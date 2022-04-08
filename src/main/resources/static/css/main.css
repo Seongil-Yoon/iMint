@@ -1,0 +1,12 @@
+ul > #goodsList{
+    list-style: none;
+    width: 100%;
+
+}
+#goodsList > li{
+    list-style: none;
+}
+
+.container{
+    background-color: aqua;
+}
