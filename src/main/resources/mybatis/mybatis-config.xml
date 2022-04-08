@@ -9,15 +9,15 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="multi.fclass.carrot.admin.dto.AdminDTO" alias="adminDTO"/>
-		<typeAlias type="multi.fclass.carrot.block.dto.BlockDTO" alias="blockDTO"/>
-		<typeAlias type="multi.fclass.carrot.chat.dto.ChatMessageDTO" alias="chatMessageDTO"/>
-		<typeAlias type="multi.fclass.carrot.chat.dto.ChatRoomDTO" alias="chatRoomDTO"/>
-		<typeAlias type="multi.fclass.carrot.goods.dto.GoodsDTO" alias="goodsDTO"/>
-		<typeAlias type="multi.fclass.carrot.goods.dto.GoodsImagesDTO" alias="goodsImagesDTO"/>
-		<typeAlias type="multi.fclass.carrot.member.dto.MemberDTO" alias="memberDTO"/>
-		<typeAlias type="multi.fclass.carrot.rating.dto.RatingDTO" alias="ratingDTO"/>
-		<typeAlias type="multi.fclass.carrot.transaction.dto.TransactionDTO" alias="transactionDTO"/>
-		<typeAlias type="multi.fclass.carrot.wishlist.dto.WishlistDTO" alias="wishlistDTO"/>
+		<typeAlias type="multi.fclass.iMint.admin.dto.AdminDTO" alias="adminDTO"/>
+		<typeAlias type="multi.fclass.iMint.block.dto.BlockDTO" alias="blockDTO"/>
+		<typeAlias type="multi.fclass.iMint.chat.dto.ChatMessageDTO" alias="chatMessageDTO"/>
+		<typeAlias type="multi.fclass.iMint.chat.dto.ChatRoomDTO" alias="chatRoomDTO"/>
+		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsDTO" alias="goodsDTO"/>
+		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsImagesDTO" alias="goodsImagesDTO"/>
+		<typeAlias type="multi.fclass.iMint.member.dto.MemberDTO" alias="memberDTO"/>
+		<typeAlias type="multi.fclass.iMint.rating.dto.RatingDTO" alias="ratingDTO"/>
+		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionDTO" alias="transactionDTO"/>
+		<typeAlias type="multi.fclass.iMint.wishlist.dto.WishlistDTO" alias="wishlistDTO"/>
 	</typeAliases>
 </configuration>
