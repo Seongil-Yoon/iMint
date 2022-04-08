@@ -10,12 +10,12 @@
 	
 	<typeAliases>
 		<typeAlias type="multi.fclass.carrot.admin.dto.AdminDTO" alias="adminDTO"/>
+		<typeAlias type="multi.fclass.carrot.block.dto.BlockDTO" alias="blockDTO"/>
 		<typeAlias type="multi.fclass.carrot.chat.dto.ChatMessageDTO" alias="chatMessageDTO"/>
 		<typeAlias type="multi.fclass.carrot.chat.dto.ChatRoomDTO" alias="chatRoomDTO"/>
 		<typeAlias type="multi.fclass.carrot.goods.dto.GoodsDTO" alias="goodsDTO"/>
 		<typeAlias type="multi.fclass.carrot.goods.dto.GoodsImagesDTO" alias="goodsImagesDTO"/>
 		<typeAlias type="multi.fclass.carrot.member.dto.MemberDTO" alias="memberDTO"/>
-		<typeAlias type="multi.fclass.carrot.member.dto.BlockDTO" alias="blockDTO"/>
 		<typeAlias type="multi.fclass.carrot.rating.dto.RatingDTO" alias="ratingDTO"/>
 		<typeAlias type="multi.fclass.carrot.transaction.dto.TransactionDTO" alias="transactionDTO"/>
 		<typeAlias type="multi.fclass.carrot.wishlist.dto.WishlistDTO" alias="wishlistDTO"/>
