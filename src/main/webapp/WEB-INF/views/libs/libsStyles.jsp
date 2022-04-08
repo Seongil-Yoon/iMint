@@ -10,6 +10,8 @@
 
 
 <!-- 외부 라이브러리 -->
-
 <!-- sweetalert CDN libs -->
-<link rel="stylesheet" href="/static/libs/sweetalert.min.css"/>
+<link rel="stylesheet" href="/static/libs/sweetalert.min.css" />
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="/static/libs/bootstrap.min.css" />
