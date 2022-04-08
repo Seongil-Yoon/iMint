@@ -17,6 +17,11 @@ public class MypageCotroller {
 		return "../views/member/baby-mypage/baby-main";
 	}
 	
+	@GetMapping("/mypage/location")
+	public String indexLocation() {
+		return "../views/member/guard-mypage/guard-location";
+	}
+	
 	@GetMapping("/mypage/mylist")
 	public String indexMylist() {
 		return "../views/member/baby-mypage/baby-mylist";

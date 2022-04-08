@@ -15,7 +15,7 @@
 	
 	
 	
-	베이비 마이페이지 마이리스트입니다.
+	베이비 마이페이지 내 아이민트목록 입니다.
 	
 	
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
