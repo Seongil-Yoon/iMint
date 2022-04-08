@@ -5,6 +5,7 @@
 HELP.md
 target/*
 META-INF/*
+.mvn/*
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
