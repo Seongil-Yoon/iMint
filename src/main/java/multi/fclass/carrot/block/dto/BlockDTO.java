@@ -1,4 +1,4 @@
-package multi.fclass.carrot.member.dto;
+package multi.fclass.carrot.block.dto;
 
 import java.sql.Timestamp;
 
