@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @MapperScan(basePackages = {"multi.fclass.carrot.*.dao"})
 @ComponentScan(basePackages = { "multi.fclass.carrot" })
-@ComponentScan
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class BabycarrotApplication {
 
