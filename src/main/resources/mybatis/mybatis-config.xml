@@ -7,17 +7,19 @@
 		<!-- db칼럼명을 카멜케이스로 변환 -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
-	
+
 	<typeAliases>
-		<typeAlias type="multi.fclass.iMint.admin.dto.AdminDTO" alias="adminDTO"/>
-		<typeAlias type="multi.fclass.iMint.block.dto.BlockDTO" alias="blockDTO"/>
-		<typeAlias type="multi.fclass.iMint.chat.dto.ChatMessageDTO" alias="chatMessageDTO"/>
-		<typeAlias type="multi.fclass.iMint.chat.dto.ChatRoomDTO" alias="chatRoomDTO"/>
-		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsDTO" alias="goodsDTO"/>
-		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsImagesDTO" alias="goodsImagesDTO"/>
-		<typeAlias type="multi.fclass.iMint.member.dto.MemberDTO" alias="memberDTO"/>
-		<typeAlias type="multi.fclass.iMint.rating.dto.RatingDTO" alias="ratingDTO"/>
-		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionDTO" alias="transactionDTO"/>
-		<typeAlias type="multi.fclass.iMint.wishlist.dto.WishlistDTO" alias="wishlistDTO"/>
+		<typeAlias type="multi.fclass.iMint.admin.dto.AdminDTO" alias="adminDTO" />
+		<typeAlias type="multi.fclass.iMint.block.dto.BlockDTO" alias="blockDTO" />
+		<typeAlias type="multi.fclass.iMint.chat.dto.ChatMessageDTO" alias="chatMessageDTO" />
+		<typeAlias type="multi.fclass.iMint.chat.dto.ChatRoomDTO" alias="chatRoomDTO" />
+		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsDTO" alias="goodsDTO" />
+		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsImagesDTO" alias="goodsImagesDTO" />
+		<typeAlias type="multi.fclass.iMint.member.dto.MemberDTO" alias="memberDTO" />
+		<typeAlias type="multi.fclass.iMint.rating.dto.RatingDTO" alias="ratingDTO" />
+		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionDTO" alias="TransactionDTO" />
+		<typeAlias type="multi.fclass.iMint.mypage.dto.WishListDTO" alias="WishListDTO" />
+		<typeAlias type="multi.fclass.iMint.mypage.dto.SellingListDTO" alias="SellingListDTO" />
+		<typeAlias type="multi.fclass.iMint.mypage.dto.CompleteListDTO" alias="CompleteListDTO" />
 	</typeAliases>
 </configuration>
