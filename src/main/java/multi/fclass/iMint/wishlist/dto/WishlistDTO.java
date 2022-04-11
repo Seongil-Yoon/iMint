@@ -1,6 +1,5 @@
 package multi.fclass.iMint.wishlist.dto;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
