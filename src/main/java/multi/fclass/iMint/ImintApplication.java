@@ -9,10 +9,10 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan(basePackages = {"multi.fclass.iMint.*.dao"})
 @ComponentScan(basePackages = { "multi.fclass.iMint" })
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-public class BabycarrotApplication {
+public class ImintApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BabycarrotApplication.class, args);
+		SpringApplication.run(ImintApplication.class, args);
 	}
 
 }
