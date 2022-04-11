@@ -18,18 +18,31 @@
 		<ul id="goodsList">
 			<!-- JS영역 -->
 			<li class="goods-detail">
-				<div class="goods-image">
-					<img src="">
-				</div>
-				<div class="goods-info">
-					<span class="goods-title"></span>
-					<span class="goods-price"></span>
-					<span class="goods-price"></span>
-				</div>
+				<a href="">
+					<div class="goods-image">
+						<img src="/static/images/aaaa.jpg">
+					</div>
+					<div class="goods-info">
+						<div>
+							<span class="goods-title">디월트 배터리</span>
+						</div>
+						<div>
+							<span class="goods-price">50000원</span>
+							<span class="goods-status">판매중</span>
+						</div>
+						<div>
+							<span class="goods-location">대구시 대명동</span>
+						</div>
+						<div>
+							<span class="goods-wishCount">관심 : 38</span>
+							<span class="goods-writeDate">5분전</span>
+						</div>
+					</div>
+				</a>
 			</li>
 		</ul>
 	</section>
-	
+
 
 	<jsp:include page="libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/main.js"></script>

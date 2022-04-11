@@ -11,6 +11,10 @@ import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 
+/**
+ * @author Seongil, Yoon
+ *
+ */
 @Service
 public class MainServiceImpl implements IMainService {
 

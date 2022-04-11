@@ -1,12 +1,99 @@
-ul > #goodsList{
+.container {
+    background-color: aqua;
+}
+
+ul#goodsList {
     list-style: none;
     width: 100%;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding-left: 44px;
 
 }
-#goodsList > li{
+
+li.goods-detail a {
+    text-decoration: none;
+    color: #212529;
+}
+
+#goodsList>li.goods-detail {
     list-style: none;
+    display: block;
+    width: 201px;
+    margin-bottom: 56px;
+    margin-right: 44px;
+
 }
 
-.container{
-    background-color: aqua;
+li.goods-detail .goods-image {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-radius: 12px;
+    background-color: #F8F9FA;
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+li.goods-detail .goods-image>img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid transparent;
+}
+
+li.goods-detail .goods-info {
+    margin-top: 12px;
+}
+
+li.goods-detail span.goods-title {
+    font-size: 16px;
+    letter-spacing: -0.02px;
+    color: #212529;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+    line-height: 1.5;
+    font-weight: normal;
+}
+
+li.goods-detail span.goods-price {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 4px;
+}
+
+li.goods-detail span.goods-status {
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 4px;
+    color: #212529;
+}
+
+li.goods-detail span.goods-location {
+    font-size: 13px;
+    color: #212529;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+    line-height: 1.5;
+}
+
+li.goods-detail span.goods-wishCount,
+li.goods-detail span.goods-writeDate {
+    color: #868e96;
+    font-size: 13px;
 }

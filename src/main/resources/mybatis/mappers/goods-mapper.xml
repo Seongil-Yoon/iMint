@@ -11,6 +11,13 @@
 		ORDER BY goods_id DESC 
 		LIMIT 18;
 	</select>
+	
+	<select id="goodsThumbnail" resultType="goodsImagesDTO">
+		SELECT * FROM `imint`.`goods_images`
+		WHERE `goods_id` = #{goods_id} AND `goods_images_thumbnail` = 1
+		ORDER BY `goods_id` DESC
+		LIMIT 18;
+	</select>
 
 	<select id="goodsImagesList" resultType="goodsImagesDTO">
 		SELECT * FROM `imint`.`goods_images`
