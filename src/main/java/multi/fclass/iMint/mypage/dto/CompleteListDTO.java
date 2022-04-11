@@ -22,6 +22,9 @@ public class CompleteListDTO {
 	// goods_images 테이블에서 조회
 	private String goodsImagesPath; // 대표 이미지 하나만 조회
 
+	// wishlist 테이블에서 조회
+	private int wishes;
+
 	// transaction 테이블에서 조회
 	private Date trxCompleteDate;
 
@@ -63,6 +66,14 @@ public class CompleteListDTO {
 
 	public void setGoodsImagesPath(String goodsImagesPath) {
 		this.goodsImagesPath = goodsImagesPath;
+	}
+
+	public int getWishes() {
+		return wishes;
+	}
+
+	public void setWishes(int wishes) {
+		this.wishes = wishes;
 	}
 
 	public Date getTrxCompleteDate() {
