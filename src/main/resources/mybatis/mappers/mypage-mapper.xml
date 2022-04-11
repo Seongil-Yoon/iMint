@@ -6,24 +6,30 @@
 
 	<select id="selectCompleteList" parameterType="Map" resultType="completeListDTO">
 		SELECT
-			IF(cr.mb_id LIKE #{myID}, "buy", "sell") AS category,
-			g.goods_id AS goods_id,
-			g.goods_title AS goods_title,
-			g.goods_price AS goods_price,
-    		g.goods_location AS goods_location,
-			gi.goods_images_path AS goods_images_path,
-			w.wishes AS wishes,
-			trx.trx_complete_date AS transaction_complete_date
+			IF(cr.mb_id LIKE #{myId}, "buy", "sell") AS category,
+			g.goods_id,
+			g.goods_title,
+			g.goods_price,
+			g.goods_location,
+			gi.goods_images_path,
+			w.wishes,
+			trx.trx_complete_date,
+			r.rating_id
 		FROM
-			(((transaction AS trx JOIN chat_room AS cr ON trx.chat_room_id = cr.chat_room_id)
+			((((transaction AS trx JOIN chat_room AS cr ON trx.chat_room_id = cr.chat_room_id)
 			JOIN goods AS g ON cr.goods_id = g.goods_id)
 			JOIN (SELECT * FROM goods_images WHERE goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id)
-			JOIN (SELECT goods_id, count(mb_id) AS wishes FROM wishlist GROUP BY goods_id) AS w ON g.goods_id = w.goods_id
+			JOIN (SELECT goods_id, count(mb_id) AS wishes FROM wishlist GROUP BY goods_id) AS w ON g.goods_id = w.goods_id)
+			LEFT OUTER JOIN (SELECT * FROM rating WHERE mb_id LIKE "#{myId}") AS r ON trx.trx_id = r.trx_id
 		WHERE
 			trx.trx_complete_date IS NOT NULL
-			AND (cr.mb_id LIKE #{myID} OR g.mb_id LIKE #{myID})
+			AND (cr.mb_id LIKE #{myId} OR g.mb_id LIKE #{myId})
 		LIMIT
 			#{startIndex}, #{numberOfItems}
+	</select>
+	
+	<select id="selectSellingList">
+	
 	</select>
 
 </mapper>

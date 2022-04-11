@@ -20,6 +20,6 @@
 		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionDTO" alias="transactionDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.WishListDTO" alias="wishListDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.SellListDTO" alias="sellListDTO" />
-		<typeAlias type="multi.fclass.iMint.mypage.dto.CompleteListDTO" alias="completeListDTO" />
+		<typeAlias type="multi.fclass.iMint.mypage.dto.CompleteListDTO" alias="CompleteListDTO" />
 	</typeAliases>
 </configuration>

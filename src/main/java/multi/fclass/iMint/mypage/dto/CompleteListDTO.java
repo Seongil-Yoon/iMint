@@ -30,6 +30,9 @@ public class CompleteListDTO {
 	// transaction 테이블에서 조회
 	private Date trxCompleteDate;
 
+	// rating 테이블에서 조회
+	private int ratingId;
+
 	public String getCategory() {
 		return category;
 	}
@@ -92,6 +95,14 @@ public class CompleteListDTO {
 
 	public void setTrxCompleteDate(Timestamp trxCompleteDate) {
 		this.trxCompleteDate = new Date(trxCompleteDate.getTime());
+	}
+
+	public int getRatingId() {
+		return ratingId;
+	}
+
+	public void setRatingId(int ratingId) {
+		this.ratingId = ratingId;
 	}
 
 }
