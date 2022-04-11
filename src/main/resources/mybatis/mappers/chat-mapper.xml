@@ -4,4 +4,14 @@
 
 <mapper namespace="multi.fclass.iMint.chat.dao.IChatDAO">
 
+	<!-- 1. 웹소켓으로 주고받은 채팅 내용 + 정보를 db저장  -->
+	<insert id=insertChatMessage parameterType="chatMessageDTO">
+		insert into chat_message values(#{chatMessageId}, #{chatRoomId}, #{chatMessageCreateDate}, #{chatMessageContent})
+	</insert>
+	
+	<!-- 2. 조건에 따른 채팅내용 + 정보불러오기 = 채팅목록에서 채팅방 각각을 눌렀을 때 불러오는 값 -->
+	<select id="bringChatMessage" resultType="chatMessageDTO">
+	 	select * from chat_message where chat_room_id = #{chatRoomId}
+	</select> 
+
 </mapper>

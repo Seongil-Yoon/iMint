@@ -21,6 +21,13 @@ public class ChatRoomDTO {
 
 	// 채팅방삭제여부
 	private Boolean chatRoomIsdelete;
+	
+	// 정민 추가구현
+	// not int DB
+	private String content; 
+	private String sendTime; 
+	//private String senderName; 
+	//private String goodsTitle;
 
 	public ChatRoomDTO() {
 	}
@@ -32,6 +39,11 @@ public class ChatRoomDTO {
 		this.mbId = mbId;
 		this.chatRoomCreateDate = chatRoomCreateDate;
 		this.chatRoomIsdelete = chatRoomIsdelete;
+	}
+	//정민 추가구현
+	public ChatRoomDTO(String content, String sendTime) {
+		this.content = content; 
+		this.sendTime = sendTime;
 	}
 
 	public Integer getChatRoomId() {
