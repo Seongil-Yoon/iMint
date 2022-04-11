@@ -11,6 +11,6 @@ import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 @Mapper
 public interface IGoodsDAO {
 	//비동기 무한스크롤
-	public List<GoodsDTO> goodsList(@Param("goods_id") int goods_id);
-	public List<GoodsImagesDTO> goodsImagesList(@Param("goods_id") int goods_id);
+	public List<GoodsDTO> goodsList(@Param("lastBoard") int lastBoard);
+	public GoodsImagesDTO goodsThumbnail(@Param("goods_id") int goods_id);
 }

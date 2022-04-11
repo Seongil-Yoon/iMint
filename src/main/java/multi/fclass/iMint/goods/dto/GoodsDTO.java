@@ -1,6 +1,7 @@
 package multi.fclass.iMint.goods.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,7 @@ public class GoodsDTO {
 	private String goodsLocation;
 
 	// 판매등록일자
-	private Timestamp goodsCreateDate;
+	private LocalDateTime goodsCreateDate;
 
 	// 거래상태
 	private String goodsStatus;
@@ -44,7 +45,7 @@ public class GoodsDTO {
 	}
 
 	public GoodsDTO(Integer goodsId, String mbId, String goodsTitle, String goodsContent, Long goodsPrice,
-			String goodsCategory, Boolean goodsSuggestible, String goodsLocation, Timestamp goodsCreateDate,
+			String goodsCategory, Boolean goodsSuggestible, String goodsLocation, LocalDateTime goodsCreateDate,
 			String goodsStatus, Boolean goodsIsdelete) {
 		this.goodsId = goodsId;
 		this.mbId = mbId;
@@ -123,11 +124,11 @@ public class GoodsDTO {
 		this.goodsLocation = goodsLocation;
 	}
 
-	public Timestamp getGoodsCreateDate() {
+	public LocalDateTime getGoodsCreateDate() {
 		return goodsCreateDate;
 	}
 
-	public void setGoodsCreateDate(Timestamp goodsCreateDate) {
+	public void setGoodsCreateDate(LocalDateTime goodsCreateDate) {
 		this.goodsCreateDate = goodsCreateDate;
 	}
 

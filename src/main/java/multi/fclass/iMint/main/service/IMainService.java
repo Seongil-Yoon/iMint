@@ -6,5 +6,5 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface IMainService {
-	public List<HashMap<String, Object>> goodsListMap(int goods_id);
+	public List<HashMap<String, Object>> goodsListMap(int lastBoard);
 }

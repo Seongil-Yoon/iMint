@@ -1,6 +1,7 @@
 package multi.fclass.iMint.block.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class BlockDTO {
 	private String mbId2;
 
 	// 차단일자
-	private Timestamp blockDate;
+	private LocalDateTime blockDate;
 
 	// 차단 취소 여부
 	private Boolean blockIsdelete;
@@ -25,7 +26,7 @@ public class BlockDTO {
 	public BlockDTO() {
 	}
 
-	public BlockDTO(Integer blockId, String mbId, String mbId2, Timestamp blockDate, Boolean blockIsdelete) {
+	public BlockDTO(Integer blockId, String mbId, String mbId2, LocalDateTime blockDate, Boolean blockIsdelete) {
 		this.blockId = blockId;
 		this.mbId = mbId;
 		this.mbId2 = mbId2;
@@ -57,11 +58,11 @@ public class BlockDTO {
 		this.mbId2 = mbId2;
 	}
 
-	public Timestamp getBlockDate() {
+	public LocalDateTime getBlockDate() {
 		return blockDate;
 	}
 
-	public void setBlockDate(Timestamp blockDate) {
+	public void setBlockDate(LocalDateTime blockDate) {
 		this.blockDate = blockDate;
 	}
 

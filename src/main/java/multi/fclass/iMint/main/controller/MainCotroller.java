@@ -27,8 +27,8 @@ public class MainCotroller {
 	}
 
 	@ResponseBody
-	@GetMapping("goods-list/{goods_id}")
-	public List<HashMap<String, Object>> goodsListMap(@PathVariable int goods_id) {
-		return service.goodsListMap(goods_id);
+	@GetMapping("goods-list/{lastBoard}")
+	public List<HashMap<String, Object>> goodsListMap(@PathVariable int lastBoard) {
+		return service.goodsListMap(lastBoard);
 	}
 }

@@ -7,15 +7,14 @@
 	<!-- &lt;는 < 와 같다 게시글 18개씩 조회 -->
 	<select id="goodsList" resultType="goodsDTO">
 		SELECT * FROM `imint`.`goods`
-		WHERE goods_id &lt; #{goods_id} 
-		ORDER BY goods_id DESC 
+		WHERE goods_id &lt; #{lastBoard} 
+		ORDER BY `goods_create_date` DESC 
 		LIMIT 18;
 	</select>
-
-	<select id="goodsImagesList" resultType="goodsImagesDTO">
+	
+	<select id="goodsThumbnail" resultType="goodsImagesDTO">
 		SELECT * FROM `imint`.`goods_images`
-		WHERE `goods_id` &lt; #{goods_id} AND `goods_images_thumbnail` = 1
-		ORDER BY `goods_id` DESC
-		LIMIT 18;
+		WHERE `goods_id` = #{goods_id} AND `goods_images_thumbnail` = 1
+		LIMIT 1;
 	</select>
 </mapper>

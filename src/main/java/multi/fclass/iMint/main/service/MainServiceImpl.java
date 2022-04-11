@@ -11,6 +11,10 @@ import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 
+/**
+ * @author Seongil, Yoon
+ *
+ */
 @Service
 public class MainServiceImpl implements IMainService {
 
@@ -18,16 +22,17 @@ public class MainServiceImpl implements IMainService {
 	IGoodsDAO goodsDAO;
 
 	@Override
-	public List<HashMap<String, Object>> goodsListMap(int goods_id) {
+	public List<HashMap<String, Object>> goodsListMap(int lastBoard) {
 		List<HashMap<String, Object>> listMap = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
 
-		List<GoodsDTO> goodsList = goodsDAO.goodsList(goods_id);
-		List<GoodsImagesDTO> goodsImagesList = goodsDAO.goodsImagesList(goods_id);
+		List<GoodsDTO> goodsList = goodsDAO.goodsList(lastBoard);
+		GoodsImagesDTO goodsThumbnail = null;
 		for (int i = 0; i < goodsList.size(); i++) {
 			map = new HashMap<String, Object>();
 			map.put("goods", goodsList.get(i));
-			map.put("goodsImage", goodsImagesList.get(i));
+			goodsThumbnail = goodsDAO.goodsThumbnail(goodsList.get(i).getGoodsId());
+			map.put("goodsImage", goodsThumbnail);
 			listMap.add(i, map);
 		}
 //		for(HashMap<String, Object> map1 : listMap) {

@@ -1,6 +1,7 @@
 package multi.fclass.iMint.chat.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class ChatRoomDTO {
 	private String mbId;
 
 	// 채팅시작시간
-	private Timestamp chatRoomCreateDate;
+	private LocalDateTime chatRoomCreateDate;
 
 	// 채팅방삭제여부
 	private Boolean chatRoomIsdelete;
@@ -25,7 +26,7 @@ public class ChatRoomDTO {
 	public ChatRoomDTO() {
 	}
 
-	public ChatRoomDTO(Integer chatRoomId, Integer goodsId, String mbId, Timestamp chatRoomCreateDate,
+	public ChatRoomDTO(Integer chatRoomId, Integer goodsId, String mbId, LocalDateTime chatRoomCreateDate,
 			Boolean chatRoomIsdelete) {
 		this.chatRoomId = chatRoomId;
 		this.goodsId = goodsId;
@@ -58,11 +59,11 @@ public class ChatRoomDTO {
 		this.mbId = mbId;
 	}
 
-	public Timestamp getChatRoomCreateDate() {
+	public LocalDateTime getChatRoomCreateDate() {
 		return chatRoomCreateDate;
 	}
 
-	public void setChatRoomCreateDate(Timestamp chatRoomCreateDate) {
+	public void setChatRoomCreateDate(LocalDateTime chatRoomCreateDate) {
 		this.chatRoomCreateDate = chatRoomCreateDate;
 	}
 
