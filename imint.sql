@@ -46,15 +46,11 @@ CREATE TABLE IF NOT EXISTS `block` (
 CREATE TABLE IF NOT EXISTS `chat_message` (
   `chat_message_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '채팅 메세지ID',
   `chat_room_id` int(11) NOT NULL COMMENT '채팅방ID',
-  `mb_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '메세지 전송 회원ID',
   `chat_message_create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '메세지 전송 시간',
-  `chat_message_content` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci DEFAULT NULL COMMENT '채팅 메세지',
-  `chat_message_isdelete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '채팅 메세지 삭제 여부',
+  `chat_message_content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci COMMENT '채팅 메세지',
   PRIMARY KEY (`chat_message_id`),
   KEY `FK_chat_message_chat_room` (`chat_room_id`),
-  KEY `FK_chat_message_member` (`mb_id`),
-  CONSTRAINT `FK_chat_message_chat_room` FOREIGN KEY (`chat_room_id`) REFERENCES `chat_room` (`chat_room_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_chat_message_member` FOREIGN KEY (`mb_id`) REFERENCES `member` (`mb_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_chat_message_chat_room` FOREIGN KEY (`chat_room_id`) REFERENCES `chat_room` (`chat_room_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
@@ -91,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `goods` (
   PRIMARY KEY (`goods_id`,`mb_id`) USING BTREE,
   KEY `FK_goods_member` (`mb_id`),
   CONSTRAINT `FK_goods_member` FOREIGN KEY (`mb_id`) REFERENCES `member` (`mb_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -100,10 +96,13 @@ CREATE TABLE IF NOT EXISTS `goods_images` (
   `goods_images_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '상품이미지ID',
   `goods_id` int(11) NOT NULL COMMENT '상품ID',
   `goods_images_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '이미지파일경로',
+  `goods_images_thumbnail` tinyint(1) NOT NULL DEFAULT '0' COMMENT '대표이미지여부',
+  `goods_images_originname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '파일원본이름',
+  `goods_images_isdelete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '이미지 삭제여부',
   PRIMARY KEY (`goods_images_id`,`goods_id`) USING BTREE,
   KEY `FK_goods_images_goods` (`goods_id`),
   CONSTRAINT `FK_goods_images_goods` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -173,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
   KEY `FK_wishlist_goods` (`goods_id`),
   CONSTRAINT `FK_wishlist_goods` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_wishlist_member` FOREIGN KEY (`mb_id`) REFERENCES `member` (`mb_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 

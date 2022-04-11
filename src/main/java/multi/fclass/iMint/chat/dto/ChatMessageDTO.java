@@ -13,29 +13,21 @@ public class ChatMessageDTO {
 	// 채팅방ID
 	private Integer chatRoomId;
 
-	// 메세지 전송 회원ID
-	private String mbId;
-
 	// 메세지 전송 시간
 	private Timestamp chatMessageCreateDate;
 
 	// 채팅 메세지
 	private String chatMessageContent;
 
-	// 채팅 메세지 삭제 여부
-	private Boolean chatMessageIsdelete;
-
 	public ChatMessageDTO() {
 	}
 
-	public ChatMessageDTO(Integer chatMessageId, Integer chatRoomId, String mbId, Timestamp chatMessageCreateDate,
-			String chatMessageContent, Boolean chatMessageIsdelete) {
+	public ChatMessageDTO(Integer chatMessageId, Integer chatRoomId, Timestamp chatMessageCreateDate,
+			String chatMessageContent) {
 		this.chatMessageId = chatMessageId;
 		this.chatRoomId = chatRoomId;
-		this.mbId = mbId;
 		this.chatMessageCreateDate = chatMessageCreateDate;
 		this.chatMessageContent = chatMessageContent;
-		this.chatMessageIsdelete = chatMessageIsdelete;
 	}
 
 	public Integer getChatMessageId() {
@@ -54,14 +46,6 @@ public class ChatMessageDTO {
 		this.chatRoomId = chatRoomId;
 	}
 
-	public String getMbId() {
-		return mbId;
-	}
-
-	public void setMbId(String mbId) {
-		this.mbId = mbId;
-	}
-
 	public Timestamp getChatMessageCreateDate() {
 		return chatMessageCreateDate;
 	}
@@ -78,19 +62,11 @@ public class ChatMessageDTO {
 		this.chatMessageContent = chatMessageContent;
 	}
 
-	public Boolean getChatMessageIsdelete() {
-		return chatMessageIsdelete;
-	}
-
-	public void setChatMessageIsdelete(Boolean chatMessageIsdelete) {
-		this.chatMessageIsdelete = chatMessageIsdelete;
-	}
-
 	@Override
 	public String toString() {
-		return "ChatMessageDTO [chatMessageId=" + chatMessageId + ", chatRoomId=" + chatRoomId + ", mbId=" + mbId
+		return "ChatMessageDTO [chatMessageId=" + chatMessageId + ", chatRoomId=" + chatRoomId
 				+ ", chatMessageCreateDate=" + chatMessageCreateDate + ", chatMessageContent=" + chatMessageContent
-				+ ", chatMessageIsdelete=" + chatMessageIsdelete + "]";
+				+ "]";
 	}
 
 }
