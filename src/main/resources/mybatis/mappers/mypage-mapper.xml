@@ -10,6 +10,7 @@
 			g.goods_id AS goods_id,
 			g.goods_title AS goods_title,
 			g.goods_price AS goods_price,
+    		g.goods_location AS goods_location,
 			gi.goods_images_path AS goods_images_path,
 			w.wishes AS wishes,
 			trx.trx_complete_date AS transaction_complete_date

@@ -19,6 +19,8 @@ public class CompleteListDTO {
 
 	private int goodsPrice;
 
+	private String goodsLocation;
+
 	// goods_images 테이블에서 조회
 	private String goodsImagesPath; // 대표 이미지 하나만 조회
 
@@ -58,6 +60,14 @@ public class CompleteListDTO {
 
 	public void setGoodsPrice(int goodsPrice) {
 		this.goodsPrice = goodsPrice;
+	}
+
+	public String getGoodsLocation() {
+		return goodsLocation;
+	}
+
+	public void setGoodsLocation(String goodsLocation) {
+		this.goodsLocation = goodsLocation;
 	}
 
 	public String getGoodsImagesPath() {
