@@ -4,7 +4,7 @@
 
 <mapper namespace="multi.fclass.iMint.member.dao.IMypageDAO">
 
-	<select id="selectCompleteList" parameterType="Map" resultType="completeListDTO">
+	<select id="selectCompleteList" parameterType="Map" resultType="CompleteListDTO">
 		SELECT
 			IF(cr.mb_id LIKE #{myId}, "buy", "sell") AS category,
 			g.goods_id,
