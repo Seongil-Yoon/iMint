@@ -5,7 +5,7 @@
 <mapper namespace="multi.fclass.iMint.chat.dao.IChatDAO">
 
 	<!-- 1. 웹소켓으로 주고받은 채팅 내용 + 정보를 db저장  -->
-	<insert id=insertChatMessage parameterType="chatMessageDTO">
+	<insert id="insertChatMessage" parameterType="chatMessageDTO">
 		insert into chat_message values(#{chatMessageId}, #{chatRoomId}, #{chatMessageCreateDate}, #{chatMessageContent})
 	</insert>
 	
