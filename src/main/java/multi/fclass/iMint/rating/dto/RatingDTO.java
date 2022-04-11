@@ -1,6 +1,7 @@
 package multi.fclass.iMint.rating.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -20,12 +21,12 @@ public class RatingDTO {
 	private Integer ratingScore;
 
 	// 평가등록일자
-	private Timestamp ratingCreateDate;
+	private LocalDateTime ratingCreateDate;
 
 	public RatingDTO() {
 	}
 
-	public RatingDTO(Integer ratingId, Integer trxId, String mbId, Integer ratingScore, Timestamp ratingCreateDate) {
+	public RatingDTO(Integer ratingId, Integer trxId, String mbId, Integer ratingScore, LocalDateTime ratingCreateDate) {
 		this.ratingId = ratingId;
 		this.trxId = trxId;
 		this.mbId = mbId;
@@ -65,11 +66,11 @@ public class RatingDTO {
 		this.ratingScore = ratingScore;
 	}
 
-	public Timestamp getRatingCreateDate() {
+	public LocalDateTime getRatingCreateDate() {
 		return ratingCreateDate;
 	}
 
-	public void setRatingCreateDate(Timestamp ratingCreateDate) {
+	public void setRatingCreateDate(LocalDateTime ratingCreateDate) {
 		this.ratingCreateDate = ratingCreateDate;
 	}
 

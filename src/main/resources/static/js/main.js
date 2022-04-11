@@ -1,4 +1,4 @@
-let goodsId = 20000; //게시글 6개씩 불러 오기 위해 look_num 값넣는 변수 초기값 은  2000000000
+let lastBoard = 20000; //게시글 18개씩 불러 오기 위해 lastBoard 값넣는 변수 초기값 은  20000
 let mainScrollTime = true; //스크롤 중복 방지 변수
 let end = true //게시글 없을 경우 데이터 가져오지 않는 변수
 
@@ -25,7 +25,7 @@ function start() {
 	mainScrollTime = false;
 
 	$.ajax({
-		url: "/goods-list/" + goodsId,
+		url: "/goods-list/" + lastBoard,
 		type: "GET",
 		dataType: "json", //json 으로 받기
 		success: function (result) {
@@ -47,7 +47,7 @@ function start() {
 									<span class="goods-status">${result[i].goods.goodsStatus}</span>
 								</div>
 								<div>
-									<span class="goods-location">${result[i].goods.goodsStatus}</span>
+									<span class="goods-location">${result[i].goods.goodsLocation}</span>
 								</div>
 								<div>
 									<span class="goods-wishCount">관심 : 38</span>
@@ -61,8 +61,8 @@ function start() {
 				$("#goodsList").append(html);
 			}
 
-			//다음 게시글 6개 가져 오기 위해 마지막 게시글 기본키 값 넘겨줌
-			goodsId = result[result.length - 1].goodsId;
+			//다음 게시글 18개 가져 오기 위해 마지막 게시글 기본키 값 넘겨줌
+			lastBoard = result[result.length - 1].goods.goodsId;
 
 			setTimeout(function () {
 				mainScrollTime = true;

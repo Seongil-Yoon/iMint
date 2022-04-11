@@ -1,6 +1,7 @@
 package multi.fclass.iMint.wishlist.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class WishlistDTO {
 	private Integer goodsId;
 
 	// 관심등록일자
-	private Timestamp wishlistCreateDate;
+	private LocalDateTime wishlistCreateDate;
 
 	// 관심철회여부
 	private Boolean wishlistWithdraw;
@@ -25,7 +26,7 @@ public class WishlistDTO {
 	public WishlistDTO() {
 	}
 
-	public WishlistDTO(Integer wishlistId, String mbId, Integer goodsId, Timestamp wishlistCreateDate,
+	public WishlistDTO(Integer wishlistId, String mbId, Integer goodsId, LocalDateTime wishlistCreateDate,
 			Boolean wishlistWithdraw) {
 		this.wishlistId = wishlistId;
 		this.mbId = mbId;
@@ -58,11 +59,11 @@ public class WishlistDTO {
 		this.goodsId = goodsId;
 	}
 
-	public Timestamp getWishlistCreateDate() {
+	public LocalDateTime getWishlistCreateDate() {
 		return wishlistCreateDate;
 	}
 
-	public void setWishlistCreateDate(Timestamp wishlistCreateDate) {
+	public void setWishlistCreateDate(LocalDateTime wishlistCreateDate) {
 		this.wishlistCreateDate = wishlistCreateDate;
 	}
 

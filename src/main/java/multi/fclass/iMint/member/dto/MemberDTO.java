@@ -1,6 +1,7 @@
 package multi.fclass.iMint.member.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ public class MemberDTO {
 	private String mbEmail;
 
 	// 가입일자
-	private Timestamp mbJoinDate;
+	private LocalDateTime mbJoinDate;
 
 	// 관심사
 	private String mbInterest;
@@ -46,7 +47,7 @@ public class MemberDTO {
 	public MemberDTO() {
 	}
 
-	public MemberDTO(Integer mbNo, String mbId, String mbGuard, String mbNick, String mbEmail, Timestamp mbJoinDate,
+	public MemberDTO(Integer mbNo, String mbId, String mbGuard, String mbNick, String mbEmail, LocalDateTime mbJoinDate,
 			String mbInterest, String mbLocation, Integer mbRatingsTotal, String mbPin, String mbThumbnail,
 			Boolean mbIsdelete) {
 		this.mbNo = mbNo;
@@ -103,11 +104,11 @@ public class MemberDTO {
 		this.mbEmail = mbEmail;
 	}
 
-	public Timestamp getMbJoinDate() {
+	public LocalDateTime getMbJoinDate() {
 		return mbJoinDate;
 	}
 
-	public void setMbJoinDate(Timestamp mbJoinDate) {
+	public void setMbJoinDate(LocalDateTime mbJoinDate) {
 		this.mbJoinDate = mbJoinDate;
 	}
 

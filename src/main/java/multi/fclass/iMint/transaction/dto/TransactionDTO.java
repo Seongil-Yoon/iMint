@@ -1,6 +1,7 @@
 package multi.fclass.iMint.transaction.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -14,19 +15,19 @@ public class TransactionDTO {
 	private Integer chatRoomId;
 
 	// 예약완료시간
-	private Timestamp trxResrvDate;
+	private LocalDateTime trxResrvDate;
 
 	// 예약취소시간
 	private Boolean trxIsdelete;
 
 	// 거래완료시간
-	private Timestamp trxCompleteDate;
+	private LocalDateTime trxCompleteDate;
 
 	public TransactionDTO() {
 	}
 
-	public TransactionDTO(Integer trxId, Integer chatRoomId, Timestamp trxResrvDate, Boolean trxIsdelete,
-			Timestamp trxCompleteDate) {
+	public TransactionDTO(Integer trxId, Integer chatRoomId, LocalDateTime trxResrvDate, Boolean trxIsdelete,
+			LocalDateTime trxCompleteDate) {
 		this.trxId = trxId;
 		this.chatRoomId = chatRoomId;
 		this.trxResrvDate = trxResrvDate;
@@ -50,11 +51,11 @@ public class TransactionDTO {
 		this.chatRoomId = chatRoomId;
 	}
 
-	public Timestamp getTrxResrvDate() {
+	public LocalDateTime getTrxResrvDate() {
 		return trxResrvDate;
 	}
 
-	public void setTrxResrvDate(Timestamp trxResrvDate) {
+	public void setTrxResrvDate(LocalDateTime trxResrvDate) {
 		this.trxResrvDate = trxResrvDate;
 	}
 
@@ -66,11 +67,11 @@ public class TransactionDTO {
 		this.trxIsdelete = trxIsdelete;
 	}
 
-	public Timestamp getTrxCompleteDate() {
+	public LocalDateTime getTrxCompleteDate() {
 		return trxCompleteDate;
 	}
 
-	public void setTrxCompleteDate(Timestamp trxCompleteDate) {
+	public void setTrxCompleteDate(LocalDateTime trxCompleteDate) {
 		this.trxCompleteDate = trxCompleteDate;
 	}
 
