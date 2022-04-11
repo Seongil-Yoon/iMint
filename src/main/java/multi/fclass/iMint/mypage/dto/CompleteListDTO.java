@@ -10,28 +10,30 @@ import java.util.Date;
 public class CompleteListDTO {
 
 	// SQL로 생성
-	private String category;
+	private String category; // "buy" or "sell"
 
 	// goods 테이블에서 조회
-	private int goodsId;
+	private int goodsId; // 판매글 ID
 
-	private String goodsTitle;
+	private String goodsTitle; // 판매글 제목
 
-	private int goodsPrice;
+	private int goodsPrice; // 판매 가격
 
-	private String goodsLocation;
+	private String goodsLocation; // 판매 지역
 
 	// goods_images 테이블에서 조회
-	private String goodsImagesPath; // 대표 이미지 하나만 조회
+	private String goodsImagesPath; // 대표 이미지 저장 경로
+
+	private String goodsImagesOriginname; // 대표 이미지 원래 이름
 
 	// wishlist 테이블에서 조회
-	private int wishes;
+	private int wishes; // 관심 등록 수
 
 	// transaction 테이블에서 조회
-	private Date trxCompleteDate;
+	private Date trxCompleteDate; // 거래 완료일시
 
 	// rating 테이블에서 조회
-	private int ratingId;
+	private int ratingId; // 평가하기 ID
 
 	public String getCategory() {
 		return category;
@@ -79,6 +81,14 @@ public class CompleteListDTO {
 
 	public void setGoodsImagesPath(String goodsImagesPath) {
 		this.goodsImagesPath = goodsImagesPath;
+	}
+
+	public String getGoodsImagesOriginname() {
+		return goodsImagesOriginname;
+	}
+
+	public void setGoodsImagesOriginname(String goodsImagesOriginname) {
+		this.goodsImagesOriginname = goodsImagesOriginname;
 	}
 
 	public int getWishes() {

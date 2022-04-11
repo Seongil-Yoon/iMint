@@ -12,6 +12,7 @@
 			g.goods_price,
 			g.goods_location,
 			gi.goods_images_path,
+			gi.goods_images_originname,
 			w.wishes,
 			trx.trx_complete_date,
 			r.rating_id
