@@ -1,2 +1,2 @@
-# babyCarrot
-아기당근
+# iMint
+아이민트
