@@ -4,4 +4,25 @@
 
 <mapper namespace="multi.fclass.iMint.member.dao.IMypageDAO">
 
+	<select id="selectCompleteList" parameterType="Map" resultType="completeListDTO">
+		SELECT
+			IF(cr.mb_id LIKE #{myID}, "buy", "sell") AS category,
+			g.goods_id AS goods_id,
+			g.goods_title AS goods_title,
+			g.goods_price AS goods_price,
+			gi.goods_images_path AS goods_images_path,
+			w.wishes AS wishes,
+			trx.trx_complete_date AS transaction_complete_date
+		FROM
+			(((transaction AS trx JOIN chat_room AS cr ON trx.chat_room_id = cr.chat_room_id)
+			JOIN goods AS g ON cr.goods_id = g.goods_id)
+			JOIN (SELECT * FROM goods_images ORDER BY goods_images_id DESC LIMIT 1) AS gi ON g.goods_id = gi.goods_id)
+			JOIN (SELECT goods_id, count(mb_id) AS wishes FROM wishlist GROUP BY goods_id) AS w ON g.goods_id = w.goods_id
+		WHERE
+			trx.trx_complete_date IS NOT NULL
+			AND (cr.mb_id LIKE #{myID} OR g.mb_id LIKE #{myID})
+		LIMIT
+			#{startIndex}, #{numberOfItems}
+	</select>
+
 </mapper>
