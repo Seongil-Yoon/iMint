@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+
+/* 페이지 타이틀 */
+.title{
+    padding-top: 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+/* 사용자 안내 타이틀 */
+.welcome-message{
+    margin-bottom: 1rem;
+}
+
+/* 메인 컨테이너 */
+.container-main {
+    display: block;
+    text-align: center;
+    padding: 3rem;
+    border: 1px;
+}
+
+/* 컨테이너-거래 관련 (관심/구매예약, 판매목록, 거래완료)  */
+.container-transaction {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1.3rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* 거래 관련 (관심/구매예약, 판매목록, 거래완료) */
+.transaction{
+    padding: 1.5rem;
+    border: 1px;
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: rgb(155, 155, 155);
+}
+
+.tag {
+    text-align: left;
+}
+
+/* 회원 상태창 */
+.container-summary {
+    padding: 1.5rem;
+    border: 1px;
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: rgb(155, 155, 155);
+    margin-bottom: 1rem;
+    text-align: left;
+    height: 170px;
+}
+
+.text-summary {
+    margin-bottom: 2rem;
+}
+
+/* 기타 세팅 관련 (연결 회원, 동네 설정) */
+.container-other-settings{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1.3rem;
+}
+
+.settings{
+    padding: 1.5rem;
+    border: 1px;
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: rgb(155, 155, 155);
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.settings-title{
+    margin-bottom: 2rem;
+}
+
+/* 내아이 연결 */
+.container-authentication{
+    padding: 1.5rem;
+    border: 1px;
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: rgb(155, 155, 155);
+}
+
+.container-authentication > h5 {
+    margin-bottom: 1rem;
+}
+.btn {
+    float: right;
+}
