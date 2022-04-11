@@ -11,6 +11,7 @@ META-INF/*
 !**/src/test/**/target/
 !**/src/main/**/META-INF/
 !**/src/test/**/META-INF/
+!**/application.properties
 .springBeans
 
 ### Eclipse ###

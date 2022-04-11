@@ -13,11 +13,11 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- babycarrot 데이터베이스 구조 내보내기
-CREATE DATABASE IF NOT EXISTS `babycarrot` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `babycarrot`;
+-- imint 데이터베이스 구조 내보내기
+CREATE DATABASE IF NOT EXISTS `imint` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `imint`;
 
--- 테이블 babycarrot.admin 구조 내보내기
+-- 테이블 imint.admin 구조 내보내기
 CREATE TABLE IF NOT EXISTS `admin` (
   `admin_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '관리자아이디',
   `admin_pw` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '관리자비밀번호',
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 babycarrot.block 구조 내보내기
+-- 테이블 imint.block 구조 내보내기
 CREATE TABLE IF NOT EXISTS `block` (
   `block_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '차단ID',
   `mb_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '회원ID',
@@ -42,24 +42,20 @@ CREATE TABLE IF NOT EXISTS `block` (
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 babycarrot.chat_message 구조 내보내기
+-- 테이블 imint.chat_message 구조 내보내기
 CREATE TABLE IF NOT EXISTS `chat_message` (
   `chat_message_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '채팅 메세지ID',
   `chat_room_id` int(11) NOT NULL COMMENT '채팅방ID',
-  `mb_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '메세지 전송 회원ID',
   `chat_message_create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '메세지 전송 시간',
-  `chat_message_content` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci DEFAULT NULL COMMENT '채팅 메세지',
-  `chat_message_isdelete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '채팅 메세지 삭제 여부',
+  `chat_message_content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci COMMENT '채팅 메세지',
   PRIMARY KEY (`chat_message_id`),
   KEY `FK_chat_message_chat_room` (`chat_room_id`),
-  KEY `FK_chat_message_member` (`mb_id`),
-  CONSTRAINT `FK_chat_message_chat_room` FOREIGN KEY (`chat_room_id`) REFERENCES `chat_room` (`chat_room_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_chat_message_member` FOREIGN KEY (`mb_id`) REFERENCES `member` (`mb_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_chat_message_chat_room` FOREIGN KEY (`chat_room_id`) REFERENCES `chat_room` (`chat_room_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 babycarrot.chat_room 구조 내보내기
+-- 테이블 imint.chat_room 구조 내보내기
 CREATE TABLE IF NOT EXISTS `chat_room` (
   `chat_room_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '채팅방ID',
   `goods_id` int(11) NOT NULL COMMENT '상품ID',
@@ -75,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `chat_room` (
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 babycarrot.goods 구조 내보내기
+-- 테이블 imint.goods 구조 내보내기
 CREATE TABLE IF NOT EXISTS `goods` (
   `goods_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '상품ID',
   `mb_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '판매자ID',
@@ -91,23 +87,26 @@ CREATE TABLE IF NOT EXISTS `goods` (
   PRIMARY KEY (`goods_id`,`mb_id`) USING BTREE,
   KEY `FK_goods_member` (`mb_id`),
   CONSTRAINT `FK_goods_member` FOREIGN KEY (`mb_id`) REFERENCES `member` (`mb_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 babycarrot.goods_images 구조 내보내기
+-- 테이블 imint.goods_images 구조 내보내기
 CREATE TABLE IF NOT EXISTS `goods_images` (
   `goods_images_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '상품이미지ID',
   `goods_id` int(11) NOT NULL COMMENT '상품ID',
   `goods_images_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '이미지파일경로',
+  `goods_images_thumbnail` tinyint(1) NOT NULL DEFAULT '0' COMMENT '대표이미지여부',
+  `goods_images_originname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '파일원본이름',
+  `goods_images_isdelete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '이미지 삭제여부',
   PRIMARY KEY (`goods_images_id`,`goods_id`) USING BTREE,
   KEY `FK_goods_images_goods` (`goods_id`),
   CONSTRAINT `FK_goods_images_goods` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 babycarrot.member 구조 내보내기
+-- 테이블 imint.member 구조 내보내기
 CREATE TABLE IF NOT EXISTS `member` (
   `mb_no` int(11) NOT NULL AUTO_INCREMENT COMMENT '등록순서',
   `mb_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '회원ID',
@@ -131,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `member` (
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 babycarrot.rating 구조 내보내기
+-- 테이블 imint.rating 구조 내보내기
 CREATE TABLE IF NOT EXISTS `rating` (
   `rating_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '평가ID',
   `trx_id` int(11) NOT NULL COMMENT '거래ID',
@@ -147,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `rating` (
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 babycarrot.transaction 구조 내보내기
+-- 테이블 imint.transaction 구조 내보내기
 CREATE TABLE IF NOT EXISTS `transaction` (
   `trx_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '거래ID',
   `chat_room_id` int(11) NOT NULL COMMENT '채팅방ID',
@@ -161,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `transaction` (
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 babycarrot.wishlist 구조 내보내기
+-- 테이블 imint.wishlist 구조 내보내기
 CREATE TABLE IF NOT EXISTS `wishlist` (
   `wishlist_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '관심ID',
   `mb_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '회원ID',
@@ -173,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
   KEY `FK_wishlist_goods` (`goods_id`),
   CONSTRAINT `FK_wishlist_goods` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_wishlist_member` FOREIGN KEY (`mb_id`) REFERENCES `member` (`mb_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 

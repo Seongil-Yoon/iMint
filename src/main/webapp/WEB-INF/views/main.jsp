@@ -16,7 +16,17 @@
 
 	<section class="container">
 		<ul id="goodsList">
-			
+			<!-- JS영역 -->
+			<li class="goods-detail">
+				<div class="goods-image">
+					<img src="">
+				</div>
+				<div class="goods-info">
+					<span class="goods-title"></span>
+					<span class="goods-price"></span>
+					<span class="goods-price"></span>
+				</div>
+			</li>
 		</ul>
 	</section>
 	
