@@ -12,11 +12,9 @@
 			g.goods_location,
 			g.goods_create_date,
 			gi.goods_images_path,
-			gi.goods_images_originname,
-			w.wishes
+			gi.goods_images_originname
 		FROM
-			(goods AS g JOIN (SELECT * FROM goods_images WHERE goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id)
-			JOIN (SELECT goods_id, count(mb_id) AS wishes FROM wishlist GROUP BY goods_id) AS w ON g.goods_id = w.goods_id
+			goods AS g JOIN (SELECT * FROM goods_images WHERE goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id
 		WHERE
 			g.mb_id LIKE #{myId}
 			AND g.goods_status = "wait" OR g.goods_status = "resrv"
@@ -32,16 +30,14 @@
 			g.goods_location,
 			gi.goods_images_path,
 			gi.goods_images_originname,
-			w.wishes,
 			trx.trx_complete_date,
 			r.rating_id
 		FROM
-			(((transaction AS trx JOIN goods AS g ON trx.goods_id = g.goods_id)
+			((transaction AS trx JOIN goods AS g ON trx.goods_id = g.goods_id)
 			JOIN (SELECT * FROM goods_images WHERE goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id)
-			JOIN (SELECT goods_id, count(mb_id) AS wishes FROM wishlist GROUP BY goods_id) AS w ON g.goods_id = w.goods_id)
-			LEFT OUTER JOIN (SELECT * FROM rating WHERE mb_id LIKE "#{myId}") AS r ON trx.trx_id = r.trx_id
+			LEFT OUTER JOIN (SELECT * FROM rating WHERE mb_id LIKE #{myId}) AS r ON trx.trx_id = r.trx_id
 		WHERE
-			trx.mb_id LIKE #{myId} OR g.mb_id LIKE #{myId})
+			trx.mb_id LIKE #{myId} OR g.mb_id LIKE #{myId}
 		LIMIT
 			#{startIndex}, #{numberOfItems}
 	</select>
