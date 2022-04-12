@@ -22,22 +22,22 @@ public class ChatRoomDTO {
 	// 채팅방삭제여부
 	private Boolean chatRoomIsdelete;
 	
-	// 채팅방예약여부
-	private Boolean chatRoomIsreserved;
+	// 채팅방예약시간
+	private LocalDateTime chatRoomResrvDate;
 
 
 	public ChatRoomDTO() {
 	}
 
 	public ChatRoomDTO(Integer chatRoomId, Integer goodsId, String mbId, LocalDateTime chatRoomCreateDate,
-			Boolean chatRoomIsdelete, Boolean chatRoomIsreserved) {
+			Boolean chatRoomIsdelete, LocalDateTime chatRoomResrvDate) {
 		super();
 		this.chatRoomId = chatRoomId;
 		this.goodsId = goodsId;
 		this.mbId = mbId;
 		this.chatRoomCreateDate = chatRoomCreateDate;
 		this.chatRoomIsdelete = chatRoomIsdelete;
-		this.chatRoomIsreserved = chatRoomIsreserved;
+		this.chatRoomResrvDate = chatRoomResrvDate;
 	}
 
 	public Integer getChatRoomId() {
@@ -80,19 +80,19 @@ public class ChatRoomDTO {
 		this.chatRoomIsdelete = chatRoomIsdelete;
 	}
 
-	public Boolean getChatRoomIsreserved() {
-		return chatRoomIsreserved;
+	public LocalDateTime getChatRoomResrvDate() {
+		return chatRoomResrvDate;
 	}
 
-	public void setChatRoomIsreserved(Boolean chatRoomIsreserved) {
-		this.chatRoomIsreserved = chatRoomIsreserved;
+	public void setChatRoomIsreserved(LocalDateTime chatRoomResrvDate) {
+		this.chatRoomResrvDate = chatRoomResrvDate;
 	}
 
 	@Override
 	public String toString() {
 		return "ChatRoomDTO [chatRoomId=" + chatRoomId + ", goodsId=" + goodsId + ", mbId=" + mbId
 				+ ", chatRoomCreateDate=" + chatRoomCreateDate + ", chatRoomIsdelete=" + chatRoomIsdelete
-				+ ", chatRoomIsreserved=" + chatRoomIsreserved + "]";
+				+ ", chatRoomIsreserved=" + chatRoomResrvDate + "]";
 	}
 
 
