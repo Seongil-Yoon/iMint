@@ -8,8 +8,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>@@아기당근@@ :: 회원 탈퇴</title>
-	<link rel="stylesheet" href="css/mypage_withdraw.css">
+	<title>아이민트 :: 회원 탈퇴</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_withdraw.css" type="text/css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
@@ -28,18 +28,17 @@
 		 	
 		    <div class="container-main">
 				<div class="text">
-					<h2>회원을 탈퇴하시겠어요?</h2>
+					<h2>회원을 탈퇴하시겠어요? 😢</h2>
 					<h2>되돌리기 어려우니 신중하게 생각해 주세요.</h2>
 				</div>
 				<div class="buttons">
 					<form action="#">
-						<input type="text" placeholder="비밀번호를 입력해 주세요.">
+						<input class="buttons-text"type="password" placeholder="비밀번호를 입력해 주세요.">
 						<input type="submit" class="btn btn-primary" value="확인"/>
-						
 					</form>
 					<form action="#">
 						<br>
-						<input type="submit" class="btn btn-primary" value="탈퇴하기"/>
+						<input type="submit" class="btn btn-primary" value="아이민트 탈퇴하기"/>
 					</form>
 				</div>
 			</div>

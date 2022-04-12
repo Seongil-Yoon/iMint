@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MypageCotroller {
-	@GetMapping("/mypage")
+	@GetMapping("mypage")
 	public String index() {
-		return "../views/member/baby-mypage/baby-main";
+		return "member/baby-mypage/baby-main";
 	}
 	
-	@GetMapping("/mypage/location")
+	@GetMapping("mypage/location")
 	public String indexLocation() {
 		return "../views/member/guard-mypage/guard-location";
 	}
 	
-	@GetMapping("/mypage/mylist")
+	@GetMapping("mypage/mylist")
 	public String indexMylist() {
 		return "../views/member/baby-mypage/baby-mylist";
 	}
 	
-	@GetMapping("/mypage/block")
+	@GetMapping("mypage/block")
 	public String indexBlocklist() {
 		return "../views/member/baby-mypage/baby-blocklist";
 	}
 	
-	@GetMapping("/mypage/edit")
+	@GetMapping("mypage/edit")
 	public String indexEdit() {
 		return "../views/member/baby-mypage/baby-edit";
 	}
 	
-	@GetMapping("/mypage/withdraw")
+	@GetMapping("mypage/withdraw")
 	public String indexWithdraw() {
-		return "../views/member/baby-mypage/baby-withdraw";
+		return "member/baby-mypage/baby-withdraw";
 	}
 }
 
