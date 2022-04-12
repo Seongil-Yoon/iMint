@@ -3,6 +3,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.member.dao.IMypageDAO">
+	<select id="selectWishList" parameterType="Map" resultType="WishListDTO">
+		SELECT
+			CASE
+				WHEN g.goods_status = "wait" THEN "wait"
+		        WHEN g.goods_status = "resrv" THEN "resrv"
+		        WHEN g.goods_status = "comp" THEN "comp"
+			END AS category,
+			g.goods_id,
+			g.goods_title,
+			g.goods_price,
+			g.goods_location,
+			g.goods_create_date,
+			gi.goods_images_path,
+			gi.goods_images_originname
+		FROM
+		    (wishlist AS w JOIN goods AS g ON w.goods_id = g.goods_id)
+			JOIN (SELECT * FROM goods_images WHERE goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id
+		WHERE
+			w.mb_id LIKE #{myId}
+		ORDER BY
+			w.wishlist_create_date DESC
+		LIMIT
+			#{startIndex}, #{numberOfItems}
+	</select>
 	<select id="selectSellingList" parameterType="Map" resultType="SellingListDTO">
 		SELECT
 			IF(g.goods_status = "wait", "wait", "resrv") AS category,
@@ -18,6 +42,8 @@
 		WHERE
 			g.mb_id LIKE #{myId}
 			AND g.goods_status = "wait" OR g.goods_status = "resrv"
+		ORDER BY
+			g.goods_create_date DESC
 		LIMIT
 			#{startIndex}, #{numberOfItems}
 	</select>
@@ -38,6 +64,8 @@
 			LEFT OUTER JOIN (SELECT * FROM rating WHERE mb_id LIKE #{myId}) AS r ON trx.trx_id = r.trx_id
 		WHERE
 			trx.mb_id LIKE #{myId} OR g.mb_id LIKE #{myId}
+		ORDER BY
+			trx.trx_complete_date DESC
 		LIMIT
 			#{startIndex}, #{numberOfItems}
 	</select>
