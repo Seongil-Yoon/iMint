@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class SellingListDTO {
 
-	private String category; // "buy" or "sell"
+	private String category; // "wait" or "resrv"
 	private int goodsId; // 판매글 ID
 	private String goodsTitle; // 판매글 제목
 	private int goodsPrice; // 판매 가격
@@ -17,7 +17,6 @@ public class SellingListDTO {
 	private String goodsImagesPath; // 대표 이미지 저장 경로
 	private String goodsImagesOriginname; // 대표 이미지 원래 이름
 	private Date goodsCreateDate; // 판매글 등록일시
-	private int wishes; // 관심 등록 수
 
 	public String getCategory() {
 		return category;
@@ -81,14 +80,6 @@ public class SellingListDTO {
 
 	public void setGoodsCreateDate(Timestamp goodsCreateDate) {
 		this.goodsCreateDate = new Date(goodsCreateDate.getTime());
-	}
-
-	public int getWishes() {
-		return wishes;
-	}
-
-	public void setWishes(int wishes) {
-		this.wishes = wishes;
 	}
 
 }
