@@ -15,10 +15,10 @@
 	
 	
 	
-	<a class="content" href="#">나의 아이민트</a><br>
-	<a class="content" href="#">나의 차단목록</a><br>
-	<a class="content" href="#">회원정보 수정</a><br>
-	<a class="content" href="/mypage/withdraw">회원 탈퇴</a>
+	<a class="content" href="mypage/mylist">나의 아이민트</a><br>
+	<a class="content" href="mypage/block">나의 차단목록</a><br>
+	<a class="content" href="mypage/edit">회원정보 수정</a><br>
+	<a class="content" href="mypage/withdraw">회원 탈퇴</a>
 	
 	
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
