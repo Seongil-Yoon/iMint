@@ -4,7 +4,6 @@
 
 <mapper namespace="multi.fclass.iMint.chat.dao.IChatDAO">
 
-<!-- 풀 받고 CHATROOMDTO에 맞게 변경하기 (아직X) -->
 	<!-- 채팅내용 저장! -->
 	<!-- 1. 최초 채팅하기 버튼 클릭시 채팅방 정보 db에 저장 -->
 	<insert id="insertChatRoomInitInfo" parameterType="chatRoomDTO">
@@ -105,44 +104,4 @@
 			#{add}
 		</foreach>
 	</delete>
-	
-	
-	<!-- insert into chat_message values(#{chatMessageId}, #{chatRoomId}, #{chatMessageCreateDate}, 
-			#{chatMessageContent}) on duplicate key update chat_message_content = values(#{chatMessageCreateDate}, 
-			#{chatMessageContent}) -->
-	<!-- <delete id="deleteChatRoom" parameterType="int">
-		delete * from chat_room where chat_room_id = #{chatRoomId}
-	</delete> -->
-	<!-- select cr.chat_room_id as '채팅방 id', cr.mb_id as '구매희망자id', mbuy.mb_nick 
-		as '구매희망자 닉네임', mbuy.mb_thumbnail as '구매희망자 프로필사진경로', g.mb_id as '판매자 id', 
-		msell.mb_nick as '판매자 닉네임', msell.mb_thumbnail as '판매자 프로필사진경로', g.goods_title 
-		as '상품명', g.goods_price as '가격', gm.goods_images_thumnail(1) as '상품 대표이미지', 
-		cr.chat_room_isdelete as '채팅방삭제여부', cr.chat_room_create_date as '채팅방생성날짜' 
-		from chat_room cr left outer join member mbuy on cr.mb_id = mbuy.mb_id left 
-		outer join goods g on cr.goods_id = g.goods_id left outer join member msell 
-		on cr.mb_id = msell.mb_id left outer join goods_images gm on g.goods_id = 
-		gm.goods_id; -->
-<!-- 	<resultMap type="ChatRoomDTO" id="chatRoomDTOView">
-		<id column="chat_room_id" property="chatRoomId"/>위에서 출력 안하는데 있어야 하나?
-		<result column="mb_id" property="mbId"/>	
-		<association column="mb_id" property="member" javaType="Member">
-			<result column="mb_nick" property="mbNick"/>mbuy.mb_nick 아래랑 어떻게 구분?
-			<result column="mb_nick" property="mbNick"/>mbsell.mb_nick
-		</association>
-		<association column="goods_id" property="goods" javaType="Goods">
-			<id column="mb_id" property="mbId"/>
-			<result column="goods_suggestible" property="goodsSuggestible"/>
-		</association>
-	</resultMap> -->
-<!-- 	<resultMap type="ChatRoomDTO" id="chatRoomDTOView">
-		<id column="chat_room_id" property="chatRoomId"/>
-		<result column="goods_id" property="goodsId"/>
-		<result column="mb_id" property="mbId"/>	
-		<result column="chat_room_create_date" property="chatRoomCreateDate"/>	
-		<result column="chat_room_isdelete" property="chatRoomIsdelete"/>	
-		<result column="chat_room_isreserved" property="chatRoomIsreserved"/>	
-		<association column="mb_id" property="member" javaType="Member">
-		</association>
-	</resultMap> -->
-
 </mapper>
