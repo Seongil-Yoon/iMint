@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+/* 페이지 전체 컨테이너 */
+.container-page{
+	width: 1200px;
+	margin:auto;
+	padding-left: 3rem;
+	padding-right: 3rem;
+}
+
+/* 어사이드, 메인 2열 구현 컨테이너 */
+.container-aside-main{
+	display: grid;
+    grid-template-columns: 0.5fr 3.5fr;
+    grid-gap: 1.3rem;
+    /* width: 1300px; */
+   	justify-content: center;
+   	
+}
+
+/* 페이지 타이틀 */
+.title{
+	width: 1300px;
+    padding-top: 3rem;
+}
+
+/* 어사이드 바*/
+.container-aside{
+	padding-top: 5rem;
+}
+
+/* 메인 컨테이너 */
+.container-main {
+    display: block;
+    text-align: center;
+    padding: 3rem;
+    border: 1px;
+}
+
+.btn {
+    float: right;
+}
