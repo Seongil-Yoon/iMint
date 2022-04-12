@@ -18,7 +18,7 @@
 				)
 	</insert>
 	<!-- 2. 채팅하고 뒤로가기버튼 눌렀을시 채팅메세지 정보 db에 저장 -->
-	<insert id="insertChatMessageInfo" parameterType="chatMessageDTO">
+	<insert id="insertUpdateChatMessageInfo" parameterType="chatMessageDTO">
 		insert into
 			chat_message (
 				chat_message_id, 
@@ -29,8 +29,8 @@
 			values (
 			#{chatMessageId}, 
 			#{chatRoomId}, 
-			now(),
-			#{chat_message_content}
+			#{chatMessageCreateDate},
+			#{chatMessageContent}
 			)
 			
 		on duplicate key update
@@ -51,13 +51,13 @@
 	</select>
 	<!-- 4. 조건에 따른 채팅내용 + 정보 불러오기 = 채팅목록에서 채팅방 눌렀을 시 불러오는 다른 값들 -->
 	<!-- 상대방닉네임(구매자인경우- 판매자, 판매자인경우 - 구매자), 가격흥정여부 -->
-	<select id="bringChatInfo" resultMap="chatRoomDTOView" parameterType="int">
+	<select id="bringChatRoomInfo" resultType="chatRoomInfoDTO" parameterType="int">
 		select 
 			cr.mb_id as 'buyerId', 
-			mbuy.mb_nick as '구매희망자 닉네임',
-			g.mb_id as '판매자	id',
-			msell.mb_nick as '판매자 닉네임',
-			g.goods_suggestible as '가격흥정여부'
+			mbuy.mb_nick as 'buyerNick',
+			g.mb_id as 'sellerId',
+			msell.mb_nick as 'sellerNick',
+			g.goods_suggestible
 		
 		from chat_room as cr
 		
@@ -65,27 +65,26 @@
 			left outer join goods as g on cr.goods_id = g.goods_id
 			left outer join member	as msell on g.mb_id = msell.mb_id
 		
-		where chat_room_id = #{chatRoomId};
+		where chat_room_id = #{chatRoomId}
 		<!-- 참조entity, chat_room, member, goods,  -->
 	</select>
 
 	<!-- 채팅목록 -->
 	<!-- 5. 채팅목록 보여주기 -->
-	<resultMap type="" id=""></resultMap>
-	<select id="bringChatList" resultType="chatRoomDTO">
+	<select id="bringChatList" resultType="chatListInfoDTO" parameterType="String">
 		select 
-			cr.chat_room_id as '채팅방 id', 
-			cr.mb_id as '구매희망자id', 
-			mbuy.mb_nick as '구매희망자 닉네임',
-			mbuy.mb_thumbnail as '구매희망자 프로필사진경로',
-			g.mb_id as '판매자 id', 
-			msell.mb_nick as '판매자 닉네임', 
-			msell.mb_thumbnail as '판매자 프로필사진경로',
-			g.goods_title as '상품명', 
-			g.goods_price as '가격',
-			gi.goods_images_path as '상품 대표이미지경로', 
-			cr.chat_room_isdelete as '채팅방삭제여부',
-			cr.chat_room_create_date as '채팅방생성날짜'
+			cr.chat_room_id, 
+			cr.mb_id as 'buyerId', 
+			mbuy.mb_nick as 'buyerNick',
+			mbuy.mb_thumbnail as 'buyerThumbnail',
+			g.mb_id as 'sellerId', 
+			msell.mb_nick as 'sellerNick', 
+			msell.mb_thumbnail as 'sellerThumbnail',
+			g.goods_title, 
+			g.goods_price,
+			gi.goods_images_path, 
+			cr.chat_room_isdelete,
+			cr.chat_room_create_date
 			
 		from chat_room as cr
 			
@@ -93,7 +92,10 @@
 			left outer join goods as g on cr.goods_id = g.goods_id
 			left outer join member as msell on g.mb_id = msell.mb_id
 			left outer join (select * from goods_images where goods_images_thumbnail = true) as gi on g.goods_id = gi.goods_id
-       	order by chat_room_create_date DESC; 	
+       
+        where cr.mb_id = #{buyerId} or g.mb_id = #{sellerId}
+       	
+       	order by chat_room_create_date DESC
 	</select>
 	
 	<!-- 6. 채팅목록에서 다중선택으로 채팅방 삭제 -->
