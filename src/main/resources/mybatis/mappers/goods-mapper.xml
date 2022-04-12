@@ -8,13 +8,36 @@
 	<select id="goodsList" resultType="goodsDTO">
 		SELECT * FROM `imint`.`goods`
 		WHERE goods_id &lt; #{lastBoard} 
+		AND `goods_isdelete` = 0
 		ORDER BY `goods_create_date` DESC 
 		LIMIT 18;
 	</select>
 	
 	<select id="goodsThumbnail" resultType="goodsImagesDTO">
 		SELECT * FROM `imint`.`goods_images`
-		WHERE `goods_id` = #{goods_id} AND `goods_images_thumbnail` = 1
+		WHERE `goods_id` = #{goods_id} 
+		AND `goods_images_thumbnail` = 1
+		AND `goods_images_isdelete` = 0 
 		LIMIT 1;
 	</select>
+	
+	<!-- 상품상세조회 -->
+	<select id="goods" resultType="goodsDTO">
+		SELECT  * FROM `imint`.`goods` 
+		WHERE `goods_id`= #{goods_id}
+		AND `goods_isdelete` = 0
+		LIMIT 1;
+	</select>
+	
+	<select id="goodsImages" resultType="goodsImagesDTO">
+		SELECT * FROM `imint`.`goods_images` 
+		WHERE `goods_id` = #{goods_id}
+		AND `goods_images_thumbnail` IN (0,1) 
+		AND `goods_images_isdelete` = 0 
+		ORDER BY `goods_images_thumbnail` DESC, `goods_images_id` ASC
+		LIMIT 1000;
+	</select>
+	
+	
+	
 </mapper>

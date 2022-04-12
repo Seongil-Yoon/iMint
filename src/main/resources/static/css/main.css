@@ -96,4 +96,5 @@ li.goods-detail span.goods-wishCount,
 li.goods-detail span.goods-writeDate {
     color: #868e96;
     font-size: 13px;
+    margin-right: 20px;
 }
