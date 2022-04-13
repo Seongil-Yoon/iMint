@@ -10,18 +10,29 @@
 </head>
 
 <body>
- 	<jsp:include page="../../include/header.jsp" flush="false" />
- 	<aside></aside>
-	
-	
-	
-	<a class="content" href="mypage/mylist">나의 아이민트</a><br>
-	<a class="content" href="mypage/block">나의 차단목록</a><br>
-	<a class="content" href="mypage/edit">회원정보 수정</a><br>
-	<a class="content" href="mypage/withdraw">회원 탈퇴</a>
-	
-	
-	<jsp:include page="../../include/footer.jsp" flush="false"/>
+	<!-- 어사이드바 컨테이너 -->
+    <div class="aside-container">
+        <a class="content" href="mypage/mylist">
+            <div class="aside-tab-item">
+                <p class="tab-text">나의 아이민트</p>
+            </div>
+        </a><br>
+        <a class="content" href="mypage/block">
+            <div class="aside-tab-item">
+                <p class="tab-text">나의 차단목록</p>
+            </div>
+        </a><br>
+        <a class="content" href="mypage/edit">
+            <div class="aside-tab-item">
+                <p class="tab-text">회원정보 수정</p>
+            </div>
+        </a><br>
+        <a class="content" href="mypage/withdraw">
+            <div class="aside-tab-item">
+                <p class="tab-text">회원 탈퇴</p>
+            </div>
+        </a>
+    </div>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/baby-main.js"></script>
 </body>

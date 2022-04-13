@@ -8,6 +8,7 @@
 	<meta charset="UTF-8">
 	<title>아이민트 :: 마이페이지</title>
 	<link rel="stylesheet" href="static/css/mypage_main.css">
+	<link rel="stylesheet" href="static/css/mypage_asidebar.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
