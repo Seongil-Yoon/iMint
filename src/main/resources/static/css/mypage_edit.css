@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-/* 페이지 전체 컨테이너 */
 .container-page{
 	width: 1200px;
 	margin:auto;
@@ -31,20 +30,48 @@
 
 /* 메인 컨테이너 */
 .container-main {
-	width: 700px;
+    width: 700px;
     display: block;
     text-align: center;
     padding: 3rem;
     border: 1px;
 }
 
-/* 안내 메시지 */
-.text{
+
+/* 타이틀 (회원 정보 수정하시겠어요?) */
+.title-text{
 	margin-bottom: 5rem;
 }
 
+/* 각 항목별 컨테이너 */
+.container-context{
+    display: grid;
+    grid-template-columns: 0.4fr 0.6fr;
+    /* grid-gap: 1.5rem; */
+    text-align: left;
+    padding: 2rem;
+    padding-right: 6rem;
+   	padding-left: 6rem;
+    border-bottom: 1px solid #b3b3b3;
+}
+
+/* 비밀번호 입력 안내 레이블 */
+.lables-password{
+    justify-content: center;
+}
+
 /* 비밀번호 입력 칸 */
+.buttons{
+    display: flex;
+    text-align: left;
+    align-items: center;
+}
+
 input.buttons-text {
     height: 30px;
     width: 200px;
+}
+
+.password {
+    margin-bottom: 0.2rem;
 }
