@@ -117,7 +117,7 @@ public class OAuthAttributes {
             Map<String, Object> attributes) {
     	
     	System.out.println("네이버 로그인 호출");
-		OAuth2UserInfo oAuth2UserInfo = new NaverUserInfo((Map)attributes.get("response"));
+		OAuth2UserInfo oAuth2UserInfo = new NaverUserInfo((Map<String, Object>)attributes.get("response"));
 		System.out.println("response: " + oAuth2UserInfo.getMbEmail());
 
     	return OAuthAttributes.builder()
@@ -137,15 +137,15 @@ public class OAuthAttributes {
     public static OAuthAttributes ofKakao(String userNameAttributeName,
             Map<String, Object> attributes) {
     	System.out.println("카카오 로그인 호출");
-		OAuth2UserInfo oAuth2UserInfo = new KakaoUserInfo((Map)attributes.get("response"));
+		OAuth2UserInfo oAuth2UserInfo = new KakaoUserInfo((Map<String, Object>)attributes);
 		System.out.println("response: " + oAuth2UserInfo.getMbEmail());
 
     	return OAuthAttributes.builder()
-            	.mbId ("kakao_"+(String) attributes.get("id"))
+            	.mbId ("kakao_"+(String) oAuth2UserInfo.getMbId())
             	.mbProvider ("kakao") 
             	.mbGuard (null) // 임시  
-            	.mbNick ((String) attributes.get("name")) // 임시 
-            	.mbEmail ((String) attributes.get("email")) 
+            	.mbNick ((String) oAuth2UserInfo.getMbNick()) // 임시 
+            	.mbEmail ((String) oAuth2UserInfo.getMbEmail()) 
             	.mbIsdelete (false) 
                 .attributes(attributes)
                 .mbRole(Role.GAURD) // 임시 
