@@ -5,4 +5,13 @@
     background-color: beige;
 }
 
+section.container h2,
+section.container span {
+    display: inline-block;
 
+}
+
+section.container .goods-info{
+    float: right;
+    width: 50%;
+}
