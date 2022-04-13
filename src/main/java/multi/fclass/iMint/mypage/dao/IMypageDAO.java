@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import multi.fclass.iMint.mypage.dto.CompleteListDTO;
+import multi.fclass.iMint.mypage.dto.SellingListDTO;
+import multi.fclass.iMint.mypage.dto.WishListDTO;
 
 /**
  * @author GhostFairy
@@ -13,6 +15,10 @@ import multi.fclass.iMint.mypage.dto.CompleteListDTO;
  */
 @Mapper
 public interface IMypageDAO {
+
+	public List<WishListDTO> selectWishList(Map<String, Object> params);
+
+	public List<SellingListDTO> selectSellingList(Map<String, Object> params);
 
 	public List<CompleteListDTO> selectCompleteList(Map<String, Object> params);
 

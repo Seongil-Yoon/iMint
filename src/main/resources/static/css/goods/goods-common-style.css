@@ -1,0 +1,12 @@
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap);
+
+span,
+a,
+td,
+div.label,
+h1,
+h2,
+h3 {
+  font-family: "Noto Sans Kr", sans-serif;
+
+}

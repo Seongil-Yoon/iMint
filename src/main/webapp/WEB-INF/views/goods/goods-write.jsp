@@ -15,6 +15,6 @@
  	
 	
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
-	<script src="/static/js/goods-write.js"></script>
+	<script src="/static/js/goods/goods-write.js"></script>
 </body>
 </html>
