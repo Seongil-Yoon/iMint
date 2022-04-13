@@ -6,8 +6,12 @@ HELP.md
 target/*
 META-INF/*
 .mvn/*
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/META-INF/
+!**/src/test/**/META-INF/
 .springBeans
-application.properties
 
 ### Eclipse ###
 .metadata

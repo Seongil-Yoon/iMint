@@ -1,5 +1,6 @@
 package multi.fclass.iMint.chat.dto;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
@@ -22,22 +23,28 @@ public class ChatRoomDTO {
 	// 채팅방삭제여부
 	private Boolean chatRoomIsdelete;
 	
-	// 채팅방예약시간
-	private LocalDateTime chatRoomResrvDate;
-
+	// 정민 추가구현
+	// not int DB
+	private String content; 
+	private String sendTime; 
+	//private String senderName; 
+	//private String goodsTitle;
 
 	public ChatRoomDTO() {
 	}
 
 	public ChatRoomDTO(Integer chatRoomId, Integer goodsId, String mbId, LocalDateTime chatRoomCreateDate,
-			Boolean chatRoomIsdelete, LocalDateTime chatRoomResrvDate) {
-		super();
+			Boolean chatRoomIsdelete) {
 		this.chatRoomId = chatRoomId;
 		this.goodsId = goodsId;
 		this.mbId = mbId;
 		this.chatRoomCreateDate = chatRoomCreateDate;
 		this.chatRoomIsdelete = chatRoomIsdelete;
-		this.chatRoomResrvDate = chatRoomResrvDate;
+	}
+	//정민 추가구현
+	public ChatRoomDTO(String content, String sendTime) {
+		this.content = content; 
+		this.sendTime = sendTime;
 	}
 
 	public Integer getChatRoomId() {
@@ -80,21 +87,10 @@ public class ChatRoomDTO {
 		this.chatRoomIsdelete = chatRoomIsdelete;
 	}
 
-	public LocalDateTime getChatRoomResrvDate() {
-		return chatRoomResrvDate;
-	}
-
-	public void setChatRoomIsreserved(LocalDateTime chatRoomResrvDate) {
-		this.chatRoomResrvDate = chatRoomResrvDate;
-	}
-
 	@Override
 	public String toString() {
 		return "ChatRoomDTO [chatRoomId=" + chatRoomId + ", goodsId=" + goodsId + ", mbId=" + mbId
-				+ ", chatRoomCreateDate=" + chatRoomCreateDate + ", chatRoomIsdelete=" + chatRoomIsdelete
-				+ ", chatRoomIsreserved=" + chatRoomResrvDate + "]";
+				+ ", chatRoomCreateDate=" + chatRoomCreateDate + ", chatRoomIsdelete=" + chatRoomIsdelete + "]";
 	}
-
-
 
 }

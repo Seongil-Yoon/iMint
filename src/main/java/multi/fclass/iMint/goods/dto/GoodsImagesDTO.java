@@ -2,7 +2,6 @@ package multi.fclass.iMint.goods.dto;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class GoodsImagesDTO {
 
 	// 상품이미지ID

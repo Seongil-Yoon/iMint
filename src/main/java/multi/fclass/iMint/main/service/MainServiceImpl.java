@@ -32,12 +32,13 @@ public class MainServiceImpl implements IMainService {
 			map = new HashMap<String, Object>();
 			map.put("goods", goodsList.get(i));
 			goodsThumbnail = goodsDAO.goodsThumbnail(goodsList.get(i).getGoodsId());
-			if(goodsThumbnail == null) {
-				goodsThumbnail = new GoodsImagesDTO(null, goodsList.get(i).getGoodsId(), "/static/images/noimage.png", true, "noimage.png", null);
-			}
 			map.put("goodsImage", goodsThumbnail);
 			listMap.add(i, map);
 		}
+//		for(HashMap<String, Object> map1 : listMap) {
+//			System.out.println(map1);
+//		}
+
 		return listMap;
 	}
 

@@ -15,18 +15,11 @@
 	<!-- 헤더 시작 -->
  	<jsp:include page="../../include/header.jsp" flush="false" />
  	
- 	
+ 	<!-- 어사이드 시작 -->
+ 	<aside></aside>
  	
  	<!-- 아티클 시작 -->
-	<div class="container-page">
 	<h1 class="title">마이페이지</h1>
-	<div class="container-aside-main">
-	<!-- 어사이드 시작 -->
-	<div class="container-aside">
- 	<jsp:include page="baby-asideBar.jsp" flush="false" />
- 	</div>
- 	<!-- 어사이드 끝 -->
- 	
     <div class="container-main">
         <h2 class="welcome-message">~님 안녕하세요!</h2>
         <!-- 보호자 로그인시 숨김 -->
@@ -67,7 +60,7 @@
             </div>
             <div class="settings location">
                 <h3 class="settings-title text-location">현재 동네 설정</h3>
-                <p class="text-location">서울시 ~~구</p>
+                <p class="text-location">~~구 ~~동</p>
             </div>
         </div>
         <!-- 아이 로그인시 숨김 -->
@@ -76,8 +69,6 @@
             <h3 class="text-authentication">인증 번호: ******</h3>
         </div>
         <!-- 아이 로그인시 숨김 해제-->
-    </div>
-    </div>
     </div>
     
     <!-- 푸터 시작 -->

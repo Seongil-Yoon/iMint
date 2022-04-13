@@ -34,9 +34,9 @@ function start() {
 				let html = "";
 				html += `
 					<li class="goods-detail">
-						<a href="goods/detail?goodsId=${result[i].goods.goodsId}">
+						<a href="">
 							<div class="goods-image">
-								<img src="${result[i].goodsImage.goodsImagesPath}">
+								<img src="/static/images/aaaa.jpg">
 							</div>
 							<div class="goods-info">
 								<div>
@@ -50,7 +50,7 @@ function start() {
 									<span class="goods-location">${result[i].goods.goodsLocation}</span>
 								</div>
 								<div>
-									<span class="goods-wishCount">관심 38</span>
+									<span class="goods-wishCount">관심 : 38</span>
 									<span class="goods-writeDate">${timeForToday(result[i].goods.goodsCreateDate)}</span>
 								</div>
 							</div>
@@ -89,14 +89,14 @@ function timeForToday(value) {
 
 	//시간은 1970-01-01을 기준으로 한 에포크시간.
 	const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
-	if (betweenTime < 1) return '방금전 작성';
+	if (betweenTime < 1) return '방금전';
 	if (betweenTime < 60) {
-		return `${betweenTime}분전 작성`;
+		return `${betweenTime}분전`;
 	}
 
 	const betweenTimeHour = Math.floor(betweenTime / 60);
 	if (betweenTimeHour < 24) {
-		return `${betweenTimeHour}시간전 작성`;
+		return `${betweenTimeHour}시간전`;
 	}
 
 	const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
@@ -107,5 +107,5 @@ function timeForToday(value) {
 		return `${betweenTimeDay}일전 작성`;
 	}
 
-	return `${Math.floor(betweenTimeDay / 365)}년전 작성`;
+	return `${Math.floor(betweenTimeDay / 365)}년전`;
 }
