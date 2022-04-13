@@ -19,22 +19,22 @@ public class MypageCotroller {
 	
 	@GetMapping("mypage/location")
 	public String indexLocation() {
-		return "../views/member/guard-mypage/guard-location";
+		return "member/guard-mypage/guard-location";
 	}
 	
 	@GetMapping("mypage/mylist")
 	public String indexMylist() {
-		return "../views/member/baby-mypage/baby-mylist";
+		return "member/baby-mypage/baby-mylist";
 	}
 	
 	@GetMapping("mypage/block")
 	public String indexBlocklist() {
-		return "../views/member/baby-mypage/baby-blocklist";
+		return "member/baby-mypage/baby-blocklist";
 	}
 	
 	@GetMapping("mypage/edit")
 	public String indexEdit() {
-		return "../views/member/baby-mypage/baby-edit";
+		return "member/baby-mypage/baby-edit";
 	}
 	
 	@GetMapping("mypage/withdraw")

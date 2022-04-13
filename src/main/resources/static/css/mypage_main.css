@@ -36,6 +36,7 @@
 
 /* 메인 컨테이너 */
 .container-main {
+	width: 700px;
     display: block;
     text-align: center;
     padding: 3rem;
