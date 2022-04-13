@@ -7,6 +7,7 @@
         VALUES
         (#{mbId}, #{mbProvider}, #{mbGuard}, #{mbNick}, #{mbEmail} ,now(),25, 0 , #{mbRole});
     </insert>
+    
     <select id="findByMbId" resultType="multi.fclass.iMint.security.model.User">
         SELECT * FROM imint.member WHERE mb_id = #{mbId}
     </select>
