@@ -2,10 +2,13 @@ package multi.fclass.iMint.mypage.dto;
 
 import java.time.LocalDateTime;
 
+import lombok.Getter;
+
 /**
  * @author GhostFairy
  *
  */
+@Getter
 public class MypageDTO {
 
 	private String category; // "buy" or "sell"
@@ -17,77 +20,5 @@ public class MypageDTO {
 	private String goodsImagesPath; // 대표 이미지 저장 경로
 	private String goodsImagesOriginname; // 대표 이미지 원래 이름
 	private LocalDateTime lastUpdateDate; // 마지막 업데이트 일시(관심등록일, 예약일, 거래완료일 등)
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public int getGoodsId() {
-		return goodsId;
-	}
-
-	public void setGoodsId(int goodsId) {
-		this.goodsId = goodsId;
-	}
-
-	public String getGoodsTitle() {
-		return goodsTitle;
-	}
-
-	public void setGoodsTitle(String goodsTitle) {
-		this.goodsTitle = goodsTitle;
-	}
-
-	public int getGoodsPrice() {
-		return goodsPrice;
-	}
-
-	public void setGoodsPrice(int goodsPrice) {
-		this.goodsPrice = goodsPrice;
-	}
-
-	public String getGoodsLocation() {
-		return goodsLocation;
-	}
-
-	public void setGoodsLocation(String goodsLocation) {
-		this.goodsLocation = goodsLocation;
-	}
-
-	public LocalDateTime getGoodsCreateDate() {
-		return goodsCreateDate;
-	}
-
-	public void setGoodsCreateDate(LocalDateTime goodsCreateDate) {
-		this.goodsCreateDate = goodsCreateDate;
-	}
-
-	public String getGoodsImagesPath() {
-		return goodsImagesPath;
-	}
-
-	public void setGoodsImagesPath(String goodsImagesPath) {
-		this.goodsImagesPath = goodsImagesPath;
-	}
-
-	public String getGoodsImagesOriginname() {
-		return goodsImagesOriginname;
-	}
-
-	public void setGoodsImagesOriginname(String goodsImagesOriginname) {
-		this.goodsImagesOriginname = goodsImagesOriginname;
-	}
-
-	public LocalDateTime getLastUpdateDate() {
-		return lastUpdateDate;
-	}
-
-	public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
-		this.lastUpdateDate = lastUpdateDate;
-	}
 
 }
