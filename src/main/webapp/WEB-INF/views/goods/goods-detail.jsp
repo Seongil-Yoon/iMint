@@ -17,9 +17,10 @@
 	<section class="container">
 		<h1>게시글 제목</h1>
 		<article>
-			<h2>판매중</h2>
+			<h3>판매중</h2>
 			<div class="goods-info">
-				<span></span>
+				<span>판매자 닉네임</span>
+				<img src="" alt="">
 			</div>
 		</article>
 		<article class="carousel"></article>

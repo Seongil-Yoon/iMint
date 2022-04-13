@@ -4,14 +4,104 @@
 
 <mapper namespace="multi.fclass.iMint.chat.dao.IChatDAO">
 
-	<!-- 1. 웹소켓으로 주고받은 채팅 내용 + 정보를 db저장  -->
-	<insert id="insertChatMessage" parameterType="chatMessageDTO">
-		insert into chat_message values(#{chatMessageId}, #{chatRoomId}, #{chatMessageCreateDate}, #{chatMessageContent})
+	<!-- 채팅내용 저장! -->
+	<!-- 1. 최초 채팅하기 버튼 클릭시 채팅방 정보 db에 저장 -->
+	<insert id="insertChatRoomInitInfo" parameterType="chatRoomDTO">
+		insert into
+			chat_room values(
+				#{chatRoomId}, 
+				#{goodsId},
+				#{mbId},
+				#{chatRoomCreateDate}, 
+				#{chatRoomIsDelete}
+				)
 	</insert>
-	
-	<!-- 2. 조건에 따른 채팅내용 + 정보불러오기 = 채팅목록에서 채팅방 각각을 눌렀을 때 불러오는 값 -->
-	<select id="bringChatMessage" resultType="chatMessageDTO">
-	 	select * from chat_message where chat_room_id = #{chatRoomId}
-	</select> 
+	<!-- 2. 채팅하고 뒤로가기버튼 눌렀을시 채팅메세지 정보 db에 저장 -->
+	<insert id="insertUpdateChatMessageInfo" parameterType="chatMessageDTO">
+		insert into
+			chat_message (
+				chat_message_id, 
+				chat_room_id,
+				chat_message_create_date,
+				chat_message_content
+				)
+			values (
+			#{chatMessageId}, 
+			#{chatRoomId}, 
+			#{chatMessageCreateDate},
+			#{chatMessageContent}
+			)
+			
+		on duplicate key update
+			chat_message_create_date = values(chat_message_create_date),
+			chat_message_content = values(chat_message_content)
+	</insert>
 
+	<!-- 채팅내용 불러오기 -->
+	<!-- 3. 조건에 따른 채팅내용 + 정보불러오기 = 채팅목록에서 채팅방 각각을 눌렀을 때 불러오는 메세지값 -->
+	<select id="bringChatMessage" resultType="chatMessageDTO" parameterType="int">
+		select
+			chat_message_create_date, 
+			chat_message_content
+		
+		from chat_message
+		
+		where chat_room_id = #{chatRoomId}
+	</select>
+	<!-- 4. 조건에 따른 채팅내용 + 정보 불러오기 = 채팅목록에서 채팅방 눌렀을 시 불러오는 다른 값들 -->
+	<!-- 상대방닉네임(구매자인경우- 판매자, 판매자인경우 - 구매자), 가격흥정여부 -->
+	<select id="bringChatRoomInfo" resultType="chatRoomInfoDTO" parameterType="int">
+		select 
+			cr.mb_id as 'buyerId', 
+			mbuy.mb_nick as 'buyerNick',
+			g.mb_id as 'sellerId',
+			msell.mb_nick as 'sellerNick',
+			g.goods_suggestible
+		
+		from chat_room as cr
+		
+			left outer join member as mbuy on cr.mb_id = mbuy.mb_id
+			left outer join goods as g on cr.goods_id = g.goods_id
+			left outer join member	as msell on g.mb_id = msell.mb_id
+		
+		where chat_room_id = #{chatRoomId}
+		<!-- 참조entity, chat_room, member, goods,  -->
+	</select>
+
+	<!-- 채팅목록 -->
+	<!-- 5. 채팅목록 보여주기 -->
+	<select id="bringChatList" resultType="chatListInfoDTO" parameterType="String">
+		select 
+			cr.chat_room_id, 
+			cr.mb_id as 'buyerId', 
+			mbuy.mb_nick as 'buyerNick',
+			mbuy.mb_thumbnail as 'buyerThumbnail',
+			g.mb_id as 'sellerId', 
+			msell.mb_nick as 'sellerNick', 
+			msell.mb_thumbnail as 'sellerThumbnail',
+			g.goods_title, 
+			g.goods_price,
+			gi.goods_images_path, 
+			cr.chat_room_isdelete,
+			cr.chat_room_create_date
+			
+		from chat_room as cr
+			
+			left outer join member as mbuy on cr.mb_id = mbuy.mb_id
+			left outer join goods as g on cr.goods_id = g.goods_id
+			left outer join member as msell on g.mb_id = msell.mb_id
+			left outer join (select * from goods_images where goods_images_thumbnail = true) as gi on g.goods_id = gi.goods_id
+       
+        where cr.mb_id = #{buyerId} or g.mb_id = #{sellerId}
+       	
+       	order by chat_room_create_date DESC
+	</select>
+	
+	<!-- 6. 채팅목록에서 다중선택으로 채팅방 삭제 -->
+	<delete id="deleteChatRoom">
+		delete from chat_room where chat_room_id in
+		<foreach collection="array" item="add" open="(" close=")" separator=",">
+			#{add}
+		</foreach>
+	</delete>
 </mapper>
