@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>@@아기당근@@ :: 마이페이지</title>
+	<title>아이민트 :: 마이페이지</title>
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 

@@ -31,7 +31,7 @@
 
 /* 메인 컨테이너 */
 .container-main {
-	width: 700px;
+	/* width: 700px; */
     display: block;
     text-align: center;
     padding: 3rem;
@@ -45,6 +45,6 @@
 
 /* 비밀번호 입력 칸 */
 input.buttons-text {
-    height: 30px;
+    height: 35px;
     width: 200px;
 }

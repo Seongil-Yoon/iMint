@@ -38,7 +38,7 @@
 					</form>
 					<form action="#">
 						<br>
-						<input type="submit" class="btn btn-primary" value="아이민트 탈퇴하기"/>
+						<input type="submit" class="btn btn-danger" value="아이민트 탈퇴하기"/>
 					</form>
 				</div>
 			</div>
