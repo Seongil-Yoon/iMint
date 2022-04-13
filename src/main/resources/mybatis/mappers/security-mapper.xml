@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="multi.fclass.iMint.security.dao.IUserDAO">
+
+    <insert id="save" parameterType="multi.fclass.iMint.security.model.User">
+        INSERT INTO imint.member(mb_id, mb_provider, mb_guard ,mb_nick,  mb_email, mb_join_date, mb_ratings_total,mb_isdelete, mb_role) 
+        VALUES
+        (#{mbId}, #{mbProvider}, #{mbGuard}, #{mbNick}, #{mbEmail} ,now(),25, 0 , #{mbRole});
+    </insert>
+    <select id="findByMbId" resultType="multi.fclass.iMint.security.model.User">
+        SELECT * FROM imint.member WHERE mb_id = #{mbId}
+    </select>
+    
+    <select id="findByMbEmail" resultType="multi.fclass.iMint.security.model.User">
+        SELECT * FROM imint.member WHERE mb_email = #{mbEmail}
+    </select>
+  
+</mapper>
