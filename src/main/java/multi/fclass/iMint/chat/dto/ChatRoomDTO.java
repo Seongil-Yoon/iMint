@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 @Component
 public class ChatRoomDTO {
 
@@ -28,7 +31,8 @@ public class ChatRoomDTO {
 
 	public ChatRoomDTO() {
 	}
-
+	
+//	@Builder
 	public ChatRoomDTO(Integer chatRoomId, Integer goodsId, String mbId, LocalDateTime chatRoomCreateDate,
 			Boolean chatRoomIsdelete, LocalDateTime chatRoomResrvDate) {
 		super();

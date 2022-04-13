@@ -1,5 +1,7 @@
 @charset "UTF-8";
 @import "goods-common-style.css";
+@import "carousel.css";
+
 
 .container {
     background-color: beige;
@@ -11,7 +13,56 @@ section.container span {
 
 }
 
-section.container .goods-info{
+section.container .goods-info {
     float: right;
-    width: 50%;
+    width: max-content;
+
+}
+
+.goods-info>div:nth-child(1) {
+    width: inherit;
+}
+
+.goods-info span {
+    margin-right: 10px;
+}
+
+.goods-info img.member-rating {
+    width: 25px;
+    height: 25px;
+}
+
+.goods-info>span.goods-date {
+    float: right;
+}
+
+/* @import "carousel.css"; */
+
+section.container .goods-content-wrap {}
+
+.goods-content-wrap>textarea {
+    width: 78.6%;
+    height: 300px;
+    border: 1px;
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: rgb(155, 155, 155);
+    margin-left: 10.7%;
+    margin-right: 10.7%;
+    padding: 1.5rem;
+    padding: 1.5rem;
+    resize: none;
+    font-size: x-large;
+    text-align: center;
+}
+
+article.goods-action{
+    position: fixed;
+    width: 500px;
+    padding: 1.5rem;
+    border: 1px;
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: rgb(155, 155, 155);
+    bottom: 0;
 }
