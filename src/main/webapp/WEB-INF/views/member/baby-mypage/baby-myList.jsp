@@ -6,18 +6,76 @@
 <head>
 	<meta charset="UTF-8">
 	<title>아이민트 :: 마이페이지</title>
+	<link rel="stylesheet" href="static/css/mypage_asidebar.css">
+	<link rel="stylesheet" href="static/css/mypage_mylist.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
 <body>
+	<!-- 헤더 시작 -->
  	<jsp:include page="../../include/header.jsp" flush="false" />
- 	<aside></aside>
-	
-	
-	
-	베이비 마이페이지 내 아이민트목록 입니다.
-	
-	
+ 	
+ 	<!-- 아티클 시작 -->
+	<div class="container-page">
+		<h1 class="title">마이페이지</h1>
+		<div class="container-aside-main">
+		<!-- 어사이드 시작 -->
+		<div class="container-aside">
+	 	<jsp:include page="baby-asideBar.jsp" flush="false" />
+	 	</div>
+	 	<!-- 어사이드 끝 -->
+	 	
+	 	<!-- 아티클 시작 -->
+	 	<div class="container-main">
+	 			<!-- 상단 탭 -->
+	        <section class="tabs">
+	            <div class="container">
+	                <div id="tab-1" class="tab-item selected">
+	                    <p class="hide-sm">관심/구매예약</p>
+	                </div>
+	                <div id="tab-2" class="tab-item">
+	                    <p class="hide-sm">판매목록</p>
+	                </div>
+	                <div id="tab-3" class="tab-item">
+	                    <p class="hide-sm">거래완료목록</p>
+	                </div>
+	                <div id="tab-4" class="tab-item">
+	                    <p class="hide-sm">채팅목록</p>
+	                </div>
+	            </div>
+	        </section>
+	        <!-- 탭별 내용 -->
+	        <section class="tab-content">
+	            <div class="container">
+	                <!-- 관심/구매예약 내용 -->
+	                <div id="tab-1-content" class="tab-content-item show">
+	                    <div class="tab-1-content-inner">
+	                        <p>관심/구매예약 내용</p>
+	                    </div>
+	                </div>
+	                <!-- 판매목록 내용 -->
+	                <div id="tab-2-content" class="tab-content-item">
+	                    <div class="tab-2-content-inner">
+	                        <p>판매목록 내용</p>
+	                    </div>
+	                </div>
+	                <!-- 거래완료목록 내용 -->
+	                <div id="tab-3-content" class="tab-content-item">
+	                    <div class="tab-3-content-inner">
+	                        <p>거래완료목록 내용</p>
+	                    </div>
+	                </div>
+	                <!-- 채팅목록 내용 -->
+	                <div id="tab-4-content" class="tab-content-item">
+	                    <div class="tab-4-content-inner">
+	                        <p>채팅목록 내용</p>
+	                    </div>
+	                </div>
+	            </div>
+	        </section>
+	    	</div>
+	    </div>
+    </div>
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/baby-main.js"></script>
