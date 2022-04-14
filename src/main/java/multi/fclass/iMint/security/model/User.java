@@ -2,10 +2,13 @@ package multi.fclass.iMint.security.model;
 
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Component
 @Data
 @NoArgsConstructor // 기본 생성자 
 public class User {
@@ -86,16 +89,29 @@ public class User {
         this.mbRole = mbRole;
     }
 	
+	// 회원가입 3
+//	@Builder
+//    public User(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
+//		this.mbId = mbId;
+//		this.mbNick = mbNick;
+//		this.mbRole = mbRole;
+//		this.mbEmail = mbEmail;
+//        this.mbInterest = mbInterest;
+//    }
+	
+	
 	// 수정 가능한 고객 정보 
-    public User update(String mbGuard, String mbInterest, String mbLocation, Integer mbRatingsTotal, String mbPin, String mbThumbnail,
-			Boolean mbIsdelete) {
+    public User update(String mbGuard, String mbInterest, String mbLocation, String mbNick, Integer mbRatingsTotal, String mbPin, String mbThumbnail,
+			Boolean mbIsdelete, Role mbRole) {
         this.mbGuard = mbGuard;
         this.mbInterest = mbInterest;
         this.mbLocation = mbLocation;
+		this.mbNick = mbNick;
         this.mbRatingsTotal = mbRatingsTotal;
         this.mbPin = mbPin;
         this.mbThumbnail = mbThumbnail;
         this.mbIsdelete = mbIsdelete;
+        this.mbRole = mbRole;
         return this;
     }
 	

@@ -67,6 +67,7 @@ public class SessionUser implements Serializable {
 		this.mbThumbnail = user.getMbThumbnail();
 		this.mbIsdelete = user.getMbIsdelete();
 		this.mbRole = user.getMbRole(); // 제일 중요한 정보 
+		
 
 	}
     
