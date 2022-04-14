@@ -4,97 +4,108 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Component
 public class ChatRoomDTO {
 
+	// chatroom 테이블
 	// 채팅방ID
-	private Integer chatRoomId;
+	private Integer id; 
 
 	// 상품ID
-	private Integer goodsId;
+	private Integer goodsId; 
 
-	// 구매희망회원ID
-	private String mbId;
+	// 판매자ID
+	private String sellerId;
 
-	// 채팅시작시간
-	private LocalDateTime chatRoomCreateDate;
+	// 판매자 닉네임
+	private String sellerNick;
+
+	// 구매희망자 ID
+	private String buyerId;
+
+	// 구매희망자 닉네임
+	private String buyerNick;
+
+	// 채팅대화저장파일경로명
+	private String fileName;
 
 	// 채팅방삭제여부
-	private Boolean chatRoomIsdelete;
+	private String isdelete;
+
+	// 예약시간 
+	private LocalDateTime resrvDate;
+
+	// 채팅시작시간
+	private LocalDateTime createdDate;
+
+	// Not in chatroom DB
+	// goods 테이블에서 받아온 값 
+	//가격흥정여부
+	private Boolean goodsSuggestible;
 	
-	// 채팅방예약시간
-	private LocalDateTime chatRoomResrvDate;
+	// 상품명
+	private String goodsTitle; 
 
+	//채팅내용
+	private String content;
+	
+	// 채팅메세지 보낸시간
+	private String sendTime;
+	
+	// 채팅보낸 사람
+	private String senderName;
 
-	public ChatRoomDTO() {
-	}
-
-	public ChatRoomDTO(Integer chatRoomId, Integer goodsId, String mbId, LocalDateTime chatRoomCreateDate,
-			Boolean chatRoomIsdelete, LocalDateTime chatRoomResrvDate) {
+	// in chatroom DB
+	public ChatRoomDTO(Integer id, Integer goodsId, String sellerId, String sellerNick, String buyerId,
+			String buyerNick, String fileName, String isdelete, LocalDateTime resrvDate, LocalDateTime createdDate) {
 		super();
-		this.chatRoomId = chatRoomId;
+		this.id = id;
 		this.goodsId = goodsId;
-		this.mbId = mbId;
-		this.chatRoomCreateDate = chatRoomCreateDate;
-		this.chatRoomIsdelete = chatRoomIsdelete;
-		this.chatRoomResrvDate = chatRoomResrvDate;
+		this.sellerId = sellerId;
+		this.sellerNick = sellerNick;
+		this.buyerId = buyerId;
+		this.buyerNick = buyerNick;
+		this.fileName = fileName;
+		this.isdelete = isdelete;
+		this.resrvDate = resrvDate;
+		this.createdDate = createdDate;
+
+	}
+	// Not in chatroom DB
+	public ChatRoomDTO(String content, String sendTime, String senderName) {
+
+		this.content = content;
+		this.sendTime = sendTime;
+		this.senderName = senderName;
 	}
 
-	public Integer getChatRoomId() {
-		return chatRoomId;
-	}
-
-	public void setChatRoomId(Integer chatRoomId) {
-		this.chatRoomId = chatRoomId;
-	}
-
-	public Integer getGoodsId() {
-		return goodsId;
-	}
-
-	public void setGoodsId(Integer goodsId) {
+	// allArgsConstructor
+	public ChatRoomDTO(Integer id, Integer goodsId, String sellerId, String sellerNick, String buyerId,
+			String buyerNick, String fileName, String isdelete, LocalDateTime resrvDate, LocalDateTime createdDate,
+			Boolean goodsSuggestible, String goodsTitle, String content, String sendTime, String senderName) {
+		super();
+		this.id = id;
 		this.goodsId = goodsId;
+		this.sellerId = sellerId;
+		this.sellerNick = sellerNick;
+		this.buyerId = buyerId;
+		this.buyerNick = buyerNick;
+		this.fileName = fileName;
+		this.isdelete = isdelete;
+		this.resrvDate = resrvDate;
+		this.createdDate = createdDate;
+		this.goodsSuggestible = goodsSuggestible;
+		this.goodsTitle = goodsTitle;
+		this.content = content;
+		this.sendTime = sendTime;
+		this.senderName = senderName;
 	}
-
-	public String getMbId() {
-		return mbId;
-	}
-
-	public void setMbId(String mbId) {
-		this.mbId = mbId;
-	}
-
-	public LocalDateTime getChatRoomCreateDate() {
-		return chatRoomCreateDate;
-	}
-
-	public void setChatRoomCreateDate(LocalDateTime chatRoomCreateDate) {
-		this.chatRoomCreateDate = chatRoomCreateDate;
-	}
-
-	public Boolean getChatRoomIsdelete() {
-		return chatRoomIsdelete;
-	}
-
-	public void setChatRoomIsdelete(Boolean chatRoomIsdelete) {
-		this.chatRoomIsdelete = chatRoomIsdelete;
-	}
-
-	public LocalDateTime getChatRoomResrvDate() {
-		return chatRoomResrvDate;
-	}
-
-	public void setChatRoomIsreserved(LocalDateTime chatRoomResrvDate) {
-		this.chatRoomResrvDate = chatRoomResrvDate;
-	}
-
-	@Override
-	public String toString() {
-		return "ChatRoomDTO [chatRoomId=" + chatRoomId + ", goodsId=" + goodsId + ", mbId=" + mbId
-				+ ", chatRoomCreateDate=" + chatRoomCreateDate + ", chatRoomIsdelete=" + chatRoomIsdelete
-				+ ", chatRoomIsreserved=" + chatRoomResrvDate + "]";
-	}
-
-
+	
+	
 
 }
