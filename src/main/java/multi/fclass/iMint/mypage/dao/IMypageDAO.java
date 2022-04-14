@@ -14,10 +14,10 @@ import multi.fclass.iMint.mypage.dto.MypageDTO;
 @Mapper
 public interface IMypageDAO {
 
-	public List<MypageDTO> selectWishList(Map<String, Object> params);
+	public List<MypageDTO> getWishList(Map<String, Object> params);
 
-	public List<MypageDTO> selectSellingList(Map<String, Object> params);
+	public List<MypageDTO> getSellingList(Map<String, Object> params);
 
-	public List<MypageDTO> selectCompleteList(Map<String, Object> params);
+	public List<MypageDTO> getCompleteList(Map<String, Object> params);
 
 }
