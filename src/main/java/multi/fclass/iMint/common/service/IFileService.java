@@ -6,5 +6,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface IFileService {
 	public String mkDir(List<String> paths);
-	public String uploadGoodsImageFiles(List<String> paths, int goodsId,List<MultipartFile> files);
+	public int uploadGoodsImageFiles(List<String> paths, int goodsId, List<MultipartFile> files);
 }

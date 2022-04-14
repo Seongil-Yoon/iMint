@@ -1,6 +1,7 @@
 package multi.fclass.iMint.common.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,8 @@ import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 
 @Service
-public class UtilService implements IUtilService {
-	
+public class UtilServiceImpl implements IUtilService {
+
 	// 윈도우에서는 \\, 리눅스서버에서는/
 	@Value("${route}")
 	String route;
@@ -24,16 +25,20 @@ public class UtilService implements IUtilService {
 	@Value("${memberImagePath}")
 	String memberImagePath;
 
+	// 경로배열 생성
 	@Override
-	public List<String> createGoodsPaths(LocalDateTime createTime) {
+	public List<String> createGoodsPaths(String createTime) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime dateTime = LocalDateTime.parse(createTime, formatter);
+		
 		List<String> path = new ArrayList<String>();
 		path.add(directory);
 		path.add(goodsImagePath);
-        String year = String.valueOf(createTime.getYear());
-        path.add(year);//년
-        String month = String.valueOf(createTime.getMonth());
-        path.add(month);//월
-		
+		String year = String.valueOf(dateTime.getYear());
+		path.add(year);// 년
+		String month = String.valueOf(dateTime.getMonth());
+		path.add(month);// 월
+
 		return path;
 	}
 
@@ -46,4 +51,14 @@ public class UtilService implements IUtilService {
 		}
 		return path;
 	}
+
+	@Override
+	public String completePath(List<String> paths, int idx) {
+		String path = "";
+		for (int i = idx; i < paths.size(); i++) {
+			path += paths.get(i) + route;
+		}
+		return path;
+	}
+
 }
