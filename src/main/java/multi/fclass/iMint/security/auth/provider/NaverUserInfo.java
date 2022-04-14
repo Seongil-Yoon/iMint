@@ -31,4 +31,11 @@ public class NaverUserInfo implements OAuth2UserInfo{
 		return (String) attributes.get("id");
 	}
 
+	public String getAgeRange() {
+		String result = (String) attributes.get("age");
+		System.out.println("연령대: " + result);
+		return result;
+
+	}
+
 }

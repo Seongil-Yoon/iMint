@@ -36,5 +36,12 @@ public class KakaoUserInfo implements OAuth2UserInfo{
 	public String getMbId() {
 		return String.valueOf(attributes.get("id"));
 	}
+//	
+	@Override
+	public String getAgeRange() {
+		String result = (String) attributesAccount.get("age_range");
+		System.out.println("연령대: " + result);
+		return result;  
+	}
 
 }
