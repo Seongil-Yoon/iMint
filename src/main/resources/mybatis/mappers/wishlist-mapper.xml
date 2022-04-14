@@ -3,5 +3,55 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.wishlist.dao.IWishlistDAO">
-
+	<!-- 해당 상품 관심수 조회 -->
+	<select id="countWishlist" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			`imint`.`wishlist`
+		WHERE
+			goods_id = #{goodsId}
+			AND wishlist_isdelete = FALSE
+	</select>
+	
+	<!-- 해당 상품 관심등록여부 조회 -->
+	<select id="checkMyWishlist" parameterType="Map" resultType="WishlistDTO">
+		SELECT
+			wishlist_id,
+			wishlist_isdelete
+		FROM
+			`imint`.`wishlist`
+		WHERE
+			mb_id = #{myId}
+			AND goods_id = #{goodsId}
+	</select>
+	
+	<!-- 해당 상품 관심등록: DB에 없을 때 -->
+	<insert id="insertWishlist" parameterType="Map">
+		INSERT INTO
+			`imint`.`wishlist`(mb_id, goods_id)
+		VALUES
+			(#{myId}, #{goodsId})
+	</insert>
+	
+	<!-- 해당 상품 관심등록: DB에 있을 때 -->
+	<update id="updateWishlist">
+		UPDATE
+			`imint`.`wishlist`
+		SET
+			wishlist_create_date = CURRENT_TIMESTAMP,
+			wishlist_isdelete = FALSE
+		WHERE
+			wishlist_id = #{wishlistId}
+	</update>
+	
+	<!-- 해당 상품 관심해제 -->
+	<update id="removeWishlist">
+		UPDATE
+			`imint`.`wishlist`
+		SET
+			wishlist_isdelete = TRUE
+		WHERE
+			wishlist_id = #{wishlistId}
+	</update>
 </mapper>

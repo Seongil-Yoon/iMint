@@ -21,5 +21,6 @@
 		<typeAlias type="multi.fclass.iMint.rating.dto.RatingDTO" alias="ratingDTO" />
 		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionDTO" alias="TransactionDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageDTO" alias="MypageDTO" />
+		<typeAlias type="multi.fclass.iMint.wishlist.dto.WishlistDTO" alias="WishlistDTO" />
 	</typeAliases>
 </configuration>
