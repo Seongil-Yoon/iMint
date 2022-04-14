@@ -2,12 +2,16 @@ package multi.fclass.iMint.goods.dto;
 
 import org.springframework.stereotype.Component;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
-@NoArgsConstructor
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Component
 public class GoodsImagesDTO {
 
@@ -15,6 +19,7 @@ public class GoodsImagesDTO {
 	private Integer goodsImagesId;
 
 	// 상품ID
+	@NonNull
 	private Integer goodsId;
 
 	// 이미지파일경로
@@ -28,15 +33,5 @@ public class GoodsImagesDTO {
 
 	// 이미지 삭제여부
 	private Boolean goodsImagesIsdelete;
-
-	public GoodsImagesDTO(Integer goodsImagesId, Integer goodsId, String goodsImagesPath, Boolean goodsImagesThumbnail,
-			String goodsImagesOriginname, Boolean goodsImagesIsdelete) {
-		this.goodsImagesId = goodsImagesId;
-		this.goodsId = goodsId;
-		this.goodsImagesPath = goodsImagesPath;
-		this.goodsImagesThumbnail = goodsImagesThumbnail;
-		this.goodsImagesOriginname = goodsImagesOriginname;
-		this.goodsImagesIsdelete = goodsImagesIsdelete;
-	}
 
 }

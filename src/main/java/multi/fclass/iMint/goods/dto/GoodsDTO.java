@@ -4,12 +4,16 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Component
 public class GoodsDTO {
 
@@ -17,18 +21,22 @@ public class GoodsDTO {
 	private Integer goodsId;
 
 	// 판매자ID
+	@NonNull
 	private String sellerId;
 
 	// 닉네임
+	@NonNull
 	private String sellerNick;
 
 	// 글제목
+	@NonNull
 	private String goodsTitle;
 
 	// 글내용
 	private String goodsContent;
 
 	// 가격
+	@NonNull
 	private Long goodsPrice;
 
 	// 카테고리
@@ -48,23 +56,5 @@ public class GoodsDTO {
 
 	// 상품 삭제 여부
 	private Boolean goodsIsdelete;
-
-	@Builder
-	public GoodsDTO(Integer goodsId, String sellerId, String sellerNick, String goodsTitle, String goodsContent,
-			Long goodsPrice, String goodsCategory, Boolean goodsSuggestible, String goodsLocation,
-			LocalDateTime goodsCreateDate, String goodsStatus, Boolean goodsIsdelete) {
-		this.goodsId = goodsId;
-		this.sellerId = sellerId;
-		this.sellerNick = sellerNick;
-		this.goodsTitle = goodsTitle;
-		this.goodsContent = goodsContent;
-		this.goodsPrice = goodsPrice;
-		this.goodsCategory = goodsCategory;
-		this.goodsSuggestible = goodsSuggestible;
-		this.goodsLocation = goodsLocation;
-		this.goodsCreateDate = goodsCreateDate;
-		this.goodsStatus = goodsStatus;
-		this.goodsIsdelete = goodsIsdelete;
-	}
 
 }

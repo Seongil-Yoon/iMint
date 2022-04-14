@@ -1,5 +1,6 @@
 package multi.fclass.iMint.goods.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -21,8 +22,9 @@ public interface IGoodsDAO {
 	// 상품상세
 	public GoodsDTO goods(@Param("goods_id") int goodsId);
 	public List<GoodsImagesDTO> goodsImageList(@Param("goods_id") int goodsId);
-
+	
 	// 상품등록
 	public int goodsInsert(GoodsDTO goodsDTO);
 	public int goodsImagesInsert(GoodsImagesDTO goodsImagesDTO);
+	public String goodsDate(@Param("goods_id") int goodsId);
 }

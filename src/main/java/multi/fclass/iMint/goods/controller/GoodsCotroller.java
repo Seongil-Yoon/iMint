@@ -45,8 +45,15 @@ public class GoodsCotroller {
 	
 	@ResponseBody
 	@PostMapping("goods/write")
-	public GoodsDTO goodsWrite(@RequestPart("GoodsDTO") GoodsDTO goodsDto,  
+	public GoodsDTO goodsWrite(@RequestPart("GoodsDTO") GoodsDTO goodsDTO,  
 			@RequestPart("files") List<MultipartFile> files) {
-		return null;
+		
+		int goodsId = goodsSevice.goodsWrite(goodsDTO, files);
+		System.out.println("작성된 상품글ID : " + goodsId);
+		if(goodsId != -1) {
+			goodsDTO.setGoodsId(goodsId);
+		}
+		// 브라우저단에서 location.href로 상품상세
+		return goodsDTO;
 	}
 }

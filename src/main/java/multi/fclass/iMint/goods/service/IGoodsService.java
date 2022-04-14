@@ -12,5 +12,5 @@ public interface IGoodsService {
 
 	public List<GoodsImagesDTO> goodsImageList(int goodsId);
 
-	public String goodsWrite(GoodsDTO goodsDto, List<MultipartFile> files);
+	public int goodsWrite(GoodsDTO goodsDto, List<MultipartFile> files);
 }
