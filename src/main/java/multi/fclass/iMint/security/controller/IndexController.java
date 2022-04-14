@@ -1,56 +1,133 @@
 package multi.fclass.iMint.security.controller;
 
+import java.util.Collection;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
 import multi.fclass.iMint.security.dao.IUserDAO;
+import multi.fclass.iMint.security.model.Role;
 import multi.fclass.iMint.security.model.User;
 
-
+@Slf4j // 로그
 @Controller // 뷰 반환
 public class IndexController {
 
 	@Autowired
 	private IUserDAO userdao;
 	
-	// 디폴트 설정으로는 스프링 시큐리티가 가로챈다.(설정을 추후 바꿔주어야 한다) -> SecudrityConfig 파일 생성 후 스프링시큐리티 디폴트 login페이지 작동안함 
+	@Autowired
+	private User user;
+	
+	// 로그인 
 	@GetMapping({"", "/"})
 	public String loginForm() {
 		return "member/login";
 	}
+	
+	// 가입 완료시키기
+	@RequestMapping(value = "/err/denied-page") // 안온다 
+	public ModelAndView accessDenied(Authentication auth, HttpServletRequest req){
 		
+		ModelAndView mv = new ModelAndView();
+		
+		AccessDeniedException ade = (AccessDeniedException) req.getAttribute(WebAttributes.ACCESS_DENIED_403);
+//        log.info("---------- Log 테스트 ---------");
+//		log.info("auth : {}", auth.getPrincipal()); // 로그 기록
+//		log.info("exception : {}", ade); // 로그 기록
+        
+		DefaultOAuth2User authorization = (DefaultOAuth2User) auth.getPrincipal();
+        System.out.println(authorization);
+
+		Collection<? extends GrantedAuthority> auth2 = authorization.getAuthorities();
+        System.out.println(auth2.toString());
+		
+		mv.addObject("auth", auth2);
+		mv.addObject("errMsg", ade);
+		
+		mv.setViewName("err/deniedpage");
+		
+		return mv;
+	}
+
+	// 회원가입은 총 4단계 
+	// 회원가입 2(보호자, 아이 모두): sns 가입(회원가입 1)후 register 페이지로 이동
 	@GetMapping("/register")
-	public String registerForm() {
-		return "member/register";
+	public ModelAndView registersns(User user) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user", user);
+		mv.setViewName("member/register");
+		return mv;
+	}
+	
+	// 회원가입 3(보호자): 내 동네 설정 -> 보호자, 관리자 권한 부여
+	@PreAuthorize("hasRole('ROLE_uncerti_GAURD') or hasRole('ROLE_GAURD') or hasRole('ROLE_ADMIN')")
+	@RequestMapping("/mypage/location")		
+	public ModelAndView gaurdlocation(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
+		ModelAndView mv = new ModelAndView();
+		User user = userdao.findByMbId(mbId);
+		user.setMbId(mbId);
+		user.setMbNick(mbNick);
+		user.setMbRole(mbRole);
+		user.setMbEmail(mbEmail);
+		user.setMbInterest(mbInterest);
+		
+		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
+		mv.setViewName("member/guard-mypage/guard-location");
+		return mv;
+	}
+	
+	// 회원가입 3(아이): 보호자 연결 설정 -> 아이, 관리자 권한 부여
+	@PreAuthorize("hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')")
+	@RequestMapping("/register/connect")		
+	public ModelAndView babyconnect(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
+		ModelAndView mv = new ModelAndView();
+		User user = userdao.findByMbId(mbId);
+		user.setMbId(mbId);
+		user.setMbNick(mbNick);
+		user.setMbRole(mbRole);
+		user.setMbEmail(mbEmail);
+		user.setMbInterest(mbInterest);
+		
+		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
+		mv.setViewName("member/register_connect");
+		return mv;
 	}
 
 	
-//	@PostMapping("/register")
-//	public String register(User user) {
-//		userdao.save(user);
-//		return "member/register";
-//	}
-//
-//	@PostMapping("/join")
-//	public String join(User user) {
-//		System.out.println(user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
-//		user.setRole("ROLE_USER");
-//		String rawPassword = user.getPassword();
-//		String encPassword = bCryptPasswordEncoder.encode(rawPassword); // bCryptPasswordEncoder: 비번 암호화 
-//		user.setPassword(encPassword); // 인코딩된 password를 넣고 user정보를 save
-//		userRepository.save(user); // 시큐리티로 로그인 불가: 패스워드가 암호화가 안되어서  -> 	BCryptPasswordEncoder로 해결 
-//		return "redirect:/loginform";
-//	}
+	// 회원가입 4(최종. 보호자, 아이 모두)
+	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
+	@PostMapping("/register")
+	public String registerdetails(Role mbRole, String mbId, String mbNick, String mbEmail, String mbInterest, String mbLocation, String mbGuard) {
+			
+	if (mbRole == Role.UN_GAURD) { // 보호자 
+		mbGuard = null;
+		mbRole = Role.GAURD;
+	}	
+	else if (mbRole == Role.UN_CHILD) { // 아이 
+		mbLocation = null;
+		mbRole = Role.CHILD;		
+	}	
+
+	// 유저 싱글톤? 나중에 고려
+	userdao.savedetails(mbId,mbNick,mbRole,mbEmail,mbInterest,mbLocation,mbGuard); // 아이: mbLocation이 null, 보호자: mbGuard이 null
+
+	return "회원가입 축하 페이지";
+	}
 	
 	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true
 	// @Secured: 권한 
@@ -69,20 +146,11 @@ public class IndexController {
 //		return "데이터";
 //	}
 //	
-//	// 일반로그인, OAuth로그인 모두 들어갈 수 있도록 PrincipalDetails 로 묶음.(분기할 필요x) 
-//	@GetMapping("/user")
-//	public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-//		System.out.println("principalDetails: " + principalDetails.getUser());
-//		return "user";
-//	}
+
 	
 //	@GetMapping("/admin")
 //	public @ResponseBody String admin() {
 //		return "admin";
 //	}
-//	
-//	@GetMapping("/manager")
-//	public @ResponseBody String manager() {
-//		return "manager";
-//	}
+
 }

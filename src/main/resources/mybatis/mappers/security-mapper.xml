@@ -2,11 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="multi.fclass.iMint.security.dao.IUserDAO">
 
-    <insert id="save" parameterType="multi.fclass.iMint.security.model.User">
+    <insert id="savesns" parameterType="multi.fclass.iMint.security.model.User">
         INSERT INTO imint.member(mb_id, mb_provider, mb_guard ,mb_nick,  mb_email, mb_join_date, mb_ratings_total,mb_isdelete, mb_role) 
         VALUES
         (#{mbId}, #{mbProvider}, #{mbGuard}, #{mbNick}, #{mbEmail} ,now(),25, 0 , #{mbRole});
     </insert>
+
+    <update id="savedetails" parameterType="multi.fclass.iMint.security.model.User">
+        UPDATE imint.member 
+        SET mb_nick = #{mbNick}, mb_role = #{mbRole}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}, mb_location = #{mbLocation}, mb_guard = #{mbGuard}
+        WHERE (mb_id = #{mbId});
+    </update>
     
     <select id="findByMbId" resultType="multi.fclass.iMint.security.model.User">
         SELECT * FROM imint.member WHERE mb_id = #{mbId}

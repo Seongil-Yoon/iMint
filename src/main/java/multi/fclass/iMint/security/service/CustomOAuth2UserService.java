@@ -24,7 +24,7 @@ import multi.fclass.iMint.security.model.User;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> { //  extends HttpServlet: include용 
     private final IUserDAO userDAO;
     private final HttpSession httpSession;
-// 컨트롤러가 LOAduser 
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
@@ -59,7 +59,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // OAuthAttributes: attribute를 담을 클래스 (개발자가 생성)
         OAuthAttributes attributes = OAuthAttributes
                 .of(mbProvider, userNameAttributeName, oAuth2User.getAttributes()); // 로그인, 로그인한 유저 정보 받아오기 
-        User user = saveOrUpdate(attributes); // 컨트롤러에서 호출
+        User user = SaveOrUpdate(attributes);
         
         // SessioUser: 세션에 사용자 정보를 저장하기 위한 DTO 클래스 (개발자가 생성)
         httpSession.setAttribute("user", new SessionUser(user)); // 세션 부분도 확인 필요 
@@ -69,11 +69,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getNameAttributeKey()
         );
     }
-    // 컨트롤러가 LOaduser만 호출 -> 비동기 요청으로 Saveorupdate 요청 (컨트롤러가 register페이지로 넘겨야)
-    // 컨트롤러에세 선택(페이지 이동과 관련된 전체 ) :1. include 2. 비동기 
     
     // 유저가 있는지 확인(email로) 
-    private User saveOrUpdate(OAuthAttributes attributes) {
+    private User SaveOrUpdate(OAuthAttributes attributes) {
         User user;
         if(userDAO.findByMbEmail(attributes.getMbEmail()) != null){
             System.out.println("이미 가입되어 있는 회원입니다.");
@@ -82,8 +80,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         else {
             user = attributes.toEntity();
 
-            // 가입 전에 이제 register 폼으로 넘기기 (넘겨서 나이 받아와야 한다)
-            userDAO.save(user);
+            userDAO.savesns(user);
             System.out.println("최초 로그인으로 자동 가입됩니다.");
             user = userDAO.findByMbEmail(attributes.getMbEmail());
         }
