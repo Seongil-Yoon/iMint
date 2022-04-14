@@ -4,7 +4,9 @@ import org.springframework.stereotype.Component;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
 @Component
 public class GoodsImagesDTO {
@@ -27,10 +29,6 @@ public class GoodsImagesDTO {
 	// 이미지 삭제여부
 	private Boolean goodsImagesIsdelete;
 
-	public GoodsImagesDTO() {
-	}
-
-	@Builder
 	public GoodsImagesDTO(Integer goodsImagesId, Integer goodsId, String goodsImagesPath, Boolean goodsImagesThumbnail,
 			String goodsImagesOriginname, Boolean goodsImagesIsdelete) {
 		this.goodsImagesId = goodsImagesId;
