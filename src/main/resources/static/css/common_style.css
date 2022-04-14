@@ -1,1 +1,27 @@
 @charset "UTF-8";
+
+.btn-primary {
+	background-color: #CDF0EA;
+    color: #3387a8;
+    border: none;
+}
+
+.btn-primary:hover {
+	background-color: #CDF0EA;
+    color: #3387a8;
+    border: none;
+}
+
+.btn-primary:active {
+	background-color: #CDF0EA;
+    color: #3387a8;
+    border: none;
+    outline: none;
+}
+
+.btn-primary:focus {
+	background-color: #CDF0EA;
+    color: #3387a8;
+    border: none;
+    outline: none;
+}
