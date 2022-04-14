@@ -1,6 +1,5 @@
 package multi.fclass.iMint.member.dto;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
@@ -14,6 +13,9 @@ public class MemberDTO {
 	// 회원ID
 	private String mbId;
 
+	// 사이트SNS
+	private String mbProvider;
+	
 	// 보호자
 	private String mbGuard;
 
@@ -46,12 +48,13 @@ public class MemberDTO {
 
 	public MemberDTO() {
 	}
-
-	public MemberDTO(Integer mbNo, String mbId, String mbGuard, String mbNick, String mbEmail, LocalDateTime mbJoinDate,
+	
+	public MemberDTO(Integer mbNo, String mbId, String mbProvider ,String mbGuard, String mbNick, String mbEmail, LocalDateTime mbJoinDate,
 			String mbInterest, String mbLocation, Integer mbRatingsTotal, String mbPin, String mbThumbnail,
 			Boolean mbIsdelete) {
 		this.mbNo = mbNo;
 		this.mbId = mbId;
+		this.mbProvider = mbProvider;
 		this.mbGuard = mbGuard;
 		this.mbNick = mbNick;
 		this.mbEmail = mbEmail;
@@ -61,108 +64,12 @@ public class MemberDTO {
 		this.mbRatingsTotal = mbRatingsTotal;
 		this.mbPin = mbPin;
 		this.mbThumbnail = mbThumbnail;
-		this.mbIsdelete = mbIsdelete;
-	}
-
-	public Integer getMbNo() {
-		return mbNo;
-	}
-
-	public void setMbNo(Integer mbNo) {
-		this.mbNo = mbNo;
-	}
-
-	public String getMbId() {
-		return mbId;
-	}
-
-	public void setMbId(String mbId) {
-		this.mbId = mbId;
-	}
-
-	public String getMbGuard() {
-		return mbGuard;
-	}
-
-	public void setMbGuard(String mbGuard) {
-		this.mbGuard = mbGuard;
-	}
-
-	public String getMbNick() {
-		return mbNick;
-	}
-
-	public void setMbNick(String mbNick) {
-		this.mbNick = mbNick;
-	}
-
-	public String getMbEmail() {
-		return mbEmail;
-	}
-
-	public void setMbEmail(String mbEmail) {
-		this.mbEmail = mbEmail;
-	}
-
-	public LocalDateTime getMbJoinDate() {
-		return mbJoinDate;
-	}
-
-	public void setMbJoinDate(LocalDateTime mbJoinDate) {
-		this.mbJoinDate = mbJoinDate;
-	}
-
-	public String getMbInterest() {
-		return mbInterest;
-	}
-
-	public void setMbInterest(String mbInterest) {
-		this.mbInterest = mbInterest;
-	}
-
-	public String getMbLocation() {
-		return mbLocation;
-	}
-
-	public void setMbLocation(String mbLocation) {
-		this.mbLocation = mbLocation;
-	}
-
-	public Integer getMbRatingsTotal() {
-		return mbRatingsTotal;
-	}
-
-	public void setMbRatingsTotal(Integer mbRatingsTotal) {
-		this.mbRatingsTotal = mbRatingsTotal;
-	}
-
-	public String getMbPin() {
-		return mbPin;
-	}
-
-	public void setMbPin(String mbPin) {
-		this.mbPin = mbPin;
-	}
-
-	public String getMbThumbnail() {
-		return mbThumbnail;
-	}
-
-	public void setMbThumbnail(String mbThumbnail) {
-		this.mbThumbnail = mbThumbnail;
-	}
-
-	public Boolean getMbIsdelete() {
-		return mbIsdelete;
-	}
-
-	public void setMbIsdelete(Boolean mbIsdelete) {
 		this.mbIsdelete = mbIsdelete;
 	}
 
 	@Override
 	public String toString() {
-		return "Member [mbNo=" + mbNo + ", mbId=" + mbId + ", mbGuard=" + mbGuard + ", mbNick=" + mbNick + ", mbEmail="
+		return "Member [mbNo=" + mbNo + ", mbId=" + mbId + ", mbProvider=" + mbProvider + ", mbGuard=" + mbGuard + ", mbNick=" + mbNick + ", mbEmail="
 				+ mbEmail + ", mbJoinDate=" + mbJoinDate + ", mbInterest=" + mbInterest + ", mbLocation=" + mbLocation
 				+ ", mbRatingsTotal=" + mbRatingsTotal + ", mbPin=" + mbPin + ", mbThumbnail=" + mbThumbnail
 				+ ", mbIsdelete=" + mbIsdelete + "]";

@@ -50,7 +50,7 @@ function start() {
 									<span class="goods-location">${result[i].goods.goodsLocation}</span>
 								</div>
 								<div>
-									<span class="goods-wishCount">관심 38</span>
+									<span class="goods-wishCount">🤍관심 38</span>
 									<span class="goods-writeDate">${timeForToday(result[i].goods.goodsCreateDate)}</span>
 								</div>
 							</div>
