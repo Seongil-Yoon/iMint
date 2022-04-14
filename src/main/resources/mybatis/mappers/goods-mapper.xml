@@ -13,7 +13,7 @@
 		LIMIT 18;
 	</select>
 	
-	<select id="goodsImageList" resultType="goodsImagesDTO">
+	<select id="goodsThumbnail" resultType="goodsImagesDTO">
 		SELECT * FROM `imint`.`goods_images`
 		WHERE `goods_id` = #{goods_id} 
 		AND `goods_images_thumbnail` = 1
@@ -29,7 +29,7 @@
 		LIMIT 1;
 	</select>
 	
-	<select id="goodsImages" resultType="goodsImagesDTO">
+	<select id="goodsImageList" resultType="goodsImagesDTO">
 		SELECT * FROM `imint`.`goods_images` 
 		WHERE `goods_id` = #{goods_id}
 		AND `goods_images_thumbnail` IN (0,1) 
