@@ -117,41 +117,68 @@ public class OAuthAttributes {
             Map<String, Object> attributes) {
     	
     	System.out.println("네이버 로그인 호출");
+    	Role role = null;
+
 		OAuth2UserInfo oAuth2UserInfo = new NaverUserInfo((Map<String, Object>)attributes.get("response"));
 		System.out.println("response: " + oAuth2UserInfo.getMbEmail());
 
-    	return OAuthAttributes.builder()
-            	.mbId ("naver_"+(String) oAuth2UserInfo.getMbId())
-            	.mbProvider ("naver") 
-            	.mbGuard (null) // 임시  
-            	.mbNick ((String) oAuth2UserInfo.getMbNick()) // 임시 
-            	.mbEmail ((String) oAuth2UserInfo.getMbEmail()) 
-            	.mbIsdelete (false) 
-                .attributes(attributes)
-                .mbRole(Role.GAURD) // 임시 
-                .nameAttributeKey(userNameAttributeName)
-                .build();
+		if (oAuth2UserInfo.getAgeRange().equals("0-9") || oAuth2UserInfo.getAgeRange().equals("10-19") ) { // 나이가 20살 이하이면
+			role = Role.CHILD;			
+		}
+		
+		else { // 나이가 20살 이상이면
+				role = Role.GAURD;
+		}  
+				
+			// 연령대 받아온 경우
+			return OAuthAttributes.builder()
+	            	.mbId ("naver_"+(String) oAuth2UserInfo.getMbId())
+	            	.mbProvider ("naver") 
+	            	.mbGuard (null) // 임시  
+	            	.mbNick ((String) oAuth2UserInfo.getMbNick()) // 임시 
+	            	.mbEmail ((String) oAuth2UserInfo.getMbEmail()) 
+	            	.mbIsdelete (false) 
+	                .attributes(attributes)
+	                .mbRole(role) 
+	                .nameAttributeKey(userNameAttributeName)
+	                .build();
     }
 
     
     public static OAuthAttributes ofKakao(String userNameAttributeName,
             Map<String, Object> attributes) {
     	System.out.println("카카오 로그인 호출");
+    	Role role = null;
 		OAuth2UserInfo oAuth2UserInfo = new KakaoUserInfo((Map<String, Object>)attributes);
 		System.out.println("response: " + oAuth2UserInfo.getMbEmail());
 
-    	return OAuthAttributes.builder()
-            	.mbId ("kakao_"+(String) oAuth2UserInfo.getMbId())
-            	.mbProvider ("kakao") 
-            	.mbGuard (null) // 임시  
-            	.mbNick ((String) oAuth2UserInfo.getMbNick()) // 임시 
-            	.mbEmail ((String) oAuth2UserInfo.getMbEmail()) 
-            	.mbIsdelete (false) 
-                .attributes(attributes)
-                .mbRole(Role.GAURD) // 임시 
-                .nameAttributeKey(userNameAttributeName)
-                .build();
-    }
+		if (oAuth2UserInfo.getAgeRange().equals("0~9") || oAuth2UserInfo.getAgeRange().equals("10~19") ) { // 나이가 20살 이하이면
+			role = Role.CHILD;			
+		}
+		
+		else { // 나이가 20살 이상이면
+				role = Role.GAURD;
+		}  
+				
+			// 연령대 받아온 경우
+			return OAuthAttributes.builder()
+					.mbId ("kakao_"+(String) oAuth2UserInfo.getMbId())
+					.mbProvider ("kakao") 
+					.mbGuard (null) // 임시  
+					.mbNick ((String) oAuth2UserInfo.getMbNick()) // 임시 
+					.mbEmail ((String) oAuth2UserInfo.getMbEmail()) 
+					.mbIsdelete (false) 
+					.attributes(attributes)
+					.mbRole(role) 
+					.nameAttributeKey(userNameAttributeName)
+					.build();
+	}
+		
+//		else { // 연령대 못받아온 경우 서비스 이용 불가
+//			System.out.println("연령대 수집 불가로 서비스 이용을 하실 수 없습니다.");
+//			return null;
+//		}
+//    }
 
     
     public User toEntity() {

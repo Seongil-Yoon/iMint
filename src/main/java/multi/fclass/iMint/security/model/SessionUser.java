@@ -66,10 +66,10 @@ public class SessionUser implements Serializable {
 		this.mbPin = user.getMbPin();
 		this.mbThumbnail = user.getMbThumbnail();
 		this.mbIsdelete = user.getMbIsdelete();
-		this.mbRole = user.getMbRole();
+		this.mbRole = user.getMbRole(); // 제일 중요한 정보 
 
 	}
     
-    
-    
 }
+
+// 직렬화: https://sorjfkrh5078.tistory.com/89

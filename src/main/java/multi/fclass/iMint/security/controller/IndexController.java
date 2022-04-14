@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import multi.fclass.iMint.security.dao.IUserDAO;
+import multi.fclass.iMint.security.model.User;
 
 
 @Controller // 뷰 반환
@@ -22,37 +23,22 @@ public class IndexController {
 	@Autowired
 	private IUserDAO userdao;
 	
-	// Oauth 로그인 : authentication 객체를 OAuth2User 타입으로.
-	@GetMapping("/test/oauth/login")
-	public @ResponseBody String testOAuthLogin(
-			Authentication authentication,
-			@AuthenticationPrincipal OAuth2User oauth) { 
-		System.out.println("/test/oauth/login ======");
-		
-		// 다운캐스팅
-		OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
-		System.out.println("authentication: " + oAuth2User.getAttributes());
-		
-		System.out.println("oauth2User" + oauth.getAttributes());
-		
-		return "OAuth 세션 정보 확인하기";
-	}
-	
 	// 디폴트 설정으로는 스프링 시큐리티가 가로챈다.(설정을 추후 바꿔주어야 한다) -> SecudrityConfig 파일 생성 후 스프링시큐리티 디폴트 login페이지 작동안함 
 	@GetMapping({"", "/"})
 	public String loginForm() {
 		return "member/login";
 	}
-	
-	// 지금은 시큐리티가 인터셉트 
-	@PostMapping("/login")
-	public String login() {
-		return "login";
+		
+	@GetMapping("/register")
+	public String registerForm() {
+		return "member/register";
 	}
+
 	
-//	@GetMapping("/joinform")
-//	public String joinForm() {
-//		return "joinForm";
+//	@PostMapping("/register")
+//	public String register(User user) {
+//		userdao.save(user);
+//		return "member/register";
 //	}
 //
 //	@PostMapping("/join")
