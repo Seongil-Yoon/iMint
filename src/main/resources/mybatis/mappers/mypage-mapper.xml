@@ -3,7 +3,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.mypage.dao.IMypageDAO">
-	<select id="selectWishList" parameterType="Map" resultType="MypageDTO">
+	<!-- 관심 + 구메예약 목록 -->
+	<select id="getWishList" parameterType="Map" resultType="MypageDTO">
 		SELECT
 			category,
 		    goods_id,
@@ -24,15 +25,15 @@
 				g.goods_create_date,
 				gi.goods_images_path,
 				gi.goods_images_originname,
-				cr.chat_room_resrv_date AS last_update_date
+				cr.resrv_date AS last_update_date
 			FROM
-				`imint`.`chat_room` AS cr
+				`imint`.`chatroom` AS cr
                 JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
 				JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 			WHERE
-				(cr.chat_room_isdelete = FALSE OR cr.chat_room_isdelete IS NULL)
-				AND cr.mb_id LIKE #{myId}
-                AND cr.chat_room_resrv_date IS NOT NULL
+				(cr.isdelete = FALSE OR cr.isdelete IS NULL)
+				AND cr.buyer_id LIKE #{myId}
+                AND cr.resrv_date IS NOT NULL
 				AND g.goods_isdelete = FALSE
                 AND goods_images_thumbnail = TRUE)
 			UNION ALL
@@ -55,21 +56,23 @@
                 JOIN `imint`.`goods` AS g ON w.goods_id = g.goods_id
 				JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 				LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
-				LEFT JOIN `imint`.`chat_room` AS cr ON g.goods_id = cr.goods_id
+				LEFT JOIN `imint`.`chatroom` AS cr ON g.goods_id = cr.goods_id
 			WHERE
 				w.wishlist_isdelete = FALSE
 				AND w.mb_id LIKE #{myId}
 				AND g.goods_isdelete = FALSE
                 AND goods_images_thumbnail = TRUE
 				AND (trx_isdelete = FALSE OR trx.trx_isdelete IS NULL)
-				AND (cr.chat_room_isdelete = FALSE OR cr.chat_room_isdelete IS NULL)))
+				AND (cr.isdelete = FALSE OR cr.isdelete IS NULL)))
 			AS result
 		ORDER BY
 			last_update_date DESC, goods_id DESC
 		LIMIT
 			#{startIndex}, #{numberOfItems}
 	</select>
-	<select id="selectSellingList" parameterType="Map" resultType="MypageDTO">
+	
+	<!-- 판매중(대기 + 예약) 목록 -->
+	<select id="getSellingList" parameterType="Map" resultType="MypageDTO">
 		SELECT
 			IF(g.goods_status = "wait", "wait", "resrv") AS category,
 			g.goods_id,
@@ -79,23 +82,25 @@
 			g.goods_create_date,
 			gi.goods_images_path,
 			gi.goods_images_originname,
-			IF(g.goods_status = "resrv", cr.chat_room_resrv_date, g.goods_create_date) AS last_update_date
+			IF(g.goods_status = "resrv", cr.resrv_date, g.goods_create_date) AS last_update_date
 		FROM
 			`imint`.`goods` AS g
             JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
-		    LEFT JOIN chat_room AS cr ON g.goods_id = cr.goods_id
+		    LEFT JOIN `imint`.`chatroom` AS cr ON g.goods_id = cr.goods_id
 		WHERE
 			g.goods_isdelete = FALSE
-			AND g.mb_id LIKE #{myId}
+			AND g.seller_id LIKE #{myId}
 			AND (g.goods_status = "wait" OR g.goods_status = "resrv")
             AND goods_images_thumbnail = TRUE
-		    AND (cr.chat_room_isdelete IS NULL OR cr.chat_room_isdelete = FALSE)
+		    AND (cr.isdelete IS NULL OR cr.isdelete = FALSE)
 		ORDER BY
 			last_update_date DESC, g.goods_id DESC
 		LIMIT
 			#{startIndex}, #{numberOfItems}
 	</select>
-	<select id="selectCompleteList" parameterType="Map" resultType="MypageDTO">
+	
+	<!-- 거래(구매 + 판매)완료 목록 -->
+	<select id="getCompleteList" parameterType="Map" resultType="MypageDTO">
 		SELECT
 			IF(trx.mb_id LIKE #{myId}, "buy", "sell") AS category,
 			g.goods_id,
@@ -112,7 +117,7 @@
 			JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 		WHERE
 			(trx.trx_isdelete IS NULL OR trx.trx_isdelete = FALSE)
-			AND (trx.mb_id LIKE #{myId} OR g.mb_id LIKE #{myId})
+			AND (trx.mb_id LIKE #{myId} OR g.seller_id LIKE #{myId})
 			AND goods_images_thumbnail = TRUE
 		ORDER BY
 			last_update_date DESC, g.goods_id DESC

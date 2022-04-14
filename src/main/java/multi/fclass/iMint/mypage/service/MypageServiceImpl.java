@@ -27,7 +27,7 @@ public class MypageServiceImpl implements IMypageService {
 		map.put("startIndex", (pageNumber - 1) * numberOfItems); // 시작 항목 인덱스 (페이지 표시용)
 		map.put("numberOfItems", numberOfItems); // 페이지 당 표시 항목 수 (페이지 표시용)
 
-		return mypageDAO.selectWishList(map);
+		return mypageDAO.getWishList(map);
 	}
 
 	// 판매중 목록 조회 서비스
@@ -38,7 +38,7 @@ public class MypageServiceImpl implements IMypageService {
 		map.put("startIndex", (pageNumber - 1) * numberOfItems); // 시작 항목 인덱스 (페이지 표시용)
 		map.put("numberOfItems", numberOfItems); // 페이지 당 표시 항목 수 (페이지 표시용)
 
-		return mypageDAO.selectSellingList(map);
+		return mypageDAO.getSellingList(map);
 	}
 
 	// 거래완료 목록 조회 서비스
@@ -49,7 +49,7 @@ public class MypageServiceImpl implements IMypageService {
 		map.put("startIndex", (pageNumber - 1) * numberOfItems); // 시작 항목 인덱스 (페이지 표시용)
 		map.put("numberOfItems", numberOfItems); // 페이지 당 표시 항목 수 (페이지 표시용)
 
-		return mypageDAO.selectCompleteList(map);
+		return mypageDAO.getCompleteList(map);
 	}
 
 }
