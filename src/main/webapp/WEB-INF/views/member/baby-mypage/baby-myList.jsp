@@ -6,8 +6,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>아이민트 :: 마이페이지</title>
-	<link rel="stylesheet" href="static/css/mypage_asidebar.css">
-	<link rel="stylesheet" href="static/css/mypage_mylist.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_asidebar.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_mylist.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
@@ -78,6 +78,6 @@
     </div>
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
-	<script src="/static/js/baby-main.js"></script>
+	<script src="/static/js/mypage-mylist.js"></script>
 </body>
 </html>

@@ -9,8 +9,8 @@
     display: inline-block;
     width: 210px;
     text-align: center;
-   	/* padding: 0.5rem;
-    margin: 0.5rem; */
+   	padding-top: 100px;
+    /* margin: 0.5rem; */
 }
 .aside-tab-item{
 	margin-bottom: 0.2rem;

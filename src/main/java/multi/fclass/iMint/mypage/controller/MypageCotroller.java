@@ -24,7 +24,7 @@ public class MypageCotroller {
 	
 	@GetMapping("mypage/mylist")
 	public String indexMylist() {
-		return "member/baby-mypage/baby-mylist";
+		return "member/baby-mypage/baby-myList";
 	}
 	
 	@GetMapping("mypage/block")
