@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+/* 페이지 전체 컨테이너 */
+.container-page{
+	width: 1200px;
+	margin:auto;
+	padding-left: 3rem;
+	padding-right: 3rem;
+}
+
+/* 어사이드, 메인 2열 구현 컨테이너 */
+.container-aside-main{
+	display: grid;
+    grid-template-columns: 0.5fr 3.5fr;
+    grid-gap: 1.3rem;
+    /* width: 1300px; */
+   	justify-content: center;
+   	
+}
+
+/* 페이지 타이틀 */
+.title{
+	width: 1300px;
+    padding-top: 3rem;
+}
+
+/* 어사이드 바*/
+.container-aside{
+	padding-top: 5rem;
+	height: 700px;
+}
+
+/* 메인 컨테이너 */
+.container-main {
+	/* width: 700px; */
+    display: block;
+    text-align: center;
+    padding: 3rem;
+    border: 1px;
+}
+
+
+/* 상단 탭 컨테이너*/
+.tabs .container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* 상단 탭 개별 항목 컨테이너 */
+.tab-item{
+    background-color: #F9F9F9;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* width: 200px;
+    height: 70px; */
+    border-radius: 10px;
+}
+
+.tab-item:hover{
+    background-color: #CDF0EA;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* width: 200px;
+    height: 70px; */
+    border-radius: 10px;
+    color: #3387a8;
+    font-weight: bold;
+}
+
+/* 상단 탭 선택 시 JS로 계속 선택되어있게 하는 부분 */
+.selected{
+    background-color: #CDF0EA;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* width: 200px;
+    height: 70px; */
+    border-radius: 10px;
+    color: #3387a8;
+    font-weight: bold;
+}
+
+/* 상단 탭 글자 */
+.tabs p {
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    /* padding-top: 0.5rem; */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* 상단 탭 선택 시 탭 내용을 JS로 보이기/숨기기 조정하기 위한 부분 */
+#tab-1-content, #tab-2-content, #tab-3-content, #tab-4-content {
+    display: none;
+    opacity: 0;
+}
+.show {
+    display: block !important;
+    opacity: 1 !important;
+    transition: all 1000 ease-in;
+}

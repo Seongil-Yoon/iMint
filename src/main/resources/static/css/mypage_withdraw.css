@@ -31,12 +31,20 @@
 
 /* 메인 컨테이너 */
 .container-main {
+	/* width: 700px; */
     display: block;
     text-align: center;
     padding: 3rem;
     border: 1px;
 }
 
-.btn {
-    float: right;
+/* 안내 메시지 */
+.text{
+	margin-bottom: 5rem;
+}
+
+/* 비밀번호 입력 칸 */
+input.buttons-text {
+    height: 35px;
+    width: 200px;
 }

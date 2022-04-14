@@ -2,32 +2,77 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="multi.fclass.iMint.member.dao.IMypageDAO">
-	<select id="selectWishList" parameterType="Map" resultType="WishListDTO">
+<mapper namespace="multi.fclass.iMint.mypage.dao.IMypageDAO">
+	<!-- 관심 + 구메예약 목록 -->
+	<select id="getWishList" parameterType="Map" resultType="MypageDTO">
 		SELECT
-			CASE
-				WHEN g.goods_status = "wait" THEN "wait"
-		        WHEN g.goods_status = "resrv" THEN "resrv"
-		        WHEN g.goods_status = "comp" THEN "comp"
-			END AS category,
-			g.goods_id,
-			g.goods_title,
-			g.goods_price,
-			g.goods_location,
-			g.goods_create_date,
-			gi.goods_images_path,
-			gi.goods_images_originname
+			category,
+		    goods_id,
+		    goods_title,
+		    goods_price,
+		    goods_location,
+		    goods_create_date,
+		    goods_images_path,
+		    goods_images_originname,
+		    last_update_date
 		FROM
-		    (wishlist AS w JOIN goods AS g ON w.goods_id = g.goods_id)
-			JOIN (SELECT * FROM goods_images WHERE goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id
-		WHERE
-			w.mb_id LIKE #{myId}
+		    ((SELECT
+				"resrv" AS category,
+				g.goods_id,
+				g.goods_title,
+				g.goods_price,
+				g.goods_location,
+				g.goods_create_date,
+				gi.goods_images_path,
+				gi.goods_images_originname,
+				cr.resrv_date AS last_update_date
+			FROM
+				`imint`.`chatroom` AS cr
+                JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
+				JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+			WHERE
+				(cr.isdelete = FALSE OR cr.isdelete IS NULL)
+				AND cr.buyer_id LIKE #{myId}
+                AND cr.resrv_date IS NOT NULL
+				AND g.goods_isdelete = FALSE
+                AND goods_images_thumbnail = TRUE)
+			UNION ALL
+			(SELECT
+				CASE
+					WHEN g.goods_status = "wait" THEN "wait"
+					WHEN g.goods_status = "resrv" THEN "!resrv"
+					WHEN g.goods_status = "comp" THEN IF(trx.mb_id LIKE #{myId}, "comp", "!comp")
+				END AS category,
+				g.goods_id,
+				g.goods_title,
+				g.goods_price,
+				g.goods_location,
+				g.goods_create_date,
+				gi.goods_images_path,
+				gi.goods_images_originname,
+		        IF(g.goods_status = "comp" AND trx.mb_id LIKE #{myId}, trx.trx_complete_date, w.wishlist_create_date) AS last_update_date
+			FROM
+				`imint`.`wishlist` AS w
+                JOIN `imint`.`goods` AS g ON w.goods_id = g.goods_id
+				JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+				LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
+				LEFT JOIN `imint`.`chatroom` AS cr ON g.goods_id = cr.goods_id
+			WHERE
+				w.wishlist_isdelete = FALSE
+				AND w.mb_id LIKE #{myId}
+				AND g.goods_isdelete = FALSE
+                AND goods_images_thumbnail = TRUE
+				AND (trx_isdelete = FALSE OR trx.trx_isdelete IS NULL)
+				AND (cr.isdelete = FALSE OR cr.isdelete IS NULL)))
+			AS result
 		ORDER BY
-			w.wishlist_create_date DESC
+			last_update_date DESC, goods_id DESC
 		LIMIT
 			#{startIndex}, #{numberOfItems}
 	</select>
-	<select id="selectSellingList" parameterType="Map" resultType="SellingListDTO">
+	
+	<!-- 판매중(대기 + 예약) 목록 -->
+	<select id="getSellingList" parameterType="Map" resultType="MypageDTO">
 		SELECT
 			IF(g.goods_status = "wait", "wait", "resrv") AS category,
 			g.goods_id,
@@ -36,36 +81,46 @@
 			g.goods_location,
 			g.goods_create_date,
 			gi.goods_images_path,
-			gi.goods_images_originname
+			gi.goods_images_originname,
+			IF(g.goods_status = "resrv", cr.resrv_date, g.goods_create_date) AS last_update_date
 		FROM
-			goods AS g JOIN (SELECT * FROM goods_images WHERE goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id
+			`imint`.`goods` AS g
+            JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+		    LEFT JOIN `imint`.`chatroom` AS cr ON g.goods_id = cr.goods_id
 		WHERE
-			g.mb_id LIKE #{myId}
-			AND g.goods_status = "wait" OR g.goods_status = "resrv"
+			g.goods_isdelete = FALSE
+			AND g.seller_id LIKE #{myId}
+			AND (g.goods_status = "wait" OR g.goods_status = "resrv")
+            AND goods_images_thumbnail = TRUE
+		    AND (cr.isdelete IS NULL OR cr.isdelete = FALSE)
 		ORDER BY
-			g.goods_create_date DESC
+			last_update_date DESC, g.goods_id DESC
 		LIMIT
 			#{startIndex}, #{numberOfItems}
 	</select>
-	<select id="selectCompleteList" parameterType="Map" resultType="CompleteListDTO">
+	
+	<!-- 거래(구매 + 판매)완료 목록 -->
+	<select id="getCompleteList" parameterType="Map" resultType="MypageDTO">
 		SELECT
 			IF(trx.mb_id LIKE #{myId}, "buy", "sell") AS category,
 			g.goods_id,
-			g.goods_title,
-			g.goods_price,
-			g.goods_location,
-			gi.goods_images_path,
-			gi.goods_images_originname,
-			trx.trx_complete_date,
-			r.rating_id
+		    g.goods_title,
+		    g.goods_price,
+		    g.goods_location,
+		    g.goods_create_date,
+		    gi.goods_images_path,
+		    gi.goods_images_originname,
+			trx.trx_complete_date AS last_update_date
 		FROM
-			((transaction AS trx JOIN goods AS g ON trx.goods_id = g.goods_id)
-			JOIN (SELECT * FROM goods_images WHERE goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id)
-			LEFT OUTER JOIN (SELECT * FROM rating WHERE mb_id LIKE #{myId}) AS r ON trx.trx_id = r.trx_id
+			`imint`.`transaction` AS trx
+			JOIN `imint`.`goods` AS g ON trx.goods_id = g.goods_id
+			JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 		WHERE
-			trx.mb_id LIKE #{myId} OR g.mb_id LIKE #{myId}
+			(trx.trx_isdelete IS NULL OR trx.trx_isdelete = FALSE)
+			AND (trx.mb_id LIKE #{myId} OR g.seller_id LIKE #{myId})
+			AND goods_images_thumbnail = TRUE
 		ORDER BY
-			trx.trx_complete_date DESC
+			last_update_date DESC, g.goods_id DESC
 		LIMIT
 			#{startIndex}, #{numberOfItems}
 	</select>

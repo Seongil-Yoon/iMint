@@ -20,8 +20,7 @@
 		<typeAlias type="multi.fclass.iMint.member.dto.MemberDTO" alias="memberDTO" />
 		<typeAlias type="multi.fclass.iMint.rating.dto.RatingDTO" alias="ratingDTO" />
 		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionDTO" alias="TransactionDTO" />
-		<typeAlias type="multi.fclass.iMint.mypage.dto.WishListDTO" alias="WishListDTO" />
-		<typeAlias type="multi.fclass.iMint.mypage.dto.SellingListDTO" alias="SellingListDTO" />
-		<typeAlias type="multi.fclass.iMint.mypage.dto.CompleteListDTO" alias="CompleteListDTO" />
+		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageDTO" alias="MypageDTO" />
+		<typeAlias type="multi.fclass.iMint.wishlist.dto.WishlistDTO" alias="WishlistDTO" />
 	</typeAliases>
 </configuration>

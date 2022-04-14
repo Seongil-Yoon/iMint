@@ -27,6 +27,7 @@
 /* 어사이드 바*/
 .container-aside{
 	padding-top: 5rem;
+	height: 700px;
 }
 
 /* 사용자 안내 타이틀 */
@@ -36,6 +37,7 @@
 
 /* 메인 컨테이너 */
 .container-main {
+	/* width: 700px; */
     display: block;
     text-align: center;
     padding: 3rem;
@@ -73,7 +75,7 @@
     border-color: rgb(155, 155, 155);
     margin-bottom: 1rem;
     text-align: left;
-    height: 170px;
+    height: 230px;
 }
 
 .text-summary {

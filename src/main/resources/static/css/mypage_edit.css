@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+.container-page{
+	width: 1200px;
+	margin:auto;
+	padding-left: 3rem;
+	padding-right: 3rem;
+}
+
+/* 어사이드, 메인 2열 구현 컨테이너 */
+.container-aside-main{
+	display: grid;
+    grid-template-columns: 0.5fr 3.5fr;
+    grid-gap: 1.3rem;
+    /* width: 1300px; */
+   	justify-content: center;
+   	
+}
+
+/* 페이지 타이틀 */
+.title{
+	width: 1300px;
+    padding-top: 3rem;
+}
+
+/* 어사이드 바*/
+.container-aside{
+	padding-top: 5rem;
+}
+
+/* 메인 컨테이너 */
+.container-main {
+    display: block;
+    text-align: center;
+    padding: 3rem;
+    border: 1px;
+}
+
+
+/* 타이틀 (회원 정보 수정하시겠어요?) */
+.title-text{
+	margin-bottom: 5rem;
+}
+
+/* 각 항목별 컨테이너 */
+.container-context{
+    display: grid;
+    grid-template-columns: 0.4fr 0.6fr;
+    /* grid-gap: 1.5rem; */
+    text-align: left;
+    padding: 2rem;
+    padding-right: 6rem;
+   	padding-left: 6rem;
+    border-bottom: 1px solid #b3b3b3;
+}
+
+/* 비밀번호 입력 안내 레이블 */
+.lables-password{
+    justify-content: center;
+}
+
+/* 비밀번호 입력 칸 */
+.buttons{
+    display: flex;
+    text-align: left;
+    align-items: center;
+}
+
+input.buttons-text {
+    height: 30px;
+    width: 250px;
+}
+
+.password {
+    margin-bottom: 0.2rem;
+}

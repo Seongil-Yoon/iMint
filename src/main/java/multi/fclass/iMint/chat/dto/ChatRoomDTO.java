@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+
 @Component
 public class ChatRoomDTO {
 
@@ -27,7 +29,7 @@ public class ChatRoomDTO {
 
 	// 구매희망자 ID
 	private String buyerId;
-
+  
 	// 구매희망자 닉네임
 	private String buyerNick;
 

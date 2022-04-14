@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.aside-container a{
+	text-decoration-line: none;
+	color: black;
+}
+
+.aside-container {
+    display: inline-block;
+    width: 210px;
+    text-align: center;
+   	padding-top: 100px;
+    /* margin: 0.5rem; */
+}
+.aside-tab-item{
+	margin-bottom: 0.2rem;
+	background-color: #F9F9F9;
+    border-radius: 10px;
+}
+
+.aside-tab-item p{
+	font-size: 18px;    
+	line-height: 3;
+	
+}
+
+.aside-tab-item:hover {
+    background-color: #CDF0EA;
+    color: #3387a8;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}    
+
+.aside-title{
+	margin-top: 1rem;
+	margin-bottom:0.5rem;
+	padding-bottom: 1rem;
+}

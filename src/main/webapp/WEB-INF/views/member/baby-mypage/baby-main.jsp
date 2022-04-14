@@ -8,6 +8,7 @@
 	<meta charset="UTF-8">
 	<title>아이민트 :: 마이페이지</title>
 	<link rel="stylesheet" href="static/css/mypage_main.css">
+	<link rel="stylesheet" href="static/css/mypage_asidebar.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
@@ -34,19 +35,19 @@
         <!-- 거래 관련 -->
         <div class="container-transaction">
             <div class="transaction">
-                <h3 class="tag">관심/구매예약</h3>
+                <h5 class="tag">관심/구매예약</h5>
                 <br>
                 <a class="btn btn-primary" href="#">자세히</a>
                 <!-- 관심/구매예약 요약 표  -->
             </div>
             <div class="transaction">
-                <h3 class="tag">판매목록</h3>
+                <h5 class="tag">판매목록</h5>
                 <br>
                 <a class="btn btn-primary" href="#">자세히</a>
                 <!-- 판매목록 요약 표  -->
             </div>
             <div class="transaction">
-                <h3 class="tag">거래완료</h3>
+                <h5 class="tag">거래완료</h5>
                 <br>
                 <a class="btn btn-primary" href="#">자세히</a>
                 <!-- 거래완료 요약 표  -->
@@ -55,25 +56,25 @@
         <!-- 보호자 로그인시 숨김 해제 -->
         <!-- 회원 상태 -->
         <div class="container-summary">
-            <h3 class="text-summary">~님은 아이 회원입니다.</h3>
+            <h5 class="text-summary">~님은 아이 회원입니다.</h5>
             <p>이메일: ~</p>
             <p>관심사: ~</p>
             <a class="btn btn-primary" href="#">자세히</a>
         </div>
         <div class="container-other-settings">
             <div class="settings connection">
-                <h3 class="settings-title text-connection">연결된 보호자</h3>
+                <h5 class="settings-title text-connection">연결된 보호자</h5>
                 <p class="text-connection">~~님</p>
             </div>
             <div class="settings location">
-                <h3 class="settings-title text-location">현재 동네 설정</h3>
+                <h5 class="settings-title text-location">현재 동네 설정</h5>
                 <p class="text-location">서울시 ~~구</p>
             </div>
         </div>
         <!-- 아이 로그인시 숨김 -->
         <div class="container-authentication">
-            <h3 class="text-authentication">내아이를 연결하려면 닉네임과 아래 인증번호를 아이 회원가입 시 입력하여 주세요.</h3>
-            <h3 class="text-authentication">인증 번호: ******</h3>
+            <h5 class="text-authentication">내아이를 연결하시겠어요? <br> 닉네임과 아래 인증번호를 아이 계정에서 입력하여 주세요.</h5>
+            <h5 class="text-authentication">인증 번호: ******</h5>
         </div>
         <!-- 아이 로그인시 숨김 해제-->
     </div>
