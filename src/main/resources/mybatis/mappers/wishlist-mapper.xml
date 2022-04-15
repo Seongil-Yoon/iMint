@@ -42,7 +42,8 @@
 			wishlist_create_date = CURRENT_TIMESTAMP,
 			wishlist_isdelete = FALSE
 		WHERE
-			wishlist_id = #{wishlistId}
+			mb_id = #{myId}
+			AND goods_id = #{goodsId}
 	</update>
 	
 	<!-- 해당 상품 관심해제 -->
@@ -52,6 +53,7 @@
 		SET
 			wishlist_isdelete = TRUE
 		WHERE
-			wishlist_id = #{wishlistId}
+			mb_id = #{myId}
+			AND goods_id = #{goodsId}
 	</update>
 </mapper>
