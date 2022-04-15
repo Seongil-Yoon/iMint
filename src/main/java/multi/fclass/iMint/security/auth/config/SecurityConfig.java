@@ -1,8 +1,10 @@
 package multi.fclass.iMint.security.auth.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -31,9 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/mypage/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
 			.antMatchers("/chat/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
 			.antMatchers("/goods/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
-			
-			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
+			.antMatchers("/goods-*/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')")//  or hasRole('ROLE_ADMIN')
+	        .antMatchers("/iMintImage/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')")//  or hasRole('ROLE_ADMIN')
+
+	        .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
             
+	        .antMatchers("/auth/**").permitAll()
+	        
 			.anyRequest().denyAll(); // // 허용가능 외 나머지는 인증 받아야 접근 가능(접근불가) 
 
 		
@@ -58,4 +64,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //		http.exceptionHandling()
 //			.accessDeniedHandler(webAccessDeniedHandler); // 접근 불가 페이지일 때 처리할 함수 
 	}
+	
+	@Override
+	   public void configure(WebSecurity web) throws Exception {
+	      web.ignoring()
+	         .mvcMatchers("/static/**")
+	         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	   }
 }

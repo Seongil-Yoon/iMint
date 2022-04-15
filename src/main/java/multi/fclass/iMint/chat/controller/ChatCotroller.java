@@ -8,8 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ChatCotroller {
 
 	// 1. chatroom view
-	@RequestMapping("/chat") public
-	ModelAndView chatRoomView() {
+	@RequestMapping("/chat") 
+	public ModelAndView chatRoomView() {
 		ModelAndView mv = new ModelAndView(); 
 		mv.setViewName("chat/chatroom"); 
 		return mv; 
