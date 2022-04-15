@@ -69,11 +69,48 @@
 	                <!-- 채팅목록 내용 -->
 	                <div id="tab-4-content" class="tab-content-item">
 	                    <div class="tab-4-content-inner">
-	                        <p>채팅목록 내용</p>
-	                    </div>
-	                </div>
-	            </div>
-	        </section>
+	                        <!-- 항목명 -->
+		                        <div class="item-lables-chat">
+		                            <div class="checkbox">
+		                                <h6 class="lables-checkbox">선택</h6>
+		                            </div>
+		                            <div class="photo">
+		                                <h6 class="lables-person">채팅 상대</h6>
+		                            </div>
+		                            <div class="interest">
+		                                <!-- <h6 class="lables-interest">관심 수</h6> -->
+		                            </div>
+		                            <div class="link">
+		                                <h6 id="link-price-out" class="lables-link">바로가기</h6>
+		                            </div>
+		                        </div>
+		                        <!-- 항목별 내용 -->
+		                        <div class="item-list-chat">
+		                            <div class="checkbox">
+		                                <input type="checkbox" name="selected"/>
+		                            </div>
+		                            <div class="person">
+		                                <p class="person-photo">사진(예정)</p>
+		                                <div class="person-detail">
+		                                    <p class="item-person-nickname">상대방 닉네임</p>
+		                                    <p class="item-person-chat">마지막 채팅</p>
+		                                    <div class="item-detail">
+		                                        <p class="item-subject">상품명</p>
+		                                        <p class="item-price">가격</p>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div class="interest">
+		                                <!-- <p class="text">관심 2</p> -->
+		                            </div>
+		                            <div class="link">
+		                                <p class="text">바로가기</p>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </section>
 	    	</div>
 	    </div>
     </div>
