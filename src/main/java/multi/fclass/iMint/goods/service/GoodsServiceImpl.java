@@ -59,9 +59,11 @@ public class GoodsServiceImpl implements IGoodsService {
 		}
 		goodsDto.setSellerId(sellerId);
 		goodsDto.setSellerNick(sellerNick);
-		int goodsId = goodsDAO.goodsInsert(goodsDto);
+//		int goodsId = goodsDAO.goodsInsert(goodsDto); // return 1
+		goodsDAO.goodsInsert(goodsDto);
+		int goodsId = goodsDto.getGoodsId();
 
-		// 상품글의 파일들을 올릴 경로("C:\\iMint\\goods\\YYYY\\MM\\")를 배열로 반환
+		// 상품글의 파일들을 올릴 경로("C:/iMint/goods/yyyy/MM/dd")를 배열로 반환
 		List<String> paths = utilService.createGoodsPaths(goodsDAO.goodsDate(goodsId));
 		fileService.mkDir(paths); // 폴더 생성
 		// 경로에 파일업로드 and DB insert
