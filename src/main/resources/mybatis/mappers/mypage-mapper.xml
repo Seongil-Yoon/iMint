@@ -39,7 +39,7 @@
 				AND gi.goods_images_isdelete = FALSE
 				AND cr.buyer_id LIKE #{myId}
                 AND cr.resrv_date IS NOT NULL				
-                AND goods_images_thumbnail = TRUE)
+                AND gi.goods_images_thumbnail = TRUE)
 			UNION ALL
 			(SELECT
 				CASE
@@ -70,7 +70,7 @@
 				AND (trx_isdelete = FALSE OR trx.trx_isdelete IS NULL)
 				AND (cr.isdelete = FALSE OR cr.isdelete IS NULL)
 				AND w.mb_id LIKE #{myId}
-                AND goods_images_thumbnail = TRUE))
+                AND gi.goods_images_thumbnail = TRUE))
 			AS result
 		ORDER BY
 			last_update_date DESC, goods_id DESC
