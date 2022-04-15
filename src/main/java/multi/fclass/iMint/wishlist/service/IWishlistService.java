@@ -7,8 +7,8 @@ package multi.fclass.iMint.wishlist.service;
 public interface IWishlistService {
 
 	public int countWishlist(int goodsId);
-	
-	public boolean checkWishlist(String myId, int goodsId);
+
+	public int checkWishlist(String myId, int goodsId);
 
 	public int addWishlist(String myId, int goodsId);
 
