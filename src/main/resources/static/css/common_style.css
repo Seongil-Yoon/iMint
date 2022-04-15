@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+
+/* 부트스트랩 버튼 수정 */
 .btn-primary {
 	background-color: #CDF0EA;
     color: #3387a8;
@@ -30,3 +32,12 @@
 	background-color: #CDF0EA;
     color: #3387a8;
 } */
+
+/* 모서리를 둥글게 처리한 사각형 테두리 div*/
+.roundBox{
+  padding: 1.5rem;
+  border: 1px;
+  border-radius: 1rem;
+  border-style: solid;
+  border-color: rgb(155, 155, 155);
+}

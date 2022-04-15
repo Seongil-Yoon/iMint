@@ -1,8 +1,10 @@
 package multi.fclass.iMint.security.auth.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -53,7 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/chatting/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") // 웹소켓 
 			
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
-            
+			
+      .antMatchers("/goods-*/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')")//  or hasRole('ROLE_ADMIN')
+	    .antMatchers("/iMintImage/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')")//  or hasRole('ROLE_ADMIN')
+     
+	    .antMatchers("/auth/**").permitAll()
+	        
 			.anyRequest().denyAll(); // // 허용가능 외 나머지는 인증 받아야 접근 가능(접근불가) 
 
 //		http.apply(new JwtSecurityConfig(tokenProvider));
@@ -76,4 +83,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.userService(customOAuth2UserService); // 들어가야 할 타입이 OAuth2UserService
 		
 	}
+	
+	@Override
+	   public void configure(WebSecurity web) throws Exception {
+	      web.ignoring()
+	         .mvcMatchers("/static/**")
+	         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	   }
 }
