@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
@@ -20,8 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.fclass.iMint.security.dao.IUserDAO;
-import multi.fclass.iMint.security.model.Role;
-import multi.fclass.iMint.security.model.User;
+import multi.fclass.iMint.security.dto.Role;
+import multi.fclass.iMint.security.dto.User;
+import multi.fclass.iMint.security.jwt.TokenProvider;
 
 @Slf4j // 로그
 @Controller // 뷰 반환
@@ -67,9 +69,10 @@ public class IndexController {
 	// 회원가입은 총 4단계 
 	// 회원가입 2(보호자, 아이 모두): sns 가입(회원가입 1)후 register 페이지로 이동
 	@GetMapping("/register")
-	public ModelAndView registersns(User user) {
+	public ModelAndView registersns(String mbId) { // 현재 유저 식별(세션 필요) -> mbId로 연결하기 & 수정 & 권한 업데이트
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("user", user);
+		System.out.println(mbId);
 		mv.setViewName("member/register");
 		return mv;
 	}
@@ -80,12 +83,12 @@ public class IndexController {
 	public ModelAndView gaurdlocation(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
 		ModelAndView mv = new ModelAndView();
 		User user = userdao.findByMbId(mbId);
+		
 		user.setMbId(mbId);
 		user.setMbNick(mbNick);
 		user.setMbRole(mbRole);
 		user.setMbEmail(mbEmail);
 		user.setMbInterest(mbInterest);
-		
 		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
 		mv.setViewName("member/guard-mypage/guard-location");
 		return mv;
@@ -128,7 +131,7 @@ public class IndexController {
 
 	return "회원가입 축하 페이지";
 	}
-	
+		
 	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true
 	// @Secured: 권한 
 //	@Secured("ROLE_ADMIN")

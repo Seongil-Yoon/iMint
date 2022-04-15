@@ -10,8 +10,8 @@ import lombok.Getter;
 import multi.fclass.iMint.security.auth.provider.KakaoUserInfo;
 import multi.fclass.iMint.security.auth.provider.NaverUserInfo;
 import multi.fclass.iMint.security.auth.provider.OAuth2UserInfo;
-import multi.fclass.iMint.security.model.Role;
-import multi.fclass.iMint.security.model.User;
+import multi.fclass.iMint.security.dto.Role;
+import multi.fclass.iMint.security.dto.User;
 
 
 @Getter
