@@ -107,3 +107,14 @@
     opacity: 1 !important;
     transition: all 1000 ease-in;
 }
+
+/* 탭 내용 컨테이너*/
+.tab-content > .container{
+    margin-top: 1rem;
+}
+
+.tab-content-item{
+    padding: 2rem;
+    background-color: #F9F9F9;
+    border-radius: 10px;
+}

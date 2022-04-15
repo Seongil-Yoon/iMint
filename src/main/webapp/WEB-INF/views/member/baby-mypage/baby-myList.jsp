@@ -8,6 +8,7 @@
 	<title>아이민트 :: 마이페이지</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_asidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_mylist.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mylist-content.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
@@ -50,7 +51,7 @@
 	                <!-- 관심/구매예약 내용 -->
 	                <div id="tab-1-content" class="tab-content-item show">
 	                    <div class="tab-1-content-inner">
-	                        <p>관심/구매예약 내용</p>
+	                        <jsp:include page="mylist-content.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 판매목록 내용 -->
