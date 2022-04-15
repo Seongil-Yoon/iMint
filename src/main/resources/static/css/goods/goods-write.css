@@ -1,0 +1,8 @@
+@charset "UTF-8";
+@import "goods-common-style.css";
+@import "carousel.css";
+
+
+.container {
+    background-color: beige;
+}
