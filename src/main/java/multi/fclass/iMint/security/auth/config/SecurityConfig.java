@@ -24,15 +24,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
     private final CustomOAuth2UserService customOAuth2UserService;
     // jwt
-//    private final TokenProvider tokenProvider;
-//    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final TokenProvider tokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable() // csrf: 페이지 위변조 방지. 유니크 키값 토큰넣어줌. form태그 안에 넣어주는 메서드 찾기. 비동기할 때도 참고.
 			.exceptionHandling()
-//			.authenticationEntryPoint(jwtAuthenticationEntryPoint) // jwt
+			.authenticationEntryPoint(jwtAuthenticationEntryPoint) // jwt
 			.accessDeniedPage("/err/denied-page"); // 접근 불가 페이지 (나중에 핸들러로 바꿀 수도)
 		
 		// h2-console 설정 추가
