@@ -15,17 +15,25 @@
 	<jsp:include page="../include/header.jsp" flush="false" />
 
 	<section class="container">
-		<h1>게시글 제목</h1>
-		<article>
-			<h2>판매중</h2>
+		<article class="row1">
+			<h1>${goods.goodsTitle}</h1>
+			<a href="/goods/modify?goodsId=${goods.goodsId}">
+				<img src="/static/images/write-icon.png" alt="">
+			</a>
+			<a href="/goods/delete?goodsId=${goods.goodsId}">
+				<img src="/static/images/delete-icon.png" alt="">
+			</a>
+		</article>
+		<article class="row2">
+			<h2>${goods.goodsStatus}</h2>
 			<div class="goods-info">
 				<div>
-					<span>판매자 닉네임</span>
+					<span>${goods.sellerNick}</span>
 					<img class="member-rating" src="/static/images/sun_4.png" alt="">
-					<span>지역</span>
+					<span>${goods.goodsLocation}</span>
 					<span>🤍관심 </span>
 				</div>
-				<span class="goods-date">xx초전</span>
+				<span class="goods-date" id="timeForToday">${goods.goodsCreateDate}</span>
 			</div>
 		</article>
 		<article class="carousel">
@@ -63,16 +71,54 @@
 			</div>
 		</article>
 		<article class="goods-content-wrap">
-			<textarea disabled="" id="goods-content" placeholder="상품글1"></textarea>
+			<textarea disabled="" id="goods-content" placeholder=${goods.goodsContent}></textarea>
 		</article>
 		<article class="goods-action" id="js-goods-action">
-
+			<!-- 일단 로그인됫다고 가정하고 페이지작성 -->
+			<div>
+				<span>카테고리 : ${goods.goodsCategory}</span>
+				<span>가격 : ${goods.goodsPrice}</span>
+				<c:choose>
+					<c:when test="${goods.goodsSuggestible == true}">
+						<span>가격 흥정 가능</span>
+					</c:when>
+					<c:otherwise>
+						<span>가격 흥정 불가능</span>
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<div>
+			</div>
+			<div>
+				<c:choose>
+					<c:when test="${sessionScope.mbId != null}">
+						<!-- 둘러보기 -->
+					</c:when>
+					<c:when test="${sessionScope.mbId == goods.sellerId}">
+						<a class="btn btn-primary" href="/chatroom/">
+							내 채팅 목록가기
+						</a>
+					</c:when>
+					<c:otherwise>
+						<button class="btn btn-primary">
+							관심
+						</button>
+						<a class="btn btn-primary" href="/chatroom/">
+							구매 제안하기
+						</a>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</article>
 	</section>
 
 
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
-	<script src="/static/js/goods/goods-detail.js"></script>
+	<script type="text/javascript" src="/static/js/goods/goods-detail.js"></script>
+	<script  type="text/javascript"src="/static/js/goods/carousel.js"></script>
+	<script>
+		carouselReady(${goods.goodsId});
+	</script>
 </body>
 
 </html>

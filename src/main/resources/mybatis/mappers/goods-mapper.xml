@@ -29,7 +29,7 @@
 		LIMIT 1;
 	</select>
 	
-	<select id="goodsImages" resultType="goodsImagesDTO">
+	<select id="goodsImageList" resultType="goodsImagesDTO">
 		SELECT * FROM `imint`.`goods_images` 
 		WHERE `goods_id` = #{goods_id}
 		AND `goods_images_thumbnail` IN (0,1) 
@@ -38,6 +38,26 @@
 		LIMIT 1000;
 	</select>
 	
+	 <!--상품 파일업로드를 하기위해 insert후에 날짜값을 받아오기 위함-->
+    <select id="goodsDate" resultType="String">
+        SELECT `goods_create_date` FROM `imint`.`goods` WHERE `goods_id`=#{goods_id} LIMIT 1;
+    </select>
+	
+	<!-- 상품등록 -->
+	<insert id="goodsInsert">
+		INSERT INTO `imint`.`goods` (`goods_id`,`seller_id`, `seller_nick`, `goods_title`, `goods_content`, `goods_price`, `goods_category`,`goods_suggestible`, `goods_location`) 
+		VALUES (#{goodsId},#{sellerId}, #{sellerNick}, #{goodsTitle}, #{goodsContent}, #{goodsPrice}, #{goodsCategory}, #{goodsSuggestible}, #{goodsLocation});
+		<selectKey resultType="java.lang.Integer" keyProperty="goodsId" keyColumn="goods_id" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+   		</selectKey>        
+	</insert>
+	<insert id="goodsImagesInsert">
+		INSERT INTO `imint`.`goods_images` ( `goods_images_id`,`goods_id`, `goods_images_path`, `goods_images_thumbnail`, `goods_images_originname`) 
+		VALUES (#{goodsImagesId}, #{goodsId}, #{goodsImagesPath}, #{goodsImagesThumbnail}, #{goodsImagesOriginname});
+		<selectKey resultType="java.lang.Integer" keyProperty="goodsImagesId" keyColumn="goods_images_id" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+   		</selectKey>   
+	</insert>
 	
 	
 </mapper>

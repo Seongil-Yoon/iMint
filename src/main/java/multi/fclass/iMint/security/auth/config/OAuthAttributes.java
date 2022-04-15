@@ -123,11 +123,11 @@ public class OAuthAttributes {
 		System.out.println("response: " + oAuth2UserInfo.getMbEmail());
 
 		if (oAuth2UserInfo.getAgeRange().equals("0-9") || oAuth2UserInfo.getAgeRange().equals("10-19") ) { // 나이가 20살 이하이면
-			role = Role.CHILD;			
+			role = Role.UN_CHILD;			
 		}
 		
 		else { // 나이가 20살 이상이면
-				role = Role.GAURD;
+				role = Role.UN_GAURD;
 		}  
 				
 			// 연령대 받아온 경우
@@ -153,11 +153,11 @@ public class OAuthAttributes {
 		System.out.println("response: " + oAuth2UserInfo.getMbEmail());
 
 		if (oAuth2UserInfo.getAgeRange().equals("0~9") || oAuth2UserInfo.getAgeRange().equals("10~19") ) { // 나이가 20살 이하이면
-			role = Role.CHILD;			
+			role = Role.UN_CHILD;			
 		}
 		
 		else { // 나이가 20살 이상이면
-				role = Role.GAURD;
+				role = Role.UN_GAURD;
 		}  
 				
 			// 연령대 받아온 경우
@@ -190,7 +190,7 @@ public class OAuthAttributes {
         		.mbEmail (mbEmail)
                 .mbLocation (mbLocation)
                 .mbPin (mbPin)
-                .mbRole(Role.GAURD) // 임시 
+                .mbRole(mbRole)
                 .build();
     }
 

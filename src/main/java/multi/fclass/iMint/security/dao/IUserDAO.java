@@ -3,6 +3,7 @@ package multi.fclass.iMint.security.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import multi.fclass.iMint.security.model.Role;
 import multi.fclass.iMint.security.model.User;
 
 @Mapper
@@ -11,5 +12,9 @@ public interface IUserDAO {
     //로그인 & 회원가입
     public User findByMbId(String mbId);
     public User findByMbEmail(String mbEmail);
-    public void save(User user); // 결과값 받아와기 
+    
+    public void savesns(User user); // 1차 sns 가입
+//    public void savedetails(String mbId, String mbNick, Role mbRole, String mbInterest, String mbEmail, String mbGuard); // 2차 회원 가입 완료
+    public void savedetails(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest, String mbLocation, String mbGuard); // 4차 회원가입(최종)
+    public void update(User user);
 }
