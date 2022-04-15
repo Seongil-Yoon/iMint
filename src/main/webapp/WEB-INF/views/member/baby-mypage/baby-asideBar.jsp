@@ -12,22 +12,22 @@
 <body>
 	<!-- 어사이드바 컨테이너 -->
     <div class="aside-container">
-        <a class="content" href="mypage/mylist">
+        <a class="content" href="/mypage/mylist">
             <div class="aside-tab-item">
                 <p class="tab-text">나의 아이민트</p>
             </div>
         </a><br>
-        <a class="content" href="mypage/block">
+        <a class="content" href="/mypage/block">
             <div class="aside-tab-item">
                 <p class="tab-text">나의 차단목록</p>
             </div>
         </a><br>
-        <a class="content" href="mypage/edit">
+        <a class="content" href="/mypage/edit">
             <div class="aside-tab-item">
                 <p class="tab-text">회원정보 수정</p>
             </div>
         </a><br>
-        <a class="content" href="mypage/withdraw">
+        <a class="content" href="/mypage/withdraw">
             <div class="aside-tab-item">
                 <p class="tab-text">회원 탈퇴</p>
             </div>

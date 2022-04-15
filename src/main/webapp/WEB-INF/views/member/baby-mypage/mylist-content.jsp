@@ -22,8 +22,8 @@
                             <div class="price">
                                 <h6 class="lables-price">가격</h6>
                             </div>
-                            <div class="link">
-                                <h6 class="lables-link">바로가기</h6>
+                            <div id="link-price-out" class="link">
+                                <h6 id="link-price-out-h6" class="lables-link">바로가기</h6>
                             </div>
                         </div>
                         <!-- 항목별 내용 -->

@@ -6,9 +6,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>아이민트 :: 마이페이지</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_asidebar.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_mylist.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mylist-content.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_mylist.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mylist-content.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
@@ -63,6 +63,7 @@
 	                <!-- 거래완료목록 내용 -->
 	                <div id="tab-3-content" class="tab-content-item">
 	                    <div class="tab-3-content-inner">
+	                    	<jsp:include page="mylist-content.jsp" flush="false"/>
 	                        <p>거래완료목록 내용</p>
 	                    </div>
 	                </div>
@@ -79,6 +80,6 @@
     </div>
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
-	<script src="/static/js/mypage-mylist.js"></script>
+	<script src="/static/js/mypage/mypage-mylist.js"></script>
 </body>
 </html>
