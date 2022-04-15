@@ -16,9 +16,9 @@ public class WishlistController {
 	IWishlistService wishlistService = new WishlistServiceImpl();
 
 	@RequestMapping("/wishlist/count")
-	public String countWishlist(int goodsId) {
+	public String countWishes(int goodsId) {
 		JSONObject out = new JSONObject();
-		int value = wishlistService.countWishlist(goodsId);
+		int value = wishlistService.countWishes(goodsId);
 
 		out.put("value", value);
 
@@ -26,9 +26,9 @@ public class WishlistController {
 	}
 
 	@RequestMapping("/wishlist/check")
-	public String checkWishlist(String myId, int goodsId) {
+	public String checkWish(String myId, int goodsId) {
 		JSONObject out = new JSONObject();
-		int check = wishlistService.checkWishlist(myId, goodsId);
+		int check = wishlistService.checkWish(myId, goodsId);
 
 		if (check == 1) {
 			out.put("check", "true");
@@ -40,10 +40,10 @@ public class WishlistController {
 	}
 
 	@RequestMapping("/wishlist/add")
-	public String addWishlist(String myId, int goodsId) {
+	public String addWish(String myId, int goodsId) {
 		JSONObject out = new JSONObject();
-		int result = wishlistService.addWishlist(myId, goodsId);
-		int value = wishlistService.countWishlist(goodsId);
+		int result = wishlistService.addWish(myId, goodsId);
+		int value = wishlistService.countWishes(goodsId);
 
 		if (result == 1) {
 			out.put("result", "success");
@@ -58,10 +58,10 @@ public class WishlistController {
 	}
 
 	@RequestMapping("/wishlist/remove")
-	public String removeWishlist(String myId, int goodsId) {
+	public String removeWish(String myId, int goodsId) {
 		JSONObject out = new JSONObject();
-		int result = wishlistService.removeWishlist(myId, goodsId);
-		int value = wishlistService.countWishlist(goodsId);
+		int result = wishlistService.removeWish(myId, goodsId);
+		int value = wishlistService.countWishes(goodsId);
 
 		if (result == 1) {
 			out.put("result", "success");

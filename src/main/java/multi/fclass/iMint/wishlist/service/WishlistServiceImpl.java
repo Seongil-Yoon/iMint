@@ -19,12 +19,12 @@ public class WishlistServiceImpl implements IWishlistService {
 	IWishlistDAO wishlistDAO;
 
 	@Override
-	public int countWishlist(int goodsId) {
+	public int countWishes(int goodsId) {
 		return wishlistDAO.countWishlist(goodsId);
 	}
 
 	@Override
-	public int checkWishlist(String myId, int goodsId) {
+	public int checkWish(String myId, int goodsId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("myId", myId); // 사용자 ID
 		map.put("goodsId", goodsId); // 상품 ID
@@ -43,11 +43,11 @@ public class WishlistServiceImpl implements IWishlistService {
 	}
 
 	@Override
-	public int addWishlist(String myId, int goodsId) {
+	public int addWish(String myId, int goodsId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("myId", myId); // 사용자 ID
 		map.put("goodsId", goodsId); // 상품 ID
-		int check = checkWishlist(myId, goodsId);
+		int check = checkWish(myId, goodsId);
 
 		if (check == -1) {
 			// wishlist 테이블에 등록된 적 없을 때 = INSERT
@@ -74,11 +74,11 @@ public class WishlistServiceImpl implements IWishlistService {
 	}
 
 	@Override
-	public int removeWishlist(String myId, int goodsId) {
+	public int removeWish(String myId, int goodsId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("myId", myId); // 사용자 ID
 		map.put("goodsId", goodsId); // 상품 ID
-		int check = checkWishlist(myId, goodsId);
+		int check = checkWish(myId, goodsId);
 
 		if (check == 1) {
 			// wishlist 테이블에 등록되었고 삭제되지 않았을 때 = REMOVE
