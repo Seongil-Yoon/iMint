@@ -19,6 +19,7 @@ public class MypageDTO {
 	private LocalDateTime goodsCreateDate; // 판매글 등록일시
 	private String goodsImagesPath; // 대표 이미지 저장 경로
 	private String goodsImagesOriginname; // 대표 이미지 원래 이름
+	private int wishes; // 관심등록수
 	private LocalDateTime lastUpdateDate; // 마지막 업데이트 일시(관심등록일, 예약일, 거래완료일 등)
 
 }

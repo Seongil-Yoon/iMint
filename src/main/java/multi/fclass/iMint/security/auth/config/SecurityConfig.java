@@ -1,8 +1,10 @@
 package multi.fclass.iMint.security.auth.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,16 +32,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //			.accessDeniedPage("/err/denied-page"); // 접근 불가 페이지 (나중에 핸들러로 바꿀 수도)
 		
 		// h2-console 설정 추가
-		http.headers()
-			.frameOptions()
-			.sameOrigin();
+//		http.headers()
+//			.frameOptions()
+//			.sameOrigin();
 		
 		// 세션 해제(jwt로 대체)
-		http.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//		http.sessionManagement()
+//			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.authorizeRequests()
 			.antMatchers("/", "/main", "/login/**", "/static/**").permitAll() // 비로그인시 첫화면, 둘러보기만 허용
+      
 			.anyRequest().permitAll();
 //			.antMatchers("/register/**").access("hasRole('ROLE_uncerti_GAURD') or hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
 //			
@@ -51,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
             
 //			.anyRequest().denyAll(); // // 허용가능 외 나머지는 인증 받아야 접근 가능(접근불가) 
-
+			
 //		http.apply(new JwtSecurityConfig(tokenProvider));
 		
 //		http.formLogin()
@@ -72,4 +75,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.userService(customOAuth2UserService); // 들어가야 할 타입이 OAuth2UserService
 		
 	}
+	
+	@Override
+	   public void configure(WebSecurity web) throws Exception {
+	      web.ignoring()
+	         .mvcMatchers("/static/**")
+	         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	   }
 }

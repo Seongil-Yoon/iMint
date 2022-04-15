@@ -22,6 +22,11 @@ public class MypageServiceImpl implements IMypageService {
 	// 관심 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getWishList(String myId, int pageNumber, int numberOfItems) {
+		if (pageNumber < 0) {
+			pageNumber = 0;
+		} else if (numberOfItems < 0) {
+			numberOfItems = 0;
+		}
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("myId", myId); // 사용자 ID
 		map.put("startIndex", (pageNumber - 1) * numberOfItems); // 시작 항목 인덱스 (페이지 표시용)
@@ -33,6 +38,11 @@ public class MypageServiceImpl implements IMypageService {
 	// 판매중 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getSellingList(String myId, int pageNumber, int numberOfItems) {
+		if (pageNumber < 0) {
+			pageNumber = 0;
+		} else if (numberOfItems < 0) {
+			numberOfItems = 0;
+		}
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("myId", myId); // 사용자 ID
 		map.put("startIndex", (pageNumber - 1) * numberOfItems); // 시작 항목 인덱스 (페이지 표시용)
@@ -44,6 +54,11 @@ public class MypageServiceImpl implements IMypageService {
 	// 거래완료 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getCompleteList(String myId, int pageNumber, int numberOfItems) {
+		if (pageNumber < 0) {
+			pageNumber = 0;
+		} else if (numberOfItems < 0) {
+			numberOfItems = 0;
+		}
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("myId", myId); // 사용자 ID
 		map.put("startIndex", (pageNumber - 1) * numberOfItems); // 시작 항목 인덱스 (페이지 표시용)
