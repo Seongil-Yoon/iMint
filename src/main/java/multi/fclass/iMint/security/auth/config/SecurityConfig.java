@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.AuthenticationEntryPoint;
 
 import lombok.AllArgsConstructor;
 import multi.fclass.iMint.security.service.CustomOAuth2UserService;
@@ -25,10 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable() // csrf: 페이지 위변조 방지. 유니크 키값 토큰넣어줌. form태그 안에 넣어주는 메서드 찾기. 비동기할 때도 참고.
-			.exceptionHandling()
+		http.csrf().disable(); // csrf: 페이지 위변조 방지. 유니크 키값 토큰넣어줌. form태그 안에 넣어주는 메서드 찾기. 비동기할 때도 참고.
+//			.exceptionHandling()
 //			.authenticationEntryPoint(jwtAuthenticationEntryPoint) // jwt
-			.accessDeniedPage("/err/denied-page"); // 접근 불가 페이지 (나중에 핸들러로 바꿀 수도)
+//			.accessDeniedPage("/err/denied-page"); // 접근 불가 페이지 (나중에 핸들러로 바꿀 수도)
 		
 		// h2-console 설정 추가
 		http.headers()
@@ -41,17 +40,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http.authorizeRequests()
 			.antMatchers("/", "/main", "/login/**", "/static/**").permitAll() // 비로그인시 첫화면, 둘러보기만 허용
-			
-			.antMatchers("/register/**").access("hasRole('ROLE_uncerti_GAURD') or hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
-			
-			.antMatchers("/mypage/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
-			.antMatchers("/goods/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
-			.antMatchers("/chat/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN') // 뷰 
-			.antMatchers("/chatting/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") // 웹소켓 
-			
-			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
+			.anyRequest().permitAll();
+//			.antMatchers("/register/**").access("hasRole('ROLE_uncerti_GAURD') or hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
+//			
+//			.antMatchers("/mypage/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
+//			.antMatchers("/goods/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
+//			.antMatchers("/chat/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN') // 뷰 
+//			.antMatchers("/chatting/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") // 웹소켓 
+//			
+//			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
             
-			.anyRequest().denyAll(); // // 허용가능 외 나머지는 인증 받아야 접근 가능(접근불가) 
+//			.anyRequest().denyAll(); // // 허용가능 외 나머지는 인증 받아야 접근 가능(접근불가) 
 
 //		http.apply(new JwtSecurityConfig(tokenProvider));
 		
