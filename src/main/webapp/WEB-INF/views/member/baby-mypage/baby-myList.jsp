@@ -6,9 +6,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>아이민트 :: 마이페이지</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_asidebar.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_mylist.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mylist-content.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_mylist.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mylist-content.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
