@@ -63,6 +63,7 @@
 	                <!-- 거래완료목록 내용 -->
 	                <div id="tab-3-content" class="tab-content-item">
 	                    <div class="tab-3-content-inner">
+	                    	<jsp:include page="mylist-content.jsp" flush="false"/>
 	                        <p>거래완료목록 내용</p>
 	                    </div>
 	                </div>
