@@ -3,8 +3,8 @@ package multi.fclass.iMint.security.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import multi.fclass.iMint.security.model.Role;
-import multi.fclass.iMint.security.model.User;
+import multi.fclass.iMint.security.dto.Role;
+import multi.fclass.iMint.security.dto.User;
 
 @Mapper
 @Repository

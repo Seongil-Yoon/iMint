@@ -1,4 +1,4 @@
-package multi.fclass.iMint.security.model;
+package multi.fclass.iMint.security.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

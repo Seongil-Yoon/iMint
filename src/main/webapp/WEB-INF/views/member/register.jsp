@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="multi.fclass.iMint.security.dao.IUserDAO" %>
-<%@ page import="multi.fclass.iMint.security.model.Role" %>
+<%@ page import="multi.fclass.iMint.security.dto.Role" %>
 <!DOCTYPE html>
 <html>
 <head>
