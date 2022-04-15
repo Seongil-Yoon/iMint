@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http.oauth2Login()
 			.defaultSuccessUrl("/") // oauth2 로그인
-			.loginPage("/login")  // 권한이 없는 페이지로 가려고 하면 첫화면 페이지로 보내기
+//			.loginPage("/login")  // 권한이 없는 페이지로 가려고 하면 첫화면 페이지로 보내기
 		// 구글 로그인이 완료된 이후의 후처리 필요 (구글과 같은 Oauth provider를 사용하면 아래의 1번은 생략되어 편리)		// 1. 코드받기(사용자가 정상적인 로그인한 사용자임을 인증) 2. 엑세스 토큰 받기(사이트 사용자에 접근할 수 있는 권한 생김) 
 		// 3. 사용자 프로필 정보를 가져옴 4. 그 정보로 자동으로 회원가입 진행 가능
 			.userInfoEndpoint() //oauth2Login 성공 이후의 설정을 시작
