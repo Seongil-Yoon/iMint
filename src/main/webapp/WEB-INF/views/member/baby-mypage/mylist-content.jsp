@@ -22,8 +22,8 @@
                             <div class="price">
                                 <h6 class="lables-price">가격</h6>
                             </div>
-                            <div id="link-price-out" class="link">
-                                <h6 id="link-price-out-h6" class="lables-link">바로가기</h6>
+                            <div class="link">
+                                <h6 class="lables-link">바로가기</h6>
                             </div>
                         </div>
                         <!-- 항목별 내용 -->
@@ -44,9 +44,9 @@
 	    <p class="text">관심 2</p>
 	  </div>
 	  <div class="price">
-	   <p class="text">3000원</p>
+	   <p class="text text-price">3000원</p>
 	  </div>
 	  <div class="link">
-	    <p class="text">바로가기</p>
+	    <p class="text text-link">바로가기</p>
 	  </div>
 	</div>

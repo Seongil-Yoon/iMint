@@ -57,14 +57,13 @@
 	                <!-- 판매목록 내용 -->
 	                <div id="tab-2-content" class="tab-content-item">
 	                    <div class="tab-2-content-inner">
-	                        <p>판매목록 내용</p>
+	                        <jsp:include page="mylist-content.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 거래완료목록 내용 -->
 	                <div id="tab-3-content" class="tab-content-item">
 	                    <div class="tab-3-content-inner">
-	                    	<jsp:include page="mylist-content.jsp" flush="false"/>
-	                        <p>거래완료목록 내용</p>
+	                    	 <jsp:include page="mylist-content.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 채팅목록 내용 -->
