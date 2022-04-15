@@ -14,7 +14,7 @@
 <body>
  	<jsp:include page="../include/header.jsp" flush="false" />
 
- 	<form action = "/register/guard" method = "post">
+ 	<form id = "change_url">
  	
 <!--  	출생년도에 따라서 성인, 아이 구분해서 js로 버튼 만들어야 한다  -->
  	
@@ -32,7 +32,8 @@
  		<input type = hidden id = "mbRole" value = ${user.mbRole }>
 
 <!--  		보호자, 아이 로직이 달라 주의  -->
- 		<button id = "location_btn">내 동네 설정</button>
+<!--  		<button id = "location_btn">내 동네 설정</button> -->
+ 		 	<button id = "register_btn">회원가입</button>
  		
  		
  	</form>
@@ -48,7 +49,8 @@
 	if (mbId == "ROLE_uncerti_CHILD"){ // 아이인 경우
 		$("#location_btn").attr("id", "connect_btn"); // 회원가입 버튼 말고 연동으로 버튼 변경 
 		$("#connect_btn").html("보호자 계정 연동");
-		
+		$("#change_url").attr("method", "post")
+		$("#change_url").attr("action", "/register/connect")
 	}
 	
 	$("#connect_btn").on('click', function(){
@@ -76,6 +78,11 @@
 <script>
 $(document).ready( function(){ 
 	
+		$("#register_btn").attr("id", "location_btn"); // 회원가입 버튼 말고 연동으로 버튼 변경 
+		$("#location_btn").html("내 동네 설정");
+		$("#location_btn").attr("method", "post");
+		$("#change_url").attr("action", "/mypage/location");
+		
 	$("#location_btn").on('click', function(){
 /* 		if($("#mbRole").val() == "ROLE_uncerti_GAURD") { // 보호자 
  */			$.ajax({
@@ -87,7 +94,7 @@ $(document).ready( function(){
 					'mbEmail':$("#mbEmail").val(),
 					'mbInterest':$("#mbInterest").val()
 					},
-				type: 'post',
+				type: 'get',
 				dataType: 'json',
 				
 				success: function(a) { 

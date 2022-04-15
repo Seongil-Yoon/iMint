@@ -37,7 +37,7 @@ img{
 
 </style>
 
-<body>
+<body>  <!--추가할 부분) 로그인되면 버튼 삭제  -->
  	<jsp:include page="../include/header.jsp" flush="false" />
  	
  	<div class = "container">
