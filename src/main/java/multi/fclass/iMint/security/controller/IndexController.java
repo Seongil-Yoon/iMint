@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import multi.fclass.iMint.security.dao.IUserDAO;
 import multi.fclass.iMint.security.dto.Role;
 import multi.fclass.iMint.security.dto.User;
-import multi.fclass.iMint.security.jwt.TokenProvider;
 
 @Slf4j // 로그
 @Controller // 뷰 반환
