@@ -64,7 +64,7 @@
 }
 
 input {
-	width: 300px;
+	width: 380px;
 	height: 25px;
 }
 
@@ -108,7 +108,7 @@ input {
 	var ws;
 
 	function wsOpen() {
-		ws = new WebSocket("ws://" + location.host + "/chatting");
+		ws = new WebSocket("ws://" + location.host + "/chat");
 		wsEvt();
 	}
 
@@ -144,7 +144,7 @@ input {
 		}
 	}
 	
-	function clickReserve(){
+ 	function clickReserve(){
 		$("#yourMsg-beforeReserve").hide();
 		$("#yourMsg-afterReserve").show();
 		
@@ -178,14 +178,14 @@ input {
 			<br> <br> <br>
 			<div id="chatting-insert" class="chatting-insert"></div>
 		</div>
-
+		<br>
 		<div id="yourName">
 			<table class="inputTable">
 				<tr>
-					<td>사용자명</td>
+					<td>사용자</td>
 					<td><input type="text" name="userName" id="userName"></td>
 					<td><button onclick="chatName()" id="startBtn"
-							class="btn-primary">이름 등록</button></td>
+							class="btn btn-primary">이름 등록</button></td>
 				</tr>
 			</table>
 		</div>
@@ -193,12 +193,15 @@ input {
 			<table class="inputTable">
 				<tr>
 					<!-- <th>예약하기 누르기전</th> -->
-					<td><input id="chatting" placeholder="메세지를 입력하세요.">&nbsp;</td>
-					<td><button onclick="send()" id="sendBtn" class="btn-primary">전송</button>&nbsp;</td>
-					<td>&nbsp;&nbsp;</td>
-					<td><button id="reserveBtn" class="btn-primary" onclick="clickReserve()">예약하기</button>&nbsp;</td>
-					<td><button id="completeBtn" class="btn-primary">거래완료</button>&nbsp;</td>
-					<td><button id="goBackBtn" class="btn-primary">뒤로가기</button>&nbsp;</td>
+					<td><input id="chatting" placeholder="메세지를 입력하세요.">
+					<button onclick="send()" id="sendBtn" class="btn btn-primary">전송</button></td>
+				</tr>
+				<tr>
+					<td>
+						<button id="reserveBtn" class="btn btn-primary" onclick="clickReserve()">예약하기</button>
+						<button id="completeBtn" class="btn btn-primary">거래완료</button>
+						<button id="goBackBtn" class="btn btn-primary">뒤로가기</button>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -206,12 +209,15 @@ input {
 			<table class="inputTable">
 				<tr>
 					<!-- <th>예약하기 눌렀을때</th> -->
-					<td><input id="chatting" placeholder="메시지를 입력하세요.">&nbsp;</td>
-					<td><button onclick="send()" id="sendBtn" class="btn-primary">전송</button>&nbsp;</td>
-					<td>&nbsp;&nbsp;</td>
-					<td><button id="reserveCancelBtn" class="btn-primary" onclick="clickReserveCancel()">예약취소</button>&nbsp;</td>
-					<td><button id="completeBtn" class="btn-primary">거래완료</button>&nbsp;</td>
-					<td><button id="goBackBtn" class="btn-primary">뒤로가기</button>&nbsp;</td>
+					<td><input id="chatting" placeholder="메시지를 입력하세요.">
+					<button onclick="send()" id="sendBtn" class="btn btn-primary">전송</button></td>
+				</tr>
+				<tr>
+					<td>
+						<button id="reserveCancelBtn" class="btn btn-primary" onclick="clickReserveCancel()">예약취소</button>
+						<button id="completeBtn" class="btn btn-primary">거래완료</button>
+						<button id="goBackBtn" class="btn btn-primary">뒤로가기</button>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -220,11 +226,11 @@ input {
 
 	<jsp:include page="../include/footer.jsp" flush="false" />
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
-	<script src="/webjars/stomp-websocket/2.3.3-1/stomp.js"
+<!-- 	<script src="/webjars/stomp-websocket/2.3.3-1/stomp.js"
 		type="text/javascript"></script>
 	<script src="/webjars/sockjs-client/1.1.2/sockjs.js"
-		type="text/javascript"></script>
-	<script src="/static/js/chat.js"></script>
+		type="text/javascript"></script> -->
+	<!-- <script src="/static/js/chat.js"></script> -->
 
 
 </body>
