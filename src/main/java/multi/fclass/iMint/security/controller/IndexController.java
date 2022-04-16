@@ -99,7 +99,6 @@ public class IndexController {
 		// 모듈화 결과(아래 2줄)
 		String mbId = parseMbId.parseMbId(auth);
 		User user = parseMbId.getUserMbId(mbId);
-//		Role mbRole = parseMbId.getRoleMbId(mbId);
 		
 		ModelAndView mv = new ModelAndView();
 
@@ -108,100 +107,82 @@ public class IndexController {
 		return mv;
 	}
 	
-	// 회원가입 3(보호자): 내 동네 설정 -> 보호자, 관리자 권한 부여
-//	@PreAuthorize("hasRole('ROLE_uncerti_GAURD') or hasRole('ROLE_GAURD') or hasRole('ROLE_ADMIN')")
+	@PostMapping("/register")
+	public ModelAndView registersns(String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
-	@ResponseBody
-	@RequestMapping(value = "/kakao/local", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-	public String gaurdlocation1(String latitude, String longitude, String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) { // 
-		String GEOCODE_URL="http://dapi.kakao.com/v2/local/search/address.json?"; 
-		String GEOCODE_USER_INFO="KakaoAK 81c7bda99c1d17edaf364c7a1fe1b80d"; 
-			URL obj; 
-			try{
-				obj = new URL(GEOCODE_URL+"x="+latitude+"&y="+longitude); 
-				HttpURLConnection con = (HttpURLConnection)obj.openConnection(); 
-				//get으로 받아오면 된다. 자세한 사항은 카카오개발자센터에 나와있다. 
-				con.setRequestMethod("GET"); 
-				con.setRequestProperty("Authorization",GEOCODE_USER_INFO); 
-				con.setRequestProperty("content-type", "application/json"); 
-				con.setDoOutput(true); 
-				con.setUseCaches(false); 
-				con.setDefaultUseCaches(false); 
-				Charset charset = Charset.forName("UTF-8"); 
-				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), charset)); 
-				String inputLine; 
-				StringBuffer response = new StringBuffer(); 
-				while ((inputLine = in.readLine()) != null) { 
-					response.append(inputLine); 
-					} //response 객체를 출력해보자 
-				System.out.println(response.toString());
-			} 
-				catch (Exception e) { 
-					e.printStackTrace(); 
-			}
-			return "{response:response}";
+		// 유저 정보 업데이트 
+		User user = parseMbId.getUserMbId(mbId);
+		user.setMbNick(mbNick);
+		user.setMbEmail(mbEmail);
+		user.setMbInterest(mbInterest);
+		userdao.updateuser(user);
+		
+		ModelAndView mv = new ModelAndView();
+
+		if(mbRole.equals("UN_GUARD")) {
+			mv.setViewName("member/guard-mypage/guard-location");
+		}
+		else if(mbRole.equals("UN_CHILD")) {
+			mv.setViewName("member/register_connect");			
+		}
+		
+		mv.addObject("user", user);
+		return mv;
 	}
+	
+	
+	
+	// 회원가입 3(보호자): 내 동네 설정 -> 보호자, 관리자 권한 부여
 
+//	@ResponseBody
+////	@RequestMapping(value = "/mypage/location", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+//	@RequestMapping("/mypage/location")
+//	public ModelAndView GUARDlocation(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest, String mbLocation) { // String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest
 //		
 //		ModelAndView mv = new ModelAndView();
+//		
 //		User user = parseMbId.getUserMbId(mbId);
+//		System.out.println(mbId);
+//		System.out.println(mbNick);
+//		System.out.println(mbRole);
+//
+//		//		user.setMbNick(mbNick);
+////		user.setMbRole(mbRole);
+////		user.setMbEmail(mbEmail);
+////		user.setMbInterest(mbInterest);
+////		user.setMbLocation(mbLocation);
+////		userdao.savedetails(mbId, mbNick, mbRole, mbEmail, mbInterest, mbLocation, null); // 1차 저장 
+//		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
+//		mv.setViewName("member/guard-mypage/guard-location");
+//		return mv;
+//	}
+//	
+//	// 회원가입 3(아이): 보호자 연결 설정 -> 아이, 관리자 권한 부여
+//	//@PreAuthorize("hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')")
+//	@GetMapping("/register/connect")		
+//	public ModelAndView babyconnect(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
+//		ModelAndView mv = new ModelAndView();
+//		User user = userdao.findByMbId(mbId);
+//		user.setMbId(mbId);
 //		user.setMbNick(mbNick);
 //		user.setMbRole(mbRole);
 //		user.setMbEmail(mbEmail);
 //		user.setMbInterest(mbInterest);
-//		mv.addObject("user", user); 
-//		mv.setViewName("member/guard-mypage/guard-location");
+//		
+//		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
+//		mv.setViewName("member/register_connect");
 //		return mv;
-
-	@ResponseBody
-//	@RequestMapping(value = "/mypage/location", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-	@RequestMapping("/mypage/location")
-	public ModelAndView gaurdlocation(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest, String mbLocation) { // String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest
-		
-		ModelAndView mv = new ModelAndView();
-		
-		User user = parseMbId.getUserMbId(mbId);
-		System.out.println(mbId);
-		System.out.println(mbNick);
-		System.out.println(mbRole);
-
-		//		user.setMbNick(mbNick);
-//		user.setMbRole(mbRole);
-//		user.setMbEmail(mbEmail);
-//		user.setMbInterest(mbInterest);
-//		user.setMbLocation(mbLocation);
-//		userdao.savedetails(mbId, mbNick, mbRole, mbEmail, mbInterest, mbLocation, null); // 1차 저장 
-		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
-		mv.setViewName("member/guard-mypage/guard-location");
-		return mv;
-	}
-	
-	// 회원가입 3(아이): 보호자 연결 설정 -> 아이, 관리자 권한 부여
-	//@PreAuthorize("hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')")
-	@GetMapping("/register/connect")		
-	public ModelAndView babyconnect(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
-		ModelAndView mv = new ModelAndView();
-		User user = userdao.findByMbId(mbId);
-		user.setMbId(mbId);
-		user.setMbNick(mbNick);
-		user.setMbRole(mbRole);
-		user.setMbEmail(mbEmail);
-		user.setMbInterest(mbInterest);
-		
-		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
-		mv.setViewName("member/register_connect");
-		return mv;
-	}
+//	}
 
 	
 	// 회원가입 4(최종. 보호자, 아이 모두)
 	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
-	@PostMapping("/register")
-	public String registerdetails(Role mbRole, String mbId, String mbNick, String mbEmail, String mbInterest, String mbLocation, String mbGuard) {
-			
-	if (mbRole == Role.UN_GAURD) { // 보호자 
+	@PostMapping("/register/complete")
+	public String registerdetails(Authentication auth, String mbLocation) {
+		// mbLocation 받아오기 
+	if (mbRole == Role.UN_GUARD) { // 보호자 
 		mbGuard = null;
-		mbRole = Role.GAURD;
+		mbRole = Role.GUARD;
 	}	
 	else if (mbRole == Role.UN_CHILD) { // 아이 
 		mbLocation = null;
@@ -209,7 +190,7 @@ public class IndexController {
 	}	
 
 	// 유저 싱글톤? 나중에 고려
-	userdao.savedetails(mbId,mbNick,mbRole,mbEmail,mbInterest,mbLocation,mbGuard); // 아이: mbLocation이 null, 보호자: mbGuard이 null
+	userdao.updatedetails(mbId,mbNick,mbRole,mbEmail,mbInterest,mbLocation,mbGuard); // 아이: mbLocation이 null, 보호자: mbGuard이 null
 
 	return "회원가입 축하 페이지";
 	}

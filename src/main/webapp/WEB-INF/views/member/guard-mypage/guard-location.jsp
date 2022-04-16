@@ -22,7 +22,6 @@
 	<br>
 	<h3 id = "guappend"></h3>	
 	
-	
 	<div id="map" style="width:750px;height:350px;"></div>
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13"></script>
@@ -41,33 +40,21 @@
 	
 	    /* 좌표로 구정보 얻기 : 카카오 API*/
 	    $("#mylocation_btn").on('click', function(){ /* ajax로 요청한 뒤 파싱은 어떻게 하는가?  */
-/*
-	    	$.ajax({
-				url: "/kakao/local", 
-				type: 'GET',
-				data : 
-				{'latitude' : latitude, 'longitude' : longitude
-				},
-				
-				success: function(response) {
-					console.log("구: " + response); 
-					$("#guappend").html("현재 " + response + "에 있어요");
-				},
-		    	error : function(e) {
-		        	console.log(e);
-		        	}			     	
-			}); // ajax 	 
-*/
 
  			 $.ajax({
-				url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&output_coord=WGS84&x=126.92880&y=37.37087',
+				url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&output_coord=WGS84&x=' + longitude +'&y=' + latitude,
 			    headers : {'Authorization' : 'KakaoAK 81c7bda99c1d17edaf364c7a1fe1b80d'},
 				type: 'GET',
 					
 				success: function(response) {
-					const obj = JSON.parse(response);
-					console.log("구: " + documents[0].region_2depth_name); 
-					$("#guappend").html("현재 " + obj + "에 있어요");
+ 						var contentStr = "";
+ 						contentStr += JSON.stringify(response.documents[0].road_address.region_2depth_name); /* 파싱 한다음에 JSON.stringify 하기.. */
+ 						var len = contentStr.length;
+ 						contentStr = contentStr.substring(1,len-1)
+ 						alert(contentStr);
+
+ 					$("#guappend").html("현재 " + contentStr + "에 있어요");
+ 					$("#guappend2").attr("val", contentStr);
 				},
 			    error : function(e) {
 			        console.log(e);
@@ -89,13 +76,14 @@
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 
 		// 지도에 확대 축소 컨트롤을 생성한다
-		var zoomControl = new kakao.maps.ZoomControl();
+/* 		var zoomControl = new kakao.maps.ZoomControl();
 
 		// 지도의 우측에 확대 축소 컨트롤을 추가한다
-		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT); */
 
 
 	}); // navigator
+	
 	</script>	
 
  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=LIBRARY"></script>
@@ -103,7 +91,10 @@
  	
  	<button id = "mylocation_btn">내위치 조회</button>
  
- 	<button>확인했어요</button>
+ 	<form action = "/register/complete" method = "post">
+		<input type = hidden id = "guappend2" name = "mbLocation" >
+	 	<button id = "confirm_btn">확인했어요</button>
+	</form>
  
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />

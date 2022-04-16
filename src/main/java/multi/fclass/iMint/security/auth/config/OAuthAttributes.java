@@ -107,7 +107,7 @@ public class OAuthAttributes {
             	.mbNick ((String) attributes.get("name")) // 임시 
             	.mbEmail ((String) attributes.get("email")) 
             	.mbIsdelete (false) 
-                .mbRole(Role.GAURD) // 임시 
+                .mbRole(Role.GUARD) // 임시 
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -127,7 +127,7 @@ public class OAuthAttributes {
 		}
 		
 		else { // 나이가 20살 이상이면
-				role = Role.UN_GAURD;
+				role = Role.UN_GUARD;
 		}  
 				
 			// 연령대 받아온 경우
@@ -157,7 +157,7 @@ public class OAuthAttributes {
 		}
 		
 		else { // 나이가 20살 이상이면
-				role = Role.UN_GAURD;
+				role = Role.UN_GUARD;
 		}  
 				
 			// 연령대 받아온 경우
