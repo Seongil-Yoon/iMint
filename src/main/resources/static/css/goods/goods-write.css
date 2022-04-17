@@ -6,3 +6,120 @@
 .container {
     background-color: beige;
 }
+
+.container form {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.container>form>div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    /* 화면너비 줄어들면 줄바꿈 */
+
+    margin-bottom: 15px;
+}
+
+.row1 {
+    /* 
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: flex-start;
+    */
+}
+
+.row1>div {
+    height: 150px;
+}
+
+
+.row1>.location {
+    min-width: 38%;
+    margin-right: 2%;
+}
+
+/* filePond css */
+.upload-popup {
+    display: none;
+    position: absolute;
+    width: 90%;
+    height: 400px;
+    margin-left: 20px;
+    margin-top: -4%;
+}
+
+.upload-popup> :nth-child(1) {
+    max-height: 400px;
+}
+
+.upload-popup>.filepond--list-scroller {
+    height: 400px;
+    overflow: auto;
+}
+/* end of filePond css */
+
+@media screen and (max-width: 768px) {
+    .row1>.location {
+        width: 100%;
+    }
+}
+
+.row1>.location>input {
+    height: inherit;
+}
+
+.row1>#thumbnail {
+    min-width: 29%;
+    margin-right: 2%;
+}
+
+.row1>#otherImages {
+    min-width: 29%;
+}
+
+.row2 {}
+
+.row2>.title {
+    min-width: 68%;
+    margin-right: 2%;
+}
+
+.row2>.category {
+    min-width: 30%;
+}
+
+.row3 {}
+
+.row3>.suggestible {
+    min-width: 38%;
+    margin-right: 2%;
+}
+
+.row3>.price {
+    min-width: 60%;
+}
+
+.row4 {}
+
+.row4>.content {
+    width: 100%;
+    height: 300px;
+}
+
+.row4>.content>textarea {
+    height: inherit;
+    resize: none;
+}
+
+.row5 {}
+
+.row5> :first-child {
+    flex: 8;
+    order: 1;
+}
+
+.row5>#goodsSubmit {
+    flex: 2;
+    order: 2;
+}

@@ -96,7 +96,7 @@
 					</c:when>
 					<c:when test="${sessionScope.mbId == goods.sellerId}">
 						<a class="btn btn-primary" href="/chatroom/">
-							내 채팅 목록가기
+							내 채팅 목록가기 
 						</a>
 					</c:when>
 					<c:otherwise>
@@ -117,9 +117,7 @@
 	<script type="text/javascript" src="/static/js/goods/goods-detail.js"></script>
 	<script type="text/javascript" src="/static/js/goods/carousel.js"></script>
 	<script>
-		carouselReady($ {
-			goods.goodsId
-		});
+		carouselReady( ${goods.goodsId} );
 	</script>
 </body>
 
