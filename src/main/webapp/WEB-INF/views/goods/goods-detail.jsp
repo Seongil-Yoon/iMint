@@ -73,7 +73,7 @@
 		<article class="goods-content-wrap">
 			<textarea disabled="" id="goods-content" placeholder=${goods.goodsContent}></textarea>
 		</article>
-		<article class="goods-action" id="js-goods-action">
+		<article class="roundBox goods-action" id="js-goods-action">
 			<!-- 일단 로그인됫다고 가정하고 페이지작성 -->
 			<div>
 				<span>카테고리 : ${goods.goodsCategory}</span>
@@ -96,7 +96,7 @@
 					</c:when>
 					<c:when test="${sessionScope.mbId == goods.sellerId}">
 						<a class="btn btn-primary" href="/chatroom/">
-							내 채팅 목록가기
+							내 채팅 목록가기 
 						</a>
 					</c:when>
 					<c:otherwise>
@@ -115,9 +115,9 @@
 
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
 	<script type="text/javascript" src="/static/js/goods/goods-detail.js"></script>
-	<script  type="text/javascript"src="/static/js/goods/carousel.js"></script>
+	<script type="text/javascript" src="/static/js/goods/carousel.js"></script>
 	<script>
-		carouselReady(${goods.goodsId});
+		carouselReady( ${goods.goodsId} );
 	</script>
 </body>
 

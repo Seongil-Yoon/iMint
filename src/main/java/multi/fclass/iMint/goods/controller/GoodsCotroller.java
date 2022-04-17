@@ -1,5 +1,6 @@
 package multi.fclass.iMint.goods.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 import multi.fclass.iMint.goods.service.GoodsServiceImpl;
+import multi.fclass.iMint.member.dto.MemberDTO;
 
 /**
  * @author Seongil, Yoon
@@ -39,7 +41,10 @@ public class GoodsCotroller {
 	}
 	
 	@GetMapping("goods/write")
-	public String goodsWriteView() {
+	public String goodsWriteView(Model model) {
+//		나중에 세션값으로 대체
+		MemberDTO dto1 = new MemberDTO("test1235", "무민1919", "대구 수성구");
+		model.addAttribute("member",dto1);
 		return "goods/goods-write";
 	}
 	

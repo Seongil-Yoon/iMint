@@ -73,11 +73,11 @@ article.goods-content-wrap>textarea {
 
 article.goods-action {
     position: fixed;
-    padding: 1.5rem;
+    /* padding: 1.5rem;
     border: 1px;
     border-radius: 1rem;
     border-style: solid;
-    border-color: rgb(155, 155, 155);
+    border-color: rgb(155, 155, 155); */
     bottom: 48px;
     height: 100px;
     background-color: white;

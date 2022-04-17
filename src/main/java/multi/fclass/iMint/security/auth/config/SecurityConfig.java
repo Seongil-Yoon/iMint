@@ -48,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //			
 //			.antMatchers("/mypage/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
 //			.antMatchers("/goods/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
+        .antMatchers("/goods-*/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')")//  or hasRole('ROLE_ADMIN')
+			  .antMatchers("/iMintImage/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')")//  or hasRole('ROLE_ADMIN')
 //			.antMatchers("/chat/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN') // 뷰 
 //			.antMatchers("/chatting/**").access("hasRole('ROLE_GAURD') or hasRole('ROLE_CHILD')") // 웹소켓 
 //			

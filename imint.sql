@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `chatroom` (
   KEY `FK_chatroom_member` (`buyer_id`,`buyer_nick`),
   CONSTRAINT `FK_chatroom_goods` FOREIGN KEY (`goods_id`, `seller_id`, `seller_nick`) REFERENCES `goods` (`goods_id`, `seller_id`, `seller_nick`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_chatroom_member` FOREIGN KEY (`buyer_id`, `buyer_nick`) REFERENCES `member` (`mb_id`, `mb_nick`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -75,12 +75,12 @@ CREATE TABLE IF NOT EXISTS `goods` (
   `goods_suggestible` tinyint(1) NOT NULL DEFAULT '0' COMMENT '흥정가능여부',
   `goods_location` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '거래지역',
   `goods_create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '판매등록일자',
-  `goods_status` enum('wait','resrv','comp') CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci DEFAULT NULL COMMENT '거래상태',
+  `goods_status` enum('wait','resrv','comp') CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci DEFAULT 'wait' COMMENT '거래상태',
   `goods_isdelete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '상품 삭제 여부',
   PRIMARY KEY (`goods_id`,`seller_id`,`seller_nick`) USING BTREE,
   KEY `FK_goods_member` (`seller_id`,`seller_nick`),
   CONSTRAINT `FK_goods_member` FOREIGN KEY (`seller_id`, `seller_nick`) REFERENCES `member` (`mb_id`, `mb_nick`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `goods_images` (
   PRIMARY KEY (`goods_images_id`,`goods_id`) USING BTREE,
   KEY `FK_goods_images_goods` (`goods_id`),
   CONSTRAINT `FK_goods_images_goods` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
