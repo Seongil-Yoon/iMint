@@ -19,8 +19,8 @@ public interface IWishlistDAO {
 
 	public int insertWishlist(Map<String, Object> params);
 
-	public int updateWishlist(int wishlistId);
+	public int updateWishlist(Map<String, Object> params);
 
-	public int removeWishlist(int wishlistId);
+	public int removeWishlist(Map<String, Object> params);
 
 }

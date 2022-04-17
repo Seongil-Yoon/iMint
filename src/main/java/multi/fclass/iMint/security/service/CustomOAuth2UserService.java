@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import multi.fclass.iMint.security.auth.config.OAuthAttributes;
 import multi.fclass.iMint.security.dao.IUserDAO;
-import multi.fclass.iMint.security.model.SessionUser;
-import multi.fclass.iMint.security.model.User;
+import multi.fclass.iMint.security.dto.SessionUser;
+import multi.fclass.iMint.security.dto.User;
 
 @RequiredArgsConstructor
 @Service

@@ -6,12 +6,12 @@ package multi.fclass.iMint.wishlist.service;
  */
 public interface IWishlistService {
 
-	public int countWishlist(int goodsId);
-	
-	public boolean checkWishlist(String myId, int goodsId);
+	public int countWishes(int goodsId);
 
-	public int addWishlist(String myId, int goodsId);
+	public int checkWish(String myId, int goodsId);
 
-	public int removeWishlist(String myId, int goodsId);
+	public int addWish(String myId, int goodsId);
+
+	public int removeWish(String myId, int goodsId);
 
 }

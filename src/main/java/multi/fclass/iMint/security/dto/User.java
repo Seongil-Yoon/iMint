@@ -1,9 +1,10 @@
-package multi.fclass.iMint.security.model;
+package multi.fclass.iMint.security.dto;
 
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Component
 @Data
 @NoArgsConstructor // 기본 생성자 
+@AllArgsConstructor // 전체 생성자 
 public class User {
 	
 	// 등록 순서 
@@ -54,26 +56,6 @@ public class User {
 	
 	// 권한
 	private Role mbRole;
-
-	// 전체생성자 
-	public User(Integer mbNo, String mbId, String mbProvider ,String mbGuard, String mbNick, String mbEmail, LocalDateTime mbJoinDate,
-			String mbInterest, String mbLocation, Integer mbRatingsTotal, String mbPin, String mbThumbnail,
-			Boolean mbIsdelete, Role mbRole) {
-		this.mbNo = mbNo;
-		this.mbId = mbId;
-		this.mbProvider = mbProvider;
-		this.mbGuard = mbGuard;
-		this.mbNick = mbNick;
-		this.mbEmail = mbEmail;
-		this.mbJoinDate = mbJoinDate;
-		this.mbInterest = mbInterest;
-		this.mbLocation = mbLocation;
-		this.mbRatingsTotal = mbRatingsTotal;
-		this.mbPin = mbPin;
-		this.mbThumbnail = mbThumbnail;
-		this.mbIsdelete = mbIsdelete;
-		this.mbRole = mbRole;
-	}
 	
 	// 필수값만 있는 생성자 (가입시) 
 	@Builder

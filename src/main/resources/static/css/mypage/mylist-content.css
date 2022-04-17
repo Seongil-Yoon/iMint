@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+/* 탭 내용 - 항목명 */
+.item-lables{
+    display: grid;
+    grid-template-columns: 1fr 3fr 3fr 4fr 1.8fr 3.5fr 3fr ;
+    grid-gap: 0/5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: rgb(204, 204, 204) solid 1px;
+    padding-bottom: 0.5rem;
+}
+
+/* 탭 내용 - 항목별 내용 */
+.item-list{
+    display: grid;
+    grid-template-columns: 1fr 3fr 3fr 4fr 1.8fr 3.5fr 3fr ;
+    grid-gap: 0/5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: rgb(204, 204, 204) solid 1px;
+}
+
+.text {
+    margin: auto;
+    height: 100px;
+    line-height: 6;
+}

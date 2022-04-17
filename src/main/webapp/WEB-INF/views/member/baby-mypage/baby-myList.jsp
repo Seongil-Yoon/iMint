@@ -6,8 +6,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>아이민트 :: 마이페이지</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_asidebar.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage_mylist.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_mylist.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mylist-content.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
@@ -50,34 +51,71 @@
 	                <!-- 관심/구매예약 내용 -->
 	                <div id="tab-1-content" class="tab-content-item show">
 	                    <div class="tab-1-content-inner">
-	                        <p>관심/구매예약 내용</p>
+	                        <jsp:include page="mylist-content.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 판매목록 내용 -->
 	                <div id="tab-2-content" class="tab-content-item">
 	                    <div class="tab-2-content-inner">
-	                        <p>판매목록 내용</p>
+	                        <jsp:include page="mylist-content.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 거래완료목록 내용 -->
 	                <div id="tab-3-content" class="tab-content-item">
 	                    <div class="tab-3-content-inner">
-	                        <p>거래완료목록 내용</p>
+	                    	 <jsp:include page="mylist-content.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 채팅목록 내용 -->
 	                <div id="tab-4-content" class="tab-content-item">
 	                    <div class="tab-4-content-inner">
-	                        <p>채팅목록 내용</p>
-	                    </div>
-	                </div>
-	            </div>
-	        </section>
+	                        <!-- 항목명 -->
+		                        <div class="item-lables-chat">
+		                            <div class="checkbox">
+		                                <h6 class="lables-checkbox">선택</h6>
+		                            </div>
+		                            <div class="photo">
+		                                <h6 class="lables-person">채팅 상대</h6>
+		                            </div>
+		                            <div class="interest">
+		                                <!-- <h6 class="lables-interest">관심 수</h6> -->
+		                            </div>
+		                            <div class="link">
+		                                <h6 id="link-price-out" class="lables-link">바로가기</h6>
+		                            </div>
+		                        </div>
+		                        <!-- 항목별 내용 -->
+		                        <div class="item-list-chat">
+		                            <div class="checkbox">
+		                                <input type="checkbox" name="selected"/>
+		                            </div>
+		                            <div class="person">
+		                                <p class="person-photo">사진(예정)</p>
+		                                <div class="person-detail">
+		                                    <p class="item-person-nickname">상대방 닉네임</p>
+		                                    <p class="item-person-chat">마지막 채팅</p>
+		                                    <div class="item-detail">
+		                                        <p class="item-subject">상품명</p>
+		                                        <p class="item-price">가격</p>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div class="interest">
+		                                <!-- <p class="text">관심 2</p> -->
+		                            </div>
+		                            <div class="link">
+		                                <p class="text">바로가기</p>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </section>
 	    	</div>
 	    </div>
     </div>
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
-	<script src="/static/js/mypage-mylist.js"></script>
+	<script src="/static/js/mypage/mypage-mylist.js"></script>
 </body>
 </html>
