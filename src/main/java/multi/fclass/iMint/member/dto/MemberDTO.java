@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
-import multi.fclass.iMint.security.model.Role;
 
 @Data
 @Builder
