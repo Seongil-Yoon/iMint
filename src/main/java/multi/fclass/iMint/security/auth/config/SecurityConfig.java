@@ -43,8 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
       
 			.antMatchers("/register/**").access("hasRole('ROLE_uncerti_GUARD') or hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
 
-			.antMatchers("/mypage/location").access("hasRole('ROLE_GUARD') or hasRole('ROLE_uncerti_GUARD')") /* or hasRole('ROLE_ADMIN') */
-			.antMatchers("/mypage/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
+//			.antMatchers("/mypage/location").access("hasRole('ROLE_GUARD') or hasRole('ROLE_uncerti_GUARD')") /* or hasRole('ROLE_ADMIN') */
+//			.antMatchers("/mypage/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
+			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 로그인한 admin만 들어올 수 있다.
 			
 			.anyRequest().permitAll(); // 임시 허용
 			
