@@ -94,8 +94,8 @@
  	<button id = "mylocation_btn">내위치 조회</button>
  
  	<form action = "/register/complete" method = "post">
-		<input type = hidden id = "guappend2" name = "mbLocation" >
-	 	<button id = "confirm_btn">확인했어요</button>
+		<input type = hidden id = "guappend2" name = "mbLocationOrGuard" >
+	 	<button>확인했어요</button>
 	</form>
  
 	<jsp:include page="../../include/footer.jsp" flush="false"/>

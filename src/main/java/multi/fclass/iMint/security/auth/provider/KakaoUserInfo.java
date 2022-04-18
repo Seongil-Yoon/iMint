@@ -11,8 +11,6 @@ public class KakaoUserInfo implements OAuth2UserInfo{
 	// attributes 에 {id=.., email=.., name=..} 이 넘어온다.
     public KakaoUserInfo(Map<String, Object> attributes) {
         this.attributes = attributes;
-//        this.attributesAccount = (Map<String, Object>)attributes.get("kakao_aacount");
-//        this.attributesProfile = (Map<String, Object>)attributes.get("profile");
         this.attributesAccount = (Map<String, Object>)attributes.get("kakao_account");
         this.attributesProfile = (Map<String, Object>)attributes.get("properties");
     }
@@ -36,10 +34,11 @@ public class KakaoUserInfo implements OAuth2UserInfo{
 	public String getMbId() {
 		return String.valueOf(attributes.get("id"));
 	}
-//	
+
 	@Override
 	public String getAgeRange() {
 		String result = (String) attributesAccount.get("age_range");
+		result.replace("~", "-");
 		System.out.println("연령대: " + result);
 		return result;  
 	}

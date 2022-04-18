@@ -56,6 +56,10 @@ public class User {
 	
 	// 권한
 	private Role mbRole;
+//	
+//	// 아이 테스트용(test)
+//	private String originMbId;
+	
 	
 	// 필수값만 있는 생성자 (가입시) 
 	@Builder
@@ -69,18 +73,7 @@ public class User {
         this.mbLocation = mbLocation;
         this.mbPin = mbPin;
         this.mbRole = mbRole;
-    }
-	
-	// 회원가입 3
-//	@Builder
-//    public User(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
-//		this.mbId = mbId;
-//		this.mbNick = mbNick;
-//		this.mbRole = mbRole;
-//		this.mbEmail = mbEmail;
-//        this.mbInterest = mbInterest;
-//    }
-	
+    }	
 	
 	// 수정 가능한 고객 정보 
     public User update(String mbGuard, String mbInterest, String mbLocation, String mbNick, Integer mbRatingsTotal, String mbPin, String mbThumbnail,
@@ -100,4 +93,25 @@ public class User {
     public String getRoleKey() {
         return this.mbRole.getKey();
     }
+
+    // 전세 생성자 (oringMbId 제외)
+//	public User(Integer mbNo, String mbId, String mbProvider, String mbGuard, String mbNick, String mbEmail,
+//			LocalDateTime mbJoinDate, String mbInterest, String mbLocation, Integer mbRatingsTotal, String mbPin,
+//			String mbThumbnail, Boolean mbIsdelete, Role mbRole) {
+//		super();
+//		this.mbNo = mbNo;
+//		this.mbId = mbId;
+//		this.mbProvider = mbProvider;
+//		this.mbGuard = mbGuard;
+//		this.mbNick = mbNick;
+//		this.mbEmail = mbEmail;
+//		this.mbJoinDate = mbJoinDate;
+//		this.mbInterest = mbInterest;
+//		this.mbLocation = mbLocation;
+//		this.mbRatingsTotal = mbRatingsTotal;
+//		this.mbPin = mbPin;
+//		this.mbThumbnail = mbThumbnail;
+//		this.mbIsdelete = mbIsdelete;
+//		this.mbRole = mbRole;
+//	}
 }

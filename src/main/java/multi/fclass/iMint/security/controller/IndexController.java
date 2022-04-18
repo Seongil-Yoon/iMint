@@ -90,21 +90,14 @@ public class IndexController {
 //        log.info("---------- Log 테스트 ---------");
 //		log.info("auth : {}", auth.getPrincipal()); // 로그 기록
 //		log.info("exception : {}", ade); // 로그 기록
-        
-		// 모듈화 
-//		DefaultOAuth2User authorization = (DefaultOAuth2User) auth.getPrincipal();
-//        System.out.println(authorization);
-//
-//		Collection<? extends GrantedAuthority> auth2 = authorization.getAuthorities();
-//        System.out.println(auth2.toString());
 		
 		// 모듈화 결과(아래 1줄)
-		String auth2 = parseMbRole.parseMbRole(auth);
-		
-        //// 끝
-        
-		mv.addObject("auth", auth2);
-		mv.addObject("errMsg", ade);
+//		String mbId = parseMbId.parseMbId(auth);
+//		User user = parseMbId.getUserMbId(mbId);
+//		String mbRole = user.getMbRole().toString();
+//		System.out.println(mbRole);
+//		mv.addObject("mbRole", mbRole);
+//		mv.addObject("errMsg", ade);
 		
 		mv.setViewName("err/deniedpage");
 		
@@ -128,17 +121,57 @@ public class IndexController {
 	}
 	
 	// 회원가입 3(보호자, 아이 모두. 로직은 분리)
-	@PostMapping("/register")
-	public ModelAndView registersns(String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+	@PostMapping("/register") // , String guardNick,String guardPin
+	public ModelAndView registersns(HttpServletRequest req, String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
+		ModelAndView mv = new ModelAndView();
+		
 		// 유저 정보 업데이트 
 		User user = parseMbId.getUserMbId(mbId);
 		user.setMbNick(mbNick);
 		user.setMbEmail(mbEmail);
 		user.setMbInterest(mbInterest);
+		
+		// 테스트중 
+//		if (user.getMbRole() == Role.UN_CHILD) { // 아이 
+//			User guardUser = userdao.findByMbNick(guardNick);
+//			if (guardUser != null & guardUser.getMbPin().equals(guardPin)) {
+//				user.setMbGuard(guardNick);
+//				user.setMbLocation(null);
+//				user.setMbRole(Role.CHILD);
+//				user.setMbPin(null);
+//				userdao.
+//				mv.setViewName("member/baby-mypage/baby-main");
+//				return mv;
+//			}
+//			else {
+//				mv.setViewName("member/register_connect");	// 보호자의 입력정보가 틀리면 다시 보내기
+//				mv.addObject("err", "입력하신 보호자의 정보가 일치하지 않습니다. 보호자의 마이페이지에서 닉네임, Pin번호를 확인해주세요.");
+//				return mv;
+//			}
+//		}	
+
+//		// DB저장
+//		userdao.updateregister4(user);
+//
+//		// 세션 수정
+//	    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
+//	    authorities.add(new SimpleGrantedAuthority(user.getRoleKey()));
+//		// 세션에 변경사항 저장
+//		SecurityContext context = SecurityContextHolder.getContext();
+//		// UsernamePasswordAuthenticationToken
+//		context.setAuthentication(new UsernamePasswordAuthenticationToken(user.getMbId(), null, authorities));
+//		HttpSession session = req.getSession(true);
+//		//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+//		session.setAttribute(HttpSessionSecurityContextRepository.
+//		                       SPRING_SECURITY_CONTEXT_KEY, context);
+//
+//		mv.addObject("session", session);
+//		
+		
 		userdao.updateregister3(user);
 		
-		ModelAndView mv = new ModelAndView();
+
 
 		if(mbRole.equals("UN_GUARD")) {
 			mv.setViewName("member/guard-mypage/guard-location");
@@ -146,12 +179,13 @@ public class IndexController {
 		else if(mbRole.equals("UN_CHILD")) {
 			mv.setViewName("member/register_connect");			
 		}
-		
+//		
 		mv.addObject("user", user);
 		return mv;
 	}
 	
-	
+
+
 	
 	// 회원가입 3(보호자): 내 동네 설정 -> 보호자, 관리자 권한 부여
 
@@ -199,7 +233,7 @@ public class IndexController {
 	// 회원가입 4(최종. 보호자, 아이 모두)
 	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
 	@RequestMapping("/register/complete")
-	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocation, String mbGuard) {
+	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard, String guardPin) {
 	
 	ModelAndView mv = new ModelAndView();
 		
@@ -209,17 +243,26 @@ public class IndexController {
 	// mbLocation 받아오기 
 	if (user.getMbRole() == Role.UN_GUARD) { // 보호자 
 		user.setMbGuard(null);
-		user.setMbLocation(mbLocation);
+		user.setMbLocation(mbLocationOrGuard);
 		user.setMbRole(Role.GUARD);
 		user.setMbPin(new GenerateCertCharacter().excuteGenerate());
 		mv.setViewName("member/guard-mypage/guard-main");
 	}	
 	else if (user.getMbRole() == Role.UN_CHILD) { // 아이 
-		user.setMbGuard(mbGuard);
-		user.setMbLocation(null);
-		user.setMbRole(Role.CHILD);
-		user.setMbPin(null);
-		mv.setViewName("member/baby-mypage/baby-main");
+		User guardUser = userdao.findByMbNick(mbLocationOrGuard);
+		if (guardUser != null & guardUser.getMbPin().equals(guardPin)) {
+			user.setMbGuard(guardUser.getMbId());
+			user.setMbLocation(null);
+			user.setMbRole(Role.CHILD);
+			user.setMbPin(null);
+			mv.setViewName("member/baby-mypage/baby-main");
+		}
+		else {
+//			mv.setViewName("member/register_connect");	// 보호자의 입력정보가 틀리면 다시 보내기
+			mv.setViewName("redirect:/register");	// 보호자의 입력정보가 틀리면 다시 보내기
+			
+			return mv;
+		}
 	}	
 
 	// DB저장

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import multi.fclass.iMint.security.auth.config.OAuthAttributes;
+import multi.fclass.iMint.security.auth.provider.OAuth2UserInfo;
 import multi.fclass.iMint.security.dao.IUserDAO;
 import multi.fclass.iMint.security.dto.SessionUser;
 import multi.fclass.iMint.security.dto.User;
@@ -27,7 +28,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
+        
+    	OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
         
 		// 구글 로그인 버튼 클릭 -> 구글 로그인 창 -> 로그인 완료 -> code 리턴(OAuth-Client라이브러리) -> Access Token 요청
@@ -58,7 +60,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         
         // OAuthAttributes: attribute를 담을 클래스 (개발자가 생성)
         OAuthAttributes attributes = OAuthAttributes
-                .of(mbProvider, userNameAttributeName, oAuth2User.getAttributes()); // 로그인, 로그인한 유저 정보 받아오기 
+                .of(mbProvider, userNameAttributeName, oAuth2User.getAttributes()); // 로그인, 로그인한 유저 정보 받아오기
+        
         User user = SaveOrUpdate(attributes);
         
         // SessioUser: 세션에 사용자 정보를 저장하기 위한 DTO 클래스 (개발자가 생성)
@@ -70,16 +73,17 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         );
     }
     
-    // 유저가 있는지 확인(email로) 
+    // 유저가 있는지 확인 
     private User SaveOrUpdate(OAuthAttributes attributes) {
+    	
         User user;
+        
         if(userDAO.findByMbId(attributes.getMbId()) != null){
             System.out.println("이미 가입되어 있는 회원입니다.");
         	user = userDAO.findByMbId(attributes.getMbId());
         }
         else {
             user = attributes.toEntity();
-
             userDAO.savesns(user);
             System.out.println("최초 로그인으로 자동 가입됩니다.");
         	user = userDAO.findByMbId(attributes.getMbId());
@@ -87,6 +91,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         return user;
     }
-   
+
 
 }

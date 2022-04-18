@@ -12,9 +12,12 @@ public interface IUserDAO {
     //로그인 & 회원가입
     public User findByMbId(String mbId);
     public User findByMbEmail(String mbEmail);
-    
+    public User findByMbNick(String mbNick);
+
     public void savesns(User user); // 1차 sns 가입
     // 회원가입 3, 4
+//    public void updateregister3Child(User user);
+
     public void updateregister3(User user);
     public void updateregister4(User user);
 
