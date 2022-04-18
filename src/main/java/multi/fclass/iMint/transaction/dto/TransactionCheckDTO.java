@@ -7,8 +7,9 @@ import lombok.Getter;
  *
  */
 @Getter
-public class ReservationCheckDTO {
+public class TransactionCheckDTO {
 
+	private Integer id;
 	private String sellerId;
 	private String buyerId;
 
