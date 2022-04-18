@@ -1,7 +1,6 @@
 package multi.fclass.iMint.mypage.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,10 +13,10 @@ import multi.fclass.iMint.mypage.dto.MypageDTO;
 @Mapper
 public interface IMypageDAO {
 
-	public List<MypageDTO> getWishList(Map<String, Object> params);
+	public List<MypageDTO> getWishAndReserveList(String myId, int startIndex, int numberOfItems);
 
-	public List<MypageDTO> getSellingList(Map<String, Object> params);
+	public List<MypageDTO> getSellingList(String myId, int startIndex, int numberOfItems);
 
-	public List<MypageDTO> getCompleteList(Map<String, Object> params);
+	public List<MypageDTO> getCompleteList(String myId, int startIndex, int numberOfItems);
 
 }

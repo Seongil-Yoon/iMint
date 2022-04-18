@@ -3,8 +3,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.mypage.dao.IMypageDAO">
-	<!-- 관심 + 구메예약 목록 -->
-	<select id="getWishList" parameterType="Map" resultType="MypageDTO">
+	<!-- 관심 + 구매예약 목록 -->
+	<select id="getWishAndReserveList" resultType="MypageDTO">
 		SELECT
 			category,
 		    goods_id,
@@ -79,7 +79,7 @@
 	</select>
 	
 	<!-- 판매중(대기 + 예약) 목록 -->
-	<select id="getSellingList" parameterType="Map" resultType="MypageDTO">
+	<select id="getSellingList" resultType="MypageDTO">
 		SELECT
 			IF(g.goods_status = "wait", "wait", "resrv") AS category,
 			g.goods_id,
@@ -110,7 +110,7 @@
 	</select>
 	
 	<!-- 거래(구매 + 판매)완료 목록 -->
-	<select id="getCompleteList" parameterType="Map" resultType="MypageDTO">
+	<select id="getCompleteList" resultType="MypageDTO">
 		SELECT
 			IF(trx.mb_id LIKE #{myId}, "buy", "sell") AS category,
 			g.goods_id,

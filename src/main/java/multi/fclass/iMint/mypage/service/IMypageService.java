@@ -11,7 +11,7 @@ import multi.fclass.iMint.mypage.dto.MypageDTO;
 public interface IMypageService {
 
 	// 관심 목록 조회 서비스
-	public List<MypageDTO> getWishList(String myId, int pageNumber, int numberOfItems);
+	public List<MypageDTO> getWishAndReserveList(String myId, int pageNumber, int numberOfItems);
 
 	// 판매중 목록 조회 서비스
 	public List<MypageDTO> getSellingList(String myId, int pageNumber, int numberOfItems);
