@@ -1,0 +1,129 @@
+@charset "UTF-8";
+
+/* 페이지 전체 컨테이너 */
+.container-page{
+	width: 1200px;
+	margin:auto;
+	padding-left: 3rem;
+	padding-right: 3rem;
+}
+
+/* 어사이드, 메인 2열 구현 컨테이너 */
+.container-aside-main{
+	display: grid;
+    grid-template-columns: 0.5fr 3.5fr;
+    grid-gap: 1.3rem;
+    /* width: 1300px; */
+   	justify-content: center;
+   	
+}
+
+/* 페이지 타이틀 */
+.title{
+	width: 1300px;
+    padding-top: 3rem;
+}
+
+/* 어사이드 바*/
+.container-aside{
+	padding-top: 5rem;
+	height: 700px;
+}
+
+/* 메인 컨테이너 */
+.container-main {
+	/* width: 700px; */
+    display: block;
+    text-align: center;
+    padding: 3rem;
+    border: 1px;
+}
+
+/* 탭 내용 컨테이너*/
+.tab-content > .container{
+    margin-top: 1rem;
+}
+
+.tab-content-item{
+    padding: 2rem;
+    background-color: #F9F9F9;
+    border-radius: 10px;
+}
+
+
+/* 버튼 */
+.buttons{
+    display: grid;
+    grid-template-columns: 50px 50px 60px 60px;
+    grid-gap: 0.5rem;
+    /* width: 250px; */
+    margin-bottom: 1.5rem;
+    /* margin-right: 0rem;
+    margin-left: 1rem; */
+    align-items: center;
+    justify-content: right;
+    text-align: center;
+}
+
+.select-title{
+    font-size: small;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+/* 채팅목록 내용 */
+
+/* 채팅목록-항목명 정렬 */
+.item-lables-chat{
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
+    /* grid-gap: 0.5rem; */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: rgb(204, 204, 204) solid 1px;
+    padding-bottom: 1rem;
+}
+
+/* 채팅목록-항목별 내용 정렬 */
+.item-list-chat{
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr ;
+    grid-gap: 0/5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: rgb(204, 204, 204) solid 1px;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+/* 채팅목록 내 상대 사진, 상대 내용 2열 정렬 */
+.person{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-gap: 0/5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+} 
+
+/* 채팅목록 내용 > 상대방 닉네임 굵기 처리 */
+.item-person-nickname {
+    font-weight: bold;
+}
+
+/* 채팅목록 내용 > 상대 내용 왼쪽 정렬 */
+.person-detail{
+    text-align: left;
+}
+
+/* 채팅목록 내용 > 상품명, 가격 2열 정렬 */
+.item-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-gap: 0/5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+}
