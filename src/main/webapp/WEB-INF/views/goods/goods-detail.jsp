@@ -48,7 +48,7 @@
 				</div>
 				<div class="carousel-inner">
 					<!-- JS영역 -->
-					<div class="carousel-item active">
+					<!-- <div class="carousel-item active">
 						<img src="/static/images/hamster.png" class="d-block w-100" alt="...">
 					</div>
 					<div class="carousel-item">
@@ -56,7 +56,7 @@
 					</div>
 					<div class="carousel-item">
 						<img src="/static/images/hamster.png" class="d-block w-100" alt="...">
-					</div>
+					</div> -->
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
 					data-bs-slide="prev">

@@ -17,16 +17,17 @@
 
 	<section class="container">
 		<form>
-			<input style="display: none;" type="hidden" name="mbId" value="${sessionScope.mbId}" />
-			<input style="display: none;" type="hidden" name="mbNick" value="${sessionScope.mbNick}" />
+			<input style="display: none;" type="hidden" name="mbId" value="${member.mbId}" />
+			<input style="display: none;" type="hidden" name="mbNick" value="${member.mbNick}" />
 			<article class="upload-popup" id="uploadPopup">
 				<input type="file" multiple name="goodsImages" id="goodsImages"
 					accept=".jpg, .jpeg, .png, .svg, .gif" />
 				<!-- 파일폰드 영역 -->
-				<button class="btn btn-primary" id="uploadDone">
+				<button type="button" class="btn btn-primary" id="uploadDone">
 					완료
 				</button>
 			</article>
+			<div class="popup-overlay"  tabindex="-1" style="opacity: 0; display: none;"></div>
 			<div class="row1">
 				<div class="form-floating location">
 					<input class="form-control" type="text" value="${member.mbLocation}" name="goodsLocation"
@@ -41,7 +42,7 @@
 			</div>
 			<div class="row2">
 				<div class="form-floating title">
-					<input type="text" class="form-control" id="floatingInputValue" placeholder="" name="goodsTitle"
+					<input type="text" class="form-control" id="floatingInputValue" placeholder="" name="goodsTitle" required
 						value="">
 					<label for="floatingInputValue">제목 입력하기</label>
 				</div>
@@ -69,7 +70,7 @@
 					<label class="btn btn-outline-primary" for="suggestTrue">가격 흥정 가능</label>
 				</div>
 				<div class="form-floating price">
-					<input type="number" class="form-control" id="floatingInputValue" placeholder="원" name="goodsPrice"
+					<input type="number" class="form-control" id="floatingInputValue" placeholder="원" name="goodsPrice" required
 						value="">
 					<label for="floatingInputValue">가격 입력하기</label>
 				</div>
@@ -77,7 +78,7 @@
 			<div class="row4">
 				<div class="form-floating content">
 					<textarea class="form-control" placeholder="100자 이내" id="floatingTextarea"
-						name="goodsContent"></textarea>
+						name="goodsContent" required></textarea>
 					<label for="floatingTextarea">글 내용 입력하기(100자 이내)</label>
 				</div>
 			</div>

@@ -36,7 +36,7 @@ public class FileServiceImpl implements IFileService {
 		for (String path : paths) {
 			File dirPath = new File(completePath += path + route);
 			if (!dirPath.exists()) {
-				dirPath.mkdir();
+				dirPath.mkdirs();
 			}
 		}
 		return completePath;

@@ -59,5 +59,9 @@
    		</selectKey>   
 	</insert>
 	
+	<delete id="goodsDelete">
+		DELETE FROM `imint`.`goods` WHERE `goods_id`= #{goodsId} AND `seller_id`=#{sellerId};
+	</delete>
+	
 	
 </mapper>

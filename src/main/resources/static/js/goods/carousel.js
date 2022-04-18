@@ -6,6 +6,7 @@ function startAjax(goodsId) {
         type: "GET",
         success: function (result, jqxHR) {
             console.log(result);
+            fileTocarousel(result);
         },
         error: function (error) {
             //서버오류 500  찾는 자료없음 404  권한없음  401
@@ -18,6 +19,26 @@ function startAjax(goodsId) {
             }
         }
     })
+}
+
+function fileTocarousel(result) {
+    for (var i = 0; i < result.length; i++) {
+        let html = "";
+        if (i == 0) {
+            html += `
+            <div class="carousel-item active">
+                <img src=${result[i].goodsImagesPath} class="d-block w-100" alt="..">
+            </div>
+            `;
+        } else {
+            html += `
+            <div class="carousel-item">
+                <img src=${result[i].goodsImagesPath} class="d-block w-100" alt="..">
+            </div>
+            `;
+        }
+        $(".carousel-inner").append(html);
+    }
 }
 
 function carouselReady(goodsId) {

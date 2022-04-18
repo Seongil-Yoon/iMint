@@ -1,6 +1,8 @@
 const submitBtn = document.querySelector("#goodsSubmit");
 const uploadPopupBtn = document.querySelector("#upload-popup-btn");
 const inputElement = document.querySelector('input[type="file"]');
+const uploadDoneBtn = document.querySelector("#uploadDone");
+let popupOverlay = document.querySelector(".popup-overlay");
 let uploadPopup = document.querySelector("#uploadPopup");
 let startAjax = undefined;
 
@@ -23,8 +25,8 @@ let formData = new FormData();
 function goodsWrite() {
 
     goodsDTO = {
-        mbId: $("input[name='mbId']").val(),
-        mbNick: $("input[name='mbNick']").val(),
+        sellerId: $("input[name='mbId']").val(),
+        sellerNick: $("input[name='mbNick']").val(),
         goodsTitle: $("input[name='goodsTitle']").val(),
         goodsContent: $("textarea[name='goodsContent']").val(),
         goodsPrice: $("input[name='goodsPrice']").val(),
@@ -44,37 +46,38 @@ function goodsWrite() {
         }
     })();
 
-    if (!(goodsDTO.mbId == "" && goodsDTO.goodsTitle == "")) {
-        if (fileBuffer.length > 0) {
-            startAjax = function () {
-                $.ajax({
-                    url: "/goods/write",
-                    type: "post",
-                    data: formData,
-                    dataType: false,
-                    processData: false,
-                    contentType: false,
-                    success: function (result, textStatus, jqxHR) {
-                        if (jqxHR.status == 200 || jqxHR.status == 201) {
-                            swal('', '상품을 등록 하였습니다', 'success');
-                            //등록 성공하면 내가등록한 게시글화면으로 이동
-                            setTimeout(function () {
-                                location.href = `/goods/detail?goodsId=${result.goodsId}`;
-                            }, 2000);
-                        }
-                    },
-                    error: function (error) {
-                        //서버오류 500  찾는 자료없음 404  권한없음  401
-                        if (error.status == 404) {
-                            swal('찾는 자료가 없습니다', '', 'error');
-                        } else if (error.status == 401) {
-                            swal('접근 권한이 없습니다', '', 'error');
-                        } else if (error.status == 500) {
-                            swal('서버 오류 관리자에게 문의 하세요', '', 'error');
-                        }
-                    }
-                });
+    startAjax = function () {
+        $.ajax({
+            url: "/goods/write",
+            type: "post",
+            data: formData,
+            dataType: false,
+            processData: false,
+            contentType: false,
+            success: function (result, textStatus, jqxHR) {
+                if (jqxHR.status == 200 || jqxHR.status == 201) {
+                    swal('', '상품을 등록 하였습니다', 'success');
+                    //등록 성공하면 내가등록한 게시글화면으로 이동
+                    setTimeout(function () {
+                        location.href = `/goods/detail?goodsId=${result.goodsId}`;
+                    }, 2000);
+                }
+            },
+            error: function (error) {
+                //서버오류 500  찾는 자료없음 404  권한없음  401
+                if (error.status == 404) {
+                    swal('찾는 자료가 없습니다', '', 'error');
+                } else if (error.status == 401) {
+                    swal('접근 권한이 없습니다', '', 'error');
+                } else if (error.status == 500) {
+                    swal('서버 오류 관리자에게 문의 하세요', '', 'error');
+                }
             }
+        });
+    }
+
+    if (!(goodsDTO.goodsTitle == "" || goodsDTO.goodsContent == "" || goodsDTO.goodsPrice == "")) {
+        if (fileBuffer.length > 0) {
             startAjax();
         } else {
             swal({
@@ -95,13 +98,17 @@ function goodsWrite() {
 
 
 function fileUpload() {
+    popupOverlay.style.display = "block";
+    popupOverlay.style.opacity = 1;
     uploadPopup.style.display = 'block';
 
+    function popupHidden() {
+        popupOverlay.style.display = "none";
+        popupOverlay.style.opacity = 0;
+        uploadPopup.style.display = 'none';
+    }
 
-    // $("#uploadDone").on("click", function () {
-    //     uploadPopup.style.display = 'none';
-    // });
-
+    uploadDoneBtn.addEventListener("click", popupHidden);
 }
 
 // Register the plugin with FilePond
@@ -119,8 +126,6 @@ function filePond() {
         allowReorder: true
     });
 
-
-
     const filepondRoot = document.querySelector('.filepond--root');
 
     filepondRoot.addEventListener('FilePond:updatefiles', e => {
@@ -129,7 +134,13 @@ function filePond() {
         for (let i = 0; i < e.detail.items.length; i++) {
             fileBuffer[i] = dataURLtoFile(e.detail.items[i].getFileEncodeDataURL(), e.detail.items[i].filename);
         }
+    });
+    filepondRoot.addEventListener('FilePond:reorderfiles', e => {
+        fileBuffer.splice(0, fileBuffer.length);
 
+        for (let i = 0; i < e.detail.items.length; i++) {
+            fileBuffer[i] = dataURLtoFile(e.detail.items[i].getFileEncodeDataURL(), e.detail.items[i].filename);
+        }
     });
 }
 //base64 to File객체
