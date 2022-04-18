@@ -73,16 +73,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     // 유저가 있는지 확인(email로) 
     private User SaveOrUpdate(OAuthAttributes attributes) {
         User user;
-        if(userDAO.findByMbEmail(attributes.getMbEmail()) != null){
+        if(userDAO.findByMbId(attributes.getMbId()) != null){
             System.out.println("이미 가입되어 있는 회원입니다.");
-        	user = userDAO.findByMbEmail(attributes.getMbEmail());
+        	user = userDAO.findByMbId(attributes.getMbId());
         }
         else {
             user = attributes.toEntity();
 
             userDAO.savesns(user);
             System.out.println("최초 로그인으로 자동 가입됩니다.");
-            user = userDAO.findByMbEmail(attributes.getMbEmail());
+        	user = userDAO.findByMbId(attributes.getMbId());
         }
 
         return user;

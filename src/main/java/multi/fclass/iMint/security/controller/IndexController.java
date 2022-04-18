@@ -6,20 +6,32 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +47,7 @@ import multi.fclass.iMint.security.auth.provider.KakaoUserInfo;
 import multi.fclass.iMint.security.auth.provider.NaverUserInfo;
 import multi.fclass.iMint.security.dao.IUserDAO;
 import multi.fclass.iMint.security.dto.Role;
+import multi.fclass.iMint.security.dto.SessionUser;
 import multi.fclass.iMint.security.dto.User;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.security.parsing.role.ParseMbRole;
@@ -55,7 +68,12 @@ public class IndexController {
 	@Autowired
 	ParseMbId parseMbId;
 	
-	// 로그인 
+    @Autowired
+    private AuthenticationManager authenticationManager; // 세션값 변경목적
+    
+    private HttpSession httpSession;    
+	
+    // 로그인 
 	@GetMapping({"", "/"})
 	public String loginForm() {
 		return "member/login";
@@ -180,30 +198,47 @@ public class IndexController {
 	// 회원가입 4(최종. 보호자, 아이 모두)
 	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
 	@RequestMapping("/register/complete")
-	public String registerdetails(Authentication auth, String mbLocation, String mbGuard) {
+	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocation, String mbGuard) {
 	
+	ModelAndView mv = new ModelAndView();
+		
 	String mbId = parseMbId.parseMbId(auth);
 	User user = parseMbId.getUserMbId(mbId);
-
+	
 	// mbLocation 받아오기 
 	if (user.getMbRole() == Role.UN_GUARD) { // 보호자 
 		user.setMbGuard(null);
 		user.setMbLocation(mbLocation);
 		user.setMbRole(Role.GUARD);
-		System.out.println(mbLocation);
-		System.out.println(mbGuard);
-		System.out.println(user);
+		mv.setViewName("member/guard-mypage/guard-main");
 	}	
 	else if (user.getMbRole() == Role.UN_CHILD) { // 아이 
 		user.setMbGuard(mbGuard);
 		user.setMbLocation(null);
 		user.setMbRole(Role.CHILD);
+		mv.setViewName("member/baby-mypage/baby-main");
 	}	
 
-	// 유저 싱글톤? 나중에 고려
+	// DB저장
 	userdao.updateregister4(user);
+
+	// 세션 수정
+    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
+    authorities.add(new SimpleGrantedAuthority(user.getRoleKey()));
+
+
+	// 세션에 변경사항 저장
+	SecurityContext context = SecurityContextHolder.getContext();
+	// UsernamePasswordAuthenticationToken
+	context.setAuthentication(new UsernamePasswordAuthenticationToken(user.getMbId(), null, authorities));
+	HttpSession session = req.getSession(true);
+	//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+	session.setAttribute(HttpSessionSecurityContextRepository.
+	                       SPRING_SECURITY_CONTEXT_KEY, context);
+
+	mv.addObject("session", session);
 	
-	return "/main";
+	return mv;
 	}
 		
 	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true

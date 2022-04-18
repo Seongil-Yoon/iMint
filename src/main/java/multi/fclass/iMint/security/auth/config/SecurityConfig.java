@@ -1,7 +1,9 @@
 package multi.fclass.iMint.security.auth.config;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -62,6 +64,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.userInfoEndpoint() //oauth2Login 성공 이후의 설정을 시작
 			.userService(customOAuth2UserService); // 들어가야 할 타입이 OAuth2UserService
 		
+		http.sessionManagement()
+			.invalidSessionUrl("/") // 유효하지 않은 세션 접근시 보낼 URL
+			.maximumSessions(1) // 중복 로그인 방지 
+			.maxSessionsPreventsLogin(false);
+		
+		http.sessionManagement()
+			.sessionFixation()
+			.migrateSession(); // 인증이 됐을때 새로운 세션을 생성한뒤, 기존 세션의 attribute들을 복사해 온다.
 	}
 	
 	@Override
@@ -70,4 +80,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	         .mvcMatchers("/static/**")
 	         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	   }
+	
+	// 세션 변경
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 }
