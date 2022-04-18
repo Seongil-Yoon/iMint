@@ -38,7 +38,7 @@
 		        <!-- 프로필 사진 수정 (1행)-->
 		        <div class="container-context container-photo">
 		            <div class="lables-photo">
-		                <h5 class="lables-text">프로필 사진 변경</h3>
+		                <h5 class="lables-text">프로필 사진 변경</h5>
 		            </div>
 		            <div class="buttons buttons-photo">
 		                <form action="#">
@@ -50,7 +50,7 @@
 		        <!-- 닉네임 수정 (2행)-->
 		        <div class="container-context container-nickname">
 		            <div class="lables-nickname">
-		                <h5 class="lables-text">닉네임 변경</h3>
+		                <h5 class="lables-text">닉네임 변경</h5>
 		            </div>
 		            <div class="buttons buttons-nickname">
 		                <form action="#">
@@ -60,37 +60,10 @@
 		            </div>
 		        </div>
 		        
-		        <!-- 비밀번호 수정 (3행) -->
-		        <div class="container-context container-password">
-		            <div class="lables-password">
-		                <h5 class="lables-text">비밀번호 변경</h3>
-		            </div>
-		            <div class="buttons buttons-password">
-		                <form action="#">
-		                    <input class="buttons-text password" type="password" placeholder="변경할 비밀번호를 입력해 주세요."><br>
-		                    <input class="buttons-text" type="password" placeholder="한번 더 입력해 주세요.">
-		                    <input type="submit" class="btn btn-primary" value="확인"/>
-		                </form>
-		            </div>
-		        </div>
-		        
-		        <!-- 이메일 수정  (4행)-->
-		        <div class="container-context container-email">
-		            <div class="lables-email">
-		                <h5 class="lables-text">이메일 변경</h3>
-		            </div>
-		            <div class="buttons buttons-email">
-		                <form action="#">
-		                    <input type="text" class="buttons-text">
-		                    <input type="submit" class="btn btn-primary" value="확인"/>
-		                </form>
-		            </div>
-		        </div>
-		        
-		        <!-- 관심사 수정  (5행)-->
+		        <!-- 관심사 수정  (3행)-->
 		        <div class="container-context container-interest">
 		            <div class="lables-interest">
-		                <h5 class="lables-text">관심사 변경</h3>
+		                <h5 class="lables-text">관심사 변경</h5>
 		            </div>
 		            <div class="buttons buttons-interest">
 		                <form action="#">
