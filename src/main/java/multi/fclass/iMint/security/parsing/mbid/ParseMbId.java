@@ -30,24 +30,30 @@ public class ParseMbId {
 		DefaultOAuth2User authorization = (DefaultOAuth2User) auth.getPrincipal();
 
 		String mbId = null;
-
+		String customerId = null;
+		
 		// 구글(아이 테스트용) 
-		if(auth.getName() != null & auth.getName().length() <= 40) { // 네이버 (임시 숫자 크기 지정)
-			mbId= "google_" + auth.getName();
+		if(auth.getName().length() <= 40 & userDAO.findByMbId("google_" + auth.getName().toString()) != null) { 
+			mbId = "google_" + auth.getName();
+			return mbId;
 		}
+		
+		// 카카오 
 		else {
-			// 카카오 
-			String customerId = authorization.getName();
+			System.out.println("카카오..");
+			customerId = authorization.getName();
 			mbId = "kakao_" + customerId;
 			
+			// 네이버 (임시 숫자 크기 지정)
 			Map<String, Object> naverMap = null;
-			if (customerId.length() >= 40) { // 네이버 (임시 숫자 크기 지정)
+			if (customerId.length() >= 40) { 
 				naverMap = authorization.getAttributes();
 				naverMap = (Map<String, Object>) naverMap.get("response");
 				customerId = (String) naverMap.get("id");
 				
 				mbId = "naver_" + customerId;
 			}
+			
 		}
 		
 		System.out.println("mbId: " + mbId);
