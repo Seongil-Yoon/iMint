@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
       
 			.antMatchers("/register/**").access("hasRole('ROLE_uncerti_GUARD') or hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
 
-			.antMatchers("/mypage/location").access("hasRole('ROLE_GUARD') or hasRole('ROLE_uncerti_GUARD') or hasRole('ROLE_ADMIN')")
+			.antMatchers("/mypage/location").access("hasRole('ROLE_GUARD') or hasRole('ROLE_uncerti_GUARD')") /* or hasRole('ROLE_ADMIN') */
 			.antMatchers("/mypage/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
 			
 			.anyRequest().permitAll(); // 임시 허용

@@ -17,10 +17,10 @@ public class MypageCotroller {
 		return "member/baby-mypage/baby-main";
 	}
 	
-//	@GetMapping("mypage/location")
-//	public String indexLocation() {
-//		return "member/guard-mypage/guard-location";
-//	}
+	@GetMapping("mypage/location")
+	public String indexLocation() {
+		return "member/guard-mypage/guard-location";
+	}
 	
 	@GetMapping("mypage/mylist")
 	public String indexMylist() {

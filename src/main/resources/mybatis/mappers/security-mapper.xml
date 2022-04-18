@@ -8,18 +8,24 @@
         (#{mbId}, #{mbProvider}, #{mbGuard}, #{mbNick}, #{mbEmail} ,now(),25, 0 , #{mbRole});
     </insert>
     
-    <update id="updateuser" parameterType="multi.fclass.iMint.security.dto.User">
+    <update id="updateregister3" parameterType="multi.fclass.iMint.security.dto.User">
         UPDATE imint.member 
         SET mb_nick = #{mbNick}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}
         WHERE (mb_id = #{mbId});
     </update>
 
-    <update id="updatedetails" parameterType="multi.fclass.iMint.security.dto.User">
+    <update id="updateregister4" parameterType="multi.fclass.iMint.security.dto.User">
         UPDATE imint.member 
-        SET mb_nick = #{mbNick}, mb_role = #{mbRole}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}, mb_location = #{mbLocation}, mb_guard = #{mbGuard}
+        SET mb_role = #{mbRole}, mb_location = #{mbLocation}, mb_guard = #{mbGuard}
         WHERE (mb_id = #{mbId});
     </update>
     
+   <!--  임시  -->
+    <update id="updatedetails" parameterType="multi.fclass.iMint.security.dto.User">
+        UPDATE imint.member 
+        SET mb_nick = #{mbNick}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}
+        WHERE (mb_id = #{mbId});
+    </update>
 
     
     <select id="findByMbId" resultType="multi.fclass.iMint.security.dto.User">

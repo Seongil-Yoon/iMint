@@ -45,7 +45,7 @@ public class ParseMbId {
 	// mbId를 가진 유저 조회 
 	public User getUserMbId(String mbId) {
 		User user = userDAO.findByMbId(mbId);
-        System.out.println("mbId가 " + mbId + "인 유저 조회 결과");
+        System.out.println("mbId가 " + mbId + "인 유저 조회 결과: " + user);
 		return user;
 	}
 	

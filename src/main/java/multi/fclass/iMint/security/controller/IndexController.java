@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import multi.fclass.iMint.security.auth.provider.KakaoUserInfo;
@@ -107,6 +108,7 @@ public class IndexController {
 		return mv;
 	}
 	
+	// 회원가입 3(보호자, 아이 모두. 로직은 분리)
 	@PostMapping("/register")
 	public ModelAndView registersns(String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
@@ -115,7 +117,7 @@ public class IndexController {
 		user.setMbNick(mbNick);
 		user.setMbEmail(mbEmail);
 		user.setMbInterest(mbInterest);
-		userdao.updateuser(user);
+		userdao.updateregister3(user);
 		
 		ModelAndView mv = new ModelAndView();
 
@@ -177,22 +179,31 @@ public class IndexController {
 	
 	// 회원가입 4(최종. 보호자, 아이 모두)
 	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
-	@PostMapping("/register/complete")
-	public String registerdetails(Authentication auth, String mbLocation) {
-		// mbLocation 받아오기 
-	if (mbRole == Role.UN_GUARD) { // 보호자 
-		mbGuard = null;
-		mbRole = Role.GUARD;
+	@RequestMapping("/register/complete")
+	public String registerdetails(Authentication auth, String mbLocation, String mbGuard) {
+	
+	String mbId = parseMbId.parseMbId(auth);
+	User user = parseMbId.getUserMbId(mbId);
+
+	// mbLocation 받아오기 
+	if (user.getMbRole() == Role.UN_GUARD) { // 보호자 
+		user.setMbGuard(null);
+		user.setMbLocation(mbLocation);
+		user.setMbRole(Role.GUARD);
+		System.out.println(mbLocation);
+		System.out.println(mbGuard);
+		System.out.println(user);
 	}	
-	else if (mbRole == Role.UN_CHILD) { // 아이 
-		mbLocation = null;
-		mbRole = Role.CHILD;		
+	else if (user.getMbRole() == Role.UN_CHILD) { // 아이 
+		user.setMbGuard(mbGuard);
+		user.setMbLocation(null);
+		user.setMbRole(Role.CHILD);
 	}	
 
 	// 유저 싱글톤? 나중에 고려
-	userdao.updatedetails(mbId,mbNick,mbRole,mbEmail,mbInterest,mbLocation,mbGuard); // 아이: mbLocation이 null, 보호자: mbGuard이 null
-
-	return "회원가입 축하 페이지";
+	userdao.updateregister4(user);
+	
+	return "/main";
 	}
 		
 	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true
