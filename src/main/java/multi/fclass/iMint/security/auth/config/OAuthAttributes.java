@@ -13,6 +13,10 @@ import multi.fclass.iMint.security.auth.provider.OAuth2UserInfo;
 import multi.fclass.iMint.security.dto.Role;
 import multi.fclass.iMint.security.dto.User;
 
+/**
+ * @author Junming, Yang
+ *
+ */
 
 @Getter
 public class OAuthAttributes {

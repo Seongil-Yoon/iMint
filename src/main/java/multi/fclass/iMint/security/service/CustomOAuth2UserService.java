@@ -20,6 +20,11 @@ import multi.fclass.iMint.security.dao.IUserDAO;
 import multi.fclass.iMint.security.dto.SessionUser;
 import multi.fclass.iMint.security.dto.User;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> { //  extends HttpServlet: include용 

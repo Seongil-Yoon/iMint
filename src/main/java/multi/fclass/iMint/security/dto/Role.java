@@ -3,6 +3,11 @@ package multi.fclass.iMint.security.dto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 @Getter
 @RequiredArgsConstructor
 public enum Role {

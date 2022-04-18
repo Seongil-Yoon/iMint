@@ -4,6 +4,11 @@ import lombok.Getter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 /*
  * 세션에 저장하려면 직렬화를 해야 하는데
  * User 엔티티는 추후 변경사항이 있을 수 있기 때문에

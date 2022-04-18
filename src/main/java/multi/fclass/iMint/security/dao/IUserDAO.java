@@ -6,6 +6,11 @@ import org.springframework.stereotype.Repository;
 import multi.fclass.iMint.security.dto.Role;
 import multi.fclass.iMint.security.dto.User;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 @Mapper
 @Repository
 public interface IUserDAO {

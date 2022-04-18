@@ -2,6 +2,11 @@ package multi.fclass.iMint.security.auth.provider;
 
 import java.util.Map;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 public class NaverUserInfo implements OAuth2UserInfo{
 
 	private Map<String, Object> attributes;
