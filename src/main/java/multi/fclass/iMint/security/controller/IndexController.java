@@ -53,6 +53,11 @@ import multi.fclass.iMint.security.dto.User;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.security.parsing.role.ParseMbRole;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 @Slf4j // 로그
 @Controller // 뷰 반환
 public class IndexController {
@@ -132,61 +137,20 @@ public class IndexController {
 		user.setMbEmail(mbEmail);
 		user.setMbInterest(mbInterest);
 		
-		// 테스트중 
-//		if (user.getMbRole() == Role.UN_CHILD) { // 아이 
-//			User guardUser = userdao.findByMbNick(guardNick);
-//			if (guardUser != null & guardUser.getMbPin().equals(guardPin)) {
-//				user.setMbGuard(guardNick);
-//				user.setMbLocation(null);
-//				user.setMbRole(Role.CHILD);
-//				user.setMbPin(null);
-//				userdao.
-//				mv.setViewName("member/baby-mypage/baby-main");
-//				return mv;
-//			}
-//			else {
-//				mv.setViewName("member/register_connect");	// 보호자의 입력정보가 틀리면 다시 보내기
-//				mv.addObject("err", "입력하신 보호자의 정보가 일치하지 않습니다. 보호자의 마이페이지에서 닉네임, Pin번호를 확인해주세요.");
-//				return mv;
-//			}
-//		}	
-
-//		// DB저장
-//		userdao.updateregister4(user);
-//
-//		// 세션 수정
-//	    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
-//	    authorities.add(new SimpleGrantedAuthority(user.getRoleKey()));
-//		// 세션에 변경사항 저장
-//		SecurityContext context = SecurityContextHolder.getContext();
-//		// UsernamePasswordAuthenticationToken
-//		context.setAuthentication(new UsernamePasswordAuthenticationToken(user.getMbId(), null, authorities));
-//		HttpSession session = req.getSession(true);
-//		//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
-//		session.setAttribute(HttpSessionSecurityContextRepository.
-//		                       SPRING_SECURITY_CONTEXT_KEY, context);
-//
-//		mv.addObject("session", session);
-//		
-		
 		userdao.updateregister3(user);
 		
-
-
 		if(mbRole.equals("UN_GUARD")) {
 			mv.setViewName("member/guard-mypage/guard-location");
 		}
 		else if(mbRole.equals("UN_CHILD")) {
 			mv.setViewName("member/register_connect");			
 		}
-//		
+
 		mv.addObject("user", user);
 		return mv;
 	}
 	
 
-
-	
 	// 회원가입 3(보호자): 내 동네 설정 -> 보호자, 관리자 권한 부여
 
 //	@ResponseBody

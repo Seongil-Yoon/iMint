@@ -13,6 +13,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import lombok.AllArgsConstructor;
 import multi.fclass.iMint.security.service.CustomOAuth2UserService;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 @AllArgsConstructor
 @Configuration
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록이 된다.

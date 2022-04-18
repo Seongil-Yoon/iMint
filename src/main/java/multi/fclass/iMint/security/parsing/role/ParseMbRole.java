@@ -12,6 +12,11 @@ import multi.fclass.iMint.security.dao.IUserDAO;
 import multi.fclass.iMint.security.dto.Role;
 import multi.fclass.iMint.security.dto.User;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 //모듈화
 @Component
 public class ParseMbRole {

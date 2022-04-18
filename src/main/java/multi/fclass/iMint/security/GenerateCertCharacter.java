@@ -1,6 +1,11 @@
 package multi.fclass.iMint.security;
 import java.util.Random;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 public class GenerateCertCharacter{ // 보호자 8자리 영문+숫자 인증 번호 생성
 	
     private int certCharLength = 8;

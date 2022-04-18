@@ -9,6 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 @Component
 @Data
 @NoArgsConstructor // 기본 생성자 
