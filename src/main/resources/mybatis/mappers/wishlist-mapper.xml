@@ -18,7 +18,7 @@
 	<select id="checkMyWishlist" parameterType="Map" resultType="WishlistDTO">
 		SELECT
 			wishlist_id,
-			wishlist_isdelete
+			wishlist_isdelete AS deleted
 		FROM
 			`imint`.`wishlist`
 		WHERE

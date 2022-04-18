@@ -33,7 +33,7 @@ public class WishlistServiceImpl implements IWishlistService {
 		if (wishlistDTO == null) {
 			// wishlist 테이블에 등록된 적 없을 때
 			return -1;
-		} else if (wishlistDTO.isWishlistIsdelete()) {
+		} else if (wishlistDTO.isDeleted()) {
 			// wishlist 테이블에 등록된 적 있지만 삭제이력이 있을 때
 			return 0;
 		} else {
