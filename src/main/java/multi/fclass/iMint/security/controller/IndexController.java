@@ -43,6 +43,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import multi.fclass.iMint.security.GenerateCertCharacter;
 import multi.fclass.iMint.security.auth.provider.KakaoUserInfo;
 import multi.fclass.iMint.security.auth.provider.NaverUserInfo;
 import multi.fclass.iMint.security.dao.IUserDAO;
@@ -210,12 +211,14 @@ public class IndexController {
 		user.setMbGuard(null);
 		user.setMbLocation(mbLocation);
 		user.setMbRole(Role.GUARD);
+		user.setMbPin(new GenerateCertCharacter().excuteGenerate());
 		mv.setViewName("member/guard-mypage/guard-main");
 	}	
 	else if (user.getMbRole() == Role.UN_CHILD) { // 아이 
 		user.setMbGuard(mbGuard);
 		user.setMbLocation(null);
 		user.setMbRole(Role.CHILD);
+		user.setMbPin(null);
 		mv.setViewName("member/baby-mypage/baby-main");
 	}	
 
@@ -225,8 +228,6 @@ public class IndexController {
 	// 세션 수정
     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
     authorities.add(new SimpleGrantedAuthority(user.getRoleKey()));
-
-
 	// 세션에 변경사항 저장
 	SecurityContext context = SecurityContextHolder.getContext();
 	// UsernamePasswordAuthenticationToken

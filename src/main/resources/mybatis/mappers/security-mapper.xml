@@ -16,7 +16,7 @@
 
     <update id="updateregister4" parameterType="multi.fclass.iMint.security.dto.User">
         UPDATE imint.member 
-        SET mb_role = #{mbRole}, mb_location = #{mbLocation}, mb_guard = #{mbGuard}
+        SET mb_role = #{mbRole}, mb_location = #{mbLocation}, mb_guard = #{mbGuard}, mb_pin = #{mbPin}
         WHERE (mb_id = #{mbId});
     </update>
     
