@@ -26,7 +26,6 @@
         SET mb_nick = #{mbNick}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}
         WHERE (mb_id = #{mbId});
     </update>
-
     
     <select id="findByMbId" resultType="multi.fclass.iMint.security.dto.User">
         SELECT * FROM imint.member WHERE mb_id = #{mbId}

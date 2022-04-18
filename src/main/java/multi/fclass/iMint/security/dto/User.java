@@ -61,10 +61,6 @@ public class User {
 	
 	// 권한
 	private Role mbRole;
-//	
-//	// 아이 테스트용(test)
-//	private String originMbId;
-	
 	
 	// 필수값만 있는 생성자 (가입시) 
 	@Builder
