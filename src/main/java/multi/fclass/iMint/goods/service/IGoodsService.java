@@ -13,4 +13,6 @@ public interface IGoodsService {
 	public List<GoodsImagesDTO> goodsImageList(int goodsId);
 
 	public int goodsWrite(GoodsDTO goodsDto, List<MultipartFile> files);
+
+	public int goodsDelete(int goodsId, int sellerId);
 }

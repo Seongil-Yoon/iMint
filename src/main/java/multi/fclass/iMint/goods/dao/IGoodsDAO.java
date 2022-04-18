@@ -27,4 +27,6 @@ public interface IGoodsDAO {
 	public int goodsInsert(GoodsDTO goodsDTO);
 	public int goodsImagesInsert(GoodsImagesDTO goodsImagesDTO);
 	public String goodsDate(@Param("goods_id") int goodsId);
+	
+	public int goodsDelete(@Param("goods_id") int goodsId, @Param("seller_id") int sellerId);
 }

@@ -40,13 +40,29 @@
 }
 
 /* filePond css */
+.popup-overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10000;
+}
+
 .upload-popup {
     display: none;
-    position: absolute;
-    width: 90%;
-    height: 400px;
-    margin-left: 20px;
-    margin-top: -4%;
+    position: fixed;
+    width: 76%;
+    height: max-content;
+    left: 12%;
+    top: 17%;
+    text-align: center;
+    background-color: white;
+    border-radius: 1rem;
+    border: 1px solid rgb(155, 155, 155);
+    padding: 17px;
+    z-index: 99999;
 }
 
 .upload-popup> :nth-child(1) {
@@ -57,6 +73,7 @@
     height: 400px;
     overflow: auto;
 }
+
 /* end of filePond css */
 
 @media screen and (max-width: 768px) {
