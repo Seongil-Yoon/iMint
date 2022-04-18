@@ -39,6 +39,11 @@
     border: 1px;
 }
 
+/* 타이틀 (회원 정보 수정하시겠어요?) */
+.title-text{
+	margin-bottom: 6rem;
+}
+
 /* 탭 내용 컨테이너*/
 .tab-content > .container{
     margin-top: 1rem;

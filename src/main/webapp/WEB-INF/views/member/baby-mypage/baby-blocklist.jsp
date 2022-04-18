@@ -27,6 +27,9 @@
 	 	
 	 	<!-- 아티클 시작 -->
 	<div class="container-main">
+		<div class="title-text">
+		   <h2>차단 목록입니다.</h2>
+		</div>
         <div class="container">
             <div class="tab-content-item">
                 <!-- <div class="tab-4-content-inner"> -->

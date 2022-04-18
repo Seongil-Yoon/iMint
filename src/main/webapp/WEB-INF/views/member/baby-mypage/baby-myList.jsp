@@ -28,6 +28,9 @@
 	 	
 	 	<!-- 아티클 시작 -->
 	 	<div class="container-main">
+		 	<div class="title-text">
+			   <h2>거래 관련 목록입니다.</h2>
+			</div>
 	 			<!-- 상단 탭 -->
 	        <section class="tabs">
 	            <div class="container">

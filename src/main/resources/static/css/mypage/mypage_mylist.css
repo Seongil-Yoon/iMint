@@ -39,6 +39,10 @@
     border: 1px;
 }
 
+/* 타이틀 (회원 정보 수정하시겠어요?) */
+.title-text{
+	margin-bottom: 6rem;
+}
 
 /* 상단 탭 컨테이너*/
 .tabs .container {
@@ -71,6 +75,7 @@
     border-radius: 10px;
     color: #3387a8;
     font-weight: bold;
+   	cursor: pointer;
 }
 
 /* 상단 탭 선택 시 JS로 계속 선택되어있게 하는 부분 */
