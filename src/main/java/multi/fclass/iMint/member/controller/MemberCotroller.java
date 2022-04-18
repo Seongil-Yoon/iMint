@@ -1,12 +1,18 @@
 package multi.fclass.iMint.member.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,8 +22,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import multi.fclass.iMint.member.dao.IMemberDAO;
@@ -46,6 +56,9 @@ public class MemberCotroller {
 	@Autowired
 	ParseMbId parseMbId;
 	
+	@Value("${directory}")
+	private String directory;
+	
 	@RequestMapping("/mypage/edit")
 	public ModelAndView updateuser(Authentication auth, String thumbnail, String nickname, String interest) {
 		
@@ -70,7 +83,7 @@ public class MemberCotroller {
 		return mv;
 	}
 	
-	@GetMapping("/mypage/withdraw")
+//	@GetMapping("/mypage/withdraw")
 	public ModelAndView	deleteuser(Authentication auth) {
 		
 		ModelAndView mv = new ModelAndView();
@@ -88,7 +101,7 @@ public class MemberCotroller {
 		return mv;
 	}
 	
-	@PostMapping("/mypage/withdraw")
+//	@PostMapping("/mypage/withdraw")
 	public String deleteuserresult(HttpServletRequest req, Authentication auth) {
 		
 		String mbId = parseMbId.parseMbId(auth);
@@ -97,7 +110,7 @@ public class MemberCotroller {
 		// 세션에 변경사항 저장
 		SecurityContext context = SecurityContextHolder.getContext();
 		// UsernamePasswordAuthenticationToken
-		context.setAuthentication(new UsernamePasswordAuthenticationToken(user.getMbId(), null, null));
+		context.setAuthentication(new UsernamePasswordAuthenticationToken(user.getMbId(), null, null)); // Role 삭제
 		HttpSession session = req.getSession(true);
 		//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 		session.setAttribute(HttpSessionSecurityContextRepository.
@@ -105,6 +118,50 @@ public class MemberCotroller {
 		
 		// 탈퇴하면 로그인 페이지로 보내기			
 		return "member/login";
+	}
+	
+	// 프로필사진은 1개만 지정. 원래 파일명 저장 X. 삭제시 DB에서 삭제. 회원 탈퇴시 사진도 자동 삭제(사진이 컬럼이므로 따로 처리 필요 X)
+	@ResponseBody
+	@RequestMapping("/mypage/edit/thumbnail")
+	public Map<String, String> upload(MultipartFile thumbnail, Authentication auth) throws IOException { // @ModelAttribute("뷰가 받을 이름"): 뷰로 전달해주고 싶을 때.
+
+		Map<String, String> map = new HashMap<String, String>();
+		
+		System.out.println(thumbnail.getOriginalFilename()); //dto.getFile1():Multipartfile 이 toString 메서드 오버라이딩하지 않았으면 패키지명.클래스명@16진수 주소 로 출력.
+		System.out.println(thumbnail.getSize());
+		System.out.println(thumbnail.isEmpty()); // isEmpty: 파일 전송 여부를 boolean으로. 
+		
+		String mbId = parseMbId.parseMbId(auth);
+		User user = parseMbId.getUserMbId(mbId);
+		String mbRole = user.getMbRole().toString();
+		
+		// ex. ../naver/GUARD/naver_sdfklw242.jpg
+		String savePath = directory + "/" + user.getMbProvider() + "/" + mbRole.substring(mbRole.length()-5, mbRole.length()); // 저장경로: 1.provider 별로 지정 2. guard / child 별로 지정
+		
+		if(!thumbnail.isEmpty()) {
+			
+			// 원래 파일 명에서 확장자(.) 추출 
+			String ext = thumbnail.getOriginalFilename().substring(thumbnail.getOriginalFilename().indexOf("."));
+
+			// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
+			String newname = savePath + "_" + mbId + ext;
+			String allname = savePath + newname;
+			
+			File serverfile = new File(newname);
+			thumbnail.transferTo(serverfile);
+			
+			// db에 업데이트 하기(저장경로 + 파일 이름)
+			memberDAO.updatethumbnail(mbId, allname);
+			
+			map.put("success", allname);
+			
+			return map;
+		}
+		else {
+			map.put("fail", "isEmpty");
+			return map;
+		}
+		
 	}
 	
 }
