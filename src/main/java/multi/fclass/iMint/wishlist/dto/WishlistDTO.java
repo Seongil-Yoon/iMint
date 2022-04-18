@@ -10,6 +10,6 @@ import lombok.Getter;
 public class WishlistDTO {
 
 	private int wishlistId;
-	private boolean wishlistIsdelete;
+	private boolean deleted;
 
 }
