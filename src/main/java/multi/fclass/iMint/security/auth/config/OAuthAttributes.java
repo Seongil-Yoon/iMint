@@ -97,17 +97,18 @@ public class OAuthAttributes {
 		}
     }
     
+    // 아이 테스트용(구글은 연령대를 못 받아와서 원래는 미사용) 
     public static OAuthAttributes ofGoogle(String userNameAttributeName,
                                            Map<String, Object> attributes) {
     	System.out.println("구글 로그인 호출");
         return OAuthAttributes.builder()
             	.mbId ("google_"+(String) attributes.get("sub"))
             	.mbProvider ("goole") 
-            	.mbGuard (null) // 임시  
+            	.mbGuard (null)
             	.mbNick ((String) attributes.get("name")) // 임시 
             	.mbEmail ((String) attributes.get("email")) 
             	.mbIsdelete (false) 
-                .mbRole(Role.GUARD) // 임시 
+                .mbRole(Role.UN_CHILD) // 테스트용으로 구글이 아이라 가정 
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -173,13 +174,6 @@ public class OAuthAttributes {
 					.nameAttributeKey(userNameAttributeName)
 					.build();
 	}
-		
-//		else { // 연령대 못받아온 경우 서비스 이용 불가
-//			System.out.println("연령대 수집 불가로 서비스 이용을 하실 수 없습니다.");
-//			return null;
-//		}
-//    }
-
     
     public User toEntity() {
         return User.builder()

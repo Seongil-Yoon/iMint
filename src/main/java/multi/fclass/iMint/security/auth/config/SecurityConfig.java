@@ -32,6 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http.authorizeRequests()
 			.antMatchers("/", "/main", "/login/**", "/static/**").permitAll() // 비로그인시 첫화면, 둘러보기만 허용
+
+			// 아이 회원가입(test)
+			.antMatchers("/register/child/test").access("hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
       
 			.antMatchers("/register/**").access("hasRole('ROLE_uncerti_GUARD') or hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
 

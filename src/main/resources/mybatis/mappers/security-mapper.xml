@@ -7,10 +7,10 @@
         VALUES
         (#{mbId}, #{mbProvider}, #{mbGuard}, #{mbNick}, #{mbEmail} ,now(),25, 0 , #{mbRole});
     </insert>
-    
+        
     <update id="updateregister3" parameterType="multi.fclass.iMint.security.dto.User">
         UPDATE imint.member 
-        SET mb_nick = #{mbNick}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}
+        SET mb_id = #{mbId}, mb_nick = #{mbNick}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}
         WHERE (mb_id = #{mbId});
     </update>
 
@@ -35,5 +35,8 @@
     <select id="findByMbEmail" resultType="multi.fclass.iMint.security.dto.User">
         SELECT * FROM imint.member WHERE mb_email = #{mbEmail}
     </select>
-  
+
+    <select id="findByMbNick" resultType="multi.fclass.iMint.security.dto.User">
+        SELECT * FROM imint.member WHERE mb_nick = #{mbNick}
+    </select>  
 </mapper>
