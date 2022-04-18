@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
+<!-- 버튼 -->
+<div class="buttons">
+                            <h6 class="select-title">전체선택</h6>
+                            <input type="checkbox" class="selectAllbtn" name="selected"/>
+                            <button type="button" id="edit" class="btn btn-secondary btn-sm">수정</button>
+                            <button type="button" id="delete" class="btn btn-secondary btn-sm">삭제</button>
+                        </div>
 	<!-- 항목명 -->
                      
                         <div class="item-lables">
@@ -29,7 +36,7 @@
                         <!-- 항목별 내용 -->
 	<div class="item-list">
 	  <div class="checkbox">
-	    <input type="checkbox" name="selected"/>
+	    <input type="checkbox" class="select-targets" name="selected"/>
 	  </div>
 	  <div class="status">
 	   <p class="text">예약중</p>

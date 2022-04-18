@@ -57,4 +57,24 @@ function changeTab3(e){
 
 tab3.addEventListener('click', changeTab3);
 
+//전체선택 선택 시 모든 선택 버튼이 선택되도록 함
+const btnSelected = document.querySelectorAll('.selectAllbtn');
 
+function selectAll(event)  {
+	const btnTarget = event.target;
+	
+	parentbtn = $(btnTarget).parents(".show");
+	childbtns = $(parentbtn).find("input.select-targets");
+
+  	if($(btnTarget).is(":checked") == true){
+		childbtns.each(function(index){ 
+	    	$(this).prop("checked", true);
+	    });
+	} else {
+		childbtns.each(function(index){ 
+	    	$(this).prop("checked", false);
+	    });
+	}
+}
+
+btnSelected.forEach(item => item.addEventListener('click', selectAll));

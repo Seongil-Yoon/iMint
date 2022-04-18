@@ -119,6 +119,26 @@
     border-radius: 10px;
 }
 
+/* 버튼 */
+.buttons{
+    display: grid;
+    grid-template-columns: 50px 50px 60px 60px;
+    grid-gap: 0.5rem;
+    /* width: 250px; */
+    margin-bottom: 1.5rem;
+    /* margin-right: 0rem;
+    margin-left: 1rem; */
+    align-items: center;
+    justify-content: right;
+    text-align: center;
+}
+
+.select-title{
+    font-size: small;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
 /* 채팅목록 내용 */
 
 /* 채팅목록-항목명 정렬 */
@@ -143,7 +163,7 @@
     text-align: center;
     border-bottom: rgb(204, 204, 204) solid 1px;
     padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
 }
 
 /* 채팅목록 내 상대 사진, 상대 내용 2열 정렬 */
