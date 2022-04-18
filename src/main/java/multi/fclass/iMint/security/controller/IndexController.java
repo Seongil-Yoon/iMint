@@ -1,28 +1,56 @@
 package multi.fclass.iMint.security.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import multi.fclass.iMint.security.auth.provider.KakaoUserInfo;
+import multi.fclass.iMint.security.auth.provider.NaverUserInfo;
 import multi.fclass.iMint.security.dao.IUserDAO;
 import multi.fclass.iMint.security.dto.Role;
+import multi.fclass.iMint.security.dto.SessionUser;
 import multi.fclass.iMint.security.dto.User;
+import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
+import multi.fclass.iMint.security.parsing.role.ParseMbRole;
 
 @Slf4j // 로그
 @Controller // 뷰 반환
@@ -34,7 +62,18 @@ public class IndexController {
 	@Autowired
 	private User user;
 	
-	// 로그인 
+	@Autowired
+	ParseMbRole parseMbRole;
+	
+	@Autowired
+	ParseMbId parseMbId;
+	
+    @Autowired
+    private AuthenticationManager authenticationManager; // 세션값 변경목적
+    
+    private HttpSession httpSession;    
+	
+    // 로그인 
 	@GetMapping({"", "/"})
 	public String loginForm() {
 		return "member/login";
@@ -51,12 +90,18 @@ public class IndexController {
 //		log.info("auth : {}", auth.getPrincipal()); // 로그 기록
 //		log.info("exception : {}", ade); // 로그 기록
         
-		DefaultOAuth2User authorization = (DefaultOAuth2User) auth.getPrincipal();
-        System.out.println(authorization);
-
-		Collection<? extends GrantedAuthority> auth2 = authorization.getAuthorities();
-        System.out.println(auth2.toString());
+		// 모듈화 
+//		DefaultOAuth2User authorization = (DefaultOAuth2User) auth.getPrincipal();
+//        System.out.println(authorization);
+//
+//		Collection<? extends GrantedAuthority> auth2 = authorization.getAuthorities();
+//        System.out.println(auth2.toString());
 		
+		// 모듈화 결과(아래 1줄)
+		String auth2 = parseMbRole.parseMbRole(auth);
+		
+        //// 끝
+        
 		mv.addObject("auth", auth2);
 		mv.addObject("errMsg", ade);
 		
@@ -68,67 +113,132 @@ public class IndexController {
 	// 회원가입은 총 4단계 
 	// 회원가입 2(보호자, 아이 모두): sns 가입(회원가입 1)후 register 페이지로 이동
 	@GetMapping("/register")
-	public ModelAndView registersns(String mbId) { // 현재 유저 식별(세션 필요) -> mbId로 연결하기 & 수정 & 권한 업데이트
+	public ModelAndView registersns(Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+
+		// 모듈화 결과(아래 2줄)
+		String mbId = parseMbId.parseMbId(auth);
+		User user = parseMbId.getUserMbId(mbId);
+		
 		ModelAndView mv = new ModelAndView();
+
 		mv.addObject("user", user);
-		System.out.println(mbId);
 		mv.setViewName("member/register");
 		return mv;
 	}
 	
-	// 회원가입 3(보호자): 내 동네 설정 -> 보호자, 관리자 권한 부여
-	@PreAuthorize("hasRole('ROLE_uncerti_GAURD') or hasRole('ROLE_GAURD') or hasRole('ROLE_ADMIN')")
-	@RequestMapping("/mypage/location")		
-	public ModelAndView gaurdlocation(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
-		ModelAndView mv = new ModelAndView();
-		User user = userdao.findByMbId(mbId);
-		
-		user.setMbId(mbId);
+	// 회원가입 3(보호자, 아이 모두. 로직은 분리)
+	@PostMapping("/register")
+	public ModelAndView registersns(String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+
+		// 유저 정보 업데이트 
+		User user = parseMbId.getUserMbId(mbId);
 		user.setMbNick(mbNick);
-		user.setMbRole(mbRole);
 		user.setMbEmail(mbEmail);
 		user.setMbInterest(mbInterest);
-		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
-		mv.setViewName("member/guard-mypage/guard-location");
+		userdao.updateregister3(user);
+		
+		ModelAndView mv = new ModelAndView();
+
+		if(mbRole.equals("UN_GUARD")) {
+			mv.setViewName("member/guard-mypage/guard-location");
+		}
+		else if(mbRole.equals("UN_CHILD")) {
+			mv.setViewName("member/register_connect");			
+		}
+		
+		mv.addObject("user", user);
 		return mv;
 	}
 	
-	// 회원가입 3(아이): 보호자 연결 설정 -> 아이, 관리자 권한 부여
-	@PreAuthorize("hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')")
-	@RequestMapping("/register/connect")		
-	public ModelAndView babyconnect(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
-		ModelAndView mv = new ModelAndView();
-		User user = userdao.findByMbId(mbId);
-		user.setMbId(mbId);
-		user.setMbNick(mbNick);
-		user.setMbRole(mbRole);
-		user.setMbEmail(mbEmail);
-		user.setMbInterest(mbInterest);
-		
-		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
-		mv.setViewName("member/register_connect");
-		return mv;
-	}
+	
+	
+	// 회원가입 3(보호자): 내 동네 설정 -> 보호자, 관리자 권한 부여
+
+//	@ResponseBody
+////	@RequestMapping(value = "/mypage/location", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
+//	@RequestMapping("/mypage/location")
+//	public ModelAndView GUARDlocation(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest, String mbLocation) { // String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest
+//		
+//		ModelAndView mv = new ModelAndView();
+//		
+//		User user = parseMbId.getUserMbId(mbId);
+//		System.out.println(mbId);
+//		System.out.println(mbNick);
+//		System.out.println(mbRole);
+//
+//		//		user.setMbNick(mbNick);
+////		user.setMbRole(mbRole);
+////		user.setMbEmail(mbEmail);
+////		user.setMbInterest(mbInterest);
+////		user.setMbLocation(mbLocation);
+////		userdao.savedetails(mbId, mbNick, mbRole, mbEmail, mbInterest, mbLocation, null); // 1차 저장 
+//		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
+//		mv.setViewName("member/guard-mypage/guard-location");
+//		return mv;
+//	}
+//	
+//	// 회원가입 3(아이): 보호자 연결 설정 -> 아이, 관리자 권한 부여
+//	//@PreAuthorize("hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')")
+//	@GetMapping("/register/connect")		
+//	public ModelAndView babyconnect(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
+//		ModelAndView mv = new ModelAndView();
+//		User user = userdao.findByMbId(mbId);
+//		user.setMbId(mbId);
+//		user.setMbNick(mbNick);
+//		user.setMbRole(mbRole);
+//		user.setMbEmail(mbEmail);
+//		user.setMbInterest(mbInterest);
+//		
+//		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
+//		mv.setViewName("member/register_connect");
+//		return mv;
+//	}
 
 	
 	// 회원가입 4(최종. 보호자, 아이 모두)
 	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
-	@PostMapping("/register")
-	public String registerdetails(Role mbRole, String mbId, String mbNick, String mbEmail, String mbInterest, String mbLocation, String mbGuard) {
-			
-	if (mbRole == Role.UN_GAURD) { // 보호자 
-		mbGuard = null;
-		mbRole = Role.GAURD;
+	@RequestMapping("/register/complete")
+	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocation, String mbGuard) {
+	
+	ModelAndView mv = new ModelAndView();
+		
+	String mbId = parseMbId.parseMbId(auth);
+	User user = parseMbId.getUserMbId(mbId);
+	
+	// mbLocation 받아오기 
+	if (user.getMbRole() == Role.UN_GUARD) { // 보호자 
+		user.setMbGuard(null);
+		user.setMbLocation(mbLocation);
+		user.setMbRole(Role.GUARD);
+		mv.setViewName("member/guard-mypage/guard-main");
 	}	
-	else if (mbRole == Role.UN_CHILD) { // 아이 
-		mbLocation = null;
-		mbRole = Role.CHILD;		
+	else if (user.getMbRole() == Role.UN_CHILD) { // 아이 
+		user.setMbGuard(mbGuard);
+		user.setMbLocation(null);
+		user.setMbRole(Role.CHILD);
+		mv.setViewName("member/baby-mypage/baby-main");
 	}	
 
-	// 유저 싱글톤? 나중에 고려
-	userdao.savedetails(mbId,mbNick,mbRole,mbEmail,mbInterest,mbLocation,mbGuard); // 아이: mbLocation이 null, 보호자: mbGuard이 null
+	// DB저장
+	userdao.updateregister4(user);
 
-	return "회원가입 축하 페이지";
+	// 세션 수정
+    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
+    authorities.add(new SimpleGrantedAuthority(user.getRoleKey()));
+
+
+	// 세션에 변경사항 저장
+	SecurityContext context = SecurityContextHolder.getContext();
+	// UsernamePasswordAuthenticationToken
+	context.setAuthentication(new UsernamePasswordAuthenticationToken(user.getMbId(), null, authorities));
+	HttpSession session = req.getSession(true);
+	//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+	session.setAttribute(HttpSessionSecurityContextRepository.
+	                       SPRING_SECURITY_CONTEXT_KEY, context);
+
+	mv.addObject("session", session);
+	
+	return mv;
 	}
 		
 	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true

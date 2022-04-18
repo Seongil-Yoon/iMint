@@ -14,25 +14,26 @@
 <body>
  	<jsp:include page="../include/header.jsp" flush="false" />
 
- 	<form action = "/register/guard" method = "post">
+ 	<form id = "change_url" action = "/register" method = "post">
  	
 <!--  	출생년도에 따라서 성인, 아이 구분해서 js로 버튼 만들어야 한다  -->
  	
  		<div>닉네임<br>
-	 		<input type = text id = "mbNick" value = ${user.mbNick }>
+	 		<input type = text name = "mbNick" id = "mbNick" value = ${user.mbNick }>
  		</div>
  		<div>이메일<br>
-	 		<input type = text id = "mbEmail" value = ${user.mbEmail }>
+	 		<input type = text name = "mbEmail" id = "mbEmail" value = ${user.mbEmail }>
  		</div>
  		<div>관심사<br> <!-- 드롭박스로 바꾸기  -->
-	 		<input type = text id = "mbInterest">
+	 		<input type = text name = "mbInterest" id = "mbInterest">
  		</div>
  		
- 		<input type = hidden id = "mbId" value = ${user.mbId }>
- 		<input type = hidden id = "mbRole" value = ${user.mbRole }>
+ 		<input type = hidden name = "mbId" id = "mbId" value = ${user.mbId }>
+ 		<input type = hidden name = "mbRole" id = "mbRole" value = ${user.mbRole }>
 
 <!--  		보호자, 아이 로직이 달라 주의  -->
- 		<button id = "location_btn">내 동네 설정</button>
+<!--  		<button id = "location_btn">내 동네 설정</button> -->
+ 		 	<button id = "register_btn">회원가입</button>
  		
  		
  	</form>
@@ -44,11 +45,12 @@
 
 <script type="text/javascript">
 	
-	var mbId = $("#mbId").val();
+/* 	var mbId = $("#mbId").val();
 	if (mbId == "ROLE_uncerti_CHILD"){ // 아이인 경우
 		$("#location_btn").attr("id", "connect_btn"); // 회원가입 버튼 말고 연동으로 버튼 변경 
 		$("#connect_btn").html("보호자 계정 연동");
-		
+		$("#change_url").attr("method", "post")
+		$("#change_url").attr("action", "/register/connect")
 	}
 	
 	$("#connect_btn").on('click', function(){
@@ -70,15 +72,19 @@
 			}); 		
 	)};
 	
-</script>
+ */</script>
 
 
 <script>
-$(document).ready( function(){ 
+/* $(document).ready( function(){ 
 	
+		$("#register_btn").attr("id", "location_btn"); // 회원가입 버튼 말고 연동으로 버튼 변경 
+		$("#location_btn").html("내 동네 설정");
+		$("#location_btn").attr("method", "post");
+		$("#change_url").attr("action", "/mypage/location");
+		
 	$("#location_btn").on('click', function(){
-/* 		if($("#mbRole").val() == "ROLE_uncerti_GAURD") { // 보호자 
- */			$.ajax({
+			$.ajax({
 				url: "/mypage/location", 
 				data: {
 					'mbRole':$("#mbRole").val(), // val 가 어떻게 나올지 확인 필요 
@@ -87,18 +93,17 @@ $(document).ready( function(){
 					'mbEmail':$("#mbEmail").val(),
 					'mbInterest':$("#mbInterest").val()
 					},
-				type: 'post',
+				type: 'get',
 				dataType: 'json',
 				
 				success: function(a) { 
 					alert(a.mbEmail); 
 				}
 			}); 
-/* 		} // if end  */
 
 	});
 });
-
+*/
 </script>
 
 

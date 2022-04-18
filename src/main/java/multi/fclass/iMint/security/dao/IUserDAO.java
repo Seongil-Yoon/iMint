@@ -14,7 +14,12 @@ public interface IUserDAO {
     public User findByMbEmail(String mbEmail);
     
     public void savesns(User user); // 1차 sns 가입
-//    public void savedetails(String mbId, String mbNick, Role mbRole, String mbInterest, String mbEmail, String mbGuard); // 2차 회원 가입 완료
-    public void savedetails(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest, String mbLocation, String mbGuard); // 4차 회원가입(최종)
-    public void update(User user);
+    // 회원가입 3, 4
+    public void updateregister3(User user);
+    public void updateregister4(User user);
+
+    // 회원정보 수정(임시)
+    public void updatedetails(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest, String mbLocation, String mbGuard); // 4차 회원가입(최종)
+    public void updateuser(User user);
+    
 }

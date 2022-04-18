@@ -12,7 +12,7 @@
 <body>
 	<h1>접근 거부 페이지(403): 미인증 보호자, 아이를 회원가입 페이지로</h1>
 
-<c:if test = "${auth eq '[ROLE_uncerti_GAURD]' or '[ROLE_uncerti_CHILD]'}" >
+<c:if test = "${auth eq '[ROLE_uncerti_GUARD]' or '[ROLE_uncerti_CHILD]'}" >
 	<script>
 	location.href = "/register";
 	</script>
