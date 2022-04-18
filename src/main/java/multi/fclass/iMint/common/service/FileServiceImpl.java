@@ -81,7 +81,8 @@ public class FileServiceImpl implements IFileService {
 							.goodsImagesOriginname(file.getOriginalFilename())
 						.build();
 
-					goodsImagesId = goodsDAO.goodsImagesInsert(goodsImagesDTO);
+					goodsDAO.goodsImagesInsert(goodsImagesDTO);
+					goodsImagesId = goodsImagesDTO.getGoodsImagesId();
 
 					index++;
 				}

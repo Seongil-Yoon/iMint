@@ -15,7 +15,6 @@ import multi.fclass.iMint.goods.dto.GoodsDTO;
 @Service
 public class UtilServiceImpl implements IUtilService {
 
-	// 윈도우에서는 \\, 리눅스서버에서는/
 	@Value("${route}")
 	String route;
 	@Value("${directory}")
@@ -30,14 +29,16 @@ public class UtilServiceImpl implements IUtilService {
 	public List<String> createGoodsPaths(String createTime) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDateTime dateTime = LocalDateTime.parse(createTime, formatter);
-		
+
 		List<String> path = new ArrayList<String>();
 		path.add(directory);
 		path.add(goodsImagePath);
-		String year = String.valueOf(dateTime.getYear());
+		String year = Integer.toString(dateTime.getYear());
 		path.add(year);// 년
-		String month = String.valueOf(dateTime.getMonth());
+		String month = Integer.toString(dateTime.getMonthValue());
 		path.add(month);// 월
+		String day = Integer.toString(dateTime.getDayOfMonth());
+		path.add(day);
 
 		return path;
 	}

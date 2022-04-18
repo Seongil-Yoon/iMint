@@ -4,75 +4,69 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import multi.fclass.iMint.goods.dto.GoodsDTO;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Component
 public class MemberDTO {
 
 	// 등록순서
-	private Integer mbNo;
+    private Integer mbNo;
 
-	// 회원ID
-	private String mbId;
+    // 회원ID
+    private String mbId;
 
-	// 사이트SNS
-	private String mbProvider;
-	
-	// 보호자
-	private String mbGuard;
+    // SNS사이트
+    private String mbProvider;
 
-	// 닉네임
-	private String mbNick;
+    // 보호자
+    private String mbGuard;
 
-	// 이메일
-	private String mbEmail;
+    // 닉네임
+    private String mbNick;
 
-	// 가입일자
-	private LocalDateTime mbJoinDate;
+    // 이메일
+    private String mbEmail;
 
-	// 관심사
-	private String mbInterest;
+    // 가입일자
+    private LocalDateTime mbJoinDate;
 
-	// 내 동네
-	private String mbLocation;
+    // 관심사
+    private String mbInterest;
 
-	// 평가점수
-	private Integer mbRatingsTotal;
+    // 내 동네
+    private String mbLocation;
 
-	// 아이등록인증PIN
-	private String mbPin;
+    // 평가점수
+    private Integer mbRatingsTotal;
 
-	// 프로필사진
-	private String mbThumbnail;
+    // 아이등록인증PIN
+    private String mbPin;
 
-	// 탈퇴여부
-	private Boolean mbIsdelete;
+    // 프로필사진
+    private String mbThumbnail;
 
-	public MemberDTO() {
-	}
-	
-	public MemberDTO(Integer mbNo, String mbId, String mbProvider ,String mbGuard, String mbNick, String mbEmail, LocalDateTime mbJoinDate,
-			String mbInterest, String mbLocation, Integer mbRatingsTotal, String mbPin, String mbThumbnail,
-			Boolean mbIsdelete) {
-		this.mbNo = mbNo;
+    // 탈퇴여부
+    private Boolean mbIsdelete;
+
+    // 멤버권한
+    private String mbRole;
+
+    @Builder
+	public MemberDTO(String mbId, String mbNick, String mbLocation) {
+		super();
 		this.mbId = mbId;
-		this.mbProvider = mbProvider;
-		this.mbGuard = mbGuard;
 		this.mbNick = mbNick;
-		this.mbEmail = mbEmail;
-		this.mbJoinDate = mbJoinDate;
-		this.mbInterest = mbInterest;
 		this.mbLocation = mbLocation;
-		this.mbRatingsTotal = mbRatingsTotal;
-		this.mbPin = mbPin;
-		this.mbThumbnail = mbThumbnail;
-		this.mbIsdelete = mbIsdelete;
 	}
-
-	@Override
-	public String toString() {
-		return "Member [mbNo=" + mbNo + ", mbId=" + mbId + ", mbProvider=" + mbProvider + ", mbGuard=" + mbGuard + ", mbNick=" + mbNick + ", mbEmail="
-				+ mbEmail + ", mbJoinDate=" + mbJoinDate + ", mbInterest=" + mbInterest + ", mbLocation=" + mbLocation
-				+ ", mbRatingsTotal=" + mbRatingsTotal + ", mbPin=" + mbPin + ", mbThumbnail=" + mbThumbnail
-				+ ", mbIsdelete=" + mbIsdelete + "]";
-	}
-
+    
+    
 }
