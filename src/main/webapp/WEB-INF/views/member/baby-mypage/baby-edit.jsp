@@ -42,7 +42,7 @@
 		            </div>
 		            <div class="buttons buttons-photo">
 		                <form action="#">
-		                    <input type="file">
+		                    <input name = "thumbnail" type="file">
 		                </form>
 		            </div>
 		        </div>
@@ -54,7 +54,7 @@
 		            </div>
 		            <div class="buttons buttons-nickname">
 		                <form action="#">
-		                    <input class="buttons-text" type="text">
+		                    <input name = "nickname" class="buttons-text" type="text">
 		                    <input type="submit" class="btn btn-primary" value="확인"/>
 		                </form>
 		            </div>
@@ -67,7 +67,7 @@
 		            </div>
 		            <div class="buttons buttons-interest">
 		                <form action="#">
-		                    <input type="text" class="buttons-text">
+		                    <input name = "interest" type="text" class="buttons-text">
 		                </form>
 		            </div>
 		        </div>
