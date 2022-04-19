@@ -42,7 +42,7 @@
 		            </div>
 		            <div class="buttons buttons-photo">
 		                <form action="#" method="post">
-		                    <input name = "thumbnail" type="file">
+		                    <input name = "thumbnail" type="file" id="photo-update-child">
 		                </form>
 		            </div>
 		        </div>
@@ -54,8 +54,8 @@
 		            </div>
 		            <div class="buttons buttons-nickname">
 		                <form action="#" method="post">
-		                    <input name = "nickname" class="buttons-text" type="text">
-		                    <input type="submit" class="btn btn-primary" value="확인"/>
+		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-child">
+		                    <input type="submit" class="btn btn-primary" value="확인" id="nickname-check-child"/>
 		                </form>
 		            </div>
 		        </div>
@@ -67,7 +67,7 @@
 		            </div>
 		            <div class="buttons buttons-interest">
 		                <form action="#" method="post">
-		                    <input name = "interest" type="text" class="buttons-text">
+		                    <input name = "interest" type="text" class="buttons-text" id="interest-update-child">
 		                </form>
 		            </div>
 		        </div>
@@ -76,7 +76,7 @@
 		        <form action="#" method="post">
 		            <br>
 		            <br>
-		            <input type="submit" class="btn btn-primary" value="회원정보 수정하기"/>
+		            <input type="submit" class="btn btn-primary" value="회원정보 수정하기" id="update-complete-child"/>
 		        </form>
 		    </div>
 		</div>

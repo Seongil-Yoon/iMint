@@ -39,7 +39,7 @@
 					</form> -->
 					<form action="/mypage/withdraw" method="post">
 						<br>
-						<input type="submit" class="btn btn-danger" value="아이민트 탈퇴하기"/>
+						<input type="submit" class="btn btn-danger" value="아이민트 탈퇴하기" id="withdraw-complete-child"/>
 					</form>
 				</div>
 			</div>
