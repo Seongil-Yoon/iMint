@@ -9,6 +9,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -125,8 +126,26 @@ public class IndexController {
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/register/nickname")
+	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+
+		Map<String, String> map = new HashMap<String, String>();
+		
+		System.out.println(nickcheck);
+		
+		if (securityDAO.findByMbNick(nickcheck) == null || securityDAO.findByMbNick(nickcheck).getMbId().equals(mbId) ) { // 없거나, 본인이면
+			map.put("result", "ok");
+			map.put("nickcheck", nickcheck);
+		}
+		else {
+			map.put("result", "duplicated");			
+		}
+		return map;		
+	}
+	
 	// 회원가입 3(보호자, 아이 모두. 로직은 분리)
-	@PostMapping("/register") // , String guardNick,String guardPin
+	@PostMapping("/register") //
 	public ModelAndView registersns(HttpServletRequest req, String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
 		ModelAndView mv = new ModelAndView();
@@ -229,24 +248,24 @@ public class IndexController {
 		}
 	}	
 
-	// DB저장
-	securityDAO.updateregister4(memberDTO);
-
-	// 세션 수정
-    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
-    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
-	// 세션에 변경사항 저장
-	SecurityContext context = SecurityContextHolder.getContext();
-	// UsernamePasswordAuthenticationToken
-	context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
-	HttpSession session = req.getSession(true);
-	//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
-	session.setAttribute(HttpSessionSecurityContextRepository.
-	                       SPRING_SECURITY_CONTEXT_KEY, context);
-
-	mv.addObject("session", session);
+		// DB저장
+		securityDAO.updateregister4(memberDTO);
 	
-	return mv;
+		// 세션 수정
+	    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
+	    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
+		// 세션에 변경사항 저장
+		SecurityContext context = SecurityContextHolder.getContext();
+		// UsernamePasswordAuthenticationToken
+		context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
+		HttpSession session = req.getSession(true);
+		//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+		session.setAttribute(HttpSessionSecurityContextRepository.
+		                       SPRING_SECURITY_CONTEXT_KEY, context);
+	
+		mv.addObject("session", session);
+		
+		return mv;
 	}
 		
 	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true

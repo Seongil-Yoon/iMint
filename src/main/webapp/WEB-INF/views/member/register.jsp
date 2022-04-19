@@ -19,9 +19,9 @@
  	<h6>${err}</h6>
 	
 	<br>
- 	<form id = "change_url" action="/register" method = "post">
- 		<div>닉네임<br>
-	 		<input type = text name = "mbNick" id = "mbNick" value = ${memberDTO.mbNick }>
+ 	<form id = "change_url"> <!-- input type = submit, prevent -->
+ 		<div>닉네임 <button type="button" id = "nick_btn">닉네임 중복확인</button><p id = "nickappend"></p>
+	 		<input type = text name = "mbNick" id = "mbNick" placeholder = ${memberDTO.mbNick }>
  		</div>
  		<div>이메일<br>
 	 		<input type = text name = "mbEmail" id = "mbEmail" value = ${memberDTO.mbEmail }>
@@ -32,13 +32,45 @@
  		
  		<input type = hidden name = "mbId" id = "mbId" value = ${memberDTO.mbId }>
  		<input type = hidden name = "mbRole" id = "mbRole" value = ${memberDTO.mbRole }>
-    	<button id = "register_btn">회원가입</button>
+    	<input type = "submit" id = "register_btn" value = "회원가입">
 	</form>
 	
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
 
-	<script src="/static/js/register.js"></script>
+<!-- 	<script src="/static/js/register.js"></script> -->
 	
+	<script>
+	/* ajax로 닉네임 중복확인 */ 
+		$("#nick_btn").on('click', function(){
+			var mbNick = $("#mbNick").val();
+			$.ajax({
+				url: "/register/nickname",
+				type: 'get',
+				data: {'nickcheck' : $("#mbNick").val(),
+					'mbId' : $("#mbId").val()
+					}, 
+				dataType: "json",
+					
+					success: function(response) { /* 중복확인 결과  */
+						/* alert(response.result); */
+						alert(JSON.stringify(response.nickcheck));
+ 						if(response.result == "ok"){
+							$("#nickappend").html('<p style = color: black>사용가능한 닉네임입니다.</p>'); /* 왜 텍스트 추가가 안되지  */
+							alert("사용 가능한 닉네임입니다.");
+ 							
+ 							$("#change_url").attr("action", "/register");		
+							$("#change_url").attr("method", "post"); 
+ 						} // if end 
+						else{
+							/* alert("다른 사용자가 이미 사용중인 닉네임입니다."); */
+							/* $("#mbNick").val("");  */
+ 							$("#nickappend").html('<p style = color: red>다른 사용자가 이미 사용중인 닉네임입니다.</p>');							
+ 						} // else end
+					} // success end 	
+			}); // ajax end
+		});
+
+	</script>	
 	
 </body>
 
