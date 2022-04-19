@@ -32,8 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import multi.fclass.iMint.member.dao.IMemberDAO;
-import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.member.dto.MemberDTO;
+import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
