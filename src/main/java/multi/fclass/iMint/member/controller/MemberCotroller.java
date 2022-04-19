@@ -60,6 +60,8 @@ public class MemberCotroller {
 	@Value("${directory}")
 	private String directory;
 	
+	//URL 매핑 수정(회원가입 수정/탈퇴-> 보호자, 아이 구분 x)
+	
 	@RequestMapping("/mypage/edit")
 	public ModelAndView updateuser(Authentication auth, String thumbnail, String nickname, String interest) {
 		
@@ -74,15 +76,18 @@ public class MemberCotroller {
 		
 		memberDAO.updatemember(mbId, thumbnail, nickname, interest);
 		
-		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/guard-mypage/guard-edit");
-		}
-		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-edit");
-		}
+//		if(memberDTO.getMbRole() == Role.GUARD) {
+//			mv.setViewName("member/guard-mypage/guard-edit");
+//		}
+//		else if(memberDTO.getMbRole() == Role.CHILD) {
+//			mv.setViewName("member/baby-mypage/baby-edit");
+//		}
+		
+		mv.setViewName("member/baby-mypage/baby-edit");
 		
 		return mv;
 	}
+	
 	
 	@GetMapping("/mypage/withdraw")
 	public ModelAndView	deleteuser(Authentication auth) {
@@ -92,12 +97,14 @@ public class MemberCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
-		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/guard-mypage/guard-withdraw"); 
-		}
-		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-withdraw");
-		}
+//		if(memberDTO.getMbRole() == Role.GUARD) {
+//			mv.setViewName("member/guard-mypage/guard-withdraw"); 
+//		}
+//		else if(memberDTO.getMbRole() == Role.CHILD) {
+//			mv.setViewName("member/baby-mypage/baby-withdraw");
+//		}
+//		
+		mv.setViewName("member/baby-mypage/baby-withdraw");
 		
 		return mv;
 	}
