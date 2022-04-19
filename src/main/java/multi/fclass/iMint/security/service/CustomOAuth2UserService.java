@@ -14,11 +14,11 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import multi.fclass.iMint.member.dto.SessionMember;
+import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.auth.config.OAuthAttributes;
 import multi.fclass.iMint.security.auth.provider.OAuth2UserInfo;
-import multi.fclass.iMint.security.dao.IUserDAO;
-import multi.fclass.iMint.security.dto.SessionUser;
-import multi.fclass.iMint.security.dto.User;
+import multi.fclass.iMint.security.dao.ISecurityDAO;
 
 /**
  * @author Junming, Yang
@@ -28,7 +28,7 @@ import multi.fclass.iMint.security.dto.User;
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> { //  extends HttpServlet: include용 
-    private final IUserDAO userDAO;
+    private final ISecurityDAO securityDAO;
     private final HttpSession httpSession;
 
     @Override
@@ -67,34 +67,34 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes
                 .of(mbProvider, userNameAttributeName, oAuth2User.getAttributes()); // 로그인, 로그인한 유저 정보 받아오기
         
-        User user = SaveOrUpdate(attributes);
+        MemberDTO memberDTO = SaveOrUpdate(attributes);
         
         // SessioUser: 세션에 사용자 정보를 저장하기 위한 DTO 클래스 (개발자가 생성)
-        httpSession.setAttribute("user", new SessionUser(user)); // 세션 부분도 확인 필요 
+        httpSession.setAttribute("memberDTO", new SessionMember(memberDTO));
         return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
+                Collections.singleton(new SimpleGrantedAuthority(memberDTO.getRoleKey())),
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey()
         );
     }
     
     // 유저가 있는지 확인 
-    private User SaveOrUpdate(OAuthAttributes attributes) {
+    private MemberDTO SaveOrUpdate(OAuthAttributes attributes) {
     	
-        User user;
+        MemberDTO memberDTO;
         
-        if(userDAO.findByMbId(attributes.getMbId()) != null){
+        if(securityDAO.findByMbId(attributes.getMbId()) != null){
             System.out.println("이미 가입되어 있는 회원입니다.");
-        	user = userDAO.findByMbId(attributes.getMbId());
+            memberDTO = securityDAO.findByMbId(attributes.getMbId());
         }
         else {
-            user = attributes.toEntity();
-            userDAO.savesns(user);
+        	memberDTO = attributes.toEntity();
+            securityDAO.savesns(memberDTO);
             System.out.println("최초 로그인으로 자동 가입됩니다.");
-        	user = userDAO.findByMbId(attributes.getMbId());
+            memberDTO = securityDAO.findByMbId(attributes.getMbId());
         }
 
-        return user;
+        return memberDTO;
     }
 
 

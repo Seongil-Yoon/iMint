@@ -33,11 +33,11 @@
 					<h2>되돌리기 어려우니 신중하게 생각해 주세요.</h2>
 				</div>
 				<div class="buttons">
-					<form action="#">
+					<!-- <form action="#">
 						<input class="buttons-text"type="password" placeholder="비밀번호를 입력해 주세요.">
 						<input type="submit" class="btn btn-primary" value="확인"/>
-					</form>
-					<form action="#">
+					</form> -->
+					<form action="/mypage/withdraw" method="post">
 						<br>
 						<input type="submit" class="btn btn-danger" value="아이민트 탈퇴하기"/>
 					</form>

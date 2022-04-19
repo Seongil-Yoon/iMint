@@ -43,13 +43,13 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.member.dto.SessionMember;
+import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.GenerateCertCharacter;
 import multi.fclass.iMint.security.auth.provider.KakaoUserInfo;
 import multi.fclass.iMint.security.auth.provider.NaverUserInfo;
-import multi.fclass.iMint.security.dao.IUserDAO;
-import multi.fclass.iMint.security.dto.Role;
-import multi.fclass.iMint.security.dto.SessionUser;
-import multi.fclass.iMint.security.dto.User;
+import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.security.parsing.role.ParseMbRole;
 
@@ -63,10 +63,10 @@ import multi.fclass.iMint.security.parsing.role.ParseMbRole;
 public class IndexController {
 
 	@Autowired
-	private IUserDAO userdao;
+	private ISecurityDAO securityDAO;
 	
 	@Autowired
-	private User user;
+	private MemberDTO memberDTO;
 	
 	@Autowired
 	ParseMbRole parseMbRole;
@@ -98,7 +98,7 @@ public class IndexController {
 		
 		// 모듈화 결과(아래 1줄)
 //		String mbId = parseMbId.parseMbId(auth);
-//		User user = parseMbId.getUserMbId(mbId);
+//		User user = parseMbId.getMemberMbId(mbId);
 //		String mbRole = user.getMbRole().toString();
 //		System.out.println(mbRole);
 //		mv.addObject("mbRole", mbRole);
@@ -116,7 +116,7 @@ public class IndexController {
 
 		// 모듈화 결과(아래 2줄)
 		String mbId = parseMbId.parseMbId(auth);
-		User user = parseMbId.getUserMbId(mbId);
+		MemberDTO user = parseMbId.getMemberMbId(mbId);
 		
 		ModelAndView mv = new ModelAndView();
 
@@ -132,12 +132,12 @@ public class IndexController {
 		ModelAndView mv = new ModelAndView();
 		
 		// 유저 정보 업데이트 
-		User user = parseMbId.getUserMbId(mbId);
-		user.setMbNick(mbNick);
-		user.setMbEmail(mbEmail);
-		user.setMbInterest(mbInterest);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		memberDTO.setMbNick(mbNick);
+		memberDTO.setMbEmail(mbEmail);
+		memberDTO.setMbInterest(mbInterest);
 		
-		userdao.updateregister3(user);
+		securityDAO.updateregister3(memberDTO);
 		
 		if(mbRole.equals("UN_GUARD")) {
 			mv.setViewName("member/guard-mypage/guard-location");
@@ -146,7 +146,7 @@ public class IndexController {
 			mv.setViewName("member/register_connect");			
 		}
 
-		mv.addObject("user", user);
+		mv.addObject("memberDTO", memberDTO);
 		return mv;
 	}
 	
@@ -160,7 +160,7 @@ public class IndexController {
 //		
 //		ModelAndView mv = new ModelAndView();
 //		
-//		User user = parseMbId.getUserMbId(mbId);
+//		User user = parseMbId.getMemberMbId(mbId);
 //		System.out.println(mbId);
 //		System.out.println(mbNick);
 //		System.out.println(mbRole);
@@ -202,23 +202,23 @@ public class IndexController {
 	ModelAndView mv = new ModelAndView();
 		
 	String mbId = parseMbId.parseMbId(auth);
-	User user = parseMbId.getUserMbId(mbId);
+	MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 	
 	// mbLocation 받아오기 
-	if (user.getMbRole() == Role.UN_GUARD) { // 보호자 
-		user.setMbGuard(null);
-		user.setMbLocation(mbLocationOrGuard);
-		user.setMbRole(Role.GUARD);
-		user.setMbPin(new GenerateCertCharacter().excuteGenerate());
+	if (memberDTO.getMbRole() == Role.UN_GUARD) { // 보호자 
+		memberDTO.setMbGuard(null);
+		memberDTO.setMbLocation(mbLocationOrGuard);
+		memberDTO.setMbRole(Role.GUARD);
+		memberDTO.setMbPin(new GenerateCertCharacter().excuteGenerate());
 		mv.setViewName("member/guard-mypage/guard-main");
 	}	
-	else if (user.getMbRole() == Role.UN_CHILD) { // 아이 
-		User guardUser = userdao.findByMbNick(mbLocationOrGuard);
-		if (guardUser != null & guardUser.getMbPin().equals(guardPin)) {
-			user.setMbGuard(guardUser.getMbId());
-			user.setMbLocation(null);
-			user.setMbRole(Role.CHILD);
-			user.setMbPin(null);
+	else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이 
+		MemberDTO guardMember = securityDAO.findByMbNick(mbLocationOrGuard);
+		if (guardMember != null & guardMember.getMbPin().equals(guardPin)) {
+			memberDTO.setMbGuard(guardMember.getMbId());
+			memberDTO.setMbLocation(null);
+			memberDTO.setMbRole(Role.CHILD);
+			memberDTO.setMbPin(null);
 			mv.setViewName("member/baby-mypage/baby-main");
 		}
 		else {
@@ -230,15 +230,15 @@ public class IndexController {
 	}	
 
 	// DB저장
-	userdao.updateregister4(user);
+	securityDAO.updateregister4(memberDTO);
 
 	// 세션 수정
     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
-    authorities.add(new SimpleGrantedAuthority(user.getRoleKey()));
+    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
 	// 세션에 변경사항 저장
 	SecurityContext context = SecurityContextHolder.getContext();
 	// UsernamePasswordAuthenticationToken
-	context.setAuthentication(new UsernamePasswordAuthenticationToken(user.getMbId(), null, authorities));
+	context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
 	HttpSession session = req.getSession(true);
 	//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 	session.setAttribute(HttpSessionSecurityContextRepository.

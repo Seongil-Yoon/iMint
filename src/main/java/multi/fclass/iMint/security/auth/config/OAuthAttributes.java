@@ -7,11 +7,11 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 
 import lombok.Builder;
 import lombok.Getter;
+import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.auth.provider.KakaoUserInfo;
 import multi.fclass.iMint.security.auth.provider.NaverUserInfo;
 import multi.fclass.iMint.security.auth.provider.OAuth2UserInfo;
-import multi.fclass.iMint.security.dto.Role;
-import multi.fclass.iMint.security.dto.User;
 
 /**
  * @author Junming, Yang
@@ -179,8 +179,8 @@ public class OAuthAttributes {
 					.build();
 	}
     
-    public User toEntity() {
-        return User.builder()
+    public MemberDTO toEntity() {
+        return MemberDTO.builder()
         		.mbId (mbId)
         		.mbProvider (mbProvider)
         		.mbGuard (mbGuard)
