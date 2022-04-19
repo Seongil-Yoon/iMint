@@ -24,17 +24,28 @@ public class TransactionServiceImpl implements ITransactionService {
 		TransactionCheckDTO trxCheckDTO = trxDAO.checkReservation(goodsId);
 
 		if (trxCheckDTO == null) {
-			// 예약 중 아님
-			return "!resrv";
-		} else if (trxCheckDTO.getSellerId().equals(myId)) {
-			// 예약 중인 채팅방(판매자)
-			return "seller";
-		} else if (trxCheckDTO.getBuyerId().equals(myId)) {
-			// 예약 중인 채팅방(구매자)
-			return "buyer";
+			return "error";
+		}
+
+		if (trxCheckDTO.getId() == null) {
+			if (trxCheckDTO.getSellerId().equals(myId)) {
+				// 예약가능(판매자)
+				return "?resrv";
+			} else {
+				// 예약가능(판매자 아님)
+				return "!resrv";
+			}
 		} else {
-			// 다른 사용자가 예약 중(구매자)
-			return "resrv";
+			if (trxCheckDTO.getSellerId().equals(myId)) {
+				// 예약 중(판매자)
+				return "seller";
+			} else if (trxCheckDTO.getBuyerId().equals(myId)) {
+				// 예약 중(구매자)
+				return "buyer";
+			} else {
+				// 예약 중(판매자/구매자 아님)
+				return "resrv";
+			}
 		}
 	}
 
@@ -42,9 +53,18 @@ public class TransactionServiceImpl implements ITransactionService {
 	public String checkTransaction(String myId, int goodsId) {
 		TransactionCheckDTO trxCheckDTO = trxDAO.checkTransaction(goodsId);
 
+		if (trxCheckDTO == null) {
+			return "error";
+		}
+
 		if (trxCheckDTO.getId() == null) {
-			// 판매 중
-			return "!comp";
+			if (trxCheckDTO.getSellerId().equals(myId)) {
+				// 판매 중(판매자)
+				return "?comp";
+			} else {
+				// 판매 중(판매자 아님)
+				return "!comp";
+			}
 		} else {
 			if (trxCheckDTO.getBuyerId() == null) {
 				if (trxCheckDTO.getSellerId().equals(myId)) {

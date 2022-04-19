@@ -7,13 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nimbusds.jose.shaded.json.JSONObject;
 
 import multi.fclass.iMint.wishlist.service.IWishlistService;
-import multi.fclass.iMint.wishlist.service.WishlistServiceImpl;
 
 @RestController
 public class WishlistController {
 
 	@Autowired
-	IWishlistService wishlistService = new WishlistServiceImpl();
+	IWishlistService wishlistService;
 
 	@RequestMapping("/wishlist/count")
 	public String countWishes(Integer goodsId) {
