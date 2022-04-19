@@ -7,7 +7,7 @@
 <!-- 회원정보 수정 -->
     <update id = "updatemember" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
-        SET mb_thumbnail = {mbThumbnail}, mb_nickname = {mbNickname}, mb_interest = #{mbInterest}
+        SET mb_thumbnail = #{mbThumbnail}, mb_nickname = #{mbNickname}, mb_interest = #{mbInterest}
         WHERE (mb_id = #{mbId});
     </update>
 	

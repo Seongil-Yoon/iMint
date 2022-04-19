@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="multi.fclass.iMint.block.dao.IBlockDAO">
+
+<!-- 수정중  -->
+    <insert id="blockinsert" parameterType="String">
+        INSERT INTO imint.block(mb_id, mb_id2, now()) 
+        VALUES
+        (#{mbId}, #{blockmbId}, #{block_date});
+    </insert>
+
+
+    <update id = "blockupdate" parameterType="String">
+        UPDATE imint.block 
+        SET mb_thumbnail = #{allname}
+        WHERE (mb_id = #{mbId});
+    </update>
+
+</mapper>
