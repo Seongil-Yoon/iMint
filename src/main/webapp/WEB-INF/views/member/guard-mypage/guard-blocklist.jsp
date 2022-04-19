@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>@@아기당근@@ :: 마이페이지</title>
+	<title>아이민트 :: 마이페이지</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_block.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
