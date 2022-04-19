@@ -1,6 +1,5 @@
 package multi.fclass.iMint.goods.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 import multi.fclass.iMint.goods.service.GoodsServiceImpl;
 import multi.fclass.iMint.member.dto.MemberDTO;
-import multi.fclass.iMint.security.dto.User;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
 /**
@@ -36,10 +34,10 @@ public class GoodsCotroller {
 	@GetMapping("goods/detail")
 	public String goodsDetail(Authentication auth, @RequestParam("goodsId") int goodsId, Model model) {
 		String mbId = parseService.parseMbId(auth);
-		User userDTO = parseService.getUserMbId(mbId);
+		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
 
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
-		model.addAttribute("member", userDTO);
+		model.addAttribute("member", memberDTO);
 		return "goods/goods-detail";
 	}
 
@@ -52,11 +50,9 @@ public class GoodsCotroller {
 	@GetMapping("goods/write")
 	public String goodsWriteView(Authentication auth, Model model) {
 		String mbId = parseService.parseMbId(auth);
-		User userDTO = parseService.getUserMbId(mbId);
+		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
 
-//		나중에 세션값으로 대체
-//		MemberDTO dto1 = new MemberDTO("test1235", "무민1919", "대구 수성구");
-		model.addAttribute("member", userDTO);
+		model.addAttribute("member", memberDTO);
 		return "goods/goods-write";
 	}
 
@@ -72,5 +68,14 @@ public class GoodsCotroller {
 		}
 		// 브라우저단에서 location.href로 상품상세
 		return goodsDTO;
+	}
+
+	@GetMapping("goods/delete")
+	public String goodsDelete(Authentication auth, @RequestParam("goodsId") int goodsId) {
+		String mbId = parseService.parseMbId(auth);
+		System.out.println("현재 상품 ID  :" + goodsId);
+		goodsSevice.goodsDelete(goodsId, mbId);
+
+		return "main";
 	}
 }

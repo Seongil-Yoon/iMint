@@ -167,6 +167,8 @@ const dataURLtoFile = (dataurl, fileName) => {
 function main() {
     $("#thumbnailFile").on("change", function () {
         thumbnailFile = this.files[0];
+        console.log(thumbnailFile);
+        $("#thumbnailFileName").val(`파일명 : ${thumbnailFile.name}`);
     })
 
     filePond();

@@ -14,7 +14,9 @@ import multi.fclass.iMint.goods.dto.GoodsDTO;
 
 @Service
 public class UtilServiceImpl implements IUtilService {
-
+	
+	@Value("${root}")
+	String root;
 	@Value("${route}")
 	String route;
 	@Value("${directory}")
@@ -31,6 +33,7 @@ public class UtilServiceImpl implements IUtilService {
 		LocalDateTime dateTime = LocalDateTime.parse(createTime, formatter);
 
 		List<String> path = new ArrayList<String>();
+		path.add(root);
 		path.add(directory);
 		path.add(goodsImagePath);
 		String year = Integer.toString(dateTime.getYear());
