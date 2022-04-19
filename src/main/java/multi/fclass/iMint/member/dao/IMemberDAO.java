@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface IMemberDAO {
 
     // 회원정보 수정
-	public void updatemember(String mbId, String thumbnail, String nickname, String interest);
+	public void updatemember(String mbId, String mbThumbnail, String mbNickname, String mbInterest);
 	
 	// 탈퇴
 	public void updatedelete(String mbId);
