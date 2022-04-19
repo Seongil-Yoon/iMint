@@ -29,7 +29,7 @@
 	 	<!-- 아티클 시작 -->
 	 	<div class="container-main">
 		 	<div class="title-text">
-			   <h2>거래 관련 목록입니다.</h2>
+			   <h2>내아이 ~의 거래 관련 목록입니다.</h2>
 			</div>
 	 			<!-- 상단 탭 -->
 	        <section class="tabs">
@@ -76,8 +76,8 @@
 							<div class="buttons">
 	                            <h6 class="select-title">전체선택</h6>
 	                            <input type="checkbox" class="selectAllbtn" name="selected"/>
-	                            <button type="button" id="edit" class="btn btn-secondary btn-sm">수정</button>
-	                            <button type="button" id="delete" class="btn btn-secondary btn-sm">삭제</button>
+	                            <button type="button" id="block" class="btn btn-secondary btn-sm">차단</button>
+	                            <button type="button" id="chatroom-delete" class="btn btn-secondary btn-sm">삭제</button>
                         	</div>
 	                        <!-- 항목명 -->
 		                        <div class="item-lables-chat">
