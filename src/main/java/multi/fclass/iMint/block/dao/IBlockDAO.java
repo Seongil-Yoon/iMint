@@ -10,4 +10,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface IBlockDAO {
 
+	// 수정중
+	public void blockinsert(String mbId, String blockmbId);
+	
+	public void blockupdate(String allname, String mbId);
+	
+	
 }
