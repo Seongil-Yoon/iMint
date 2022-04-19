@@ -7,9 +7,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Component;
 
-import multi.fclass.iMint.security.dao.IUserDAO;
-import multi.fclass.iMint.security.dto.Role;
-import multi.fclass.iMint.security.dto.User;
+import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.member.dto.MemberDTO;
+import multi.fclass.iMint.security.dao.ISecurityDAO;
 
 /**
  * @author Junming, Yang
@@ -20,10 +20,10 @@ import multi.fclass.iMint.security.dto.User;
 @Component
 public class ParseMbId {
 
-	User user;
+	MemberDTO user;
 	
 	@Autowired
-	IUserDAO userDAO;
+	ISecurityDAO SecurityDAO;
 	
 	// mbId파싱
 	public String parseMbId(Authentication auth) {
@@ -33,7 +33,7 @@ public class ParseMbId {
 		String customerId = null;
 		
 		// 구글(아이 테스트용) 
-		if(auth.getName().length() <= 40 & userDAO.findByMbId("google_" + auth.getName().toString()) != null) { 
+		if(auth.getName().length() <= 40 & SecurityDAO.findByMbId("google_" + auth.getName().toString()) != null) { 
 			mbId = "google_" + auth.getName();
 			return mbId;
 		}
@@ -61,16 +61,16 @@ public class ParseMbId {
 		return mbId;
 	}
 	
-	// mbId를 가진 유저 조회 
-	public User getUserMbId(String mbId) {
-		User user = userDAO.findByMbId(mbId);
+	// mbId를 가진 Member 조회 
+	public MemberDTO getMemberMbId(String mbId) {
+		MemberDTO user = SecurityDAO.findByMbId(mbId);
         System.out.println("mbId가 " + mbId + "인 유저 조회 결과: " + user);
 		return user;
 	}
 	
-	// mbId유저의 Role 
+	// mbId를 가진 Member의 Role 
 	public Role getRoleMbId(String mbId) {
-		User user = getUserMbId(mbId);
+		MemberDTO user = getMemberMbId(mbId);
 		Role mbRole = user.getMbRole();
         System.out.println("mbId가 " + mbId + "인 유저의 권한은 " + mbRole);
 		return mbRole;
