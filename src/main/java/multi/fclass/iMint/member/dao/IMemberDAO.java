@@ -3,6 +3,8 @@ package multi.fclass.iMint.member.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
+import multi.fclass.iMint.member.dto.MemberDTO;
+
 /**
  * @author Junming, Yang
  *
@@ -20,4 +22,7 @@ public interface IMemberDAO {
 	// 프로필 사진
 	public void updatethumbnail(String mbId, String allname);
 
+	// 동네
+	public void updatelocation(MemberDTO memberDTO);
+	
 }

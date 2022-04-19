@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -65,8 +66,27 @@ public class MypageCotroller {
 	}
 	
 	@GetMapping("mypage/location")
-	public String indexLocation() {
-		return "member/guard-mypage/guard-location";
+	public ModelAndView indexLocation(Authentication auth) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		String mbId = parseMbId.parseMbId(auth);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		
+		mv.addObject("memberDTO", memberDTO);
+		mv.setViewName("member/guard-mypage/guard-location");
+		
+		return mv;
+	}
+	
+	@PostMapping("mypage/location")
+	public String indexLocationResult(Authentication auth) {
+		
+		String mbId = parseMbId.parseMbId(auth);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		memberDAO.updatelocation(memberDTO);
+		
+		return "redirect:/mypage";
 	}
 	
 //	@GetMapping("mypage/mylist")
