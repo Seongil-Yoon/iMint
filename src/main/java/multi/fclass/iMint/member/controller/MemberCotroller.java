@@ -84,7 +84,7 @@ public class MemberCotroller {
 		return mv;
 	}
 	
-//	@GetMapping("/mypage/withdraw")
+	@GetMapping("/mypage/withdraw")
 	public ModelAndView	deleteuser(Authentication auth) {
 		
 		ModelAndView mv = new ModelAndView();

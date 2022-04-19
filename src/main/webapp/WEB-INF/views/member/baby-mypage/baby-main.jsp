@@ -72,10 +72,10 @@
             </div>
         </div>
         <!-- 아이 로그인시 숨김 -->
-        <div class="container-authentication">
+        <!-- <div class="container-authentication">
             <h5 class="text-authentication">내아이를 연결하시겠어요? <br> 닉네임과 아래 인증번호를 아이 계정에서 입력하여 주세요.</h5>
             <h5 class="text-authentication">인증 번호: ******</h5>
-        </div>
+        </div> -->
         <!-- 아이 로그인시 숨김 해제-->
     </div>
     </div>
