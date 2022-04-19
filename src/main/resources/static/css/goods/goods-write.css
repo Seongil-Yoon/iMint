@@ -35,9 +35,58 @@
 
 
 .row1>.location {
-    min-width: 38%;
+    flex: 4;
     margin-right: 2%;
 }
+
+.row1>.location>input {
+    height: inherit;
+}
+
+.row1>#thumbnail {
+    flex: 4;
+    margin-right: 2%;
+}
+
+.row1>#thumbnail>input {
+    display: none;
+}
+
+
+.row1>#thumbnail> :nth-child(2) {
+    color: rgba(0, 0, 0, 0.584);
+}
+.row1>#thumbnail> :nth-child(3) {
+}
+
+.row1>#thumbnail> :nth-child(4) {
+    float: right;
+}
+
+.row1>#thumbnail img {
+    width: 80px;
+    height: 80px;
+}
+
+.row1>#otherImages {
+    flex: 2;
+    display: flex;
+    align-items: center;
+}
+
+.row1>#otherImages>.btn-plus {
+    margin: 0 auto;
+    box-sizing: content-box;
+    width: 3em;
+    height: 3em;
+    padding: 0.25em 0.25em;
+    color: #000;
+    background: transparent url("/static/images/plus.png") center/3em auto no-repeat;
+    border: 0;
+    border-radius: 0.25rem;
+    opacity: .5;
+}
+
 
 /* filePond css */
 .popup-overlay {
@@ -82,18 +131,7 @@
     }
 }
 
-.row1>.location>input {
-    height: inherit;
-}
 
-.row1>#thumbnail {
-    min-width: 29%;
-    margin-right: 2%;
-}
-
-.row1>#otherImages {
-    min-width: 29%;
-}
 
 .row2 {}
 

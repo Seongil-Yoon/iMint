@@ -14,6 +14,12 @@
 <body>
 	<jsp:include page="../include/header.jsp" flush="false" />
 
+	<input style="display: none;" type="hidden" id="goodsId" value="${goods.goodsId}" />
+	<input style="display: none;" type="hidden" id="sellerId" value="${goods.sellerId}" />
+	<input style="display: none;" type="hidden" id="sellerNick" value="${goods.sellerNick}" />
+	<input style="display: none;" type="hidden" id="sellerNick" value="${goods.sellerNick}" />
+	<input style="display: none;" type="hidden" id="sellerNick" value="${goods.sellerNick}" />
+	<input style="display: none;" type="hidden" id="goodsTitle" value="${goods.goodsTitle}" />
 	<section class="container">
 		<article class="row1">
 			<h1>${goods.goodsTitle}</h1>
@@ -39,12 +45,13 @@
 		<article class="carousel">
 			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-indicators">
-					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+					<!-- JS영역 -->
+					<!-- <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
 						class="active" aria-current="true" aria-label="Slide 1"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
 						aria-label="Slide 2"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-						aria-label="Slide 3"></button>
+						aria-label="Slide 3"></button> -->
 				</div>
 				<div class="carousel-inner">
 					<!-- JS영역 -->
@@ -96,7 +103,7 @@
 					</c:when>
 					<c:when test="${sessionScope.mbId == goods.sellerId}">
 						<a class="btn btn-primary" href="/chatroom/">
-							내 채팅 목록가기 
+							내 채팅 목록가기
 						</a>
 					</c:when>
 					<c:otherwise>
@@ -117,7 +124,9 @@
 	<script type="text/javascript" src="/static/js/goods/goods-detail.js"></script>
 	<script type="text/javascript" src="/static/js/goods/carousel.js"></script>
 	<script>
-		carouselReady( ${goods.goodsId} );
+		carouselReady($ {
+			goods.goodsId
+		});
 	</script>
 </body>
 
