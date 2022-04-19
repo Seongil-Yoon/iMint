@@ -26,6 +26,8 @@ public class FileServiceImpl implements IFileService {
 	@Autowired
 	IGoodsDAO goodsDAO; // 파일업로드 후 DB insert
 
+	@Value("${root}")
+	String root;
 	@Value("${route}")
 	String route;
 
@@ -42,12 +44,27 @@ public class FileServiceImpl implements IFileService {
 		return completePath;
 	}
 
+	@Override
+	public int rmFiles(List<String> imagesPath) {
+		// imagesPath는 DB에서 조회해서 완성된 경로
+		int idx = 0;
+		for (String path : imagesPath) {
+			File f = new File(root + path);
+			if (!f.exists()) {
+				return idx;
+			}
+			f.delete();
+			idx++;
+		}
+		return idx;
+	}
+
 	// 파일업로드
 	@Override
 	public int uploadGoodsImageFiles(List<String> paths, int goodsId, List<MultipartFile> files) {
-//    	String path = "C:\\iMint\\goods\\YYYY\\MM\\";
+//    	String path = "C:/iMintImage/goods/YYYY/MM/DD";
 		String realPath = utilService.completePath(paths);
-		String mappingPath = utilService.completePath(paths, 1);
+		String mappingPath = utilService.completePath(paths, 2); // "goods/YYYY/MM/DD"
 		String fileName = null;
 		String fileOriginName = null;
 		String fileOriginNameExt = null;
@@ -66,20 +83,18 @@ public class FileServiceImpl implements IFileService {
 					SimpleDateFormat foramt1 = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
 					String formatToday = foramt1.format(new Date());
 					String originalFilename = URLEncoder.encode(file.getOriginalFilename(), "UTF-8");
-					fileOriginName =  FilenameUtils.getBaseName(originalFilename);
+					fileOriginName = FilenameUtils.getBaseName(originalFilename);
 					fileOriginNameExt = originalFilename.substring(originalFilename.lastIndexOf("."));
 					// ex) .png, .jpg, .gif
-					fileName = goodsId + "_" + fileOriginName + "_" + formatToday + "(" + uuid + ")" + fileOriginNameExt;
+					fileName = goodsId + "_" + fileOriginName + "_" + formatToday + "(" + uuid + ")"
+							+ fileOriginNameExt;
 					byte[] fileData = file.getBytes();
 					File target = new File(realPath, fileName);
 
 					FileCopyUtils.copy(fileData, target);
-					goodsImagesDTO = GoodsImagesDTO.builder()
-							.goodsId(goodsId)
-							.goodsImagesPath("/iMintImage/" + mappingPath + fileName)
-							.goodsImagesThumbnail(isThumbnail)
-							.goodsImagesOriginname(file.getOriginalFilename())
-						.build();
+					goodsImagesDTO = GoodsImagesDTO.builder().goodsId(goodsId)
+							.goodsImagesPath("/iMintImage/" + mappingPath + fileName).goodsImagesThumbnail(isThumbnail)
+							.goodsImagesOriginname(file.getOriginalFilename()).build();
 
 					goodsDAO.goodsImagesInsert(goodsImagesDTO);
 					goodsImagesId = goodsImagesDTO.getGoodsImagesId();

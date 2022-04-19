@@ -46,20 +46,28 @@
 .row1>#thumbnail {
     flex: 4;
     margin-right: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: row;
 }
 
-.row1>#thumbnail>input {
-    display: none;
+.row1>#thumbnail>div {
+    width: 100%;
+    display: inline-block;
 }
 
+.row1>#thumbnail>div>div {
+    width: 160px;
+    display: inline-block;
+}
 
-.row1>#thumbnail> :nth-child(2) {
+.row1>#thumbnail>div>div>:nth-child(2) {
     color: rgba(0, 0, 0, 0.584);
 }
-.row1>#thumbnail> :nth-child(3) {
-}
 
-.row1>#thumbnail> :nth-child(4) {
+.row1>#thumbnail>div>label.thumbnailFile {
+    height: max-content;
     float: right;
 }
 
@@ -67,6 +75,13 @@
     width: 80px;
     height: 80px;
 }
+
+.row1>#thumbnail>input#thumbnailFileName {}
+
+.row1>#thumbnail>input#thumbnailFile {
+    display: none;
+}
+
 
 .row1>#otherImages {
     flex: 2;

@@ -1,6 +1,6 @@
 package multi.fclass.iMint.goods.service;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import multi.fclass.iMint.common.exception.NotFoundException;
+import multi.fclass.iMint.common.exception.UnauthorizedException;
 import multi.fclass.iMint.common.service.IFileService;
 import multi.fclass.iMint.common.service.IUtilService;
 import multi.fclass.iMint.goods.dao.IGoodsDAO;
@@ -75,12 +77,31 @@ public class GoodsServiceImpl implements IGoodsService {
 	}
 
 	@Override
-	public int goodsDelete(int goodsId, int sellerId) {
-		goodsDAO.goodsDelete(goodsId, sellerId);
-		// 파일삭제 로직 추가예정
-		return 0;
+	public int goodsDelete(int goodsId, String mbId) {
+		GoodsDTO goodsDTO = goodsDAO.goods(goodsId);
+		int result = 0;
+
+		if (goodsDTO == null) {
+			throw new NotFoundException(String.format("ID[%s] not found", goodsId));
+		}
+		if (mbId.isEmpty() || goodsDTO.getSellerId().equals(mbId) == false) {
+			// 로그인한 아이디와 작성자 아이디가 달라서 권한없음 오류보냄
+			throw new UnauthorizedException(String.format("unauthorized you"));
+		} else {
+			// 로그인 아이디 와 작성자 아이디 가 같아서 글삭제
+//			List<GoodsImagesDTO> images = goodsDAO.goodsImageList(goodsId);
+//			List<String> imagesPath = new ArrayList<String>();
+//			for (GoodsImagesDTO imageDTO : images) {
+//				imagesPath.add(imageDTO.getGoodsImagesPath());
+//			}
+//	deleteCnt = fileService.rmFiles(imagesPath);
+			// 실제파일은 삭제하지 않고, DB의 isdelete값만 1로 변경
+			goodsDAO.goodsIsdelete(goodsId, mbId);
+			goodsDAO.goodsImagesIsdelete(goodsId);
+			result = 1;
+
+		}
+		return result;
 	}
-	
-	
 
 }
