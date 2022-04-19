@@ -8,9 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Component;
 
-import multi.fclass.iMint.security.dao.IUserDAO;
-import multi.fclass.iMint.security.dto.Role;
-import multi.fclass.iMint.security.dto.User;
+import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.member.dto.MemberDTO;
+import multi.fclass.iMint.security.dao.ISecurityDAO;
 
 /**
  * @author Junming, Yang
@@ -21,12 +21,12 @@ import multi.fclass.iMint.security.dto.User;
 @Component
 public class ParseMbRole {
 
-	User user;
+	MemberDTO user;
 	
 	Role role;
 	
 	@Autowired
-	IUserDAO userDAO;
+	ISecurityDAO securityDAO;
 	
 	public String parseMbRole(Authentication auth) {
 		

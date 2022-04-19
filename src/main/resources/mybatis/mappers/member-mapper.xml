@@ -5,17 +5,23 @@
 <mapper namespace="multi.fclass.iMint.member.dao.IMemberDAO">
 
 <!-- 회원정보 수정 -->
-    <update id = "updateuser" parameterType="multi.fclass.iMint.security.dto.User">
+    <update id = "updatemember" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
         SET mb_thumbnail = {mbThumbnail}, mb_nickname = {mbNickname}, mb_interest = #{mbInterest}
         WHERE (mb_id = #{mbId});
     </update>
 	
 <!-- 회원탈퇴	 -->
-    <update id = "updatedelete" parameterType="multi.fclass.iMint.security.dto.User">
+    <update id = "updatedelete" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
         SET mb_isdelete = 1
         WHERE (mb_id = #{mbId});
     </update>
 
+<!-- 회원사진 업로드	 -->
+    <update id = "updatethumbnail" parameterType="String">
+        UPDATE imint.member 
+        SET mb_thumbnail = #{allname}
+        WHERE (mb_id = #{mbId});
+    </update>
 </mapper>
