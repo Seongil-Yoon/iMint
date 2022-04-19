@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import multi.fclass.iMint.member.dao.IMemberDAO;
-import multi.fclass.iMint.security.dao.IUserDAO;
-import multi.fclass.iMint.security.dto.Role;
-import multi.fclass.iMint.security.dto.User;
+import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.member.dto.MemberDTO;
+import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
 
@@ -25,13 +25,13 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 public class MypageCotroller {
 	
 	@Autowired
-	User user;
+	MemberDTO memberDTO;
 	
 	@Autowired
 	IMemberDAO memberDAO;
 	
 	@Autowired
-	IUserDAO userDAO;
+	ISecurityDAO securityDAO;
 	
 	@Autowired
 	ParseMbId parseMbId;
@@ -56,12 +56,12 @@ public class MypageCotroller {
 		ModelAndView mv = new ModelAndView();
 		
 		String mbId = parseMbId.parseMbId(auth);
-		User user = parseMbId.getUserMbId(mbId);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
-		if(user.getMbRole() == Role.GUARD) {
+		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/baby-mypage/guard-myList"); 
 		}
-		else if(user.getMbRole() == Role.CHILD) {
+		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-myList");
 		}
 		return mv;
@@ -72,12 +72,12 @@ public class MypageCotroller {
 		ModelAndView mv = new ModelAndView();
 		
 		String mbId = parseMbId.parseMbId(auth);
-		User user = parseMbId.getUserMbId(mbId);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
-		if(user.getMbRole() == Role.GUARD) {
+		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/baby-mypage/guard-blocklist"); 
 		}
-		else if(user.getMbRole() == Role.CHILD) {
+		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-blocklist");
 		}
 		
