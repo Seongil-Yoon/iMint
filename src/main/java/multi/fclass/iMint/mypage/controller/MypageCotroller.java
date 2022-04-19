@@ -54,13 +54,14 @@ public class MypageCotroller {
 		String userEmail = memberDTO.getMbEmail();
 		String userInterest = memberDTO.getMbInterest();
 		String userLocation = memberDTO.getMbLocation();
+		String userPin = memberDTO.getMbPin();
 		
 		mv.addObject("userNickName", userNickName);
 		mv.addObject("userEmail", userEmail);
 		mv.addObject("userInterest", userInterest);
 		mv.addObject("userLocation", userLocation);
+		mv.addObject("userPin", userPin);
 		return mv;
-		
 	}
 	
 	@GetMapping("mypage/location")
@@ -80,10 +81,10 @@ public class MypageCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
-		if(memberDTO.getMbRole() == Role.UN_GUARD) {
+		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/guard-mypage/guard-mylist"); 
 		}
-		else if(memberDTO.getMbRole() == Role.UN_CHILD) {
+		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-mylist");
 		}
 		return mv;

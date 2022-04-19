@@ -76,10 +76,10 @@ public class MemberCotroller {
 		
 		memberDAO.updatemember(mbId, thumbnail, nickname, interest);
 		
-		if(memberDTO.getMbRole() == Role.UN_GUARD) {
+		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/guard-mypage/guard-edit");
 		}
-		else if(memberDTO.getMbRole() == Role.UN_CHILD) {
+		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-edit");
 		}
 		
@@ -95,10 +95,10 @@ public class MemberCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
-		if(memberDTO.getMbRole() == Role.UN_GUARD) {
+		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/guard-mypage/guard-withdraw"); 
 		}
-		else if(memberDTO.getMbRole() == Role.UN_CHILD) {
+		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-withdraw");
 		}
 		
