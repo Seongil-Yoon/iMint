@@ -8,16 +8,25 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>@@아기당근@@ :: 내동네설정</title>
+	<title>아이민트 :: 내동네설정</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_location.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
 <body>
  	<jsp:include page="../../include/header.jsp" flush="false" />
- 	<aside></aside>
-	
-	
-	보호자 마이페이지 내 동네 설정입니다.
+ 	<!-- 아티클 시작 -->
+	<div class="container-page">
+	<h1 class="title">마이페이지</h1>
+	<div class="container-aside-main">
+	<!-- 어사이드 시작 -->
+	<div class="container-aside">
+ 	<jsp:include page="guard-asideBar.jsp" flush="false" />
+ 	</div>
+ 	<!-- 어사이드 끝 -->
+ 	
+    <div class="container-main">
 	<br>
 	<br>
 	<h3 id = "guappend"></h3>	
@@ -90,13 +99,18 @@
 
  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=LIBRARY"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=services,clusterer,drawing"></script>	
- 	
- 	<button id = "mylocation_btn">내위치 조회</button>
- 
- 	<form action = "/register/complete" method = "post">
-		<input type = hidden id = "guappend2" name = "mbLocationOrGuard" >
-	 	<button>확인했어요</button>
-	</form>
+ 		<br>
+	 	<div class="buttons">
+		 	<button id = "mylocation_btn" class="btn btn-primary btn-sm">내위치 조회</button>
+		 
+		 	<form action = "/register/complete" method = "post">
+				<input type = hidden id = "guappend2" name = "mbLocationOrGuard" >
+			 	<button class="btn btn-primary btn-sm" >확인했어요</button>
+			</form>
+		</div>
+	</div>
+	</div>
+	</div>
  
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
