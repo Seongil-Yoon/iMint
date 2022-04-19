@@ -12,5 +12,7 @@ public class TransactionChatroomDTO {
 	private boolean reserved;
 	private int chatroomId;
 	private String buyerId;
+	private String buyerNick;
+	private String mbThumbnail;
 
 }

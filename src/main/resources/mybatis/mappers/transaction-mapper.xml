@@ -6,15 +6,16 @@
 	<!-- 예약여부 확인(채팅용) -->
 	<select id="checkReservation" resultType="TransactionCheckDTO">
 		SELECT
-			id,
-			seller_id,
-			buyer_id
+			cr.id,
+			g.seller_id,
+			cr.buyer_id
 		FROM
-			`imint`.`chatroom`
+			`imint`.`goods` AS g
+			LEFT JOIN (SELECT * FROM `imint`.`chatroom` WHERE resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
 		WHERE
-			isdelete = FALSE
-			AND goods_id = #{goodsId}
-			AND resrv_date IS NOT NULL
+			g.goods_isdelete = FALSE
+			AND (cr.isdelete IS NULL OR cr.isdelete = FALSE)
+			AND g.goods_id = #{goodsId}
 	</select>
 	
 	<!-- 거래완료여부 확인(채팅용) -->
@@ -27,22 +28,27 @@
 			`imint`.`goods` AS g
 			LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id 
 		WHERE
-			g.goods_id = #{goodsId}
+			g.goods_isdelete = FALSE
 			AND (trx.trx_isdelete IS NULL OR trx.trx_isdelete = FALSE)
+			AND g.goods_id = #{goodsId}
 	</select>
 	
 	
 	<!-- 해당 상품 관련 채팅방 목록 조회(예약자 선택) -->
 	<select id="getChatroomList" resultType="TransactionChatroomDTO">
 		SELECT
-			IF(resrv_date IS NOT NULL, TRUE, FALSE) AS reserved,
-			id AS chatroom_id,
-			buyer_id
+			IF(cr.resrv_date IS NOT NULL, TRUE, FALSE) AS reserved,
+			cr.id AS chatroom_id,
+			cr.buyer_id,
+			cr.buyer_nick,
+			mb.mb_thumbnail
 		FROM
-			`imint`.`chatroom`
+			`imint`.`chatroom` AS cr
+			JOIN `imint`.`member` AS mb ON cr.buyer_id = mb.mb_id
 		WHERE
-			isdelete = FALSE
-			AND goods_id = #{goodsId}
+			cr.isdelete = FALSE
+			AND mb.mb_isdelete = FALSE
+			AND cr.goods_id = #{goodsId}
 	</select>
 	
 	<!-- 예약등록 -->
