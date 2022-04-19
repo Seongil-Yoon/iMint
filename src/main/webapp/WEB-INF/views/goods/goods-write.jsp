@@ -27,23 +27,31 @@
 					완료
 				</button>
 			</article>
-			<div class="popup-overlay"  tabindex="-1" style="opacity: 0; display: none;"></div>
+			<div class="popup-overlay" tabindex="-1" style="opacity: 0; display: none;"></div>
 			<div class="row1">
 				<div class="form-floating location">
 					<input class="form-control" type="text" value="${member.mbLocation}" name="goodsLocation"
 						aria-label="readonly input example" readonly name="goodsLocation">
 					<label for="floatingInputValue">현재위치</label>
 				</div>
-				<div class="roundBox" id="thumbnail"></div>
+				<div class="roundBox" id="thumbnail">
+					<label for="thumbnailFile">상품 대표사진 올리기</label>
+					<label for="thumbnailFile">정면 사진을 권장해요</label>
+					<label id="thumbnailFileName"></label>
+					<label for="thumbnailFile">
+						<img src="/static/images/fileupload.png">
+					</label>
+					<input type="file" name="thumbnailFile" id="thumbnailFile">
+				</div>
 				<div class="roundBox" id="otherImages">
-					<button type="button" class="btn-close" aria-label="Close" id="upload-popup-btn"></button>
-
+					<button type="button" class="btn-plus" aria-label="Close" id="upload-popup-btn">
+					</button>
 				</div>
 			</div>
 			<div class="row2">
 				<div class="form-floating title">
-					<input type="text" class="form-control" id="floatingInputValue" placeholder="" name="goodsTitle" required
-						value="">
+					<input type="text" class="form-control" id="floatingInputValue" placeholder="" name="goodsTitle"
+						required value="">
 					<label for="floatingInputValue">제목 입력하기</label>
 				</div>
 				<div class="form-floating category">
@@ -70,15 +78,15 @@
 					<label class="btn btn-outline-primary" for="suggestTrue">가격 흥정 가능</label>
 				</div>
 				<div class="form-floating price">
-					<input type="number" class="form-control" id="floatingInputValue" placeholder="원" name="goodsPrice" required
-						value="">
+					<input type="number" class="form-control" id="floatingInputValue" placeholder="원" name="goodsPrice"
+						required value="">
 					<label for="floatingInputValue">가격 입력하기</label>
 				</div>
 			</div>
 			<div class="row4">
 				<div class="form-floating content">
-					<textarea class="form-control" placeholder="100자 이내" id="floatingTextarea"
-						name="goodsContent" required></textarea>
+					<textarea class="form-control" placeholder="100자 이내" id="floatingTextarea" name="goodsContent"
+						required></textarea>
 					<label for="floatingTextarea">글 내용 입력하기(100자 이내)</label>
 				</div>
 			</div>

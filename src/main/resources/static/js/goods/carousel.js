@@ -23,21 +23,31 @@ function startAjax(goodsId) {
 
 function fileTocarousel(result) {
     for (var i = 0; i < result.length; i++) {
-        let html = "";
+        let itemHtml = "";
+        let indicaHtml = "";
         if (i == 0) {
-            html += `
+            itemHtml += `
             <div class="carousel-item active">
                 <img src=${result[i].goodsImagesPath} class="d-block w-100" alt="..">
             </div>
             `;
+            indicaHtml += `
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to=${i} class="active" aria-current="true" aria-label=${i+1}>
+            </button>
+            `;
         } else {
-            html += `
+            itemHtml += `
             <div class="carousel-item">
                 <img src=${result[i].goodsImagesPath} class="d-block w-100" alt="..">
             </div>
             `;
+            indicaHtml += `
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to=${i} aria-label=${i+1}>
+            </button>
+            `
         }
-        $(".carousel-inner").append(html);
+        $(".carousel-inner").append(itemHtml);
+        $(".carousel-indicators").append(indicaHtml);
     }
 }
 

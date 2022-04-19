@@ -13,4 +13,6 @@ public interface IMemberDAO {
 	
 	// 탈퇴
 	public void updatedelete(String mbId);
+
+	public void updatethumbnail(String mbId, String allname);
 }

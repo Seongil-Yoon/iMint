@@ -34,8 +34,12 @@ public class GoodsCotroller {
 	ParseMbId parseService;
 
 	@GetMapping("goods/detail")
-	public String goodsDetail(@RequestParam("goodsId") int goodsId, Model model) {
+	public String goodsDetail(Authentication auth, @RequestParam("goodsId") int goodsId, Model model) {
+		String mbId = parseService.parseMbId(auth);
+		User userDTO = parseService.getUserMbId(mbId);
+
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
+		model.addAttribute("member", userDTO);
 		return "goods/goods-detail";
 	}
 
