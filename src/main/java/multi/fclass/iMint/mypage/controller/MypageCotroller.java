@@ -37,8 +37,20 @@ public class MypageCotroller {
 	ParseMbId parseMbId;
 	
 	@GetMapping("mypage")
-	public String index() {
-		return "member/baby-mypage/baby-main";
+	public ModelAndView index(Authentication auth) {
+		ModelAndView mv = new ModelAndView();
+		
+		String mbId = parseMbId.parseMbId(auth);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		
+		if(memberDTO.getMbRole() == Role.UN_GUARD) {
+			mv.setViewName("member/guard-mypage/guard-main"); 
+		}
+		else if(memberDTO.getMbRole() == Role.UN_CHILD) {
+			mv.setViewName("member/baby-mypage/baby-main");
+		}
+		return mv;
+		
 	}
 	
 	@GetMapping("mypage/location")
@@ -58,31 +70,31 @@ public class MypageCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
-		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/baby-mypage/guard-myList"); 
+		if(memberDTO.getMbRole() == Role.UN_GUARD) {
+			mv.setViewName("member/guard-mypage/guard-mylist"); 
 		}
-		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-myList");
+		else if(memberDTO.getMbRole() == Role.UN_CHILD) {
+			mv.setViewName("member/baby-mypage/baby-mylist");
 		}
 		return mv;
 	}
 	
-	@GetMapping("mypage/block")
-	public ModelAndView indexBlocklist(Authentication auth) {
-		ModelAndView mv = new ModelAndView();
-		
-		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
-		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/baby-mypage/guard-blocklist"); 
-		}
-		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-blocklist");
-		}
-		
-		return mv;
-	}
+//	@GetMapping("mypage/block")
+//	public ModelAndView indexBlocklist(Authentication auth) {
+//		ModelAndView mv = new ModelAndView();
+//		
+//		String mbId = parseMbId.parseMbId(auth);
+//		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+//		
+//		if(memberDTO.getMbRole() == Role.UN_GUARD) {
+//			mv.setViewName("member/guard-mypage/guard-blocklist"); 
+//		}
+//		else if(memberDTO.getMbRole() == Role.UN_CHILD) {
+//			mv.setViewName("member/baby-mypage/baby-blocklist");
+//		}
+//		
+//		return mv;
+//	}
 	
 //	@GetMapping("mypage/edit")
 //	public String indexEdit() {
