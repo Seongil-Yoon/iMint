@@ -29,7 +29,7 @@
  	<!-- 어사이드 끝 -->
  	
     <div class="container-main">
-        <h2 class="welcome-message">~님 안녕하세요!</h2>
+        <h2 class="welcome-message">${userNickName}님, 안녕하세요!</h2>
         <!-- 보호자 로그인시 숨김 -->
        <!--  <h2 class="transaction-summary">최근 3달간 판매금액은 ~원이고, 구매금액은 ~원입니다.</h2>
         거래 관련
@@ -56,9 +56,9 @@
         <!-- 보호자 로그인시 숨김 해제 -->
         <!-- 회원 상태 -->
         <div class="container-summary">
-            <h5 class="text-summary">~님은 보호자 회원입니다.</h5>
-            <p>이메일: ~</p>
-            <p>관심사: ~</p>
+            <h5 class="text-summary">${userNickName}님은 보호자 회원입니다.</h5>
+            <p>이메일: ${userEmail}</p>
+            <p>관심사: ${userInterest}</p>
             <a class="btn btn-primary" href="#">자세히</a>
         </div>
         <div class="container-other-settings">
@@ -68,7 +68,7 @@
             </div>
             <div class="settings location">
                 <h5 class="settings-title text-location">현재 동네 설정</h5>
-                <p class="text-location">서울시 ~~구</p>
+                <p class="text-location">${userLocation}</p>
             </div>
         </div>
         <!-- 아이 로그인시 숨김 -->

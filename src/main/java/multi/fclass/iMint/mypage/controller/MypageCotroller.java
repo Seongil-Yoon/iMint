@@ -49,6 +49,16 @@ public class MypageCotroller {
 		else if(memberDTO.getMbRole() == Role.UN_CHILD) {
 			mv.setViewName("member/baby-mypage/baby-main");
 		}
+		
+		String userNickName = memberDTO.getMbNick();
+		String userEmail = memberDTO.getMbEmail();
+		String userInterest = memberDTO.getMbInterest();
+		String userLocation = memberDTO.getMbLocation();
+		
+		mv.addObject("userNickName", userNickName);
+		mv.addObject("userEmail", userEmail);
+		mv.addObject("userInterest", userInterest);
+		mv.addObject("userLocation", userLocation);
 		return mv;
 		
 	}
