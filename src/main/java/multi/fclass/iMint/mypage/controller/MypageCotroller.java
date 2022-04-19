@@ -1,7 +1,9 @@
 package multi.fclass.iMint.mypage.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -32,14 +34,14 @@ public class MypageCotroller {
 		return "member/baby-mypage/baby-blocklist";
 	}
 	
-	@GetMapping("mypage/edit")
-	public String indexEdit() {
-		return "member/baby-mypage/baby-edit";
-	}
-	
-	@GetMapping("mypage/withdraw")
-	public String indexWithdraw() {
-		return "member/baby-mypage/baby-withdraw";
-	}
+//	@GetMapping("mypage/edit")
+//	public String indexEdit() {
+//		return "member/baby-mypage/baby-edit";
+//	}
+//	
+//	@GetMapping("mypage/withdraw")
+//	public String indexWithdraw() {
+//		return "member/baby-mypage/baby-withdraw";
+//	}
 }
 

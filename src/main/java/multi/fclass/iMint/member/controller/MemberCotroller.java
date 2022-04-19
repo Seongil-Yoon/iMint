@@ -101,7 +101,7 @@ public class MemberCotroller {
 		return mv;
 	}
 	
-//	@PostMapping("/mypage/withdraw")
+	@PostMapping("/mypage/withdraw")
 	public String deleteuserresult(HttpServletRequest req, Authentication auth) {
 		
 		String mbId = parseMbId.parseMbId(auth);
