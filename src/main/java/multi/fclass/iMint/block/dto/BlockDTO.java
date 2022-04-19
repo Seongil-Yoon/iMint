@@ -1,9 +1,13 @@
 package multi.fclass.iMint.block.dto;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
+
+/**
+ * @author Junming, Yang
+ *
+ */
 
 @Component
 public class BlockDTO {
