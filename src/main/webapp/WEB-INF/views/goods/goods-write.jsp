@@ -35,12 +35,19 @@
 					<label for="floatingInputValue">현재위치</label>
 				</div>
 				<div class="roundBox" id="thumbnail">
-					<label for="thumbnailFile">상품 대표사진 올리기</label>
-					<label for="thumbnailFile">정면 사진을 권장해요</label>
-					<label id="thumbnailFileName"></label>
-					<label for="thumbnailFile">
-						<img src="/static/images/fileupload.png">
-					</label>
+					<div>
+						<div>
+							<label for="thumbnailFile">상품 대표사진 올리기</label>
+							<label for="thumbnailFile">정면 사진을 권장해요</label>
+						</div>
+						<label class="thumbnailFile" for="thumbnailFile">
+							<img src="/static/images/fileupload.png">
+						</label>
+					</div>
+					<input class="form-control" type="text" 
+					id="thumbnailFileName"
+					value="파일명 : " aria-label="readonly input example" readonly>
+					<!-- <label id="thumbnailFileName">파일명 : </label> -->
 					<input type="file" name="thumbnailFile" id="thumbnailFile">
 				</div>
 				<div class="roundBox" id="otherImages">

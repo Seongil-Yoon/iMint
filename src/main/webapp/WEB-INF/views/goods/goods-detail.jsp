@@ -17,18 +17,28 @@
 	<input style="display: none;" type="hidden" id="goodsId" value="${goods.goodsId}" />
 	<input style="display: none;" type="hidden" id="sellerId" value="${goods.sellerId}" />
 	<input style="display: none;" type="hidden" id="sellerNick" value="${goods.sellerNick}" />
-	<input style="display: none;" type="hidden" id="sellerNick" value="${goods.sellerNick}" />
-	<input style="display: none;" type="hidden" id="sellerNick" value="${goods.sellerNick}" />
+	<input style="display: none;" type="hidden" id="buyerId" value="${member.mbId}" />
+	<input style="display: none;" type="hidden" id="buyerNick" value="${member.mbNick}" />
 	<input style="display: none;" type="hidden" id="goodsTitle" value="${goods.goodsTitle}" />
 	<section class="container">
 		<article class="row1">
 			<h1>${goods.goodsTitle}</h1>
-			<a href="/goods/modify?goodsId=${goods.goodsId}">
-				<img src="/static/images/write-icon.png" alt="">
-			</a>
-			<a href="/goods/delete?goodsId=${goods.goodsId}">
-				<img src="/static/images/delete-icon.png" alt="">
-			</a>
+			<c:choose>
+				<c:when test="${member.mbId == null}">
+						<!-- 둘러보기 -->
+				</c:when>
+				<c:when test="${member.mbId == goods.sellerId}">
+					<a href="/goods/modify?goodsId=${goods.goodsId}">
+						<img src="/static/images/write-icon.png" alt="">
+					</a>
+					<a href="/goods/delete?goodsId=${goods.goodsId}">
+						<img src="/static/images/delete-icon.png" alt="">
+					</a>
+				</c:when>
+				<c:otherwise>
+					<!-- 둘러보기 -->
+				</c:otherwise>
+			</c:choose>
 		</article>
 		<article class="row2">
 			<h2>${goods.goodsStatus}</h2>
@@ -98,10 +108,10 @@
 			</div>
 			<div>
 				<c:choose>
-					<c:when test="${sessionScope.mbId != null}">
+					<c:when test="${member.mbId == null}">
 						<!-- 둘러보기 -->
 					</c:when>
-					<c:when test="${sessionScope.mbId == goods.sellerId}">
+					<c:when test="${member.mbId == goods.sellerId}">
 						<a class="btn btn-primary" href="/chatroom/">
 							내 채팅 목록가기
 						</a>
@@ -124,9 +134,7 @@
 	<script type="text/javascript" src="/static/js/goods/goods-detail.js"></script>
 	<script type="text/javascript" src="/static/js/goods/carousel.js"></script>
 	<script>
-		carouselReady($ {
-			goods.goodsId
-		});
+		carouselReady(${goods.goodsId});
 	</script>
 </body>
 

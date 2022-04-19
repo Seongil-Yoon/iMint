@@ -14,5 +14,5 @@ public interface IGoodsService {
 
 	public int goodsWrite(GoodsDTO goodsDto, List<MultipartFile> files);
 
-	public int goodsDelete(int goodsId, int sellerId);
+	public int goodsDelete(int goodsId, String mbId);
 }

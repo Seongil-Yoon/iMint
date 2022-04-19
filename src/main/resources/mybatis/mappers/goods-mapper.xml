@@ -59,9 +59,12 @@
    		</selectKey>   
 	</insert>
 	
-	<delete id="goodsDelete">
-		DELETE FROM `imint`.`goods` WHERE `goods_id`= #{goodsId} AND `seller_id`=#{sellerId};
-	</delete>
+	<update id="goodsIsdelete">
+		UPDATE `imint`.`goods` SET `goods_isdelete`='1' WHERE  `goods_id`=#{goodsId} AND `seller_id`=#{sellerId};
+	</update>
+	<update id="goodsImagesIsdelete">
+		UPDATE `imint`.`goods_images` SET `goods_images_isdelete`='1' WHERE AND `goods_id`= #{goodsId};
+	</update>
 	
 	
 </mapper>
