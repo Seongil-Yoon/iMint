@@ -222,6 +222,7 @@ public class IndexController {
 		
 	String mbId = parseMbId.parseMbId(auth);
 	MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+	mv.addObject("memberDTO", memberDTO);
 	
 	// mbLocation 받아오기 
 	if (memberDTO.getMbRole() == Role.UN_GUARD) { // 보호자 
@@ -246,6 +247,10 @@ public class IndexController {
 			
 			return mv;
 		}
+	}	
+	else if(memberDTO.getMbRole() == Role.GUARD){
+		mv.setViewName("redirect:/mypage/location");
+		return mv;
 	}	
 
 		// DB저장

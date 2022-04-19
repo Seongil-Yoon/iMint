@@ -83,7 +83,16 @@
 
  					$("#guappend").html("현재 " + contentStr + "에 있어요");
  					$("#guappend2").val(contentStr);
-				},
+ 						if($("#mbRole").val() == "GUARD"){
+	 						$("#confirm_form").attr("action", "/mypage/location"); /* submit */
+	 						$("#confirm_form").attr("method", "post");
+ 						}
+ 						else{
+ 							
+	 						$("#confirm_form").attr("action", "/register/complete");
+	 						$("#confirm_form").attr("method", "post");
+ 						}
+				}, // success
 			    error : function(e) {
 			        console.log(e);
 			        }			     	
@@ -101,11 +110,12 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=services,clusterer,drawing"></script>	
  		<br>
 	 	<div class="buttons">
-		 	<button id = "mylocation_btn" class="btn btn-primary btn-sm">내위치 조회</button>
+		 	<button type = "button" id = "mylocation_btn" class="btn btn-primary btn-sm">내위치 조회</button>
 		 
-		 	<form action = "/register/complete" method = "post">
+		 	<form id = "confirm_form">
 				<input type = hidden id = "guappend2" name = "mbLocationOrGuard" >
-			 	<button class="btn btn-primary btn-sm" >확인했어요</button>
+				<input type = hidden id = "mbRole" name = "mbRole" value = ${memberDTO.mbRole }>
+			 	<input type = "submit" id = "confirm_btn" class="btn btn-primary btn-sm" value = "확인했어요">
 			</form>
 		</div>
 	</div>

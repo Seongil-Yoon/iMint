@@ -24,4 +24,12 @@
         SET mb_thumbnail = #{allname}
         WHERE (mb_id = #{mbId});
     </update>
+    
+<!-- 회원 동네 수정  -->    
+    <update id="updatelocation" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
+        UPDATE imint.member 
+        SET mb_location = #{mbLocation}
+        WHERE (mb_id = #{mbId});
+    </update>
+    
 </mapper>
