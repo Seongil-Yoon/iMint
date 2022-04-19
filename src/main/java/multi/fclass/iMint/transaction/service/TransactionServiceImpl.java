@@ -27,13 +27,13 @@ public class TransactionServiceImpl implements ITransactionService {
 			// 예약 중 아님
 			return "!resrv";
 		} else if (trxCheckDTO.getSellerId().equals(myId)) {
-			// 예약 중이고 현재 사용자는 판매자
+			// 예약 중인 채팅방(판매자)
 			return "seller";
 		} else if (trxCheckDTO.getBuyerId().equals(myId)) {
-			// 내가 예약 중
+			// 예약 중인 채팅방(구매자)
 			return "buyer";
 		} else {
-			// 다른 사용자가 예약 중
+			// 다른 사용자가 예약 중(구매자)
 			return "resrv";
 		}
 	}
@@ -42,19 +42,30 @@ public class TransactionServiceImpl implements ITransactionService {
 	public String checkTransaction(String myId, int goodsId) {
 		TransactionCheckDTO trxCheckDTO = trxDAO.checkTransaction(goodsId);
 
-		if (trxCheckDTO.getSellerId().equals(myId)) {
-			if (trxCheckDTO.getId() == null) {
-				// 판매 완료되지 않음
-				return "!comp";
-			} else {
-				if (trxCheckDTO.getBuyerId() == null) {
-					return "?comp";
+		if (trxCheckDTO.getId() == null) {
+			// 판매 중
+			return "!comp";
+		} else {
+			if (trxCheckDTO.getBuyerId() == null) {
+				if (trxCheckDTO.getSellerId().equals(myId)) {
+					// 거래완료, 구매자 지정안함(판매자)
+					return "?seller";
 				} else {
-					return "comp";
+					// 거래완료, 구매자 지정안함(판매자 아님)
+					return "?permit";
+				}
+			} else {
+				if (trxCheckDTO.getSellerId().equals(myId)) {
+					// 거래완료(판매자)
+					return "seller";
+				} else if (trxCheckDTO.getBuyerId().equals(myId)) {
+					// 거래완료(구매자)
+					return "buyer";
+				} else {
+					// 거래완료(판매자/구매자 아님)
+					return "!permit";
 				}
 			}
-		} else {
-			return "!seller";
 		}
 	}
 
@@ -64,24 +75,43 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
-	public int makeReservation(int chatroomId) {
-		return trxDAO.makeReservation(chatroomId);
+	public boolean makeReservation(int chatroomId) {
+		if (trxDAO.makeReservation(chatroomId) == 2) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public int cancelReservation(int chatroomId) {
-		return trxDAO.cancelReservation(chatroomId);
+	public boolean cancelReservation(int chatroomId) {
+		if (trxDAO.cancelReservation(chatroomId) == 2) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public int completeTransaction(String buyerId, int goodsId) {
-		trxDAO.updateGoodsStatus(goodsId);
-		return trxDAO.completeTransaction(buyerId, goodsId);
+	public boolean completeTransaction(String buyerId, int goodsId) {
+		if (trxDAO.updateGoodsStatus(goodsId) == 1) {
+			if (trxDAO.completeTransaction(buyerId, goodsId) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public int addBuyerTransaction(String buyerId, int goodsId) {
-		return trxDAO.addBuyerTransaction(buyerId, goodsId);
+	public boolean addBuyerTransaction(String buyerId, int goodsId) {
+		if (trxDAO.addBuyerTransaction(buyerId, goodsId) == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

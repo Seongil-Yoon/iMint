@@ -16,12 +16,12 @@ public interface ITransactionService {
 
 	public List<TransactionChatroomDTO> getChatroomList(int goodsId);
 
-	public int makeReservation(int chatroomId);
+	public boolean makeReservation(int chatroomId);
 
-	public int cancelReservation(int chatroomId);
+	public boolean cancelReservation(int chatroomId);
 	
-	public int completeTransaction(String buyerId, int goodsId);
+	public boolean completeTransaction(String buyerId, int goodsId);
 	
-	public int addBuyerTransaction(String buyerId, int goodsId);
+	public boolean addBuyerTransaction(String buyerId, int goodsId);
 
 }
