@@ -43,10 +43,10 @@ public class MypageCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
-		if(memberDTO.getMbRole() == Role.UN_GUARD) {
+		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/guard-mypage/guard-main"); 
 		}
-		else if(memberDTO.getMbRole() == Role.UN_CHILD) {
+		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-main");
 		}
 		
