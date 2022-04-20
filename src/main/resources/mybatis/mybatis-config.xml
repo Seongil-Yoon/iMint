@@ -11,10 +11,6 @@
 	<typeAliases>
 		<typeAlias type="multi.fclass.iMint.admin.dto.AdminDTO" alias="adminDTO" />
 		<typeAlias type="multi.fclass.iMint.block.dto.BlockDTO" alias="blockDTO" />
-		<typeAlias type="multi.fclass.iMint.chat.dto.ChatRoomDTO" alias="chatRoomDTO" />
-	<!-- 	<typeAlias type="multi.fclass.iMint.chat.dto.ChatMessageDTO" alias="chatMessageDTO" />
-		<typeAlias type="multi.fclass.iMint.chat.dto.ChatRoomInfoDTO" alias="chatRoomInfoDTO" />
-		<typeAlias type="multi.fclass.iMint.chat.dto.ChatListInfoDTO" alias="chatListInfoDTO" /> -->
 		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsDTO" alias="goodsDTO" />
 		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsImagesDTO" alias="goodsImagesDTO" />
 		<typeAlias type="multi.fclass.iMint.member.dto.MemberDTO" alias="memberDTO" />
