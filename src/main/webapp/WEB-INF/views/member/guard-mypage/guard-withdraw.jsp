@@ -30,7 +30,7 @@
 		    <div class="container-main">
 				<div class="text">
 					<h2>회원을 탈퇴하시겠어요? 😢</h2>
-					<h2>되돌리기 어려우니 신중하게 생각해 주세요.</h2>
+					<h2>탈퇴하시면 연동된 아이 계정이 모두 탈퇴되니, 신중하게 생각해 주세요.</h2>
 				</div>
 				<div class="buttons">
 					<!-- <form action="#">

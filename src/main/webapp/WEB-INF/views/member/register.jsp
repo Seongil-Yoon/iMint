@@ -52,19 +52,18 @@
 				dataType: "json",
 					
 					success: function(response) { /* 중복확인 결과  */
-						/* alert(response.result); */
 						alert(JSON.stringify(response.nickcheck));
  						if(response.result == "ok"){
-							$("#nickappend").html('<p style = color: black>사용가능한 닉네임입니다.</p>'); /* 왜 텍스트 추가가 안되지  */
+							$("#nickappend").html('<p style = color: black>사용가능한 닉네임입니다.</p>');
 							alert("사용 가능한 닉네임입니다.");
  							
  							$("#change_url").attr("action", "/register");		
 							$("#change_url").attr("method", "post"); 
+							$("#register_btn").unbind(); // 회원가입 가능
  						} // if end 
 						else{
-							/* alert("다른 사용자가 이미 사용중인 닉네임입니다."); */
-							/* $("#mbNick").val("");  */
- 							$("#nickappend").html('<p style = color: red>다른 사용자가 이미 사용중인 닉네임입니다.</p>');							
+ 							$("#nickappend").html('<p style = color: red>다른 사용자가 이미 사용중인 닉네임입니다.</p>');
+ 							$("#register_btn").preventDefault(); // 회원가입 불가 
  						} // else end
 					} // success end 	
 			}); // ajax end

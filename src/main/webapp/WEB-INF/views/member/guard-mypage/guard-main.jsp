@@ -64,7 +64,18 @@
         <div class="container-other-settings">
             <div class="settings connection">
                 <h5 class="settings-title text-connection">연결된 아이</h5>
-                <p class="text-connection">~~님</p>
+                <p class="text-connection">
+                	<c:choose> 
+                		<c:when test= "${userChilds.size() == 0}">
+                			연결된 아이가 없습니다.
+     					</c:when>
+     					<c:otherwise>
+     						<c:forEach items="${userChilds}" var="child" varStatus="order">
+     							${child.mbNick}님
+     						</c:forEach>
+     					</c:otherwise>
+                	</c:choose>
+                </p>
             </div>
             <div class="settings location">
                 <h5 class="settings-title text-location">현재 동네 설정</h5>

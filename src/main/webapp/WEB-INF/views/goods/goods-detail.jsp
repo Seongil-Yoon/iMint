@@ -25,13 +25,13 @@
 			<h1>${goods.goodsTitle}</h1>
 			<c:choose>
 				<c:when test="${member.mbId == null}">
-						<!-- 둘러보기 -->
+					<!-- 둘러보기 -->
 				</c:when>
 				<c:when test="${member.mbId == goods.sellerId}">
-					<a href="/goods/modify?goodsId=${goods.goodsId}">
+					<a id="modifyBtn" value="${goods.goodsId}" href="/goods/modify?goodsId=${goods.goodsId}">
 						<img src="/static/images/write-icon.png" alt="">
 					</a>
-					<a href="/goods/delete?goodsId=${goods.goodsId}">
+					<a id="deleteBtn" value="${goods.goodsId}">
 						<img src="/static/images/delete-icon.png" alt="">
 					</a>
 				</c:when>
@@ -47,7 +47,7 @@
 					<span>${goods.sellerNick}</span>
 					<img class="member-rating" src="/static/images/sun_4.png" alt="">
 					<span>${goods.goodsLocation}</span>
-					<span>🤍관심 </span>
+					<span>🤍관심 ${countWishes}</span>
 				</div>
 				<span class="goods-date" id="timeForToday">${goods.goodsCreateDate}</span>
 			</div>
@@ -117,7 +117,7 @@
 						</a>
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-primary">
+						<button type="button" class="btn btn-primary" id="wishBtn">
 							관심
 						</button>
 						<a class="btn btn-primary" href="/chatroom/">
@@ -134,7 +134,7 @@
 	<script type="text/javascript" src="/static/js/goods/goods-detail.js"></script>
 	<script type="text/javascript" src="/static/js/goods/carousel.js"></script>
 	<script>
-		carouselReady(${goods.goodsId});
+		carouselReady( ${goods.goodsId} );
 	</script>
 </body>
 

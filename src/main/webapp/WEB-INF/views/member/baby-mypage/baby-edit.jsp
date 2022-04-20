@@ -35,15 +35,14 @@
 		            <h2>회원 정보를 수정하시겠어요?</h2>
 		        </div>
 		        
+		        <form action="/mypage/edit" method="post">
 		        <!-- 프로필 사진 수정 (1행)-->
 		        <div class="container-context container-photo">
 		            <div class="lables-photo">
 		                <h5 class="lables-text">프로필 사진 변경</h5>
 		            </div>
 		            <div class="buttons buttons-photo">
-		                <form action="#" method="post">
 		                    <input name = "thumbnail" type="file" id="photo-update-child">
-		                </form>
 		            </div>
 		        </div>
 		        
@@ -53,10 +52,8 @@
 		                <h5 class="lables-text">닉네임 변경</h5>
 		            </div>
 		            <div class="buttons buttons-nickname">
-		                <form action="#" method="post">
 		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-child">
 		                    <input type="submit" class="btn btn-primary" value="확인" id="nickname-check-child"/>
-		                </form>
 		            </div>
 		        </div>
 		        
@@ -66,14 +63,11 @@
 		                <h5 class="lables-text">관심사 변경</h5>
 		            </div>
 		            <div class="buttons buttons-interest">
-		                <form action="#" method="post">
 		                    <input name = "interest" type="text" class="buttons-text" id="interest-update-child">
-		                </form>
 		            </div>
 		        </div>
 		        
 		        <!-- 변경하기 버튼 -->
-		        <form action="#" method="post">
 		            <br>
 		            <br>
 		            <input type="submit" class="btn btn-primary" value="회원정보 수정하기" id="update-complete-child"/>

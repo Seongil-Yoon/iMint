@@ -60,10 +60,10 @@
 	</insert>
 	
 	<update id="goodsIsdelete">
-		UPDATE `imint`.`goods` SET `goods_isdelete`='1' WHERE  `goods_id`=#{goodsId} AND `seller_id`=#{sellerId};
+		UPDATE `imint`.`goods` SET `goods_isdelete`='1' WHERE `goods_id`=#{goods_id} AND `seller_id`=#{seller_id};
 	</update>
 	<update id="goodsImagesIsdelete">
-		UPDATE `imint`.`goods_images` SET `goods_images_isdelete`='1' WHERE AND `goods_id`= #{goodsId};
+		UPDATE `imint`.`goods_images` SET `goods_images_isdelete`='1' WHERE `goods_id`= #{goods_id};
 	</update>
 	
 	

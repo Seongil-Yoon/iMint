@@ -41,3 +41,49 @@
   border-style: solid;
   border-color: rgb(155, 155, 155);
 }
+
+/* 헤더 */
+
+/* 배경색 */
+/* .navbar{
+	background-color: #CDF0EA;
+*/
+
+/*  */
+.location-text{
+	/* margin-right: 3rem; */
+}
+
+/* 검색창 위치 조정 */
+.search{
+	/* margin-left: 1rem; */
+	justify-content:center;
+}
+
+/* 검색창 길이 */
+.me-2 {
+	width: 300px;
+} 
+
+/* 검색창 버튼*/
+.search-btn{
+	margin-right: 0.5rem;
+}
+
+/* 상품 등록 버튼 */
+.add-btn{
+	margin-left: 5rem;
+}
+
+/* 푸터 */
+
+.fixed-bottom {
+	position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    /* text-align: center; */
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
