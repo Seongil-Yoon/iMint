@@ -51,18 +51,17 @@ public class GoodsServiceImpl implements IGoodsService {
 	}
 
 	@Override
-	public int goodsWrite(GoodsDTO goodsDto, List<MultipartFile> files) {
+	public int goodsWrite(String mbId, GoodsDTO goodsDto, List<MultipartFile> files) {
 //		String sellerId = (String) httpSession.getAttribute("mbId");
 //		String sellerNick = (String) httpSession.getAttribute("mbNick");
 
-		if (!goodsDto.getSellerId().isEmpty()) {
-//			throw new UnauthorizedException(String.format("unauthorized you"));
+		if (mbId.isEmpty() || !mbId.equals(goodsDto.getSellerId())) {
+			throw new UnauthorizedException(String.format("unauthorized you"));
 		}
-//		int goodsId = goodsDAO.goodsInsert(goodsDto); // return 1
 		goodsDAO.goodsInsert(goodsDto);
 		int goodsId = goodsDto.getGoodsId();
 
-		if (!files.isEmpty()) {
+		if (files != null && !files.isEmpty()) {
 			// 상품글의 파일들을 올릴 경로("C:/iMint/goods/yyyy/MM/dd")를 배열로 반환
 			List<String> paths = utilService.createGoodsPaths(goodsDAO.goodsDate(goodsId));
 			fileService.mkDir(paths); // 폴더 생성
@@ -98,7 +97,7 @@ public class GoodsServiceImpl implements IGoodsService {
 //			}
 //	deleteCnt = fileService.rmFiles(imagesPath);
 			// 실제파일은 삭제하지 않고, DB의 isdelete값만 1로 변경
-			System.out.println("상품삭제 : " + goodsId +", " + mbId);
+			System.out.println("상품삭제 : " + goodsId + ", " + mbId);
 			goodsDAO.goodsIsdelete(goodsId, mbId);
 			goodsDAO.goodsImagesIsdelete(goodsId);
 			result = 1;
