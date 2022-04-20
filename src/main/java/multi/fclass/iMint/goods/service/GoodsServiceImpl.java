@@ -75,6 +75,35 @@ public class GoodsServiceImpl implements IGoodsService {
 
 		return goodsId;
 	}
+	
+	@Override
+	public int goodsModify(String mbId, GoodsDTO goodsDto, List<MultipartFile> files) {
+		if (mbId.isEmpty() || !mbId.equals(goodsDto.getSellerId())) {
+			throw new UnauthorizedException(String.format("unauthorized you"));
+		}
+		int updateRows = 0;
+		int goodsId = -1;
+		goodsId = goodsDAO.goods(goodsDto.getGoodsId()).getGoodsId();
+		if(goodsId == -1) {
+			//수정할 게시글이 없으므로 not found 
+            throw new NotFoundException(String.format("goodsId[%s] not found", goodsDto.getGoodsId()));
+		}
+		goodsDAO.goodsUpdate(goodsDto);
+		updateRows = goodsDAO.goodsImagesDelete(goodsId);
+
+		if (files != null && !files.isEmpty()) {
+			// 상품글의 파일들을 올릴 경로("C:/iMint/goods/yyyy/MM/dd")를 배열로 반환
+			List<String> paths = utilService.createGoodsPaths(goodsDAO.goodsDate(goodsId));
+			fileService.mkDir(paths); // 폴더 생성
+			// 경로에 파일업로드 and DB insert
+			int goodsImagesId = fileService.uploadGoodsImageFiles(paths, goodsDto.getGoodsId(), files);
+			if (goodsImagesId == -1) {
+				return goodsImagesId;
+//			throw new 
+			}
+		}
+		return updateRows;
+	}
 
 	@Override
 	public int goodsDelete(int goodsId, String mbId) {

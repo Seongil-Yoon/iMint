@@ -26,7 +26,7 @@ function fileTocarousel(result) {
         if (i == 0) {
             itemHtml += `
             <div class="carousel-item active">
-                <img src=${result[i].goodsImagesPath} class="d-block w-100" alt="..">
+                <img src=${decodeURIComponent(result[i].goodsImagesPath)} class="d-block w-100" alt="..">
             </div>
             `;
             indicaHtml += `
@@ -36,7 +36,7 @@ function fileTocarousel(result) {
         } else {
             itemHtml += `
             <div class="carousel-item">
-                <img src=${result[i].goodsImagesPath} class="d-block w-100" alt="..">
+                <img src=${decodeURIComponent(result[i].goodsImagesPath)} class="d-block w-100" alt="..">
             </div>
             `;
             indicaHtml += `

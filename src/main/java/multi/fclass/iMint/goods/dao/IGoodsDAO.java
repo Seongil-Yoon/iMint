@@ -28,6 +28,11 @@ public interface IGoodsDAO {
 	public int goodsImagesInsert(GoodsImagesDTO goodsImagesDTO);
 	public String goodsDate(@Param("goods_id") int goodsId);
 	
+	//상품수정
+	public int goodsUpdate(GoodsDTO goodsDTO);
+	public int goodsImagesDelete(@Param("goods_id") int goodsId);
+	
+	// 상품삭제
 	public int goodsIsdelete(@Param("goods_id") int goodsId, @Param("seller_id") String sellerId);
 	public int goodsImagesIsdelete(@Param("goods_id") int goodsId);
 }

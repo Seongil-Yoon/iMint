@@ -85,6 +85,9 @@ public class GoodsCotroller {
 	@PostMapping("goods/write")
 	public GoodsDTO goodsWrite(Authentication auth, @RequestPart("GoodsDTO") GoodsDTO goodsDTO,
 			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
+		if (auth == null) {
+			throw new UnauthorizedException(String.format("unauthorized you"));
+		}
 		String mbId = parseService.parseMbId(auth);
 		int goodsId = goodsSevice.goodsWrite(mbId, goodsDTO, files);
 		System.out.println("작성된 상품글ID : " + goodsId);
@@ -97,9 +100,14 @@ public class GoodsCotroller {
 
 	@ResponseBody
 	@PostMapping("goods/modify")
-	public GoodsDTO goodsModify(@RequestPart("GoodsDTO") GoodsDTO goodsDTO,
+	public GoodsDTO goodsModify(Authentication auth,@RequestParam("goodsId") int goodsId, @RequestPart("GoodsDTO") GoodsDTO goodsDTO,
 			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
-
+		if (auth == null) {
+			throw new UnauthorizedException(String.format("unauthorized you"));
+		}
+		String mbId = parseService.parseMbId(auth);
+		goodsSevice.goodsModify(mbId, goodsDTO, files);
+		
 		// 브라우저단에서 location.href로 상품상세
 		return goodsDTO;
 	}

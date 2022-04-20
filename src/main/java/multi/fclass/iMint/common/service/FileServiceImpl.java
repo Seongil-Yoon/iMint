@@ -83,18 +83,18 @@ public class FileServiceImpl implements IFileService {
 					SimpleDateFormat foramt1 = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
 					String formatToday = foramt1.format(new Date());
 					String originalFilename = URLEncoder.encode(file.getOriginalFilename(), "UTF-8");
-					fileOriginName = FilenameUtils.getBaseName(originalFilename);
+//					fileOriginName = FilenameUtils.getBaseName(originalFilename);
 					fileOriginNameExt = originalFilename.substring(originalFilename.lastIndexOf("."));
 					// ex) .png, .jpg, .gif
-					fileName = goodsId + "_" + fileOriginName + "_" + formatToday + "(" + uuid + ")"
-							+ fileOriginNameExt;
+					fileName = goodsId + "_" + formatToday + "(" + uuid + ")" + fileOriginNameExt;
 					byte[] fileData = file.getBytes();
 					File target = new File(realPath, fileName);
 
 					FileCopyUtils.copy(fileData, target);
 					goodsImagesDTO = GoodsImagesDTO.builder().goodsId(goodsId)
-							.goodsImagesPath("/iMintImage/" + mappingPath + fileName).goodsImagesThumbnail(isThumbnail)
-							.goodsImagesOriginname(file.getOriginalFilename()).build();
+							.goodsImagesPath("/iMintImage/" + mappingPath + URLEncoder.encode(fileName, "UTF-8"))
+							.goodsImagesThumbnail(isThumbnail).goodsImagesOriginname(file.getOriginalFilename())
+							.build();
 
 					goodsDAO.goodsImagesInsert(goodsImagesDTO);
 					goodsImagesId = goodsImagesDTO.getGoodsImagesId();

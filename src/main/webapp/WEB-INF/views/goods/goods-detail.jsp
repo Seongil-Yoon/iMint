@@ -88,7 +88,7 @@
 			</div>
 		</article>
 		<article class="goods-content-wrap">
-			<textarea disabled="" id="goods-content" placeholder=${goods.goodsContent}></textarea>
+			<textarea disabled="" id="goods-content" placeholder="${goods.goodsContent}"></textarea>
 		</article>
 		<article class="roundBox goods-action" id="js-goods-action">
 			<!-- 일단 로그인됫다고 가정하고 페이지작성 -->

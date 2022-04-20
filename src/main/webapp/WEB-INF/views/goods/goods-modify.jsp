@@ -102,7 +102,7 @@
 			<div class="row5">
 				<div></div>
 				<button type="button" class="tab-item goodsSubmit" id="goodsSubmit">
-					<p>등록하기</p>
+					<p>수정하기</p>
 			</div>
 			</div>
 		</form>

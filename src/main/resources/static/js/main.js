@@ -39,7 +39,7 @@ function start() {
 					<li class="goods-detail">
 						<a href="goods/detail?goodsId=${result[i].goods.goodsId}">
 							<div class="goods-image">
-								<img src="${result[i].goodsImage.goodsImagesPath}">
+								<img src="${decodeURIComponent(result[i].goodsImage.goodsImagesPath)}">
 							</div>
 							<div class="goods-info">
 								<div>
