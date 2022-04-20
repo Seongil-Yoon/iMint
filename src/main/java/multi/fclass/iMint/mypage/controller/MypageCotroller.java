@@ -62,7 +62,7 @@ public class MypageCotroller {
 		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-main");
 		}
-		
+		//계정 관련 정보
 		String userID = memberDTO.getMbId();
 		String userNickName = memberDTO.getMbNick();
 		String userEmail = memberDTO.getMbEmail();
@@ -83,6 +83,14 @@ public class MypageCotroller {
 		mv.addObject("userGuard", userGuardNick);
 		mv.addObject("userPin", userPin);
 		mv.addObject("userChilds", userChilds);
+		
+		//거래 관련 정보
+		List<MypageDTO> userWish = iMypageDAO.getWishAndReserveList(mbId, 1, 5);
+		mv.addObject("userWish", userWish);
+		
+		List<MypageDTO> userSell = iMypageDAO.getSellingList(mbId, 1, 5);
+		mv.addObject("userSell", userSell);
+		
 		return mv;
 	}
 	
@@ -139,6 +147,10 @@ public class MypageCotroller {
 			// 관심/구매 목록
 			List<MypageDTO> userWish = iMypageDAO.getWishAndReserveList(mbId, 1, 5);
 			mv.addObject("userWish", userWish);
+			
+			//판매 목록
+			List<MypageDTO> userSell = iMypageDAO.getSellingList(mbId, 1, 5);
+			mv.addObject("userSell", userSell);
 		}
 		return mv;
 	}
