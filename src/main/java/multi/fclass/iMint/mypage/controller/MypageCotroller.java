@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.mypage.dao.IMypageDAO;
+import multi.fclass.iMint.mypage.dto.MypageDTO;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
@@ -22,7 +24,7 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
  * @author haeyeon
  *
  */
-//보호자 계정일 경우 보호자용 jsp 파일로 보여주는 로직 미구현
+
 
 @Controller
 public class MypageCotroller {
@@ -38,6 +40,14 @@ public class MypageCotroller {
 	
 	@Autowired
 	ParseMbId parseMbId;
+	
+//	@Autowired
+//	MypageDTO mypageDTO;
+	
+	@Autowired
+	IMypageDAO iMypageDAO;
+	
+// 마이페이지 - 메인
 	
 	@GetMapping("mypage")
 	public ModelAndView index(Authentication auth) {
@@ -76,6 +86,9 @@ public class MypageCotroller {
 		return mv;
 	}
 	
+	
+// 마이페이지 - 내 동네 설정	
+	
 	@GetMapping("mypage/location")
 	public ModelAndView indexLocation(Authentication auth) {
 		
@@ -103,10 +116,8 @@ public class MypageCotroller {
 		return "redirect:/mypage";
 	}
 	
-//	@GetMapping("mypage/mylist")
-//	public String indexMylist() {
-//		return "member/baby-mypage/baby-myList";
-//	}
+
+// 마이페이지 - 나의 아이민트/내 아이 목록	
 	
 	@GetMapping("mypage/mylist")
 	public ModelAndView indexMylist(Authentication auth) {
@@ -117,15 +128,18 @@ public class MypageCotroller {
 		
 		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/guard-mypage/guard-mylist"); 
+			
+			String userID = memberDTO.getMbId();
+			List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
+			mv.addObject("userChilds", userChilds);
 		}
 		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-mylist");
+			mv.setViewName("member/baby-mypage/baby-myList");
+			
+			// 관심/구매 목록
+			List<MypageDTO> userWish = iMypageDAO.getWishAndReserveList(mbId, 1, 5);
+			mv.addObject("userWish", userWish);
 		}
-		
-		String userID = memberDTO.getMbId();
-		List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
-		mv.addObject("userChilds", userChilds);
-		
 		return mv;
 	}
 	

@@ -54,19 +54,19 @@
 	                <!-- 관심/구매예약 내용 -->
 	                <div id="tab-1-content" class="tab-content-item show">
 	                    <div class="tab-1-content-inner">
-	                        <jsp:include page="mylist-content.jsp" flush="false"/>
+	                        <jsp:include page="mylist-content-wish-buy.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 판매목록 내용 -->
 	                <div id="tab-2-content" class="tab-content-item">
 	                    <div class="tab-2-content-inner">
-	                        <jsp:include page="mylist-content.jsp" flush="false"/>
+	                        <jsp:include page="mylist-content-selling.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 거래완료목록 내용 -->
 	                <div id="tab-3-content" class="tab-content-item">
 	                    <div class="tab-3-content-inner">
-	                    	 <jsp:include page="mylist-content.jsp" flush="false"/>
+	                    	 <jsp:include page="mylist-content-complete.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 채팅목록 내용 -->
