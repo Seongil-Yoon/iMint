@@ -255,7 +255,7 @@ public class IndexController {
 			try {
 				if (guardMember != null & guardMember.getMbPin().equals(guardPin)) {
 					memberDTO.setMbGuard(guardMember.getMbId());
-					memberDTO.setMbLocation(null);
+					memberDTO.setMbLocation(guardMember.getMbLocation());
 					memberDTO.setMbRole(Role.CHILD);
 					memberDTO.setMbPin(null);
 					mv.setViewName("member/login");

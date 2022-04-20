@@ -28,7 +28,7 @@
 					<!-- 둘러보기 -->
 				</c:when>
 				<c:when test="${member.mbId == goods.sellerId}">
-					<a id="modifyBtn" value="${goods.goodsId}" href="/goods/modify?goodsId=${goods.goodsId}">
+					<a id="modifyBtn" value="${goods.goodsId}" >
 						<img src="/static/images/write-icon.png" alt="">
 					</a>
 					<a id="deleteBtn" value="${goods.goodsId}">
