@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
+import multi.fclass.iMint.wishlist.service.WishlistServiceImpl;
 
 /**
  * @author Seongil, Yoon
@@ -20,6 +21,9 @@ public class MainServiceImpl implements IMainService {
 
 	@Autowired
 	IGoodsDAO goodsDAO;
+	
+	@Autowired
+	WishlistServiceImpl wishService;
 
 	@Override
 	public List<HashMap<String, Object>> goodsListMap(int lastBoard) {
@@ -36,6 +40,7 @@ public class MainServiceImpl implements IMainService {
 				goodsThumbnail = new GoodsImagesDTO(null, goodsList.get(i).getGoodsId(), "/static/images/noimage.png", true, "noimage.png", null);
 			}
 			map.put("goodsImage", goodsThumbnail);
+			map.put("countWishes", wishService.countWishes(goodsList.get(i).getGoodsId()));
 			listMap.add(i, map);
 		}
 		return listMap;

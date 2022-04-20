@@ -80,10 +80,13 @@ public class MypageCotroller {
 	}
 	
 	@PostMapping("mypage/location")
-	public String indexLocationResult(Authentication auth) {
+	public String indexLocationResult(Authentication auth, String mbLocationOrGuard) {
 		
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		
+		memberDTO.setMbLocation(mbLocationOrGuard);
+		
 		memberDAO.updatelocation(memberDTO);
 		
 		return "redirect:/mypage";

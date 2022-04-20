@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,6 +79,7 @@ public class GoodsServiceImpl implements IGoodsService {
 
 	@Override
 	public int goodsDelete(int goodsId, String mbId) {
+//		mbId = Authentication auth
 		GoodsDTO goodsDTO = goodsDAO.goods(goodsId);
 		int result = 0;
 
@@ -96,6 +98,7 @@ public class GoodsServiceImpl implements IGoodsService {
 //			}
 //	deleteCnt = fileService.rmFiles(imagesPath);
 			// 실제파일은 삭제하지 않고, DB의 isdelete값만 1로 변경
+			System.out.println("상품삭제 : " + goodsId +", " + mbId);
 			goodsDAO.goodsIsdelete(goodsId, mbId);
 			goodsDAO.goodsImagesIsdelete(goodsId);
 			result = 1;

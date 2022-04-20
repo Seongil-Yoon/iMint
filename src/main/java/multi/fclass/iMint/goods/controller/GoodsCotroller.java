@@ -18,6 +18,7 @@ import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 import multi.fclass.iMint.goods.service.GoodsServiceImpl;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
+import multi.fclass.iMint.wishlist.service.WishlistServiceImpl;
 
 /**
  * @author Seongil, Yoon
@@ -27,7 +28,9 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 public class GoodsCotroller {
 	@Autowired
 	GoodsServiceImpl goodsSevice;
-
+	@Autowired
+	WishlistServiceImpl wishService;
+	
 	@Autowired
 	ParseMbId parseService;
 
@@ -37,6 +40,7 @@ public class GoodsCotroller {
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
 
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
+		model.addAttribute("countWishes", wishService.countWishes(goodsId));
 		model.addAttribute("member", memberDTO);
 		return "goods/goods-detail";
 	}
@@ -73,7 +77,6 @@ public class GoodsCotroller {
 	@GetMapping("goods/delete")
 	public String goodsDelete(Authentication auth, @RequestParam("goodsId") int goodsId) {
 		String mbId = parseService.parseMbId(auth);
-		System.out.println("현재 상품 ID  :" + goodsId);
 		goodsSevice.goodsDelete(goodsId, mbId);
 
 		return "main";

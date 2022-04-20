@@ -117,11 +117,11 @@ public class IndexController {
 
 		// 모듈화 결과(아래 2줄)
 		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO user = parseMbId.getMemberMbId(mbId);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
 		ModelAndView mv = new ModelAndView();
 
-		mv.addObject("user", user);
+		mv.addObject("memberDTO", memberDTO);
 		mv.setViewName("member/register");
 		return mv;
 	}
