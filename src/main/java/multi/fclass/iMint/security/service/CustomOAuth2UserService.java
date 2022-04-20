@@ -89,6 +89,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         }
         else {
         	memberDTO = attributes.toEntity();
+        	memberDTO.setMbNick(memberDTO.getMbNick() +  + (int)(Math.random() * 10000 + 1)); // 닉네임에 랜덤값 추가
             securityDAO.savesns(memberDTO);
             System.out.println("최초 로그인으로 자동 가입됩니다.");
             memberDTO = securityDAO.findByMbId(attributes.getMbId());

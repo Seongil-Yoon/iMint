@@ -105,24 +105,25 @@ public class MemberCotroller {
 		String mbRole = memberDTO.getMbRole().toString();
 		String provider = memberDTO.getMbProvider();
 		
-				
-		String savePath = root + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
+		// 전체 저장경로 + 파일 이름 
+		// ex. ../GUARD/naver/naver_sdfklw242.jpg
+		String mbThumbnail = null;
+		
+		// 파일 업로드
+		try {		
+		String savePath = root + "/" + directory + "/" + memberImagePath + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
 
 		List<String> path = new ArrayList<String>();
+		path.add(root);
+		path.add(directory);
+		path.add(memberImagePath);
 		path.add(mbRole);
 		path.add(provider);
 		
 		// 폴더 생성 
 		fileService.mkDir(path);
 
-		// 전체 저장경로 + 파일 이름 
-		// ex. ../GUARD/naver/naver_sdfklw242.jpg
-		String mbThumbnail = null;
-		
 		System.out.println("thumbnail" + thumbnail);
-		
-		// 파일 업로드
-		try {
 				
 			if(!thumbnail.isEmpty()) {
 				
@@ -130,15 +131,14 @@ public class MemberCotroller {
 				String ext = thumbnail.getOriginalFilename().substring(thumbnail.getOriginalFilename().indexOf("."));
 	
 				// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
-				String newname = mbId + "." + ext;
+				String newname = mbId + ext;
 				mbThumbnail = savePath + "/" + newname;
 				
-				File serverfile = new File(newname);
+				System.out.println("mbThumbnail: " + mbThumbnail);
+				
+				File serverfile = new File(mbThumbnail);
 				thumbnail.transferTo(serverfile);
 				
-				// db에 업데이트 하기(저장경로 + 파일 이름)
-	//			memberDTO.setMbThumbnail(mbThumbnail);
-	//			memberDAO.updatethumbnail(memberDTO);
 			} // if end
 		}
 		catch (Exception e) {
