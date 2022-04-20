@@ -19,10 +19,10 @@ public interface IMemberDAO {
 	// 탈퇴
 	public void updatedelete(String mbId);
 
-	// 프로필 사진
-	public void updatethumbnail(String mbId, String allname);
-
 	// 동네
 	public void updatelocation(MemberDTO memberDTO);
 	
+	// 프로필 사진
+	public void updatethumbnail(MemberDTO memberDTO);
+
 }

@@ -20,7 +20,6 @@
         WHERE (mb_id = #{mbId});
     </update>
     
-   <!--  임시  -->
     <update id="updatedetails" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
         SET mb_nick = #{mbNick}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}
