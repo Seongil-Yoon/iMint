@@ -14,7 +14,7 @@ import multi.fclass.iMint.member.dto.MemberDTO;
 public interface IMemberDAO {
 
     // 회원정보 수정
-	public void updatemember(String mbId, String mbThumbnail, String mbNickname, String mbInterest);
+	public void updatemember(String mbId, String mbThumbnail, String mbNick, String mbInterest);
 	
 	// 탈퇴
 	public void updatedelete(String mbId);

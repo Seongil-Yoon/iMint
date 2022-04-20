@@ -61,18 +61,38 @@ public class MemberCotroller {
 	private String directory;
 	
 	//URL 매핑 수정(회원가입 수정/탈퇴-> 보호자, 아이 구분 x)
+	@GetMapping("/mypage/edit")
+	public ModelAndView updateuser(Authentication auth) {
+		
+		ModelAndView mv = new ModelAndView();
+
+		String mbId = parseMbId.parseMbId(auth);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		
+		mv.addObject("memberDTO", memberDTO);
+		
+		if(memberDTO.getMbRole() == Role.GUARD) {
+			mv.setViewName("member/guard-mypage/guard-edit");
+		}
+		else if(memberDTO.getMbRole() == Role.CHILD) {
+			mv.setViewName("member/baby-mypage/baby-edit");
+		}
+		
+		return mv;
+	}
 	
-	@RequestMapping("/mypage/edit")
+	@PostMapping("/mypage/edit")
 	public ModelAndView updateuser(Authentication auth, String thumbnail, String nickname, String interest) {
 		
 		ModelAndView mv = new ModelAndView();
 
 		String mbId = parseMbId.parseMbId(auth);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		memberDTO.setMbThumbnail(thumbnail);
+		memberDTO.setMbNick(nickname);
+		memberDTO.setMbInterest(interest);
 		
-//		User user = parseMbId.getUserMbId(mbId);
-//		user.setMbThumbnail(thumbnail);
-//		user.setMbNick(nickname);
-//		user.setMbInterest(interest);
+		mv.addObject("memberDTO", memberDTO);
 		
 		memberDAO.updatemember(mbId, thumbnail, nickname, interest);
 		
