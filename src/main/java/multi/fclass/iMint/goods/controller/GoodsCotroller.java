@@ -37,8 +37,12 @@ public class GoodsCotroller {
 
 	@GetMapping("goods/detail")
 	public String goodsDetail(Authentication auth, @RequestParam("goodsId") int goodsId, Model model) {
-		String mbId = parseService.parseMbId(auth);
-		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
+		String mbId = null;
+		MemberDTO memberDTO = null;
+		if (auth != null) {
+			mbId = parseService.parseMbId(auth);
+			memberDTO = parseService.getMemberMbId(mbId);
+		}
 
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
 		model.addAttribute("countWishes", wishService.countWishes(goodsId));

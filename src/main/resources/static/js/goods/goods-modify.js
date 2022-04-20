@@ -140,9 +140,17 @@ function createFilePond() {
 let putImage = (result) => {
     console.log(result.length - 1);
     for (let i = result.length - 1; i > -1; i--) {
-        pond.addFile(result[i].goodsImagesPath);
-        // pond.addFile(`image/png, ${result[i].goodsImagesPath}`);
-        // e.detail.items[i].filename = result[i].name;
+        if (i == 0) {
+            
+
+            $("#thumbnailFile").on("change", function () {
+                thumbnailFile = this.files[0];
+                console.log(thumbnailFile);
+                $("#thumbnailFileName").val(`파일명 : ${thumbnailFile.name}`);
+            })
+        }
+        // pond.addFile(result[i].goodsImagesPath);
+        pond.addFile(decodeURI(result[i].goodsImagesPath));
     }
 }
 
@@ -214,11 +222,7 @@ function main() {
     } else {
         document.getElementsByName("suggestible")[1].checked = true;
     }
-    $("#thumbnailFile").on("change", function () {
-        thumbnailFile = this.files[0];
-        console.log(thumbnailFile);
-        $("#thumbnailFileName").val(`파일명 : ${thumbnailFile.name}`);
-    })
+
 
     getGoodsImages();
     uploadPopupBtn.addEventListener('click', fileUpload);
