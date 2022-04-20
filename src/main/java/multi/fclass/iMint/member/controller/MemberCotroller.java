@@ -140,6 +140,11 @@ public class MemberCotroller {
 				thumbnail.transferTo(serverfile);
 				
 			} // if end
+			else { // 전달된 파일이 없으면 
+				if(memberDTO.getMbThumbnail() != null) { // 원래 파일있으면
+					mbThumbnail = memberDTO.getMbThumbnail(); // 원래 파일 유지
+				}
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -229,45 +234,25 @@ public class MemberCotroller {
 	
 	// 프로필사진은 1개만 지정. 원래 파일명 저장 X. 삭제시 DB에서 삭제. 회원 탈퇴시 사진도 자동 삭제(사진이 컬럼이므로 따로 처리 필요 X)
 	@ResponseBody
-	@RequestMapping("/mypage/edit/thumbnail")
-	public Map<String, String> upload(MultipartFile thumbnail, Authentication auth) throws IOException { // @ModelAttribute("뷰가 받을 이름"): 뷰로 전달해주고 싶을 때.
+	@RequestMapping("/mypage/edit/delete/thumbnail")
+	public Map<String, String> delete(Authentication auth) throws IOException {
 
 		Map<String, String> map = new HashMap<String, String>();
-
 		
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		String mbRole = memberDTO.getMbRole().toString();
-		String provider = memberDTO.getMbProvider();
 		
-//		// ex. ../GUARD/naver/naver_sdfklw242.jpg
-				
-		String savePath = root + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
+		// 파일 삭제
+		if(!memberDTO.getMbThumbnail().isEmpty()) {
 
-		List<String> path = new ArrayList<String>();
-		path.add(mbRole);
-		path.add(provider);
-		
-		// 폴더 생성 
-		fileService.mkDir(path);
+			File file = new File(memberDTO.getMbThumbnail());
+			
+			if (file.exists()) {
+				file.delete(); // 삭제
+			}
 
-		// 파일 업로드
-		
-		if(!thumbnail.isEmpty()) {
-			
-			// 원래 파일 명에서 확장자(.) 추출 
-			String ext = thumbnail.getOriginalFilename().substring(thumbnail.getOriginalFilename().indexOf("."));
-
-			// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
-			String newname = mbId + "." + ext;
-			String mbThumbnail = savePath + "/" + newname;
-			
-			File serverfile = new File(newname);
-			thumbnail.transferTo(serverfile);
-			
 			// db에 업데이트 하기(저장경로 + 파일 이름)
-			memberDTO.setMbThumbnail(mbThumbnail);
-			memberDAO.updatethumbnail(memberDTO);
+			memberDAO.updatedelthumbnail(mbId);
 			
 			map.put("result", "success");
 			
