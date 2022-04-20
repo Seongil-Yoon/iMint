@@ -38,4 +38,8 @@
     <select id="findByMbNick" resultType="multi.fclass.iMint.member.dto.MemberDTO">
         SELECT * FROM imint.member WHERE mb_nick = #{mbNick}
     </select>  
+    
+    <select id="findByMbGuard" resultType="multi.fclass.iMint.member.dto.MemberDTO">
+        SELECT * FROM imint.member WHERE mb_guard = #{mbGuard}
+    </select>  
 </mapper>

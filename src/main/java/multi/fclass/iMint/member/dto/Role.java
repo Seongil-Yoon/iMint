@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Role {
 
-	GEUST("ROLE_GEUST", "비회원"),
+	GEUST("ROLE_GEUST", "탈퇴 회원"),
 	UN_GUARD("ROLE_uncerti_GUARD","미인증 보호자"),
 	UN_CHILD("ROLE_uncerti_CHILD","미인증 아이"),
 	GUARD("ROLE_GUARD","보호자"),
