@@ -91,6 +91,9 @@ public class MypageCotroller {
 		List<MypageDTO> userSell = iMypageDAO.getSellingList(mbId, 1, 5);
 		mv.addObject("userSell", userSell);
 		
+		List<MypageDTO> userComplete = iMypageDAO.getCompleteList(mbId, 1, 5);
+		mv.addObject("userComplete", userComplete);
+		
 		return mv;
 	}
 	
@@ -151,6 +154,10 @@ public class MypageCotroller {
 			//판매 목록
 			List<MypageDTO> userSell = iMypageDAO.getSellingList(mbId, 1, 5);
 			mv.addObject("userSell", userSell);
+			
+			//거래완료 목록
+			List<MypageDTO> userComplete = iMypageDAO.getCompleteList(mbId, 1, 5);
+			mv.addObject("userComplete", userComplete);
 		}
 		return mv;
 	}

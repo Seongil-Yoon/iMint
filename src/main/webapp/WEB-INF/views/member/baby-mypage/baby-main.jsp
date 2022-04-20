@@ -51,6 +51,7 @@
             <div class="transaction">
                 <h5 class="tag">거래완료</h5>
                 <br>
+                ${userComplete.size()} 건
                 <a class="btn btn-primary" href="#">자세히</a>
                 <!-- 거래완료 요약 표  -->
             </div>
@@ -70,7 +71,7 @@
             </div>
             <div class="settings location">
                 <h5 class="settings-title text-location">현재 동네 설정</h5>
-                <p class="text-location">${userLocation}</p>
+                <p class="text-location">${userGuard.mbLocation}</p>
             </div>
         </div>
         <!-- 아이 로그인시 숨김 -->
