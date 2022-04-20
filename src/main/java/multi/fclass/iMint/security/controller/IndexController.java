@@ -215,62 +215,105 @@ public class IndexController {
 	
 	// 회원가입 4(최종. 보호자, 아이 모두)
 	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
+	// 회원가입 후 다시 로그인 요청
 	@RequestMapping("/register/complete")
 	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard, String guardPin) {
 	
 	ModelAndView mv = new ModelAndView();
-		
+	
 	String mbId = parseMbId.parseMbId(auth);
 	MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 	mv.addObject("memberDTO", memberDTO);
-	
-	// mbLocation 받아오기 
-	if (memberDTO.getMbRole() == Role.UN_GUARD) { // 보호자 
-		memberDTO.setMbGuard(null);
-		memberDTO.setMbLocation(mbLocationOrGuard);
-		memberDTO.setMbRole(Role.GUARD);
-		memberDTO.setMbPin(new GenerateCertCharacter().excuteGenerate());
-		mv.setViewName("member/guard-mypage/guard-main");
-	}	
-	else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이 
-		MemberDTO guardMember = securityDAO.findByMbNick(mbLocationOrGuard);
-		if (guardMember != null & guardMember.getMbPin().equals(guardPin)) {
-			memberDTO.setMbGuard(guardMember.getMbId());
-			memberDTO.setMbLocation(null);
-			memberDTO.setMbRole(Role.CHILD);
-			memberDTO.setMbPin(null);
-			mv.setViewName("member/baby-mypage/baby-main");
-		}
-		else {
-//			mv.setViewName("member/register_connect");	// 보호자의 입력정보가 틀리면 다시 보내기
-			mv.setViewName("redirect:/register");	// 보호자의 입력정보가 틀리면 다시 보내기
+
+	try {
+		// mbLocation 받아오기 
+		if (memberDTO.getMbRole() == Role.UN_GUARD) { // 보호자 
+			memberDTO.setMbGuard(null);
+			memberDTO.setMbLocation(mbLocationOrGuard);
+			memberDTO.setMbRole(Role.GUARD);
+			memberDTO.setMbPin(new GenerateCertCharacter().excuteGenerate());
+			mv.setViewName("member/login");
 			
+			// DB저장
+			securityDAO.updateregister4(memberDTO);
+		
+			// 세션 수정
+		    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
+		    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
+			// 세션에 변경사항 저장
+			SecurityContext context = SecurityContextHolder.getContext();
+			// UsernamePasswordAuthenticationToken
+			context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
+			HttpSession session = req.getSession(true);
+			//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+			session.setAttribute(HttpSessionSecurityContextRepository.
+			                       SPRING_SECURITY_CONTEXT_KEY, context);
+			
+		}	
+		else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이 
+			MemberDTO guardMember = securityDAO.findByMbNick(mbLocationOrGuard);
+			try {
+				if (guardMember != null & guardMember.getMbPin().equals(guardPin)) {
+					memberDTO.setMbGuard(guardMember.getMbId());
+					memberDTO.setMbLocation(null);
+					memberDTO.setMbRole(Role.CHILD);
+					memberDTO.setMbPin(null);
+					mv.setViewName("member/login");
+					
+					// DB저장
+					securityDAO.updateregister4(memberDTO);
+				
+					// 세션 수정
+				    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
+				    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
+					// 세션에 변경사항 저장
+					SecurityContext context = SecurityContextHolder.getContext();
+					// UsernamePasswordAuthenticationToken
+					context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
+					HttpSession session = req.getSession(true);
+					//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+					session.setAttribute(HttpSessionSecurityContextRepository.
+					                       SPRING_SECURITY_CONTEXT_KEY, context);
+				}
+				else { // 보호자의 입력정보가 틀리면 다시 보내기
+					mv.setViewName("redirect:/register");
+				}
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				mv.setViewName("redirect:/register");	// 보호자의 입력정보가 틀리면 다시 보내기
+				mv.addObject("err", "정확한 보호자의 정보를 입력하세요.");
+			}			
+				return mv;
+		}	
+		else if(memberDTO.getMbRole() == Role.GUARD){ // 가입 완료된 보호자
+			mv.setViewName("redirect:/mypage/location");
 			return mv;
-		}
-	}	
-	else if(memberDTO.getMbRole() == Role.GUARD){
+		}	
+
+//			// DB저장
+//			securityDAO.updateregister4(memberDTO);
+//		
+//			// 세션 수정
+//		    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
+//		    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
+//			// 세션에 변경사항 저장
+//			SecurityContext context = SecurityContextHolder.getContext();
+//			// UsernamePasswordAuthenticationToken
+//			context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
+//			HttpSession session = req.getSession(true);
+//			//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+//			session.setAttribute(HttpSessionSecurityContextRepository.
+//			                       SPRING_SECURITY_CONTEXT_KEY, context);
+		
+			return mv;
+
+	} // try end 
+		
+	catch (ClassCastException e) {
 		mv.setViewName("redirect:/mypage/location");
 		return mv;
-	}	
-
-		// DB저장
-		securityDAO.updateregister4(memberDTO);
-	
-		// 세션 수정
-	    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
-	    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
-		// 세션에 변경사항 저장
-		SecurityContext context = SecurityContextHolder.getContext();
-		// UsernamePasswordAuthenticationToken
-		context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
-		HttpSession session = req.getSession(true);
-		//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
-		session.setAttribute(HttpSessionSecurityContextRepository.
-		                       SPRING_SECURITY_CONTEXT_KEY, context);
-	
-		mv.addObject("session", session);
+	} // catch end
 		
-		return mv;
 	}
 		
 	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true

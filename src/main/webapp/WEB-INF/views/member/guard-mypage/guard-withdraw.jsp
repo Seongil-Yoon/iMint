@@ -39,6 +39,8 @@
 					</form> -->
 					<form action="/mypage/withdraw" method="post">
 						<br>
+<%-- 						<input type = hidden id = "mbId" name = "mbId" value = ${memberDTO.mbId }>
+						<input type = hidden id = "mbRole" name = "mbRole" value = ${memberDTO.mbRole }> --%>
 						<input type="submit" class="btn btn-danger" value="아이민트 탈퇴하기" id="withdraw-complete-guardian"/>
 					</form>
 				</div>
