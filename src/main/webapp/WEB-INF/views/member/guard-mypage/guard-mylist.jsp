@@ -29,7 +29,20 @@
 	 	<!-- 아티클 시작 -->
 	 	<div class="container-main">
 		 	<div class="title-text">
-			   <h2>내아이 ~의 거래 관련 목록입니다.</h2>
+			   <h2>
+			   <c:choose> 
+                		<c:when test= "${userChilds.size() == 0}">
+                			연결된 아이가 없습니다.
+     					</c:when>
+     					<c:otherwise>
+     						<c:forEach items="${userChilds}" var="child" varStatus="order">
+     							${child}님
+     						</c:forEach>
+     					</c:otherwise>
+                	</c:choose>
+			   내아이 ~의 거래 관련 목록입니다.
+			   
+			   </h2>
 			</div>
 	 			<!-- 상단 탭 -->
 	        <section class="tabs">

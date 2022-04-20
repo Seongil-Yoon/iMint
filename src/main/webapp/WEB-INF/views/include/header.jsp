@@ -34,32 +34,25 @@
     </div>
 	
 	<ul class="navbar-nav justify-content-end">
-        
-    	<%
-		if(session.getAttribute("id") == null) // 로그인이 안되었을 때
-{
-			%>
-	        <li class="nav-item">
+	
+	<c:choose>
+		<c:when test="${userNickName == null}">
+		<li class="nav-item">
 	              <a class="nav-link" href="#">로그인</a>
 	            </li>
 	        <li class="nav-item">
 	              <a class="nav-link" href="#">회원가입</a>
 	        </li>
-	    <%
-			}
-			else // 로그인 했을 경우
-			{
-			%>
-	    
-    	
-    		<li class="nav-item">
+		</c:when>
+		<c:otherwise>
+			<li class="nav-item">
 	              <a class="nav-link" href="#">로그아웃</a>
 	            </li>
 	        <li class="nav-item">
 	              <a class="nav-link" href="#">마이페이지</a>
 	        </li>
-    	
-    	<% } %>
+		</c:otherwise>
+	</c:choose>
         </ul>
 	
   </div>

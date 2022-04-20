@@ -1,5 +1,7 @@
 package multi.fclass.iMint.mypage.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -51,17 +53,24 @@ public class MypageCotroller {
 			mv.setViewName("member/baby-mypage/baby-main");
 		}
 		
+		String userID = memberDTO.getMbId();
 		String userNickName = memberDTO.getMbNick();
 		String userEmail = memberDTO.getMbEmail();
 		String userInterest = memberDTO.getMbInterest();
 		String userLocation = memberDTO.getMbLocation();
+		String userGuard = memberDTO.getMbGuard();
 		String userPin = memberDTO.getMbPin();
+		List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
 		
+		
+		mv.addObject("userID", userID);
 		mv.addObject("userNickName", userNickName);
 		mv.addObject("userEmail", userEmail);
 		mv.addObject("userInterest", userInterest);
 		mv.addObject("userLocation", userLocation);
+		mv.addObject("userGuard", userGuard);
 		mv.addObject("userPin", userPin);
+		mv.addObject("userChilds", userChilds);
 		return mv;
 	}
 	
@@ -110,6 +119,11 @@ public class MypageCotroller {
 		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-mylist");
 		}
+		
+		String userGuard = memberDTO.getMbGuard();
+		List<MemberDTO> userChilds = securityDAO.findByMbGuard(userGuard);
+		mv.addObject("userChilds", userChilds);
+		
 		return mv;
 	}
 	
