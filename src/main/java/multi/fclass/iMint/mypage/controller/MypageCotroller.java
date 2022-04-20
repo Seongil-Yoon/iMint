@@ -60,6 +60,8 @@ public class MypageCotroller {
 		String userLocation = memberDTO.getMbLocation();
 		String userGuard = memberDTO.getMbGuard();
 		String userPin = memberDTO.getMbPin();
+		
+		MemberDTO userGuardNick = securityDAO.findByMbId(userGuard);
 		List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
 		
 		
@@ -68,7 +70,7 @@ public class MypageCotroller {
 		mv.addObject("userEmail", userEmail);
 		mv.addObject("userInterest", userInterest);
 		mv.addObject("userLocation", userLocation);
-		mv.addObject("userGuard", userGuard);
+		mv.addObject("userGuard", userGuardNick);
 		mv.addObject("userPin", userPin);
 		mv.addObject("userChilds", userChilds);
 		return mv;
@@ -120,8 +122,8 @@ public class MypageCotroller {
 			mv.setViewName("member/baby-mypage/baby-mylist");
 		}
 		
-		String userGuard = memberDTO.getMbGuard();
-		List<MemberDTO> userChilds = securityDAO.findByMbGuard(userGuard);
+		String userID = memberDTO.getMbId();
+		List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
 		mv.addObject("userChilds", userChilds);
 		
 		return mv;

@@ -64,7 +64,7 @@
         <div class="container-other-settings">
             <div class="settings connection">
                 <h5 class="settings-title text-connection">연결된 보호자</h5>
-                <p class="text-connection">${userGuard}님</p>
+                <p class="text-connection">${userGuard.mbNick}님</p>
             </div>
             <div class="settings location">
                 <h5 class="settings-title text-location">현재 동네 설정</h5>
