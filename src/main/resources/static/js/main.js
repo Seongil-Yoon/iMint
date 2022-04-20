@@ -1,6 +1,9 @@
 let lastBoard = 20000; //게시글 18개씩 불러 오기 위해 lastBoard 값넣는 변수 초기값 은  20000
 let mainScrollTime = true; //스크롤 중복 방지 변수
 let end = true //게시글 없을 경우 데이터 가져오지 않는 변수
+let countWish = 0;
+
+
 
 //on load html 이미지나 자바스크립트 링크가 다오고 실행됨
 $(window).on('load', function () {
@@ -50,7 +53,7 @@ function start() {
 									<span class="goods-location">${result[i].goods.goodsLocation}</span>
 								</div>
 								<div>
-									<span class="goods-wishCount">🤍관심 38</span>
+									<span class="goods-wishCount">🤍관심 ${result[i].countWishes}</span>
 									<span class="goods-writeDate">${timeForToday(result[i].goods.goodsCreateDate)}</span>
 								</div>
 							</div>
@@ -109,3 +112,50 @@ function timeForToday(value) {
 
 	return `${Math.floor(betweenTimeDay / 365)}년전 작성`;
 }
+
+// function countWishlist(goodId) {
+// 	return new Promise(function (resolve, reject) {
+// 		$.ajax({
+// 			url: `/wishlist/count?goodsId=${goodId}`,
+// 			type: "GET",
+// 			dataType: "json", //json 으로 받기
+// 			success: function (result) {
+// 				resolve(result.value);
+// 			},
+// 			error: function (error) {
+// 				reject(new Error("error"));
+// 				//서버오류 500  권한없음 401  찾는내용없음 400
+// 				if (error.status == 500) {
+// 					swal('서버오류', '', 'error');
+// 				} else if (error.status == 404) {
+// 					end = false;
+// 					//가져올 게시글이 없어서 더이상 데이터를 가져오지 않게 바꿈
+// 				}
+// 			}
+// 		});
+// 	});
+// }
+
+
+// function getCount(goodsId) {
+// 	let goodsWishCount = document.querySelector(".goods-wishCount");
+// 	let data = 0;
+// 	countWishlist(goodsId)
+// 		.then((response) => {
+// 			console.log(response);
+// 			goodsWishCount.innerHTML = "ASD";
+// 			data = response
+// 		});
+
+// 	return data;
+
+// }
+
+
+// console.log(getCount(31));
+
+// countWishlist(31).then(function (data) {
+// 	console.log(data);
+// }).catch(function (err) {
+// 	console.log(err);
+// });
