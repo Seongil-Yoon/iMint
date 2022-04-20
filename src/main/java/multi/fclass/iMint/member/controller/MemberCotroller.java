@@ -153,10 +153,10 @@ public class MemberCotroller {
 		memberDAO.updatemember(mbId, mbThumbnail, nickname, interest);
 		
 		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/guard-mypage/guard-edit");
+			mv.setViewName("redirect:/mypage");
 		}
 		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-edit");
+			mv.setViewName("redirect:/mypage");
 		}
 		
 		return mv;

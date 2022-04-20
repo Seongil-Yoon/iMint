@@ -1,20 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<!-- 공통 스크립트파일 -->
+<!-- 공통 스크립트 -->
 
-
-<!-- 헤더파일 -->
+<!-- 헤더 스크립트 -->
 <script src="/static/js/header.js"></script>
 
-
 <!-- 외부 라이브러리 -->
-<!-- jquery CDN libs -->
-<script type="text/javascript" src="/static/libs/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap WebJars -->
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- jQuery WebJars -->
+<script src="/webjars/jquery/jquery.min.js"></script>
 
 <!-- sweetalert CDN libs -->
 <script src="/static/libs/sweetalert.min.js"></script>
-
-<!-- Bootstrap -->
-<script src="/static/libs/bootstrap.min.js"></script>

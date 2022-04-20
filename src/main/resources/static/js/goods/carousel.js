@@ -1,5 +1,3 @@
-let goodsId = undefined;
-
 function startAjax(goodsId) {
     $.ajax({
         url: `/goods/detail-images?goodsId=${goodsId}`,

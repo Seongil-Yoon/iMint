@@ -3,6 +3,9 @@ let container = undefined,
 	containerWidth = undefined,
 	goodsActionbar = undefined;
 
+let goodsTitle = $("#goodsTitle").val();
+let goodsId = $("#goodsId").val();
+let myId = $("#buyerId").val();
 
 //on load html 이미지나 자바스크립트 링크가 다오고 실행됨
 $(window).on('load', function () {
@@ -46,11 +49,125 @@ function timeForToday(value) {
 	return `${Math.floor(betweenTimeDay / 365)}년전 작성`;
 }
 
+function deleteHandler() {
+	$(document).on("click", "#deleteBtn", function (event) {
+		goodsTitle = $("#goodsTitle").val();
+		goodsId = $("#goodsId").val();
+		swal({
+				title: `${goodsTitle}을 삭제하시겠습니까?`,
+				text: "",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((e) => {
+				if (e) { //true
+					//이벤트 부모태그인 li의 value값 가져오기
+					$.ajax({
+						url: `/goods/delete?goodsId=${goodsId}`,
+						type: "GET", //데이터 전달방식
+						success: function (result, textStatus, jqxHR) {
+							if (jqxHR.status == 200) {
+								swal({
+									title: "상품이 삭제되었습니다",
+									text: "",
+									icon: "info",
+									type: "success",
+									timer: 1.1 * 1000
+								}).then(() => {
+									location.href = "/main";
+								})
+							}
+						},
+						error: function (error) {
+							//서버오류 500  찾는 자료없음 404  권한없음  401
+							if (error.status == 404) {
+								swal('찾는 자료가 없습니다', '', 'error');
+							} else if (error.status == 401) {
+								swal('삭제 권한이 없습니다', '', 'error');
+							} else if (error.status == 500) {
+								swal('서버 오류 관리자에게 문의 하세요', '', 'error');
+							}
+						}
+					}) //end of ajax
+				} else {
+					// swal("취소하였습니다.");
+				}
+			});
+	}); //end of click
+}
+
+function wishHandler() {
+	$("#wishBtn").on("click", function () {
+		$.ajax({
+			url: `/wishlist/add?myId=${myId}&goodsId=${goodsId}`,
+			type: "GET", //데이터 전달방식
+			dataType: "json", //json 으로 받기
+			success: function (response, textStatus, jqxHR) {
+				if (response.result == "fail") {
+					removeWish();
+				} else {
+					swal({
+						title: "관심 등록되었습니다",
+						text: "",
+						icon: "info",
+						type: "success",
+						timer: 1.1 * 1000
+					}).then(() => {
+						location.href = "";
+					})
+				}
+			},
+			error: function (error) {
+				//서버오류 500  찾는 자료없음 404  권한없음  401
+				if (error.status == 404) {
+					swal('찾는 자료가 없습니다', '', 'error');
+				} else if (error.status == 401) {
+					swal('삭제 권한이 없습니다', '', 'error');
+				} else if (error.status == 500) {
+					swal('서버 오류 관리자에게 문의 하세요', '', 'error');
+				}
+			}
+		}) //end of ajax
+	})
+
+	function removeWish() {
+		$.ajax({
+			url: `/wishlist/remove?myId=${myId}&goodsId=${goodsId}`,
+			type: "GET", //데이터 전달방식
+			dataType: "json", //json 으로 받기
+			success: function (result, textStatus, jqxHR) {
+				swal({
+					title: "관심 취소하였습니다",
+					text: "",
+					icon: "warning",
+					type: "success",
+					timer: 1.1 * 1000
+				}).then(() => {
+					location.href = "";
+				})
+			},
+			error: function (error) {
+				//서버오류 500  찾는 자료없음 404  권한없음  401
+				if (error.status == 404) {
+					swal('찾는 자료가 없습니다', '', 'error');
+				} else if (error.status == 401) {
+					swal('삭제 권한이 없습니다', '', 'error');
+				} else if (error.status == 500) {
+					swal('서버 오류 관리자에게 문의 하세요', '', 'error');
+				}
+			}
+		}) //end of ajax
+	}
+}
+
 function main() {
+	deleteHandler();
+	wishHandler();
 	let regDate = $("#timeForToday").text();
 	$("#timeForToday").text(timeForToday(regDate));
 
-	
+
 
 
 }
