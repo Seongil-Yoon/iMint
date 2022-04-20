@@ -91,8 +91,8 @@
 				}, 
 			dataType: "json",
 				
-				success: function(result) {
-					alert(result);
+				success: function(response) {
+					alert(JSON.stringify(response.result));
 				} // success
 		}); // ajax
 	}); 	
