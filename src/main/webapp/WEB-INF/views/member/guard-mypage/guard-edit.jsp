@@ -35,15 +35,14 @@
 		            <h2>회원 정보를 수정하시겠어요?</h2>
 		        </div>
 		        
+		       	<form action="/mypage/edit" method="post">
 		        <!-- 프로필 사진 수정 (1행)-->
 		        <div class="container-context container-photo">
 		            <div class="lables-photo">
 		                <h5 class="lables-text">프로필 사진 변경</h5>
 		            </div>
 		            <div class="buttons buttons-photo">
-		                <form action="#" method="post">
-		                    <input name = "thumbnail" type="file" id="photo-update-guard">
-		                </form>
+		            	<input name = "thumbnail" type="file" id="photo-update-guard">
 		            </div>
 		        </div>
 		        
@@ -53,10 +52,9 @@
 		                <h5 class="lables-text">닉네임 변경</h5>
 		            </div>
 		            <div class="buttons buttons-nickname">
-		                <form action="#" method="post">
-		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-guard">
-		                    <input type="submit" class="btn btn-primary" value="확인" id="nickname-check-guard"/>
-		                </form>
+		                <!-- ajax로 비동기 닉네임 중복확인 체크 하면 될듯해요~register뷰, indexcontroller register/nickname 참고(정민) --> 
+		            	<input name = "nickname" class="buttons-text" type="text" id="nickname-update-guard">
+		                <input type="button" class="btn btn-primary" value="닉네임 중복확인" id="nickname-check-guard"/> <!-- submit빼고, 닉네임 중복확인으로 변경했습니다(정민) -->
 		            </div>
 		        </div>
 		        
@@ -66,18 +64,16 @@
 		                <h5 class="lables-text">관심사 변경</h5>
 		            </div>
 		            <div class="buttons buttons-interest">
-		                <form action="#" method="post">
-		                    <input name = "interest" type="text" class="buttons-text" id="interest-update-guard">
-		                </form>
+		            	<input name = "interest" type="text" class="buttons-text" id="interest-update-guard">
 		            </div>
 		        </div>
 		        
 		        <!-- 변경하기 버튼 -->
-		        <form action="#" method="post">
 		            <br>
 		            <br>
-		            <input type="submit" class="btn btn-primary" value="회원정보 수정하기" id="update-complete-guard"/>
+		            <input type="submit" class="btn btn-primary" value= "회원정보 수정하기" id="update-complete-guard"/>
 		        </form>
+		        
 		    </div>
 		</div>
 		</div>
