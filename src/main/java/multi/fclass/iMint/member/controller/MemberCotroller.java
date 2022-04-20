@@ -115,6 +115,8 @@ public class MemberCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
+		mv.addObject("memberDTO", memberDTO);
+		
 		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/guard-mypage/guard-withdraw"); 
 		}
@@ -131,18 +133,27 @@ public class MemberCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 
-		memberDAO.updatedelete(mbId); 
+
 		
 	//  cascade로 할 수 있는지? 우선은 리스트에 아이를 담아서 처리(테스트필요). 보호자가 탈퇴하면 자동으로 아이도 탈퇴처리 필요
 		if (memberDTO.getMbRole() == Role.GUARD) { // 보호자일 때만 처리
-			
-			List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
-			for (Iterator iterator = childlist.iterator(); iterator.hasNext();) { // childlist.size()
-				MemberDTO childmember = (MemberDTO) iterator.next();
-				memberDAO.updatedelete(childmember.getMbId()); // 한 명씩 모두 탈퇴
+//			List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
+//			for (int i = 0; i <= childlist.size(); i++) { // childlist.size()
+//				MemberDTO childmember = childlist.get(i);
+//				memberDAO.updatedelete(childmember.getMbId()); // 한 명씩 모두 탈퇴
+//			};
+			try {
+				List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
+				for (MemberDTO childMemberDTO : childlist) { // childlist.size()
+					memberDAO.updatedelete(childMemberDTO.getMbId()); // 한 명씩 모두 탈퇴
+				};			
+			} catch (Exception BindingException) {
+				BindingException.printStackTrace();
 			}
-			
 		}
+
+		// 아이 모두 탈퇴시킨 뒤 보호자 탈퇴
+		memberDAO.updatedelete(mbId); 
 		
 		// 세션에 변경사항 저장
 		SecurityContext context = SecurityContextHolder.getContext();

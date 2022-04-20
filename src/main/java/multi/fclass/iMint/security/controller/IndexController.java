@@ -234,21 +234,22 @@ public class IndexController {
 	}	
 	else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이 
 		MemberDTO guardMember = securityDAO.findByMbNick(mbLocationOrGuard);
-		if (guardMember != null & guardMember.getMbPin().equals(guardPin)) {
-			memberDTO.setMbGuard(guardMember.getMbId());
-			memberDTO.setMbLocation(null);
-			memberDTO.setMbRole(Role.CHILD);
-			memberDTO.setMbPin(null);
-			mv.setViewName("member/baby-mypage/baby-main");
-		}
-		else {
-//			mv.setViewName("member/register_connect");	// 보호자의 입력정보가 틀리면 다시 보내기
+		try {
+			if (guardMember != null & guardMember.getMbPin().equals(guardPin)) {
+				memberDTO.setMbGuard(guardMember.getMbId());
+				memberDTO.setMbLocation(null);
+				memberDTO.setMbRole(Role.CHILD);
+				memberDTO.setMbPin(null);
+				mv.setViewName("member/baby-mypage/baby-main");
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 			mv.setViewName("redirect:/register");	// 보호자의 입력정보가 틀리면 다시 보내기
-			
+			mv.addObject("err", "정확한 보호자의 정보를 입력하세요.");
+		}			
 			return mv;
-		}
 	}	
-	else if(memberDTO.getMbRole() == Role.GUARD){
+	else if(memberDTO.getMbRole() == Role.GUARD){ // 가입 완료된 보호자
 		mv.setViewName("redirect:/mypage/location");
 		return mv;
 	}	
