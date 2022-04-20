@@ -31,9 +31,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import multi.fclass.iMint.common.service.IFileService;
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.member.service.IMemberService;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
@@ -57,8 +59,20 @@ public class MemberCotroller {
 	@Autowired
 	ParseMbId parseMbId;
 	
+	@Autowired
+	IMemberService memberService;
+	
+	@Autowired
+	IFileService fileService;
+	
+	@Value("${root}")
+	private String root;
+
 	@Value("${directory}")
 	private String directory;
+	
+	@Value("${memberImagePath}")
+	String memberImagePath;
 	
 	//URL 매핑 수정(회원가입 수정/탈퇴-> 보호자, 아이 구분 x)
 	@GetMapping("/mypage/edit")
@@ -82,19 +96,61 @@ public class MemberCotroller {
 	}
 	
 	@PostMapping("/mypage/edit")
-	public ModelAndView updateuser(Authentication auth, String thumbnail, String nickname, String interest) {
+	public ModelAndView updateuser(Authentication auth, MultipartFile thumbnail, String nickname, String interest) throws IOException {
 		
 		ModelAndView mv = new ModelAndView();
 
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		memberDTO.setMbThumbnail(thumbnail);
+		String mbRole = memberDTO.getMbRole().toString();
+		String provider = memberDTO.getMbProvider();
+		
+		// 전체 저장경로 + 파일 이름 
+		// ex. ../GUARD/naver/naver_sdfklw242.jpg
+		String mbThumbnail = null;
+		
+		// 파일 업로드
+		try {		
+		String savePath = root + "/" + directory + "/" + memberImagePath + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
+
+		List<String> path = new ArrayList<String>();
+		path.add(root);
+		path.add(directory);
+		path.add(memberImagePath);
+		path.add(mbRole);
+		path.add(provider);
+		
+		// 폴더 생성 
+		fileService.mkDir(path);
+
+		System.out.println("thumbnail" + thumbnail);
+				
+			if(!thumbnail.isEmpty()) {
+				
+				// 원래 파일 명에서 확장자(.) 추출 
+				String ext = thumbnail.getOriginalFilename().substring(thumbnail.getOriginalFilename().indexOf("."));
+	
+				// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
+				String newname = mbId + ext;
+				mbThumbnail = savePath + "/" + newname;
+				
+				System.out.println("mbThumbnail: " + mbThumbnail);
+				
+				File serverfile = new File(mbThumbnail);
+				thumbnail.transferTo(serverfile);
+				
+			} // if end
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}		
+		memberDTO.setMbThumbnail(mbThumbnail);			
 		memberDTO.setMbNick(nickname);
 		memberDTO.setMbInterest(interest);
 		
 		mv.addObject("memberDTO", memberDTO);
 		
-		memberDAO.updatemember(mbId, thumbnail, nickname, interest);
+		memberDAO.updatemember(mbId, mbThumbnail, nickname, interest);
 		
 		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("redirect:/mypage");
@@ -177,17 +233,25 @@ public class MemberCotroller {
 	public Map<String, String> upload(MultipartFile thumbnail, Authentication auth) throws IOException { // @ModelAttribute("뷰가 받을 이름"): 뷰로 전달해주고 싶을 때.
 
 		Map<String, String> map = new HashMap<String, String>();
-		
-		System.out.println(thumbnail.getOriginalFilename()); //dto.getFile1():Multipartfile 이 toString 메서드 오버라이딩하지 않았으면 패키지명.클래스명@16진수 주소 로 출력.
-		System.out.println(thumbnail.getSize());
-		System.out.println(thumbnail.isEmpty()); // isEmpty: 파일 전송 여부를 boolean으로. 
+
 		
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		String mbRole = memberDTO.getMbRole().toString();
+		String provider = memberDTO.getMbProvider();
 		
-		// ex. ../naver/GUARD/naver_sdfklw242.jpg
-		String savePath = directory + "/" + memberDTO.getMbProvider() + "/" + mbRole.substring(mbRole.length()-5, mbRole.length()); // 저장경로: 1.provider 별로 지정 2. guard / child 별로 지정
+//		// ex. ../GUARD/naver/naver_sdfklw242.jpg
+				
+		String savePath = root + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
+
+		List<String> path = new ArrayList<String>();
+		path.add(mbRole);
+		path.add(provider);
+		
+		// 폴더 생성 
+		fileService.mkDir(path);
+
+		// 파일 업로드
 		
 		if(!thumbnail.isEmpty()) {
 			
@@ -195,21 +259,22 @@ public class MemberCotroller {
 			String ext = thumbnail.getOriginalFilename().substring(thumbnail.getOriginalFilename().indexOf("."));
 
 			// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
-			String newname = savePath + "_" + mbId + ext;
-			String allname = savePath + newname;
+			String newname = mbId + "." + ext;
+			String mbThumbnail = savePath + "/" + newname;
 			
 			File serverfile = new File(newname);
 			thumbnail.transferTo(serverfile);
 			
 			// db에 업데이트 하기(저장경로 + 파일 이름)
-			memberDAO.updatethumbnail(mbId, allname);
+			memberDTO.setMbThumbnail(mbThumbnail);
+			memberDAO.updatethumbnail(memberDTO);
 			
-			map.put("success", allname);
+			map.put("result", "success");
 			
 			return map;
 		}
 		else {
-			map.put("fail", "isEmpty");
+			map.put("result", "failure");
 			return map;
 		}
 		

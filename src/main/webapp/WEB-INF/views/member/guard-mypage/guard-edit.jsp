@@ -42,7 +42,7 @@
 		                <h5 class="lables-text">프로필 사진 변경</h5>
 		            </div>
 		            <div class="buttons buttons-photo">
-		            	<input name = "thumbnail" type="file" id="photo-update-guard">
+		            	<input name = "thumbnail" type="file" id="photo-update-guard" enctype = "multipart/form-data">
 		            </div>
 		        </div>
 		        
