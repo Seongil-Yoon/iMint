@@ -35,7 +35,7 @@
 		            <h2>회원 정보를 수정하시겠어요?</h2>
 		        </div>
 		        
-		        <form action="/mypage/edit" method="post">
+		        <form action="/mypage/edit" method="post"  enctype = "multipart/form-data">
 		        <!-- 프로필 사진 수정 (1행)-->
 		        <div class="container-context container-photo">
 		            <div class="lables-photo">
