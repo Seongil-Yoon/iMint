@@ -42,7 +42,9 @@
 		                <h5 class="lables-text">프로필 사진 변경</h5>
 		            </div>
 		            <div class="buttons buttons-photo">
-		                    <input name = "thumbnail" type="file" id="photo-update-child">
+		                <input name = "thumbnail" type="file" id="photo-update-child">
+		            	<input name = "mbId" type="hidden" id="mbId">
+		            	<input type= "button" class="btn btn-primary" name = "thumbnail_delete_btn" id="thumbnail_delete_btn" value = "기존 프로필 사진 삭제">
 		            </div>
 		        </div>
 		        
@@ -78,5 +80,21 @@
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/baby-main.js"></script>
+		<script>
+	$("#thumbnail_delete_btn").on('click', function(){
+		$.ajax({
+			url: "/mypage/edit/delete/thumbnail",
+			type: 'post',
+			data: {'mbId' : $("#mbId").val()
+				}, 
+			dataType: "json",
+				
+				success: function(response) {
+					alert(JSON.stringify(response.result));
+				} // success
+		}); // ajax
+	}); 	
+
+	</script>
 </body>
 </html>

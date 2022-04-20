@@ -2,6 +2,7 @@ package multi.fclass.iMint.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -123,8 +124,6 @@ public class MemberCotroller {
 		// 폴더 생성 
 		fileService.mkDir(path);
 
-		System.out.println("thumbnail" + thumbnail);
-				
 			if(!thumbnail.isEmpty()) {
 				
 				// 원래 파일 명에서 확장자(.) 추출 
@@ -133,24 +132,38 @@ public class MemberCotroller {
 				// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
 				String newname = mbId + ext;
 				mbThumbnail = savePath + "/" + newname;
+
+				memberDTO.setMbThumbnail(mbThumbnail);			
 				
-				System.out.println("mbThumbnail: " + mbThumbnail);
-				
+				// 파일 업로드
 				File serverfile = new File(mbThumbnail);
 				thumbnail.transferTo(serverfile);
 				
 			} // if end
+			else { // 전달된 파일이 없으면 
+				if(memberDTO.getMbThumbnail() != null) { // 원래 파일있으면
+					mbThumbnail = memberDTO.getMbThumbnail(); // 원래 파일 유지
+				}
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-		}		
-		memberDTO.setMbThumbnail(mbThumbnail);			
-		memberDTO.setMbNick(nickname);
-		memberDTO.setMbInterest(interest);
+		}
 		
+		if (!nickname.equals("")) {
+			System.out.println("전달된 닉네임 있음");
+			memberDTO.setMbNick(nickname);		
+		}
+
+		if (!interest.equals("")) {
+			System.out.println("전달된 관심사 있음");
+			memberDTO.setMbInterest(interest);		
+		}
+				
 		mv.addObject("memberDTO", memberDTO);
 		
-		memberDAO.updatemember(mbId, mbThumbnail, nickname, interest);
+//		memberDAO.updatemember(mbId, mbThumbnail, nickname, interest);
+		memberDAO.updatemember(memberDTO);
 		
 		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("redirect:/mypage");
@@ -189,15 +202,7 @@ public class MemberCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 
-
-		
-	//  cascade로 할 수 있는지? 우선은 리스트에 아이를 담아서 처리(테스트필요). 보호자가 탈퇴하면 자동으로 아이도 탈퇴처리 필요
 		if (memberDTO.getMbRole() == Role.GUARD) { // 보호자일 때만 처리
-//			List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
-//			for (int i = 0; i <= childlist.size(); i++) { // childlist.size()
-//				MemberDTO childmember = childlist.get(i);
-//				memberDAO.updatedelete(childmember.getMbId()); // 한 명씩 모두 탈퇴
-//			};
 			try {
 				List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
 				System.out.println("childlist: "+childlist);
@@ -229,45 +234,25 @@ public class MemberCotroller {
 	
 	// 프로필사진은 1개만 지정. 원래 파일명 저장 X. 삭제시 DB에서 삭제. 회원 탈퇴시 사진도 자동 삭제(사진이 컬럼이므로 따로 처리 필요 X)
 	@ResponseBody
-	@RequestMapping("/mypage/edit/thumbnail")
-	public Map<String, String> upload(MultipartFile thumbnail, Authentication auth) throws IOException { // @ModelAttribute("뷰가 받을 이름"): 뷰로 전달해주고 싶을 때.
+	@RequestMapping("/mypage/edit/delete/thumbnail")
+	public Map<String, String> delete(Authentication auth) throws IOException {
 
 		Map<String, String> map = new HashMap<String, String>();
-
 		
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		String mbRole = memberDTO.getMbRole().toString();
-		String provider = memberDTO.getMbProvider();
 		
-//		// ex. ../GUARD/naver/naver_sdfklw242.jpg
-				
-		String savePath = root + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
+		// 파일 삭제
+		if(!memberDTO.getMbThumbnail().isEmpty()) {
 
-		List<String> path = new ArrayList<String>();
-		path.add(mbRole);
-		path.add(provider);
-		
-		// 폴더 생성 
-		fileService.mkDir(path);
+			File file = new File(memberDTO.getMbThumbnail());
+			
+			if (file.exists()) {
+				file.delete(); // 삭제
+			}
 
-		// 파일 업로드
-		
-		if(!thumbnail.isEmpty()) {
-			
-			// 원래 파일 명에서 확장자(.) 추출 
-			String ext = thumbnail.getOriginalFilename().substring(thumbnail.getOriginalFilename().indexOf("."));
-
-			// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
-			String newname = mbId + "." + ext;
-			String mbThumbnail = savePath + "/" + newname;
-			
-			File serverfile = new File(newname);
-			thumbnail.transferTo(serverfile);
-			
 			// db에 업데이트 하기(저장경로 + 파일 이름)
-			memberDTO.setMbThumbnail(mbThumbnail);
-			memberDAO.updatethumbnail(memberDTO);
+			memberDAO.updatedelthumbnail(mbId);
 			
 			map.put("result", "success");
 			

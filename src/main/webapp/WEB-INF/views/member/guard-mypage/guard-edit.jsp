@@ -43,6 +43,8 @@
 		            </div>
 		            <div class="buttons buttons-photo">
 		            	<input name = "thumbnail" type="file" id="photo-update-guard">
+		            	<input name = "mbId" type="hidden" id="mbId">
+		            	<input type= "button" class="btn btn-primary" name = "thumbnail_delete_btn" id="thumbnail_delete_btn" value = "기존 프로필 사진 삭제">
 		            </div>
 		        </div>
 		        
@@ -54,7 +56,7 @@
 		            <div class="buttons buttons-nickname">
 		                <!-- ajax로 비동기 닉네임 중복확인 체크 하면 될듯해요~register뷰, indexcontroller register/nickname 참고(정민) --> 
 		            	<input name = "nickname" class="buttons-text" type="text" id="nickname-update-guard">
-		                <input type="button" class="btn btn-primary" value="닉네임 중복확인" id="nickname-check-guard"/> <!-- submit빼고, 닉네임 중복확인으로 변경했습니다(정민) -->
+		                <input type = "button" class="btn btn-primary" value="닉네임 중복확인" id="nickname-check-guard"/> <!-- submit빼고, 닉네임 중복확인으로 변경했습니다(정민) -->
 		            </div>
 		        </div>
 		        
@@ -80,5 +82,21 @@
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/baby-main.js"></script>
+	<script>
+	$("#thumbnail_delete_btn").on('click', function(){
+		$.ajax({
+			url: "/mypage/edit/delete/thumbnail",
+			type: 'post',
+			data: {'mbId' : $("#mbId").val()
+				}, 
+			dataType: "json",
+				
+				success: function(response) {
+					alert(JSON.stringify(response.result));
+				} // success
+		}); // ajax
+	}); 	
+
+	</script>
 </body>
 </html>
