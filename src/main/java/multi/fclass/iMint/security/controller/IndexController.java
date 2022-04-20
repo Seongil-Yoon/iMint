@@ -215,6 +215,7 @@ public class IndexController {
 	
 	// 회원가입 4(최종. 보호자, 아이 모두)
 	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
+	// 회원가입 후 다시 로그인 요청
 	@RequestMapping("/register/complete")
 	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard, String guardPin) {
 	
@@ -231,7 +232,7 @@ public class IndexController {
 			memberDTO.setMbLocation(mbLocationOrGuard);
 			memberDTO.setMbRole(Role.GUARD);
 			memberDTO.setMbPin(new GenerateCertCharacter().excuteGenerate());
-			mv.setViewName("main");
+			mv.setViewName("member/login");
 			
 			// DB저장
 			securityDAO.updateregister4(memberDTO);
@@ -257,7 +258,7 @@ public class IndexController {
 					memberDTO.setMbLocation(null);
 					memberDTO.setMbRole(Role.CHILD);
 					memberDTO.setMbPin(null);
-					mv.setViewName("main");
+					mv.setViewName("member/login");
 					
 					// DB저장
 					securityDAO.updateregister4(memberDTO);

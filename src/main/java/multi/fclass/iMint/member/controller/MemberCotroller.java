@@ -144,11 +144,14 @@ public class MemberCotroller {
 //			};
 			try {
 				List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
+				System.out.println("childlist: "+childlist);
 				for (MemberDTO childMemberDTO : childlist) { // childlist.size()
-					memberDAO.updatedelete(childMemberDTO.getMbId()); // 한 명씩 모두 탈퇴
+					System.out.println("childMemberDTO: "+childMemberDTO);
+					String childMbId = childMemberDTO.getMbId();
+					memberDAO.updatedelete(childMbId); // 한 명씩 모두 탈퇴
 				};			
-			} catch (Exception BindingException) {
-				BindingException.printStackTrace();
+			} catch (Exception err) {
+				err.printStackTrace();
 			}
 		}
 
