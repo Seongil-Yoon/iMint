@@ -1,20 +1,4 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?> -->
-<!--
-  Licensed to the Apache Software Foundation (ASF) under one or more
-  contributor license agreements.  See the NOTICE file distributed with
-  this work for additional information regarding copyright ownership.
-  The ASF licenses this file to You under the Apache License, Version 2.0
-  (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain a copy of the License at
-      http://www.apache.org/licenses/LICENSE-2.0
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
--->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -22,86 +6,6 @@
 <meta charset="UTF-8">
 <title>iMint :: 채팅방</title>
 <jsp:include page="../libs/libsStyles.jsp" flush="false" />
-<style>
-* {
-	margin: 0;
-	padding: 0;
-}
-
-.container {
-	width: 500px;
-	margin: 0 auto;
-	padding: 25px;
-}
-
-/* .container h1 {
-	text-align: left;
-	padding: 5px 5px 5px 15px;
-	color: #3387a8;
-	margin-bottom: 20px;
-	font-weight: bolder;
-} */
-.container h4 {
-	text-align: left;
-	padding: 5px 5px 5px 15px;
-	color: #3387a8;
-	border-left: 3px solid #3387a8;
-	margin-bottom: 20px;
-	font-weight: bolder;
-}
-
-.chatting-container {
-	padding: 1.5rem;
-	border: 1px;
-	border-radius: 1rem;
-	/* border-style: solid;
-	border-color: rgb(155, 155, 155); */
-	width: 500px;
-	height: 500px;
-	overflow: auto;
-	background-color: #CDF0EA;
-	color: #3387a8;
-}
-
-input {
-	width: 380px;
-	height: 25px;
-}
-
-#inputTable {
-	width: 600px;
-}
-
-#caution {
-	color: #3387a8;
-	text-align: left;
-	font-weight: bold;
-}
-
-/* 흥정가능여부div */
-#goods-suggestible {
-	padding: 0.8rem;
-	border: 1px;
-	background-color: white;
-	border-radius: 1rem;
-	border-style: solid;
-	text-align: center;
-	width: 400px;
-	margin: 0 28 auto;
-	border: 2px solid #3387a8;
-	position: absolute;
-}
-
-/* 채팅방콘테이너 */
-.chatting-container {
-	color: #3387a8;
-	text-align: left;
-}
-
-#yourMsg-beforeReserve, #yourMsg-afterReserve {
-	display: none;
-}
-</style>
 </head>
 
 <script type="text/javascript">
@@ -131,7 +35,7 @@ input {
 			}
 		});
 	}
-	
+
 	function chatName() {
 		var userName = $("#userName").val();
 		if (userName == null || userName.trim() == "") {
@@ -143,17 +47,17 @@ input {
 			$("#yourMsg-beforeReserve").show();
 		}
 	}
-	
- 	function clickReserve(){
+
+	function clickReserve() {
 		$("#yourMsg-beforeReserve").hide();
 		$("#yourMsg-afterReserve").show();
-		
+
 	}
-	
-	function clickReserveCancel(){
+
+	function clickReserveCancel() {
 		$("#yourMsg-afterReserve").hide();
 		$("#yourMsg-beforeReserve").show();
-		
+
 	}
 
 	function send() {
@@ -162,17 +66,15 @@ input {
 		ws.send(uN + " : " + msg);
 		$('#chatting').val("")
 		var chat = document.querySelector('#chatting-container');
-    	chat.scrollTop = chat.scrollHeight;
-		
+		chat.scrollTop = chat.scrollHeight;
+
 	}
 </script>
 <body>
 	<div id="container" class="container">
 		<!-- <h1>채팅으로 거래하기</h1> -->
 		<h4>A님과의 대화입니다.</h4>
-		<img width=30 height=30 src="/static/images/caution.png"> <span
-			id="caution">개인정보(주소, 학교정보, 전화번호)에 관한 질문과 답변을 금지합니다.</span><br>
-		<br>
+		<img width=30 height=30 src="/static/images/caution.png"> <span id="caution">개인정보(주소, 학교정보, 전화번호)에 관한 질문과 답변을 금지합니다.</span><br> <br>
 		<div id="chatting-container" class="chatting-container">
 			<div id="goods-suggestible">가격흥정여부표시</div>
 			<br> <br> <br>
@@ -184,8 +86,7 @@ input {
 				<tr>
 					<td>사용자</td>
 					<td><input type="text" name="userName" id="userName"></td>
-					<td><button onclick="chatName()" id="startBtn"
-							class="btn btn-primary">이름 등록</button></td>
+					<td><button onclick="chatName()" id="startBtn" class="btn btn-primary">이름 등록</button></td>
 				</tr>
 			</table>
 		</div>
@@ -194,7 +95,7 @@ input {
 				<tr>
 					<!-- <th>예약하기 누르기전</th> -->
 					<td><input id="chatting" placeholder="메세지를 입력하세요.">
-					<button onclick="send()" id="sendBtn" class="btn btn-primary">전송</button></td>
+						<button onclick="send()" id="sendBtn" class="btn btn-primary">전송</button></td>
 				</tr>
 				<tr>
 					<td>
@@ -210,7 +111,7 @@ input {
 				<tr>
 					<!-- <th>예약하기 눌렀을때</th> -->
 					<td><input id="chatting" placeholder="메시지를 입력하세요.">
-					<button onclick="send()" id="sendBtn" class="btn btn-primary">전송</button></td>
+						<button onclick="send()" id="sendBtn" class="btn btn-primary">전송</button></td>
 				</tr>
 				<tr>
 					<td>
@@ -226,7 +127,7 @@ input {
 
 	<jsp:include page="../include/footer.jsp" flush="false" />
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
-<!-- 	<script src="/webjars/stomp-websocket/2.3.3-1/stomp.js"
+	<!-- 	<script src="/webjars/stomp-websocket/2.3.3-1/stomp.js"
 		type="text/javascript"></script>
 	<script src="/webjars/sockjs-client/1.1.2/sockjs.js"
 		type="text/javascript"></script> -->
@@ -405,7 +306,25 @@ input#chat {
 							type="hidden" value="${chatRoomInfo.sellerName}" id="sellerName" />
 						<input type="hidden" value="${chatRoomInfo.id}" id="id" />
 					</div>
+<<<<<<< Updated upstream
 				</div>
+=======
+					<button id="send" class="btn btn-default" type="submit">Send</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<table id="conversation" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Chatroom</th>
+						</tr>
+					</thead>
+					<tbody id="greetings">
+					</tbody>
+				</table>
+>>>>>>> Stashed changes
 			</div>
 		</div>
 	</div>
