@@ -1,5 +1,6 @@
 // 상단탭 선택시 baby-mylist.jsp 내에서 다른 컨테이너가 나오도록 함
 
+
 const tabItems = document.querySelectorAll('.tab-item');
 const tabContentItems = document.querySelectorAll('.tab-content-item');
 //Select tab content item
@@ -24,7 +25,7 @@ function removeSelected(){
 
 tabItems.forEach(item => item.addEventListener('click', selectItem));
 
-
+/*
 //상단탭 거래완료 목록 선택시 include된 mylist-content.jsp에서 다른 내용이 보여지도록 함
 
 const tab3 = document.querySelector('#tab-3');
@@ -56,6 +57,7 @@ function changeTab3(e){
 }
 
 tab3.addEventListener('click', changeTab3);
+*/
 
 //전체선택 선택 시 모든 선택 버튼이 선택되도록 함
 const btnSelected = document.querySelectorAll('.selectAllbtn');
@@ -78,3 +80,19 @@ function selectAll(event)  {
 }
 
 btnSelected.forEach(item => item.addEventListener('click', selectAll));
+
+//드롭다운에서 내 아이 선택 시 해당 아이의 이름이 타이틀에 나오도록 함
+const childSelected = document.querySelectorAll('.dropdown-item');
+
+function selectChild(event){
+	const selected = event.target.id;
+	const childTitle = document.getElementById('child-define');
+	
+	console.log(childTitle);
+	
+	childTitle.innerHTML = "내 아이 " + selected + "님의 거래 관련 목록입니다";
+}
+
+childSelected.forEach(item => item.addEventListener('click', selectChild));
+
+

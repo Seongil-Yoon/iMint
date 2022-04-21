@@ -45,16 +45,16 @@
 	   <p class="text">예약중</p>
 	  </div>
 	  <div class="photo">
-	    <img class="photo" src="${wish.goods_images_path}">
+	    <img class="photo" src="${wish.goodsImagesPath}">
 	  </div>
 	  <div class="subject">
-	    <p class="text">${wish.goods_title}</p>
+	    <p class="text">${wish.goodsTitle}</p>
 	  </div>
 	  <div class="interest">
 	    <p class="text">${wish.wishes}</p>
 	  </div>
 	  <div class="price">
-	   <p class="text text-price">${wish.goods_price}</p>
+	   <p class="text text-price">${wish.goodsPrice}</p>
 	  </div>
 	  <div class="link">
 	    <p class="text text-link">바로가기</p>

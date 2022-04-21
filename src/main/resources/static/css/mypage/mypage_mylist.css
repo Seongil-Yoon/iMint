@@ -44,6 +44,16 @@
 	margin-bottom: 6rem;
 }
 
+/* 내 아이 선택 드롭다운 */
+.dropdown-toggle{
+	justify-content: left;
+}
+
+.dropdown{
+	text-align:left;
+	margin-bottom:2rem;
+}
+
 /* 상단 탭 컨테이너*/
 .tabs .container {
     display: grid;
@@ -199,4 +209,9 @@
     align-items: center;
     justify-content: center;
     text-align: left;
+}
+
+/* 상품 사진 크기 조절 */
+img.photo {
+	width: 120px;
 }
