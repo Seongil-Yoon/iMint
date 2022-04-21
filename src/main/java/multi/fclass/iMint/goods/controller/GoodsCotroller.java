@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import multi.fclass.iMint.common.exception.UnauthorizedException;
+import multi.fclass.iMint.common.code.ErrorCode;
+import multi.fclass.iMint.common.exception.HandlableException;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 import multi.fclass.iMint.goods.service.GoodsServiceImpl;
@@ -53,7 +54,7 @@ public class GoodsCotroller {
 	@GetMapping("goods/write")
 	public String goodsWriteView(Authentication auth, Model model) {
 		if (auth == null) {
-			throw new UnauthorizedException(String.format("unauthorized you"));
+			throw new HandlableException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
@@ -65,7 +66,7 @@ public class GoodsCotroller {
 	@GetMapping("goods/modify")
 	public String goodsModifyView(@RequestParam("goodsId") int goodsId, Authentication auth, Model model) {
 		if (auth == null) {
-			throw new UnauthorizedException(String.format("unauthorized you"));
+			throw new HandlableException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
@@ -86,7 +87,7 @@ public class GoodsCotroller {
 	public GoodsDTO goodsWrite(Authentication auth, @RequestPart("GoodsDTO") GoodsDTO goodsDTO,
 			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
 		if (auth == null) {
-			throw new UnauthorizedException(String.format("unauthorized you"));
+			throw new HandlableException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
 		int goodsId = goodsSevice.goodsWrite(mbId, goodsDTO, files);
@@ -103,7 +104,7 @@ public class GoodsCotroller {
 	public GoodsDTO goodsModify(Authentication auth,@RequestParam("goodsId") int goodsId, @RequestPart("GoodsDTO") GoodsDTO goodsDTO,
 			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
 		if (auth == null) {
-			throw new UnauthorizedException(String.format("unauthorized you"));
+			throw new HandlableException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
 		goodsSevice.goodsModify(mbId, goodsDTO, files);

@@ -3,23 +3,27 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="UTF-8">
-	<title>404 | iMint</title>
-	
-	<!-- CSS -->
-	<jsp:include page="../libs/libsStyles.jsp" flush="false" />
-    <link rel="stylesheet" href="/static/css/error.css" />
+  <meta charset="UTF-8">
+  <title>404 | iMint</title>
+
+  <!-- CSS -->
+  <jsp:include page="../libs/libsStyles.jsp" flush="false" />
+  <link rel="stylesheet" href="/static/css/error.css" />
 </head>
 
 <body>
-    <div id="main">
-      <div class="fof">
-        <h1><a href="/main">홈으로 돌아가기</a></h1>
-        <img src="/static/images/404.jpg" alt="">
-      </div>
+  <div id="main">
+    <div class="fof">
+      <h1>${timestamp}</h1><br>
+      <h1>${status} - ${error}</h1><br>
+      <h1><a href="${path}">${message}</a></h1>
+      <img src="/static/images/404.jpg" alt="">
     </div>
-    
-     <jsp:include page="../libs/libsScript.jsp" flush="false" />
+  </div>
+
+  <jsp:include page="../libs/libsScript.jsp" flush="false" />
 </body>
+
 </html>

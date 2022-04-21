@@ -6,12 +6,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import multi.fclass.iMint.common.exception.NotFoundException;
-import multi.fclass.iMint.common.exception.UnauthorizedException;
+import multi.fclass.iMint.common.code.ErrorCode;
+import multi.fclass.iMint.common.exception.HandlableException;
 import multi.fclass.iMint.common.service.IFileService;
 import multi.fclass.iMint.common.service.IUtilService;
 import multi.fclass.iMint.goods.dao.IGoodsDAO;
@@ -56,7 +55,7 @@ public class GoodsServiceImpl implements IGoodsService {
 //		String sellerNick = (String) httpSession.getAttribute("mbNick");
 
 		if (mbId.isEmpty() || !mbId.equals(goodsDto.getSellerId())) {
-			throw new UnauthorizedException(String.format("unauthorized you"));
+			throw new HandlableException(ErrorCode.UNAUTHORIZED);
 		}
 		goodsDAO.goodsInsert(goodsDto);
 		int goodsId = goodsDto.getGoodsId();
@@ -78,15 +77,15 @@ public class GoodsServiceImpl implements IGoodsService {
 	
 	@Override
 	public int goodsModify(String mbId, GoodsDTO goodsDto, List<MultipartFile> files) {
-		if (mbId.isEmpty() || !mbId.equals(goodsDto.getSellerId())) {
-			throw new UnauthorizedException(String.format("unauthorized you"));
+		if (mbId.isEmpty() || !(mbId.equals(goodsDto.getSellerId())) ) {
+			throw new HandlableException(ErrorCode.UNAUTHORIZED);
 		}
 		int updateRows = 0;
 		int goodsId = -1;
 		goodsId = goodsDAO.goods(goodsDto.getGoodsId()).getGoodsId();
 		if(goodsId == -1) {
 			//수정할 게시글이 없으므로 not found 
-            throw new NotFoundException(String.format("goodsId[%s] not found", goodsDto.getGoodsId()));
+            throw new HandlableException(ErrorCode.NOT_FOUND);
 		}
 		goodsDAO.goodsUpdate(goodsDto);
 		updateRows = goodsDAO.goodsImagesDelete(goodsId);
@@ -112,11 +111,11 @@ public class GoodsServiceImpl implements IGoodsService {
 		int result = 0;
 
 		if (goodsDTO == null) {
-			throw new NotFoundException(String.format("ID[%s] not found", goodsId));
+			throw new HandlableException(ErrorCode.NOT_FOUND);
 		}
 		if (mbId.isEmpty() || goodsDTO.getSellerId().equals(mbId) == false) {
 			// 로그인한 아이디와 작성자 아이디가 달라서 권한없음 오류보냄
-			throw new UnauthorizedException(String.format("unauthorized you"));
+			throw new HandlableException(ErrorCode.UNAUTHORIZED);
 		} else {
 			// 로그인 아이디 와 작성자 아이디 가 같아서 글삭제
 //			List<GoodsImagesDTO> images = goodsDAO.goodsImageList(goodsId);
