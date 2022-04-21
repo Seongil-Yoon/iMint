@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <!-- 헤더 css,js 불러오기는 libs.jsp파일 -->
 <!--/*여기는 맨 위에 있는 바 부분*/ -->
+<div class="header-space"></div>
 <nav class="carrot_header">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
@@ -21,11 +22,25 @@
     <div class="collapse navbar-collapse justify-content-center" id="navbarScroll">
     
     <!-- 검색창 -->
-    <form class="d-flex search">
-        <input class="form-control me-2" type="search" placeholder="찾고 싶은 물품명을 입력해 주세요!" aria-label="Search">
-        <button class="btn btn-primary search-btn" type="submit">음성 검색</button>
-        <button class="btn btn-primary search-btn" type="submit">텍스트 검색</button>
-      </form>
+    <form class="d-flex search" action="/search?" method="GET">
+		<div class="input-group">
+			<select class="form-select" id="js-searchOption" name="searchOption">
+				<option value="all" selected>전체</option>
+				<option value="titleContent">제목+내용</option>
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="writer">글쓴이</option>
+			</select>
+			<input type="search" class="form-control" aria-label="Text input with dropdown button"  placeholder="찾고 싶은 물품명을 입력해 주세요!">
+		</div>
+		  
+        <button class="btn btn-primary search-btn" type="submit">
+			<img class="searchIcon" src="/static/images/mic.png" alt="">
+		</button>
+        <button class="btn btn-primary search-btn" type="submit">
+			<img class="searchIcon" src="/static/images/search.png" alt="">
+		</button>
+    </form>
       
    	<!-- 상품 등록 -->
    	<form class="">
