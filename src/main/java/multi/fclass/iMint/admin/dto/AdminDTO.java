@@ -2,6 +2,11 @@ package multi.fclass.iMint.admin.dto;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Junming, Yang
+ *
+ */
+
 @Component
 public class AdminDTO {
 

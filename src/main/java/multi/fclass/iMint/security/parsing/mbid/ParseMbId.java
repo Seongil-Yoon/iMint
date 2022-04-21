@@ -40,7 +40,6 @@ public class ParseMbId {
 		
 		// 카카오 
 		else {
-			System.out.println("카카오..");
 			customerId = authorization.getName();
 			mbId = "kakao_" + customerId;
 			
