@@ -35,7 +35,8 @@
                         </div>
                         <!-- 항목별 내용 -->
 	<div class="item-list">
-	<c:forEach items="${userComplete}" var="done">
+	<c:forEach items="${allComplete}" var="dones" varStatus="status">
+	<c:forEach items="${dones}" var="done">
 	  <div class="checkbox">
 	    <input type="checkbox" class="select-targets" name="selected"/>
 	  </div>
@@ -57,5 +58,6 @@
 	  <div class="link">
 	    <p class="text text-link">바로가기</p>
 	  </div>
+	  </c:forEach>
 	  </c:forEach>
 	</div>

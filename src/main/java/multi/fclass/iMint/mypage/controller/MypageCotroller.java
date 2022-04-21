@@ -1,5 +1,7 @@
 package multi.fclass.iMint.mypage.controller;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,25 +148,70 @@ public class MypageCotroller {
 			mv.setViewName("member/guard-mypage/guard-mylist"); 
 			
 			String userID = memberDTO.getMbId();
-			List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
+			List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID); //닉네임 모음
+			System.out.println(userChilds);
 			mv.addObject("userChilds", userChilds);
 			
-			for (MemberDTO child: userChilds) {
-				String childID = child.getMbId();
-				//아이별 관심/구매 목록 불러오기
-				List<MypageDTO> userWish = imypageService.getWishAndReserveList(childID, 1, 5);
-				mv.addObject("userWish", userWish);
+		//cnt로 구현 시도
+			
+//			int cnt = 0;
+//			
+//			for (MemberDTO child: userChilds) {
+//				String dtoNick = child.getMbNick();
+//				MemberDTO dto = securityDAO.findByMbNick(dtoNick);
+//				String childID = dto.getMbId(); //닉네임을 ID로 변환
+//				System.out.println(childID);
+//				
+//				//아이별 관심/구매 목록 불러오기
+//				List<MypageDTO> userWish = imypageService.getWishAndReserveList(childID, 1, 5);
+//				mv.addObject("cnt" + cnt, userWish); //cnt0, cnt1.. 처럼 key값 저장
+//				
+//				
+//				System.out.println(userWish);
+//				System.out.println("cnt" + cnt);
+//				
+//				
+//				//아이별 판매 목록
+//				List<MypageDTO> userSell = imypageService.getSellingList(childID, 1, 5);
+//				mv.addObject("userSell", userSell);
+//				
+//				//아이별 거래완료 목록
+//				List<MypageDTO> userComplete = imypageService.getCompleteList(childID, 1, 5);
+//				mv.addObject("userComplete", userComplete);
+//				
+//				cnt += 1;
 				
-				//아이별 판매 목록
-				List<MypageDTO> userSell = imypageService.getSellingList(childID, 1, 5);
-				mv.addObject("userSell", userSell);
+		//이중리스트 구현 시도
+			List<List<MypageDTO>> allWish = new ArrayList<>();
+			List<List<MypageDTO>> allSell = new ArrayList<>();
+			List<List<MypageDTO>> allComplete = new ArrayList<>();
+			
+				for (MemberDTO child: userChilds) {
+					String dtoNick = child.getMbNick();
+					MemberDTO dto = securityDAO.findByMbNick(dtoNick);
+					String childID = dto.getMbId(); //닉네임을 ID로 변환
+					System.out.println(childID);
+					
+					//아이별 관심/구매 목록 불러오기
+					List<MypageDTO> userWish = imypageService.getWishAndReserveList(childID, 1, 5);
+					allWish.add(userWish);
+
+					//아이별 판매 목록
+					List<MypageDTO> userSell = imypageService.getSellingList(childID, 1, 5);
+					allSell.add(userSell);
+					
+					
+					//아이별 거래완료 목록
+					List<MypageDTO> userComplete = imypageService.getCompleteList(childID, 1, 5);
+					allComplete.add(userComplete);
 				
-				//아이별 거래완료 목록
-				List<MypageDTO> userComplete = imypageService.getCompleteList(childID, 1, 5);
-				mv.addObject("userComplete", userComplete);
+				}
+
+				mv.addObject("allWish", allWish);
+				mv.addObject("allSell", allSell);
+				mv.addObject("allComplete", allComplete);
+			
 			}
-			System.out.println(userChilds);
-		}
 		
 		//아이의 경우
 		else if(memberDTO.getMbRole() == Role.CHILD) {
@@ -172,17 +219,17 @@ public class MypageCotroller {
 			String userID = memberDTO.getMbId();
 			
 			// 관심/구매 목록
-			List<MypageDTO> userWish = imypageService.getWishAndReserveList(userID, 1, 5);
+			List<MypageDTO> userWish = imypageService.getWishAndReserveList(userID, 1, 100);
 			mv.addObject("userWish", userWish);
 			
 			//판매 목록
-			List<MypageDTO> userSell = imypageService.getSellingList(userID, 1, 5);
+			List<MypageDTO> userSell = imypageService.getSellingList(userID, 1, 100);
 			mv.addObject("userSell", userSell);
-			
+			System.out.println(userSell);
+			System.out.println(userID);
 			//거래완료 목록
-			List<MypageDTO> userComplete = imypageService.getCompleteList(userID, 1, 5);
+			List<MypageDTO> userComplete = imypageService.getCompleteList(userID, 1, 100);
 			mv.addObject("userComplete", userComplete);
-			
 			
 			
 		}

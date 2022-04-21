@@ -42,7 +42,19 @@
 	  </div>
 	  
 	  <div class="status">
-	   <p class="text">예약중</p>
+	   <p class="text">
+	   	<c:choose>
+	   		<c:when test="${wish.category == 'wait'}">
+	   			구매 가능
+	   		</c:when>
+	   		<c:when test="${wish.category == 'resrv'}">
+	   			예약 중
+	   		</c:when>
+	   		<c:otherwise>
+	   			거래 완료
+	   		</c:otherwise>
+	   	</c:choose>
+	   </p>
 	  </div>
 	  <div class="photo">
 	    <img class="photo" src="${wish.goodsImagesPath}">

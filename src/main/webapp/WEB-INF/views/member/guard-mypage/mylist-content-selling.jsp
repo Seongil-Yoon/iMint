@@ -35,12 +35,25 @@
                         </div>
                         <!-- 항목별 내용 -->
 	<div class="item-list">
-	<c:forEach items="${userSell}" var="sell">
-	  <div class="checkbox">
-	    <input type="checkbox" class="select-targets" name="selected"/>
-	  </div>
-	  <div class="status">
-	   <p class="text">예약중</p>
+	<c:forEach items="${allSell}" var="sells" varStatus="status">
+			<c:forEach items="${sells}" var="sell">
+			  <div class="checkbox">
+			    <input type="checkbox" class="select-targets" name="selected"/>
+			  </div>
+			  <div class="status">
+			   <p class="text">
+				   	<c:choose>
+				   		<c:when test="${sell.category == 'wait'}">
+				   			판매 중
+				   		</c:when>
+				   		<c:when test="${sell.category == 'resrv'}">
+				   			예약 중
+				   		</c:when>
+				   		<c:otherwise>
+				   			거래 완료
+				   		</c:otherwise>
+				   	</c:choose>
+	   </p>
 	  </div>
 	  <div class="photo">
 	    <img class="photo" src="${sell.goodsImagesPath}">
@@ -57,5 +70,6 @@
 	  <div class="link">
 	    <p class="text text-link">바로가기</p>
 	  </div>
+	  </c:forEach>
 	  </c:forEach>
 	</div>

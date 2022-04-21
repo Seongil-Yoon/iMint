@@ -40,7 +40,7 @@
 	    <input type="checkbox" class="select-targets" name="selected"/>
 	  </div>
 	  <div class="status">
-	   <p class="text">예약중</p>
+	   <p class="text">거래 완료</p>
 	  </div>
 	  <div class="photo">
 	    <img class="photo" src="${done.goodsImagesPath}">
