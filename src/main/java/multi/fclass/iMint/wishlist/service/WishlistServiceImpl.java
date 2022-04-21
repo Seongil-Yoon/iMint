@@ -24,7 +24,7 @@ public class WishlistServiceImpl implements IWishlistService {
 	}
 
 	@Override
-	public int checkWish(String myId, int goodsId) {
+	public String checkWish(String myId, int goodsId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("myId", myId); // 사용자 ID
 		map.put("goodsId", goodsId); // 상품 ID
@@ -32,66 +32,66 @@ public class WishlistServiceImpl implements IWishlistService {
 
 		if (wishlistDTO == null) {
 			// wishlist 테이블에 등록된 적 없을 때
-			return -1;
+			return "false";
 		} else if (wishlistDTO.isDeleted()) {
 			// wishlist 테이블에 등록된 적 있지만 삭제이력이 있을 때
-			return 0;
+			return "deleted";
 		} else {
 			// wishlist 테이블에 등록되었고 삭제되지 않았을 때
-			return 1;
+			return "true";
 		}
 	}
 
 	@Override
-	public int addWish(String myId, int goodsId) {
+	public String addWish(String myId, int goodsId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("myId", myId); // 사용자 ID
 		map.put("goodsId", goodsId); // 상품 ID
-		int check = checkWish(myId, goodsId);
+		String check = checkWish(myId, goodsId);
 
-		if (check == -1) {
+		if (check.equals("false")) {
 			// wishlist 테이블에 등록된 적 없을 때 = INSERT
 			if (wishlistDAO.insertWishlist(map) == 1) {
 				// INSERT 성공
-				return 1;
+				return "success";
 			} else {
 				// INSERT 실패(알 수 없는 오류)
-				return -1;
+				return "error";
 			}
-		} else if (check == 0) {
+		} else if (check.equals("deleted")) {
 			// wishlist 테이블에 등록된 적 있지만 삭제이력이 있을 때 = UPDATE
 			if (wishlistDAO.updateWishlist(map) == 1) {
 				// UPDATE 성공
-				return 1;
+				return "success";
 			} else {
 				// UPDATE 실패(알 수 없는 오류)
-				return -1;
+				return "error";
 			}
 		} else {
 			// wishlist 테이블에 등록되었고 삭제되지 않았을 때 = FAILED(작업 필요 없음)
-			return 0;
+			return "fail";
 		}
 	}
 
 	@Override
-	public int removeWish(String myId, int goodsId) {
+	public String removeWish(String myId, int goodsId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("myId", myId); // 사용자 ID
 		map.put("goodsId", goodsId); // 상품 ID
-		int check = checkWish(myId, goodsId);
+		String check = checkWish(myId, goodsId);
 
-		if (check == 1) {
+		if (check.equals("success")) {
 			// wishlist 테이블에 등록되었고 삭제되지 않았을 때 = REMOVE
 			if (wishlistDAO.removeWishlist(map) == 1) {
 				// UPDATE 성공
-				return 1;
+				return "success";
 			} else {
 				// UPDATE 실패(알 수 없는 오류)
-				return -1;
+				return "error";
 			}
 		} else {
 			// 그 외 = FAILED(작업 필요 없음)
-			return 0;
+			return "fail";
 		}
 	}
 
