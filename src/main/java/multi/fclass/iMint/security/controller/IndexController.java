@@ -87,23 +87,17 @@ public class IndexController {
 	}
 	
 	// 가입 완료시키기
-	@RequestMapping(value = "/err/denied-page") // 안온다 
+	@RequestMapping(value = "/err/denied-page")
 	public ModelAndView accessDenied(Authentication auth, HttpServletRequest req){
 		
 		ModelAndView mv = new ModelAndView();
+		String mbId = parseMbId.parseMbId(auth);
+		memberDTO = parseMbId.getMemberMbId(mbId);
 		
 		AccessDeniedException ade = (AccessDeniedException) req.getAttribute(WebAttributes.ACCESS_DENIED_403);
-//        log.info("---------- Log 테스트 ---------");
-//		log.info("auth : {}", auth.getPrincipal()); // 로그 기록
-//		log.info("exception : {}", ade); // 로그 기록
-		
-		// 모듈화 결과(아래 1줄)
-//		String mbId = parseMbId.parseMbId(auth);
-//		User user = parseMbId.getMemberMbId(mbId);
-//		String mbRole = user.getMbRole().toString();
-//		System.out.println(mbRole);
-//		mv.addObject("mbRole", mbRole);
-//		mv.addObject("errMsg", ade);
+        log.info("---------- err/denied-page ---------");
+		log.info("memberDTO : {}", memberDTO);
+		log.info("exception : {}", ade); // 로그 기록
 		
 		mv.setViewName("err/deniedpage");
 		
@@ -115,6 +109,9 @@ public class IndexController {
 	@GetMapping("/register")
 	public ModelAndView registersns(Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
+        log.info("---------- register ---------");
+		log.info("memberDTO : {}", memberDTO);
+		
 		// 모듈화 결과(아래 2줄)
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
@@ -315,6 +312,18 @@ public class IndexController {
 	} // catch end
 		
 	}
+//	
+//    @RequestMapping("/log-test")
+//    public String logTest(){
+//        // 로그 라이브러리 이용한 출력
+//        log.trace("trace log={}", name);
+//        log.debug("debug log={}", name);
+//        log.info("info log={}", name);
+//        log.warn("warn log={}", name);
+//        log.error("error log={}", name);
+//
+//        return "ok";
+//    }
 		
 	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true
 	// @Secured: 권한 

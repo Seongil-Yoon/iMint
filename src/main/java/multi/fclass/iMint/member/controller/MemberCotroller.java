@@ -32,11 +32,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
 import multi.fclass.iMint.common.service.IFileService;
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.member.service.IMemberService;
+import multi.fclass.iMint.security.controller.IndexController;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
@@ -45,6 +47,7 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
  *
  */
 
+@Slf4j // 로그
 @Controller
 public class MemberCotroller {
 	
