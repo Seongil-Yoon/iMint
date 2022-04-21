@@ -1,11 +1,13 @@
 package multi.fclass.iMint.wishlist.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
 
+import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.wishlist.service.IWishlistService;
 
 @RestController
@@ -13,6 +15,9 @@ public class WishlistController {
 
 	@Autowired
 	IWishlistService wishlistService;
+
+	@Autowired
+	ParseMbId parseService;
 
 	@RequestMapping("/wishlist/count")
 	public String countWishes(Integer goodsId) {
@@ -25,7 +30,8 @@ public class WishlistController {
 	}
 
 	@RequestMapping("/wishlist/check")
-	public String checkWish(String myId, Integer goodsId) {
+	public String checkWish(Authentication auth, Integer goodsId) {
+		String myId = parseService.parseMbId(auth);
 		JSONObject out = new JSONObject();
 		int check = wishlistService.checkWish(myId, goodsId);
 
@@ -39,7 +45,8 @@ public class WishlistController {
 	}
 
 	@RequestMapping("/wishlist/add")
-	public String addWish(String myId, Integer goodsId) {
+	public String addWish(Authentication auth, Integer goodsId) {
+		String myId = parseService.parseMbId(auth);
 		JSONObject out = new JSONObject();
 		int result = wishlistService.addWish(myId, goodsId);
 		int value = wishlistService.countWishes(goodsId);
@@ -57,8 +64,9 @@ public class WishlistController {
 	}
 
 	@RequestMapping("/wishlist/remove")
-	public String removeWish(String myId, Integer goodsId) {
-		JSONObject out = new JSONObject();		
+	public String removeWish(Authentication auth, Integer goodsId) {
+		String myId = parseService.parseMbId(auth);
+		JSONObject out = new JSONObject();
 		int result = wishlistService.removeWish(myId, goodsId);
 		int value = wishlistService.countWishes(goodsId);
 
