@@ -27,6 +27,7 @@ public class ExceptionAdvice {
 
 	@ExceptionHandler(HandlableException.class)
 	public String handlableExceptionProcess(HandlableException e, Model model) {
+		System.out.println("http상태코드 : " + e.error.STATUS);
 		if (e.error.STATUS == 401) {
 			return UnauthorizedException(e, model);
 		}
@@ -46,7 +47,7 @@ public class ExceptionAdvice {
 		model.addAttribute("status", e.error.STATUS);
 		model.addAttribute("error", e.error.ERROR);
 		model.addAttribute("message", "로그인먼저 해주세요🙏");
-		model.addAttribute("path", "/register");
+		model.addAttribute("path", "/");
 		return "err/401";
 	}
 
@@ -56,7 +57,7 @@ public class ExceptionAdvice {
 		model.addAttribute("timestamp", e.error.TIMESTAMP);
 		model.addAttribute("status", e.error.STATUS);
 		model.addAttribute("error", e.error.ERROR);
-		model.addAttribute("message", "홈으로 돌아가기");
+		model.addAttribute("message", "접근 권한이 없습니다");
 		model.addAttribute("path", "/main");
 		return "err/403";
 	}
@@ -67,7 +68,7 @@ public class ExceptionAdvice {
 		model.addAttribute("timestamp", e.error.TIMESTAMP);
 		model.addAttribute("status", e.error.STATUS);
 		model.addAttribute("error", e.error.ERROR);
-		model.addAttribute("message", "홈으로 돌아가기");
+		model.addAttribute("message", "찾을수 없는 페이지 입니다.");
 		model.addAttribute("path", "/main");
 		return "err/404";
 	}
@@ -78,7 +79,7 @@ public class ExceptionAdvice {
 		model.addAttribute("timestamp", e.error.TIMESTAMP);
 		model.addAttribute("status", e.error.STATUS);
 		model.addAttribute("error", e.error.ERROR);
-		model.addAttribute("message", "홈으로 돌아가기");
+		model.addAttribute("message", "대단히 죄송합니다🙏");
 		model.addAttribute("path", "/main");
 		return "err/500";
 	}

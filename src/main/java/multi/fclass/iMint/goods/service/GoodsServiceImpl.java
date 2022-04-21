@@ -53,9 +53,8 @@ public class GoodsServiceImpl implements IGoodsService {
 	public int goodsWrite(String mbId, GoodsDTO goodsDto, List<MultipartFile> files) {
 //		String sellerId = (String) httpSession.getAttribute("mbId");
 //		String sellerNick = (String) httpSession.getAttribute("mbNick");
-
-		if (mbId.isEmpty() || !mbId.equals(goodsDto.getSellerId())) {
-			throw new HandlableException(ErrorCode.UNAUTHORIZED);
+		if (!mbId.equals(goodsDto.getSellerId())) {
+			throw new HandlableException(ErrorCode.FORBIDDEN);
 		}
 		goodsDAO.goodsInsert(goodsDto);
 		int goodsId = goodsDto.getGoodsId();
@@ -74,18 +73,19 @@ public class GoodsServiceImpl implements IGoodsService {
 
 		return goodsId;
 	}
-	
+
 	@Override
 	public int goodsModify(String mbId, GoodsDTO goodsDto, List<MultipartFile> files) {
-		if (mbId.isEmpty() || !(mbId.equals(goodsDto.getSellerId())) ) {
-			throw new HandlableException(ErrorCode.UNAUTHORIZED);
+		System.out.println(mbId + "," + goodsDto.getSellerId());
+		if (!mbId.equals(goodsDto.getSellerId())) {
+			throw new HandlableException(ErrorCode.FORBIDDEN);
 		}
 		int updateRows = 0;
 		int goodsId = -1;
 		goodsId = goodsDAO.goods(goodsDto.getGoodsId()).getGoodsId();
-		if(goodsId == -1) {
-			//수정할 게시글이 없으므로 not found 
-            throw new HandlableException(ErrorCode.NOT_FOUND);
+		if (goodsId == -1) {
+			// 수정할 게시글이 없으므로 not found
+			throw new HandlableException(ErrorCode.NOT_FOUND);
 		}
 		goodsDAO.goodsUpdate(goodsDto);
 		updateRows = goodsDAO.goodsImagesDelete(goodsId);

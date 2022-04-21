@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import multi.fclass.iMint.common.code.ErrorCode;
 import multi.fclass.iMint.common.exception.HandlableException;
+import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 import multi.fclass.iMint.goods.service.GoodsServiceImpl;
@@ -35,6 +36,9 @@ public class GoodsCotroller {
 
 	@Autowired
 	ParseMbId parseService;
+	
+	@Autowired
+	IGoodsDAO goodsDAO;
 
 	@GetMapping("goods/detail")
 	public String goodsDetail(Authentication auth, @RequestParam("goodsId") int goodsId, Model model) {
@@ -70,6 +74,10 @@ public class GoodsCotroller {
 		}
 		String mbId = parseService.parseMbId(auth);
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
+//		GoodsDTO goodsDTO = goodsDAO.goods(goodsId);
+//		if (mbId.isEmpty() || !mbId.equals(goodsDTO.getSellerId())) {
+//			throw new HandlableException(ErrorCode.FORBIDDEN);
+//		}
 
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
 		model.addAttribute("member", memberDTO);
@@ -107,6 +115,10 @@ public class GoodsCotroller {
 			throw new HandlableException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
+		if (!mbId.equals(goodsDTO.getSellerId())) {
+			System.out.println("불일치");
+			throw new HandlableException(ErrorCode.FORBIDDEN);
+		}
 		goodsSevice.goodsModify(mbId, goodsDTO, files);
 		
 		// 브라우저단에서 location.href로 상품상세

@@ -36,8 +36,8 @@ function goodsWrite() {
 
     goodsDTO = {
         goodsId: goodsId,
-        sellerId: $("input[name='mbId']").val(),
-        sellerNick: $("input[name='mbNick']").val(),
+        sellerId: $("input[name='sellerId']").val(),
+        sellerNick: $("input[name='sellerNick']").val(),
         goodsTitle: $("input[name='goodsTitle']").val(),
         goodsContent: $("textarea[name='goodsContent']").val(),
         goodsPrice: $("input[name='goodsPrice']").val(),
@@ -80,6 +80,8 @@ function goodsWrite() {
                 if (error.status == 404) {
                     swal('찾는 자료가 없습니다', '', 'error');
                 } else if (error.status == 401) {
+                    swal('유효하지 않은 인증입니다', '', 'error');
+                } else if (error.status == 403) {
                     swal('접근 권한이 없습니다', '', 'error');
                 } else if (error.status == 500) {
                     swal('서버 오류 관리자에게 문의 하세요', '', 'error');

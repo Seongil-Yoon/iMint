@@ -18,8 +18,8 @@
 	<section class="container">
 		<form>
 			<input style="display: none;" type="hidden" id="goodsId" value="${goods.goodsId}" />
-			<input style="display: none;" type="hidden" name="mbId" value="${member.mbId}" />
-			<input style="display: none;" type="hidden" name="mbNick" value="${member.mbNick}" />
+			<input style="display: none;" type="hidden" name="sellerId" value="${goods.sellerId}" />
+			<input style="display: none;" type="hidden" name="sellerNick" value="${goods.sellerNick}" />
 			<input style="display: none;" type="hidden" name="goodsCategory" value="${goods.goodsCategory}" />
 			<input style="display: none;" type="hidden" name="goodsSuggestible" value="${goods.goodsSuggestible}" />
 			<article class="upload-popup" id="uploadPopup">
