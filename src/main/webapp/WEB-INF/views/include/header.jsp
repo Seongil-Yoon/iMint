@@ -8,7 +8,7 @@
   <div class="container-fluid">
   
   <!-- 로고 -->
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/main">
     	<!-- <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"> -->
     	아이민트로고
     </a>
@@ -29,7 +29,7 @@
       
    	<!-- 상품 등록 -->
    	<form class="">
-   		<button class="btn btn-primary add-btn" type="submit">상품 등록</button>
+   		<a class="btn btn-primary add-btn" href="/goods/write">상품 등록</a>
    	</form>
     </div>
 	
@@ -38,7 +38,7 @@
 	<c:choose>
 		<c:when test="${userNickName == null}">
 		<li class="nav-item">
-	              <a class="nav-link" href="#">로그인</a>
+	              <a class="nav-link" href="/">로그인</a>
 	            </li>
 	        <li class="nav-item">
 	              <a class="nav-link" href="#">회원가입</a>

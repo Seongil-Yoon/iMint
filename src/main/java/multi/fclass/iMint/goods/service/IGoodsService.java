@@ -12,7 +12,9 @@ public interface IGoodsService {
 
 	public List<GoodsImagesDTO> goodsImageList(int goodsId);
 
-	public int goodsWrite(String mbId,GoodsDTO goodsDto, List<MultipartFile> files);
+	public int goodsWrite(String mbId, GoodsDTO goodsDto, List<MultipartFile> files);
+	
+	public int goodsModify(String mbId, GoodsDTO goodsDto, List<MultipartFile> files);
 
 	public int goodsDelete(int goodsId, String mbId);
 }

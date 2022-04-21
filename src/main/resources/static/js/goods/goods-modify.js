@@ -35,6 +35,7 @@ let formData = new FormData();
 function goodsWrite() {
 
     goodsDTO = {
+        goodsId: goodsId,
         sellerId: $("input[name='mbId']").val(),
         sellerNick: $("input[name='mbNick']").val(),
         goodsTitle: $("input[name='goodsTitle']").val(),
@@ -59,7 +60,7 @@ function goodsWrite() {
 
     startAjax = function () {
         $.ajax({
-            url: "/goods/write",
+            url: `/goods/modify?goodsId=${goodsDTO.goodsId}`,
             type: "post",
             data: formData,
             dataType: false,
@@ -67,7 +68,7 @@ function goodsWrite() {
             contentType: false,
             success: function (result, textStatus, jqxHR) {
                 if (jqxHR.status == 200 || jqxHR.status == 201) {
-                    swal('', '상품을 등록 하였습니다', 'success');
+                    swal('', '상품을 수정 하였습니다', 'success');
                     //등록 성공하면 내가등록한 게시글화면으로 이동
                     setTimeout(function () {
                         location.href = `/goods/detail?goodsId=${result.goodsId}`;
@@ -140,9 +141,8 @@ function createFilePond() {
 let putImage = (result) => {
     console.log(result.length - 1);
     for (let i = result.length - 1; i > -1; i--) {
-        pond.addFile(result[i].goodsImagesPath);
-        // pond.addFile(`image/png, ${result[i].goodsImagesPath}`);
-        // e.detail.items[i].filename = result[i].name;
+        // pond.addFile(result[i].goodsImagesPath);
+        pond.addFile(decodeURIComponent(result[i].goodsImagesPath));
     }
 }
 
@@ -209,11 +209,15 @@ function getGoodsImages() {
 
 
 function main() {
-    if (goodsSuggestibleValue == true) {
+    console.log(goodsSuggestibleValue);
+    if (goodsSuggestibleValue == false) {
         document.getElementsByName("suggestible")[0].checked = true;
+        document.getElementsByName("suggestible")[1].checked = false;
     } else {
+        document.getElementsByName("suggestible")[0].checked = false;
         document.getElementsByName("suggestible")[1].checked = true;
     }
+
     $("#thumbnailFile").on("change", function () {
         thumbnailFile = this.files[0];
         console.log(thumbnailFile);

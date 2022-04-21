@@ -59,6 +59,22 @@
    		</selectKey>   
 	</insert>
 	
+	<!-- 상품수정 -->
+	<update id="goodsUpdate">
+		UPDATE `imint`.`goods` 
+		SET `goods_title`=#{goodsTitle}, `goods_content`=#{goodsContent}, `goods_price`=#{goodsPrice}, `goods_category`=#{goodsCategory}, `goods_suggestible`=#{goodsSuggestible} 
+		WHERE  `goods_id`= #{goodsId}
+		AND `seller_id`= #{sellerId}
+		AND `goods_isdelete` = 0;
+	</update>
+	<!-- 이미지수정은 delete후에 새로 insert id="goodsImagesInsert"-->
+	<delete id="goodsImagesDelete">
+		DELETE FROM `imint`.`goods_images` 
+		WHERE `goods_id`=#{goods_id};
+	</delete>
+	
+	
+	<!-- 상품삭제 -->
 	<update id="goodsIsdelete">
 		UPDATE `imint`.`goods` SET `goods_isdelete`='1' WHERE `goods_id`=#{goods_id} AND `seller_id`=#{seller_id};
 	</update>
