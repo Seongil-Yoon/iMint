@@ -22,9 +22,8 @@ public class WishlistController {
 	@RequestMapping("/wishlist/count")
 	public String countWishes(Integer goodsId) {
 		JSONObject out = new JSONObject();
-		int value = wishlistService.countWishes(goodsId);
 
-		out.put("value", value);
+		out.put("value", wishlistService.countWishes(goodsId));
 
 		return out.toJSONString();
 	}
@@ -33,13 +32,8 @@ public class WishlistController {
 	public String checkWish(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
 		JSONObject out = new JSONObject();
-		int check = wishlistService.checkWish(myId, goodsId);
 
-		if (check == 1) {
-			out.put("check", "true");
-		} else {
-			out.put("check", "false");
-		}
+		out.put("check", wishlistService.checkWish(myId, goodsId));
 
 		return out.toJSONString();
 	}
@@ -48,17 +42,9 @@ public class WishlistController {
 	public String addWish(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
 		JSONObject out = new JSONObject();
-		int result = wishlistService.addWish(myId, goodsId);
-		int value = wishlistService.countWishes(goodsId);
 
-		if (result == 1) {
-			out.put("result", "success");
-		} else if (result == 0) {
-			out.put("result", "fail");
-		} else {
-			out.put("result", "error");
-		}
-		out.put("value", value);
+		out.put("result", wishlistService.addWish(myId, goodsId));
+		out.put("value", wishlistService.countWishes(goodsId));
 
 		return out.toJSONString();
 	}
@@ -67,17 +53,9 @@ public class WishlistController {
 	public String removeWish(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
 		JSONObject out = new JSONObject();
-		int result = wishlistService.removeWish(myId, goodsId);
-		int value = wishlistService.countWishes(goodsId);
 
-		if (result == 1) {
-			out.put("result", "success");
-		} else if (result == 0) {
-			out.put("result", "fail");
-		} else {
-			out.put("result", "error");
-		}
-		out.put("value", value);
+		out.put("result", wishlistService.removeWish(myId, goodsId));
+		out.put("value", wishlistService.countWishes(goodsId));
 
 		return out.toJSONString();
 	}

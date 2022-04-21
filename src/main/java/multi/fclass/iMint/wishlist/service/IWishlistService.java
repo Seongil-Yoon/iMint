@@ -8,10 +8,10 @@ public interface IWishlistService {
 
 	public int countWishes(int goodsId);
 
-	public int checkWish(String myId, int goodsId);
+	public String checkWish(String myId, int goodsId);
 
-	public int addWish(String myId, int goodsId);
+	public String addWish(String myId, int goodsId);
 
-	public int removeWish(String myId, int goodsId);
+	public String removeWish(String myId, int goodsId);
 
 }
