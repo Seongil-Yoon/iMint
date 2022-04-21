@@ -43,16 +43,16 @@
 	   <p class="text">예약중</p>
 	  </div>
 	  <div class="photo">
-	    <img class="photo" src="${sell.gi.goods_images_path}">
+	    <img class="photo" src="${sell.goodsImagesPath}">
 	  </div>
 	  <div class="subject">
-	    <p class="text">${sell.g.goods_title}</p>
+	    <p class="text">${sell.goodsTitle}</p>
 	  </div>
 	  <div class="interest">
-	    <p class="text">${sell.w.wishes}</p>
+	    <p class="text">${sell.wishes}</p>
 	  </div>
 	  <div class="price">
-	   <p class="text text-price">${sell.g.goods_price}</p>
+	   <p class="text text-price">${sell.goodsPrice}</p>
 	  </div>
 	  <div class="link">
 	    <p class="text text-link">바로가기</p>

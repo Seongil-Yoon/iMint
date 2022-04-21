@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.mypage.dao.IMypageDAO;
+import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
 
 /**
@@ -23,7 +24,8 @@ public class MypageServiceImpl implements IMypageService {
 	public List<MypageDTO> getWishAndReserveList(String myId, int pageNumber, int numberOfItems) {
 		if (pageNumber < 0) {
 			pageNumber = 0;
-		} else if (numberOfItems < 0) {
+		}
+		if (numberOfItems < 0) {
 			numberOfItems = 0;
 		}
 
@@ -35,7 +37,8 @@ public class MypageServiceImpl implements IMypageService {
 	public List<MypageDTO> getSellingList(String myId, int pageNumber, int numberOfItems) {
 		if (pageNumber < 0) {
 			pageNumber = 0;
-		} else if (numberOfItems < 0) {
+		}
+		if (numberOfItems < 0) {
 			numberOfItems = 0;
 		}
 
@@ -47,11 +50,25 @@ public class MypageServiceImpl implements IMypageService {
 	public List<MypageDTO> getCompleteList(String myId, int pageNumber, int numberOfItems) {
 		if (pageNumber < 0) {
 			pageNumber = 0;
-		} else if (numberOfItems < 0) {
+		}
+		if (numberOfItems < 0) {
 			numberOfItems = 0;
 		}
 
 		return mypageDAO.getCompleteList(myId, (pageNumber - 1) * numberOfItems, numberOfItems);
+	}
+
+	// 채팅방 목록 조회 서비스
+	@Override
+	public List<MypageChatroomDTO> getChatroomList(String myId, int pageNumber, int numberOfItems) {
+		if (pageNumber < 0) {
+			pageNumber = 0;
+		}
+		if (numberOfItems < 0) {
+			numberOfItems = 0;
+		}
+
+		return mypageDAO.getChatroomList(myId, (pageNumber - 1) * numberOfItems, numberOfItems);
 	}
 
 }

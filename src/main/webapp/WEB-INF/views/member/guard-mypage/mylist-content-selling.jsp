@@ -18,7 +18,7 @@
                                 <h6 class="lables-status">구분</h6>
                             </div>
                             <div class="photo">
-                                <h6 class="lables-photo">사진</h6>
+                                <h6 class="lables-photo">사진${userSell}</h6>
                             </div>
                             <div class="subject">
                                 <h6 class="lables-subject">거래명</h6>
@@ -35,30 +35,27 @@
                         </div>
                         <!-- 항목별 내용 -->
 	<div class="item-list">
-	
-	<c:forEach items="${userWish}" var="wish">
+	<c:forEach items="${userSell}" var="sell">
 	  <div class="checkbox">
 	    <input type="checkbox" class="select-targets" name="selected"/>
 	  </div>
-	  
 	  <div class="status">
 	   <p class="text">예약중</p>
 	  </div>
 	  <div class="photo">
-	    <img class="photo" src="${wish.goodsImagesPath}">
+	    <img class="photo" src="${sell.goodsImagesPath}">
 	  </div>
 	  <div class="subject">
-	    <p class="text">${wish.goodsTitle}</p>
+	    <p class="text">${sell.goodsTitle}</p>
 	  </div>
 	  <div class="interest">
-	    <p class="text">${wish.wishes}</p>
+	    <p class="text">${sell.wishes}</p>
 	  </div>
 	  <div class="price">
-	   <p class="text text-price">${wish.goodsPrice}</p>
+	   <p class="text text-price">${sell.goodsPrice}</p>
 	  </div>
 	  <div class="link">
 	    <p class="text text-link">바로가기</p>
 	  </div>
-	 </c:forEach>
-	  
+	  </c:forEach>
 	</div>

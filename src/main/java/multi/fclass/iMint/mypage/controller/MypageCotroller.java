@@ -15,6 +15,7 @@ import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.mypage.dao.IMypageDAO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
+import multi.fclass.iMint.mypage.service.IMypageService;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
@@ -46,6 +47,9 @@ public class MypageCotroller {
 	
 	@Autowired
 	IMypageDAO iMypageDAO;
+	
+	@Autowired
+	IMypageService imypageService;
 	
 // 마이페이지 - 메인
 	
@@ -85,13 +89,13 @@ public class MypageCotroller {
 		mv.addObject("userChilds", userChilds);
 		
 		//거래 관련 정보
-		List<MypageDTO> userWish = iMypageDAO.getWishAndReserveList(mbId, 1, 5);
+		List<MypageDTO> userWish = imypageService.getWishAndReserveList(mbId, 1, 5);
 		mv.addObject("userWish", userWish);
 		
-		List<MypageDTO> userSell = iMypageDAO.getSellingList(mbId, 1, 5);
+		List<MypageDTO> userSell = imypageService.getSellingList(mbId, 1, 5);
 		mv.addObject("userSell", userSell);
 		
-		List<MypageDTO> userComplete = iMypageDAO.getCompleteList(mbId, 1, 5);
+		List<MypageDTO> userComplete = imypageService.getCompleteList(mbId, 1, 5);
 		mv.addObject("userComplete", userComplete);
 		
 		return mv;
@@ -137,27 +141,50 @@ public class MypageCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
+		//보호자의 경우
 		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/guard-mypage/guard-mylist"); 
 			
 			String userID = memberDTO.getMbId();
 			List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
 			mv.addObject("userChilds", userChilds);
+			
+			for (MemberDTO child: userChilds) {
+				String childID = child.getMbId();
+				//아이별 관심/구매 목록 불러오기
+				List<MypageDTO> userWish = imypageService.getWishAndReserveList(childID, 1, 5);
+				mv.addObject("userWish", userWish);
+				
+				//아이별 판매 목록
+				List<MypageDTO> userSell = imypageService.getSellingList(childID, 1, 5);
+				mv.addObject("userSell", userSell);
+				
+				//아이별 거래완료 목록
+				List<MypageDTO> userComplete = imypageService.getCompleteList(childID, 1, 5);
+				mv.addObject("userComplete", userComplete);
+			}
+			System.out.println(userChilds);
 		}
+		
+		//아이의 경우
 		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-myList");
+			String userID = memberDTO.getMbId();
 			
 			// 관심/구매 목록
-			List<MypageDTO> userWish = iMypageDAO.getWishAndReserveList(mbId, 1, 5);
+			List<MypageDTO> userWish = imypageService.getWishAndReserveList(userID, 1, 5);
 			mv.addObject("userWish", userWish);
 			
 			//판매 목록
-			List<MypageDTO> userSell = iMypageDAO.getSellingList(mbId, 1, 5);
+			List<MypageDTO> userSell = imypageService.getSellingList(userID, 1, 5);
 			mv.addObject("userSell", userSell);
 			
 			//거래완료 목록
-			List<MypageDTO> userComplete = iMypageDAO.getCompleteList(mbId, 1, 5);
+			List<MypageDTO> userComplete = imypageService.getCompleteList(userID, 1, 5);
 			mv.addObject("userComplete", userComplete);
+			
+			
+			
 		}
 		return mv;
 	}
