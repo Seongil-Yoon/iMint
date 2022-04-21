@@ -27,31 +27,21 @@ img{
 	width: 200px;
 }
 
-/* #wrap {
-	margin: auto;
-	justify-content: center;
-	width: 300px;
-	flex-direction: column;
-	
-} */
-
 </style>
 
-<body>  <!--추가할 부분) 로그인되면 버튼 삭제  -->
- 	<%-- <jsp:include page="../include/header.jsp" flush="false" /> --%>
- 	
+<body>  
  	<div class = "container">
 	 	<div class="item">
-	 		<a href = "/oauth2/authorization/google"><img alt= "google" src = "/static/images/btn_google_light_focus_xxxhdpi.9.png"> 아이로 가입 / 로그인하기</a>
+	 		<a href = "/oauth2/authorization/google"><img alt= "google" src = "/static/images/btn_google_light_focus_xxxhdpi.9.png">관리자 로그인</a>
 	 	</div>
 	 	<div class="item">
-		 	<a href = "/oauth2/authorization/naver"><img alt= "naver" src = "/static/images/naver_icon.png">가입 / 로그인하기</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> 
+		 	<a href = "/oauth2/authorization/naver"><img alt= "naver" src = "/static/images/naver_icon.png">관리자 로그인</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> 
 		</div>
 	 	<div class="item">
-			<a href = "/oauth2/authorization/kakao"><img alt= "kakao" src = "/static/images/kakao_login_medium_wide.png">가입 / 로그인하기</a>
+			<a href = "/oauth2/authorization/kakao"><img alt= "kakao" src = "/static/images/kakao_login_medium_wide.png">관리자 로그인</a>
 		</div>
 		<div class="item">
-			<a href = "/main">둘러보기</a>
+			<a href = "/main">일반 사용자 메인페이지 둘러보기</a>
 		</div>			
  	</div>
 	
