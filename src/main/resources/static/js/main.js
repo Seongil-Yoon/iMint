@@ -46,7 +46,7 @@ function start() {
 									<span class="goods-title">${result[i].goods.goodsTitle}</span>
 								</div>
 								<div>
-									<span class="goods-price">${result[i].goods.goodsPrice}</span>
+									<span class="goods-price">${fomatPrice(result[i].goods.goodsPrice)}원</span>
 									<span class="goods-status">${result[i].goods.goodsStatus}</span>
 								</div>
 								<div>
@@ -111,6 +111,11 @@ function timeForToday(value) {
 	}
 
 	return `${Math.floor(betweenTimeDay / 365)}년전 작성`;
+}
+
+//숫자 가격화 함수
+function fomatPrice(strNum){
+	return strNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 세자리 콤마
 }
 
 // function countWishlist(goodId) {
