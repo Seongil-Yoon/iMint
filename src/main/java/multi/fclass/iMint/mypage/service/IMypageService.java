@@ -2,6 +2,7 @@ package multi.fclass.iMint.mypage.service;
 
 import java.util.List;
 
+import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
 
 /**
@@ -18,5 +19,8 @@ public interface IMypageService {
 
 	// 거래완료 목록 조회 서비스
 	public List<MypageDTO> getCompleteList(String myId, int pageNumber, int numberOfItems);
+
+	// 채팅방 목록 조회 서비스
+	public List<MypageChatroomDTO> getChatroomList(String myId, int pageNumber, int numberOfItems);
 
 }

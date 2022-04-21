@@ -1,14 +1,6 @@
 package multi.fclass.iMint.security.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,38 +10,26 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import multi.fclass.iMint.member.dto.Role;
-import multi.fclass.iMint.member.dto.SessionMember;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.GenerateCertCharacter;
-import multi.fclass.iMint.security.auth.provider.KakaoUserInfo;
-import multi.fclass.iMint.security.auth.provider.NaverUserInfo;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.security.parsing.role.ParseMbRole;
@@ -82,28 +62,38 @@ public class IndexController {
 	
     // 로그인 
 	@GetMapping({"", "/"})
-	public String loginForm() {
-		return "member/login";
-	}
-	
-	// 가입 완료시키기
-	@RequestMapping(value = "/err/denied-page") // 안온다 
-	public ModelAndView accessDenied(Authentication auth, HttpServletRequest req){
+	public ModelAndView loginForm(Authentication auth) { // 첫화면에서 로그인 여부, 회원 권한이 인증여부에 따라 다른 화면으로 전달 
 		
 		ModelAndView mv = new ModelAndView();
 		
-		AccessDeniedException ade = (AccessDeniedException) req.getAttribute(WebAttributes.ACCESS_DENIED_403);
-//        log.info("---------- Log 테스트 ---------");
-//		log.info("auth : {}", auth.getPrincipal()); // 로그 기록
-//		log.info("exception : {}", ade); // 로그 기록
+		try { // 로그인 상태인 경우 
+			String mbId = parseMbId.parseMbId(auth);
+			MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+			if(memberDTO.getMbRole() == Role.UN_CHILD || memberDTO.getMbRole() == Role.UN_GUARD) { // 권한이 미인증 회원이면 회원가입 마치도록 이동 
+				mv.setViewName("member/register");							
+			}
+			else {
+				mv.setViewName("main");	// 권한이 인증인 회원이면 메인으로 이동
+			}
+			mv.addObject("memberDTO", memberDTO);
+		} catch (Exception e) { // 비로그인 상태이면 로그인 페이지로 이동
+			mv.setViewName("member/login");			
+		}
+		return mv;
+	}
+	
+	// 가입 완료시키기
+	@RequestMapping(value = "/err/denied-page")
+	public ModelAndView accessDenied(Authentication auth, HttpServletRequest req){
 		
-		// 모듈화 결과(아래 1줄)
-//		String mbId = parseMbId.parseMbId(auth);
-//		User user = parseMbId.getMemberMbId(mbId);
-//		String mbRole = user.getMbRole().toString();
-//		System.out.println(mbRole);
-//		mv.addObject("mbRole", mbRole);
-//		mv.addObject("errMsg", ade);
+		ModelAndView mv = new ModelAndView();
+		String mbId = parseMbId.parseMbId(auth);
+		memberDTO = parseMbId.getMemberMbId(mbId);
+		
+		AccessDeniedException ade = (AccessDeniedException) req.getAttribute(WebAttributes.ACCESS_DENIED_403);
+        log.info("---------- err/denied-page ---------");
+		log.info("memberDTO : {}", memberDTO);
+		log.info("exception : {}", ade); // 로그 기록
 		
 		mv.setViewName("err/deniedpage");
 		
@@ -115,6 +105,9 @@ public class IndexController {
 	@GetMapping("/register")
 	public ModelAndView registersns(Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
+        log.info("---------- register ---------");
+		log.info("memberDTO : {}", memberDTO);
+		
 		// 모듈화 결과(아래 2줄)
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
@@ -138,7 +131,10 @@ public class IndexController {
 			map.put("result", "ok");
 			map.put("nickcheck", nickcheck);
 		}
-		else {
+		else if(nickcheck.equals("") ){
+			map.put("result", "blank");			
+		}
+		else{
 			map.put("result", "duplicated");			
 		}
 		return map;		
@@ -216,7 +212,7 @@ public class IndexController {
 	// 회원가입 4(최종. 보호자, 아이 모두)
 	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
 	// 회원가입 후 다시 로그인 요청
-	@RequestMapping("/register/complete")
+	@PostMapping({"", "/"}) // register/complete
 	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard, String guardPin) {
 	
 	ModelAndView mv = new ModelAndView();
@@ -232,7 +228,6 @@ public class IndexController {
 			memberDTO.setMbLocation(mbLocationOrGuard);
 			memberDTO.setMbRole(Role.GUARD);
 			memberDTO.setMbPin(new GenerateCertCharacter().excuteGenerate());
-			mv.setViewName("member/login");
 			
 			// DB저장
 			securityDAO.updateregister4(memberDTO);
@@ -249,6 +244,8 @@ public class IndexController {
 			session.setAttribute(HttpSessionSecurityContextRepository.
 			                       SPRING_SECURITY_CONTEXT_KEY, context);
 			
+			mv.setViewName("member/login");
+
 		}	
 		else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이 
 			MemberDTO guardMember = securityDAO.findByMbNick(mbLocationOrGuard);
@@ -258,7 +255,6 @@ public class IndexController {
 					memberDTO.setMbLocation(guardMember.getMbLocation());
 					memberDTO.setMbRole(Role.CHILD);
 					memberDTO.setMbPin(null);
-					mv.setViewName("member/login");
 					
 					// DB저장
 					securityDAO.updateregister4(memberDTO);
@@ -274,6 +270,8 @@ public class IndexController {
 					//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 					session.setAttribute(HttpSessionSecurityContextRepository.
 					                       SPRING_SECURITY_CONTEXT_KEY, context);
+					
+					mv.setViewName("member/login");
 				}
 				else { // 보호자의 입력정보가 틀리면 다시 보내기
 					mv.setViewName("redirect:/register");
@@ -281,7 +279,6 @@ public class IndexController {
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 				mv.setViewName("redirect:/register");	// 보호자의 입력정보가 틀리면 다시 보내기
-				mv.addObject("err", "정확한 보호자의 정보를 입력하세요.");
 			}			
 				return mv;
 		}	
@@ -315,6 +312,18 @@ public class IndexController {
 	} // catch end
 		
 	}
+//	
+//    @RequestMapping("/log-test")
+//    public String logTest(){
+//        // 로그 라이브러리 이용한 출력
+//        log.trace("trace log={}", name);
+//        log.debug("debug log={}", name);
+//        log.info("info log={}", name);
+//        log.warn("warn log={}", name);
+//        log.error("error log={}", name);
+//
+//        return "ok";
+//    }
 		
 	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true
 	// @Secured: 권한 

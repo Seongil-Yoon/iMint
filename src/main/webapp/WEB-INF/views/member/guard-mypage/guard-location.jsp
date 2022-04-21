@@ -67,7 +67,7 @@
 		
 		
 	    /* 좌표로 구정보 얻기 : 카카오 API*/
-	    $("#mylocation_btn").on('click', function(){ /* ajax로 요청한 뒤 파싱은 어떻게 하는가?  */
+	    $("#mylocation_btn").on('click', function(){
 
  			 $.ajax({
 				url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&output_coord=WGS84&x=' + longitude +'&y=' + latitude,
@@ -76,7 +76,7 @@
 					
 				success: function(response) {
  						var contentStr = "";
- 						contentStr += JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify 하기.. */
+ 						contentStr += JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
  						var len = contentStr.length;
  						contentStr = contentStr.substring(1,len-1)
  						alert(contentStr);
@@ -89,7 +89,7 @@
  						}
  						else{
  							
-	 						$("#confirm_form").attr("action", "/register/complete");
+	 						$("#confirm_form").attr("action", "/");
 	 						$("#confirm_form").attr("method", "post");
  						}
 				}, // success

@@ -29,18 +29,26 @@
 	 	<!-- 아티클 시작 -->
 	 	<div class="container-main">
 		 	<div class="title-text">
-			   <h2>
+			   
 			   <c:choose> 
                 		<c:when test= "${userChilds.size() == 0}">
-                			연결된 아이가 없습니다.
+                			<h2>연결된 아이가 없습니다.</h2>
      					</c:when>
      					<c:otherwise>
-     						<c:forEach items="${userChilds}" var="child" varStatus="order">
-     							내 아이 ${child.mbNick}님의 거래 관련 목록입니다.
-     						</c:forEach>
+     					<div class="dropdown">
+							  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							    아이 선택
+							  </button>
+							  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							  	<c:forEach items="${userChilds}" var="child" varStatus="order">
+     								<li><a class="dropdown-item" id="${child.mbNick}" href="#">${child.mbNick}</a></li>
+     							</c:forEach>
+							  </ul>
+							</div>
+     					<h2 id="child-define">내 아이 님의 거래 관련 목록입니다.</h2>
      					</c:otherwise>
                 	</c:choose>
-			   </h2>
+			   
 			</div>
 	 			<!-- 상단 탭 -->
 	        <section class="tabs">
@@ -65,19 +73,19 @@
 	                <!-- 관심/구매예약 내용 -->
 	                <div id="tab-1-content" class="tab-content-item show">
 	                    <div class="tab-1-content-inner">
-	                        <jsp:include page="mylist-content.jsp" flush="false"/>
+	                        <jsp:include page="mylist-content-wish-buy.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 판매목록 내용 -->
 	                <div id="tab-2-content" class="tab-content-item">
 	                    <div class="tab-2-content-inner">
-	                        <jsp:include page="mylist-content.jsp" flush="false"/>
+	                        <jsp:include page="mylist-content-selling.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 거래완료목록 내용 -->
 	                <div id="tab-3-content" class="tab-content-item">
 	                    <div class="tab-3-content-inner">
-	                    	 <jsp:include page="mylist-content.jsp" flush="false"/>
+	                    	 <jsp:include page="mylist-content-complete.jsp" flush="false"/>
 	                    </div>
 	                </div>
 	                <!-- 채팅목록 내용 -->
@@ -138,5 +146,6 @@
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/mypage/mypage-mylist.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
