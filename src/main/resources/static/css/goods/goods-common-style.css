@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap);
-
-span,
+@import "../common_style.css";
+/* span,
 a,
 td,
 div.label,
@@ -9,16 +9,16 @@ h2,
 h3 {
   font-family: "Noto Sans Kr", sans-serif;
 
-}
+} */
 
 /* 해연님 스타일 */
-.roundBox {
+/* .roundBox {
   padding: 1.5rem;
   border: 1px;
   border-radius: 1rem;
   border-style: solid;
   border-color: rgb(155, 155, 155);
-}
+} */
 
 .tab-item {
   background-color: #F9F9F9;

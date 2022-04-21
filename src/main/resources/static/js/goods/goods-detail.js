@@ -161,7 +161,26 @@ function wishHandler() {
 	}
 }
 
+function modifyHandler() {
+	$("#modifyBtn").on("click", function () {
+		swal({
+			title: `${goodsTitle}을 수정하시겠습니까?`,
+			text: "",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		}).then((e) => {
+			if (e) {
+				location.href = `/goods/modify?goodsId=${goodsId}`;
+			} else {
+				// swal("취소하였습니다.");
+			}
+		});
+	})
+}
+
 function main() {
+	modifyHandler();
 	deleteHandler();
 	wishHandler();
 	let regDate = $("#timeForToday").text();

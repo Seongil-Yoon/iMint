@@ -37,18 +37,21 @@
             <div class="transaction">
                 <h5 class="tag">관심/구매예약</h5>
                 <br>
+                ${userWish.size()} 건
                 <a class="btn btn-primary" href="#">자세히</a>
                 <!-- 관심/구매예약 요약 표  -->
             </div>
             <div class="transaction">
                 <h5 class="tag">판매목록</h5>
                 <br>
+                ${userSell.size()} 건
                 <a class="btn btn-primary" href="#">자세히</a>
                 <!-- 판매목록 요약 표  -->
             </div>
             <div class="transaction">
                 <h5 class="tag">거래완료</h5>
                 <br>
+                ${userComplete.size()} 건
                 <a class="btn btn-primary" href="#">자세히</a>
                 <!-- 거래완료 요약 표  -->
             </div>
@@ -57,18 +60,18 @@
         <!-- 회원 상태 -->
         <div class="container-summary">
             <h5 class="text-summary">${userNickName}님은 아이 회원입니다.</h5>
-            <p>이메일: ~</p>
-            <p>관심사: ~</p>
+            <p>이메일: ${userEmail}</p>
+            <p>관심사: ${userInterest}</p>
             <a class="btn btn-primary" href="#">자세히</a>
         </div>
         <div class="container-other-settings">
             <div class="settings connection">
                 <h5 class="settings-title text-connection">연결된 보호자</h5>
-                <p class="text-connection">${userGuard}님</p>
+                <p class="text-connection">${userGuard.mbNick}님</p>
             </div>
             <div class="settings location">
                 <h5 class="settings-title text-location">현재 동네 설정</h5>
-                <p class="text-location">${userLocation}</p>
+                <p class="text-location">${userGuard.mbLocation}</p>
             </div>
         </div>
         <!-- 아이 로그인시 숨김 -->

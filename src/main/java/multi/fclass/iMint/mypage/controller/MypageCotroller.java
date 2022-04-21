@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.mypage.dao.IMypageDAO;
+import multi.fclass.iMint.mypage.dto.MypageDTO;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
@@ -22,7 +24,7 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
  * @author haeyeon
  *
  */
-//보호자 계정일 경우 보호자용 jsp 파일로 보여주는 로직 미구현
+
 
 @Controller
 public class MypageCotroller {
@@ -39,6 +41,14 @@ public class MypageCotroller {
 	@Autowired
 	ParseMbId parseMbId;
 	
+//	@Autowired
+//	MypageDTO mypageDTO;
+	
+	@Autowired
+	IMypageDAO iMypageDAO;
+	
+// 마이페이지 - 메인
+	
 	@GetMapping("mypage")
 	public ModelAndView index(Authentication auth) {
 		ModelAndView mv = new ModelAndView();
@@ -52,7 +62,7 @@ public class MypageCotroller {
 		else if(memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-main");
 		}
-		
+		//계정 관련 정보
 		String userID = memberDTO.getMbId();
 		String userNickName = memberDTO.getMbNick();
 		String userEmail = memberDTO.getMbEmail();
@@ -60,6 +70,8 @@ public class MypageCotroller {
 		String userLocation = memberDTO.getMbLocation();
 		String userGuard = memberDTO.getMbGuard();
 		String userPin = memberDTO.getMbPin();
+		
+		MemberDTO userGuardNick = securityDAO.findByMbId(userGuard);
 		List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
 		
 		
@@ -68,11 +80,25 @@ public class MypageCotroller {
 		mv.addObject("userEmail", userEmail);
 		mv.addObject("userInterest", userInterest);
 		mv.addObject("userLocation", userLocation);
-		mv.addObject("userGuard", userGuard);
+		mv.addObject("userGuard", userGuardNick);
 		mv.addObject("userPin", userPin);
 		mv.addObject("userChilds", userChilds);
+		
+		//거래 관련 정보
+		List<MypageDTO> userWish = iMypageDAO.getWishAndReserveList(mbId, 1, 5);
+		mv.addObject("userWish", userWish);
+		
+		List<MypageDTO> userSell = iMypageDAO.getSellingList(mbId, 1, 5);
+		mv.addObject("userSell", userSell);
+		
+		List<MypageDTO> userComplete = iMypageDAO.getCompleteList(mbId, 1, 5);
+		mv.addObject("userComplete", userComplete);
+		
 		return mv;
 	}
+	
+	
+// 마이페이지 - 내 동네 설정	
 	
 	@GetMapping("mypage/location")
 	public ModelAndView indexLocation(Authentication auth) {
@@ -101,10 +127,8 @@ public class MypageCotroller {
 		return "redirect:/mypage";
 	}
 	
-//	@GetMapping("mypage/mylist")
-//	public String indexMylist() {
-//		return "member/baby-mypage/baby-myList";
-//	}
+
+// 마이페이지 - 나의 아이민트/내 아이 목록	
 	
 	@GetMapping("mypage/mylist")
 	public ModelAndView indexMylist(Authentication auth) {
@@ -115,15 +139,26 @@ public class MypageCotroller {
 		
 		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/guard-mypage/guard-mylist"); 
+			
+			String userID = memberDTO.getMbId();
+			List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
+			mv.addObject("userChilds", userChilds);
 		}
 		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-mylist");
+			mv.setViewName("member/baby-mypage/baby-myList");
+			
+			// 관심/구매 목록
+			List<MypageDTO> userWish = iMypageDAO.getWishAndReserveList(mbId, 1, 5);
+			mv.addObject("userWish", userWish);
+			
+			//판매 목록
+			List<MypageDTO> userSell = iMypageDAO.getSellingList(mbId, 1, 5);
+			mv.addObject("userSell", userSell);
+			
+			//거래완료 목록
+			List<MypageDTO> userComplete = iMypageDAO.getCompleteList(mbId, 1, 5);
+			mv.addObject("userComplete", userComplete);
 		}
-		
-		String userGuard = memberDTO.getMbGuard();
-		List<MemberDTO> userChilds = securityDAO.findByMbGuard(userGuard);
-		mv.addObject("userChilds", userChilds);
-		
 		return mv;
 	}
 	

@@ -35,6 +35,7 @@
                         </div>
                         <!-- 항목별 내용 -->
 	<div class="item-list">
+	<c:forEach items="${userComplete}" var="done">
 	  <div class="checkbox">
 	    <input type="checkbox" class="select-targets" name="selected"/>
 	  </div>
@@ -42,18 +43,19 @@
 	   <p class="text">예약중</p>
 	  </div>
 	  <div class="photo">
-	    <p class="text">사진(예정)</p>
+	    <img class="photo" src="${done.gi.goods_images_path}">
 	  </div>
 	  <div class="subject">
-	    <p class="text">꼬부기 스티커</p>
+	    <p class="text">${done.g.goods_title}</p>
 	  </div>
 	  <div class="interest">
-	    <p class="text">관심 2</p>
+	    <p class="text">관심 ${done.w.wishes}</p>
 	  </div>
 	  <div class="price">
-	   <p class="text text-price">3000원</p>
+	   <p class="text text-price">${done.g.goods_price}</p>
 	  </div>
 	  <div class="link">
 	    <p class="text text-link">바로가기</p>
 	  </div>
+	  </c:forEach>
 	</div>

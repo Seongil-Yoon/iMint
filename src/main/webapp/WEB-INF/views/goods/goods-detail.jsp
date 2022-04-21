@@ -28,7 +28,7 @@
 					<!-- 둘러보기 -->
 				</c:when>
 				<c:when test="${member.mbId == goods.sellerId}">
-					<a id="modifyBtn" value="${goods.goodsId}" href="/goods/modify?goodsId=${goods.goodsId}">
+					<a id="modifyBtn" value="${goods.goodsId}" >
 						<img src="/static/images/write-icon.png" alt="">
 					</a>
 					<a id="deleteBtn" value="${goods.goodsId}">
@@ -88,7 +88,7 @@
 			</div>
 		</article>
 		<article class="goods-content-wrap">
-			<textarea disabled="" id="goods-content" placeholder=${goods.goodsContent}></textarea>
+			<textarea disabled="" id="goods-content" placeholder="${goods.goodsContent}"></textarea>
 		</article>
 		<article class="roundBox goods-action" id="js-goods-action">
 			<!-- 일단 로그인됫다고 가정하고 페이지작성 -->

@@ -36,12 +36,10 @@
      					</c:when>
      					<c:otherwise>
      						<c:forEach items="${userChilds}" var="child" varStatus="order">
-     							${child}님
+     							내 아이 ${child.mbNick}님의 거래 관련 목록입니다.
      						</c:forEach>
      					</c:otherwise>
                 	</c:choose>
-			   내아이 ~의 거래 관련 목록입니다.
-			   
 			   </h2>
 			</div>
 	 			<!-- 상단 탭 -->
