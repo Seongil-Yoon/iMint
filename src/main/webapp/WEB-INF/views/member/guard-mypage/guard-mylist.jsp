@@ -41,7 +41,7 @@
 							  </button>
 							  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 							  	<c:forEach items="${userChilds}" var="child" varStatus="order">
-     								<li><a class="dropdown-item" id="${child.mbNick}" href="#">${child.mbNick}</a></li>
+     								<li><a class="dropdown-item" id="${child.childNick}" href="#">${child.childNick}</a></li>
      							</c:forEach>
 							  </ul>
 							</div>
