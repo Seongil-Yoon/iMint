@@ -21,15 +21,23 @@
 	<br>
  	<form id = "change_url"> <!-- input type = submit, prevent -->
  		<div>닉네임 <button type="button" id = "nick_btn">닉네임 중복확인</button><p id = "nickappend"></p>
-	 		<input type = text name = "mbNick" id = "mbNick" placeholder = ${memberDTO.mbNick }>
+	 		<input type = text name = "mbNick" id = "mbNick" placeholder = ${memberDTO.mbNick } class = "memberInfo">
  		</div>
  		<div>이메일<br>
-	 		<input type = text name = "mbEmail" id = "mbEmail" value = ${memberDTO.mbEmail }>
+	 		<input type = text name = "mbEmail" id = "mbEmail" value = ${memberDTO.mbEmail } class = "memberInfo">
  		</div>
- 		<div id = "interest">관심사<br> <!-- 드롭박스로 바꾸기  -->
-	 		<input type = text name = "mbInterest" id = "mbInterest">
+ 		<div id = "interest">관심사<br>
+			<select class="memberInfo" id="floatingSelect" name = "mbInterest" id = "mbInterest"
+				aria-label="Floating label select example">
+			<option value="문구" selected>문구</option>
+			<option value="완구">완구</option>
+			<option value="도서">도서</option>
+			<option value="교구">교구</option>
+			<option value="의류">의류</option>
+			<option value="가방/신발/잡화">가방/신발/잡화</option>
+			<option value="기타">기타</option>
+			</select> 		
  		</div>
- 		
  		<input type = hidden name = "mbId" id = "mbId" value = ${memberDTO.mbId }>
  		<input type = hidden name = "mbRole" id = "mbRole" value = ${memberDTO.mbRole }>
     	<input type = "submit" id = "register_btn" value = "회원가입">
@@ -72,5 +80,11 @@
 	</script>	
 	
 </body>
+
+<style>
+.memberInfo{
+width: 300px;
+}
+</style>
 
 </html>
