@@ -18,4 +18,7 @@ public interface IAdminDAO {
 	// 전체 회원 조회
 	public List<MemberDTO> selectmemberall();
 	
+	// 동네별 회원 조회
+	public List<AdminDTO> selectmemberstats();
+		
 }

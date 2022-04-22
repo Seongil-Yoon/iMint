@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 //			.antMatchers("/mypage/location").access("hasRole('ROLE_GUARD') or hasRole('ROLE_uncerti_GUARD')") /* or hasRole('ROLE_ADMIN') */
 //			.antMatchers("/mypage/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
-			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 로그인한 admin만 들어올 수 있다.
+			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
 			
 			.anyRequest().permitAll(); // 임시 허용
 			
@@ -63,6 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //			.loginPage("/login") // 권한이 없는 페이지로 가려고 하면 login페이지로 보내기
 //			.loginProcessingUrl("/"); // /login이 호출되면 시큐리티가 낚아채셔 대신 로그인 진행 
 //			.defaultSuccessUrl("/"); // 로그인하면 메인페이지로 이동.
+		
+		// 기본 로그인 해제 
+		http.httpBasic().disable();
 		
 		http.logout()
 			.logoutSuccessUrl("/");
@@ -85,6 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.migrateSession(); // 인증이 됐을때 새로운 세션을 생성한뒤, 기존 세션의 attribute들을 복사해 온다.
 	}
 	
+//	정적 파일 열기 
 	@Override
 	   public void configure(WebSecurity web) throws Exception {
 	      web.ignoring()
@@ -98,4 +102,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+    
 }

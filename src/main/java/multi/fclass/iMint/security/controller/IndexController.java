@@ -72,6 +72,10 @@ public class IndexController {
 			if(memberDTO.getMbRole() == Role.UN_CHILD || memberDTO.getMbRole() == Role.UN_GUARD) { // 권한이 미인증 회원이면 회원가입 마치도록 이동 
 				mv.setViewName("member/register");							
 			}
+			else if(memberDTO.getMbRole() == Role.ADMIN) {
+				mv.addObject(memberDTO);
+				mv.setViewName("redirect:/admin/member");
+			}
 			else {
 				mv.setViewName("main");	// 권한이 인증인 회원이면 메인으로 이동
 			}
