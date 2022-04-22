@@ -94,7 +94,7 @@
 			<!-- 일단 로그인됫다고 가정하고 페이지작성 -->
 			<div>
 				<span>카테고리 : ${goods.goodsCategory}</span>
-				<span>가격 : ${goods.goodsPrice}</span>
+				<span id="goodsPrice">가격 : ${goods.goodsPrice}원</span>
 				<c:choose>
 					<c:when test="${goods.goodsSuggestible == true}">
 						<span>가격 흥정 가능</span>

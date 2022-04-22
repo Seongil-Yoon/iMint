@@ -1,1 +1,41 @@
 @charset "UTF-8";
+
+.header-space {
+    height: 56px;
+}
+
+@media screen and (max-width: 992px) {
+    .header-space {
+        height: 96px;
+    }
+}
+
+nav.carrot_header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+
+form.search {}
+
+form.search select.form-select{
+    flex : 1;
+}
+form.search input.form-control{
+    flex : 4;
+}
+
+form.search button.search-btn {
+    width: max-content;
+    height: max-content;
+    padding-right: 0px;
+    padding-left: 0px;
+    background-color: unset;
+}
+
+form.search img.searchIcon {
+    width: 25px;
+    height: 25px;
+}

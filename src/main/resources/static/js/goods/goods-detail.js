@@ -6,6 +6,7 @@ let container = undefined,
 let goodsTitle = $("#goodsTitle").val();
 let goodsId = $("#goodsId").val();
 let myId = $("#buyerId").val();
+let goodsPrice = $("#goodsPrice").html();
 
 //on load html 이미지나 자바스크립트 링크가 다오고 실행됨
 $(window).on('load', function () {
@@ -179,7 +180,13 @@ function modifyHandler() {
 	})
 }
 
+//숫자 가격화 함수
+function fomatPrice(strNum){
+	return strNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 세자리 콤마
+}
+
 function main() {
+	$("#goodsPrice").html(fomatPrice(goodsPrice));
 	modifyHandler();
 	deleteHandler();
 	wishHandler();
