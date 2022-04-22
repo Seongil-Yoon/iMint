@@ -71,7 +71,7 @@
      					</c:when>
      					<c:otherwise>
      						<c:forEach items="${userChilds}" var="child" varStatus="order">
-     							${child.mbNick}님 <br>
+     							${child.childNick}님 <br>
      						</c:forEach>
      					</c:otherwise>
                 	</c:choose>
