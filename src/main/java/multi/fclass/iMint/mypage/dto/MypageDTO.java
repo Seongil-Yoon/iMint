@@ -13,7 +13,6 @@ public class MypageDTO {
 
 	private String category; // "buy" or "sell"
 	private String sellerNick; //판매자 닉네임
-	private String mbNick;
 	private int goodsId; // 판매글 ID
 	private String goodsTitle; // 판매글 제목
 	private int goodsPrice; // 판매 가격

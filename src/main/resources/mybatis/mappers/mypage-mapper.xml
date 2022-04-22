@@ -3,6 +3,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.mypage.dao.IMypageDAO">
+	<!-- 내 아이 목록 -->
+	<select id="getMyChildrenList" resultType="MypageChildDTO">
+		SELECT
+			mb_id AS child_id,
+			mb_nick AS child_nick
+		FROM
+			`imint`.`member`
+		WHERE
+			mb_guard LIKE #{myId}
+	</select>
+
 	<!-- 관심 + 구매예약 목록 -->
 	<select id="getWishAndReserveList" resultType="MypageDTO">
 		SELECT
@@ -15,7 +26,6 @@
 		    goods_images_path,
 		    goods_images_originname,
 		    wishes,
-		    
 		    last_update_date
 		FROM
 		    ((SELECT
@@ -28,14 +38,12 @@
 				gi.goods_images_path,
 				gi.goods_images_originname,
 				w.wishes,
-				
 				cr.resrv_date AS last_update_date
 			FROM
 				`imint`.`chatroom` AS cr
                 JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
 				JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 				JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
-
 			WHERE
 				cr.isdelete = FALSE
 				AND g.goods_isdelete = FALSE
@@ -58,7 +66,6 @@
 				gi.goods_images_path,
 				gi.goods_images_originname,
 				wi.wishes,
-				
 		        IF(g.goods_status = "comp" AND trx.mb_id LIKE #{myId}, trx.trx_complete_date, w.wishlist_create_date) AS last_update_date
 			FROM
 				`imint`.`wishlist` AS w
@@ -67,7 +74,6 @@
 				JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as wi on g.goods_id = wi.goods_id
 				LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
 				LEFT JOIN `imint`.`chatroom` AS cr ON g.goods_id = cr.goods_id
-		
 			WHERE
 				w.wishlist_isdelete = FALSE
 				AND g.goods_isdelete = FALSE
@@ -87,7 +93,6 @@
 	<select id="getSellingList" resultType="MypageDTO">
 		SELECT
 			IF(g.goods_status = "wait", "wait", "resrv") AS category,
-			g.seller_nick,
 			g.goods_id,
 			g.goods_title,
 			g.goods_price,
