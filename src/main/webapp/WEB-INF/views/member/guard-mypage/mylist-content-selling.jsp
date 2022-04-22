@@ -34,9 +34,10 @@
                             </div>
                         </div>
                         <!-- 항목별 내용 -->
-	<div class="item-list">
+	
 	<c:forEach items="${allSell}" var="sells" varStatus="status">
 			<c:forEach items="${sells}" var="sell">
+			<div class="item-list ${sell.sellerNick}">
 			  <div class="checkbox">
 			    <input type="checkbox" class="select-targets" name="selected"/>
 			  </div>
@@ -70,6 +71,7 @@
 	  <div class="link">
 	    <p class="text text-link">바로가기</p>
 	  </div>
+	  </div>
 	  </c:forEach>
 	  </c:forEach>
-	</div>
+	
