@@ -76,9 +76,14 @@
 					
 				success: function(response) {
  						var contentStr = "";
- 						contentStr += JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
- 						var len = contentStr.length;
- 						contentStr = contentStr.substring(1,len-1)
+ 						
+ 						var firLocation = JSON.stringify(response.documents[0].address.region_1depth_name); /* 파싱 한다음에 JSON.stringify */
+ 						var len = firLocation.length;
+ 						contentStr = firLocation.substring(1,len-1);
+
+ 						var secLocation = JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
+ 						var len = secLocation.length;
+ 						contentStr += " " + secLocation.substring(1,len-1);
  						alert(contentStr);
 
  					$("#guappend").html("현재 " + contentStr + "에 있어요");
