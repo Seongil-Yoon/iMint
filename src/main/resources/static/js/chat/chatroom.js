@@ -14,13 +14,13 @@ function setConnected(connected) {
 }
 
 function connect() {
-	var socket = new SockJS('/chat/server');
+	var socket = new SockJS('/chat');
 	stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
 		setConnected(true);
 		console.log('Connected: ' + frame);
-		stompClient.subscribe('/topic/greetings', function(greeting) {
-			showGreeting(JSON.parse(greeting.body).content);
+		stompClient.subscribe('/chat/chatroom/' + chatroomId, function(chatMessage) {
+			showGreeting(JSON.parse(chatMessage.body).message);
 		});
 	});
 }
@@ -34,7 +34,7 @@ function disconnect() {
 }
 
 function sendName() {
-	stompClient.send("/app/hello", {}, JSON.stringify({ 'name': $("#name").val() }));
+	stompClient.send("/chat/chatroom/" + chatroomId, {}, JSON.stringify({ 'chatroomId': chatroomId, 'message': $("#name").val() }));
 }
 
 function showGreeting(message) {

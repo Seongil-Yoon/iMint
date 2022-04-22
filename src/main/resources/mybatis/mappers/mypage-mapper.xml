@@ -152,6 +152,7 @@
 	<!-- 채팅방 목록(임시) -->
 	<select id="getChatroomList" resultType="MypageChatroomDTO">
 	SELECT
+		cr.id,
 	    g.goods_id,
 	    IF(g.seller_id LIKE #{myId}, cr.buyer_id, g.seller_id) AS opponent_id,
 	    IF(g.seller_id LIKE #{myId}, mbbuy.mb_nick, g.seller_nick) AS opponent_nick,

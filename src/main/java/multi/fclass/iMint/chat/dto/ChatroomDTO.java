@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 public class ChatroomDTO {
 
+	private int id; // 채팅방 ID
 	private int goodsId; // 판매글 ID
 	private String opponentId; // 대화상대 ID
 	private String opponentNick; // 대화상대 닉네임
