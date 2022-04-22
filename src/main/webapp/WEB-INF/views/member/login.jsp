@@ -10,6 +10,15 @@
 </head>
 
 <style>
+#wrap {
+	display: flex;
+	margin: auto;
+	justify-content: center; /* 수평 정렬  */
+	align-items: center; /* 수직 정렬  */
+	min-height: 100vh;
+	
+}
+
 .container {
 	display: flex;
 	justify-content: space-between;
@@ -19,41 +28,39 @@
 	flex-direction: column;
 }
 
-img{
-	width: 50px;
-}
-
-.item{
-	width: 200px;
-}
-
-/* #wrap {
-	margin: auto;
-	justify-content: center;
-	width: 300px;
-	flex-direction: column;
-	
+/* .item{
+	width: 250px;
 } */
+
+a{
+	justify-content: center;
+	width:250px;
+}
 
 </style>
 
-<body>  <!--추가할 부분) 로그인되면 버튼 삭제  -->
- 	<%-- <jsp:include page="../include/header.jsp" flush="false" /> --%>
- 	
+<body>
+ 	<div id="wrap">
  	<div class = "container">
+ 	
 	 	<div class="item">
-	 		<a href = "/oauth2/authorization/google"><img alt= "google" src = "/static/images/btn_google_light_focus_xxxhdpi.9.png"> 아이로 가입 / 로그인하기</a>
+			iMint로고
+		</div>
+	 	<div class="item">
+	 		<a href = "/oauth2/authorization/google" class="btn btn-primary">아이 가입/ 로그인</a>
 	 	</div>
 	 	<div class="item">
-		 	<a href = "/oauth2/authorization/naver"><img alt= "naver" src = "/static/images/naver_icon.png">가입 / 로그인하기</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> 
+		 	<a href = "/oauth2/authorization/naver" class="btn btn-naver" style="background-color: #2DB400; color: white">NAVER 가입 / 로그인</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> 
 		</div>
+		    <!-- <p class="text">iMint</p> -->
 	 	<div class="item">
-			<a href = "/oauth2/authorization/kakao"><img alt= "kakao" src = "/static/images/kakao_login_medium_wide.png">가입 / 로그인하기</a>
+			<a href = "/oauth2/authorization/kakao" class="btn btn-kakao" style="background-color: #F7E600; color: #3A1D1D">KAKAO 가입 / 로그인</a>
 		</div>
 		<div class="item">
-			<a href = "/main">둘러보기</a>
+			<a href = "/main" class="btn btn-primary">둘러보기</a>
 		</div>			
  	</div>
+	</div>
 	
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/login.js"></script>
