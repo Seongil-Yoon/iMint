@@ -1,8 +1,10 @@
 package multi.fclass.iMint.mypage.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,59 +18,57 @@ import org.springframework.web.servlet.ModelAndView;
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.mypage.dao.IMypageDAO;
+import multi.fclass.iMint.mypage.dto.MypageChildDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
 import multi.fclass.iMint.mypage.service.IMypageService;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
-
 /**
  * @author haeyeon
  *
  */
 
-
 @Controller
 public class MypageCotroller {
-	
+
 	@Autowired
 	MemberDTO memberDTO;
-	
+
 	@Autowired
 	IMemberDAO memberDAO;
-	
+
 	@Autowired
 	ISecurityDAO securityDAO;
-	
+
 	@Autowired
 	ParseMbId parseMbId;
-	
+
 //	@Autowired
 //	MypageDTO mypageDTO;
-	
+
 	@Autowired
 	IMypageDAO iMypageDAO;
-	
+
 	@Autowired
-	IMypageService imypageService;
-	
+	IMypageService mypageService;
+
 // 마이페이지 - 메인
-	
+
 	@GetMapping("mypage")
 	public ModelAndView index(Authentication auth) {
 		ModelAndView mv = new ModelAndView();
-		
+
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
-		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/guard-mypage/guard-main"); 
-		}
-		else if(memberDTO.getMbRole() == Role.CHILD) {
+
+		if (memberDTO.getMbRole() == Role.GUARD) {
+			mv.setViewName("member/guard-mypage/guard-main");
+		} else if (memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-main");
 		}
-		//계정 관련 정보
+		// 계정 관련 정보
 		String userID = memberDTO.getMbId();
 		String userNickName = memberDTO.getMbNick();
 		String userEmail = memberDTO.getMbEmail();
@@ -76,11 +76,10 @@ public class MypageCotroller {
 		String userLocation = memberDTO.getMbLocation();
 		String userGuard = memberDTO.getMbGuard();
 		String userPin = memberDTO.getMbPin();
-		
+
 		MemberDTO userGuardNick = securityDAO.findByMbId(userGuard);
-		List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID);
-		
-		
+		List<MypageChildDTO> userChilds = mypageService.getMyChildrenList(mbId);
+
 		mv.addObject("userID", userID);
 		mv.addObject("userNickName", userNickName);
 		mv.addObject("userEmail", userEmail);
@@ -89,71 +88,68 @@ public class MypageCotroller {
 		mv.addObject("userGuard", userGuardNick);
 		mv.addObject("userPin", userPin);
 		mv.addObject("userChilds", userChilds);
-		
-		//거래 관련 정보
-		List<MypageDTO> userWish = imypageService.getWishAndReserveList(mbId, 1, 5);
+
+		// 거래 관련 정보
+		List<MypageDTO> userWish = mypageService.getWishAndReserveList(mbId, 1, 5);
 		mv.addObject("userWish", userWish);
-		
-		List<MypageDTO> userSell = imypageService.getSellingList(mbId, 1, 5);
+
+		List<MypageDTO> userSell = mypageService.getSellingList(mbId, 1, 5);
 		mv.addObject("userSell", userSell);
-		
-		List<MypageDTO> userComplete = imypageService.getCompleteList(mbId, 1, 5);
+
+		List<MypageDTO> userComplete = mypageService.getCompleteList(mbId, 1, 5);
 		mv.addObject("userComplete", userComplete);
-		
+
 		return mv;
 	}
-	
-	
+
 // 마이페이지 - 내 동네 설정	
-	
+
 	@GetMapping("mypage/location")
 	public ModelAndView indexLocation(Authentication auth) {
-		
+
 		ModelAndView mv = new ModelAndView();
-		
+
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
+
 		mv.addObject("memberDTO", memberDTO);
 		mv.setViewName("member/guard-mypage/guard-location");
-		
+
 		return mv;
 	}
-	
+
 	@PostMapping("mypage/location")
 	public String indexLocationResult(Authentication auth, String mbLocationOrGuard) {
-		
+
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
+
 		memberDTO.setMbLocation(mbLocationOrGuard);
-		
+
 		memberDAO.updatelocation(memberDTO);
-		
+
 		return "redirect:/mypage";
 	}
-	
 
 // 마이페이지 - 나의 아이민트/내 아이 목록	
-	
+
 	@GetMapping("mypage/mylist")
 	public ModelAndView indexMylist(Authentication auth) {
 		ModelAndView mv = new ModelAndView();
-		
+
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
-		//보호자의 경우
-		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/guard-mypage/guard-mylist"); 
-			
-			String userID = memberDTO.getMbId();
-			List<MemberDTO> userChilds = securityDAO.findByMbGuard(userID); //닉네임 모음
+
+		// 보호자의 경우
+		if (memberDTO.getMbRole() == Role.GUARD) {
+			mv.setViewName("member/guard-mypage/guard-mylist");
+
+			List<MypageChildDTO> userChilds = mypageService.getMyChildrenList(mbId); // 닉네임 모음
 			System.out.println(userChilds);
 			mv.addObject("userChilds", userChilds);
-			
-		//cnt로 구현 시도
-			
+
+			// cnt로 구현 시도
+
 //			int cnt = 0;
 //			
 //			for (MemberDTO child: userChilds) {
@@ -180,62 +176,55 @@ public class MypageCotroller {
 //				mv.addObject("userComplete", userComplete);
 //				
 //				cnt += 1;
-				
-		//이중리스트 구현 시도
-			List<List<MypageDTO>> allWish = new ArrayList<>();
-			List<List<MypageDTO>> allSell = new ArrayList<>();
-			List<List<MypageDTO>> allComplete = new ArrayList<>();
-			
-				for (MemberDTO child: userChilds) {
-					String dtoNick = child.getMbNick();
-					MemberDTO dto = securityDAO.findByMbNick(dtoNick);
-					String childID = dto.getMbId(); //닉네임을 ID로 변환
-					System.out.println(childID);
-					
-					//아이별 관심/구매 목록 불러오기
-					List<MypageDTO> userWish = imypageService.getWishAndReserveList(childID, 1, 5);
-					allWish.add(userWish);
 
-					//아이별 판매 목록
-					List<MypageDTO> userSell = imypageService.getSellingList(childID, 1, 5);
-					allSell.add(userSell);
-					
-					
-					//아이별 거래완료 목록
-					List<MypageDTO> userComplete = imypageService.getCompleteList(childID, 1, 5);
-					allComplete.add(userComplete);
-				
-				}
+			// 맵으로 구현
+			Map<String, List<MypageDTO>> allWish = new HashMap<String, List<MypageDTO>>();
+			Map<String, List<MypageDTO>> allSell = new HashMap<String, List<MypageDTO>>();
+			Map<String, List<MypageDTO>> allComplete = new HashMap<String, List<MypageDTO>>();
 
-				mv.addObject("allWish", allWish);
-				mv.addObject("allSell", allSell);
-				mv.addObject("allComplete", allComplete);
-			
+			for (MypageChildDTO child : userChilds) {
+				// 아이별 관심/구매 목록 불러오기
+				List<MypageDTO> userWish = mypageService.getWishAndReserveList(child.getChildId(), 1, 5);
+				allWish.put(child.getChildNick(), userWish);
+
+				// 아이별 판매 목록
+				List<MypageDTO> userSell = mypageService.getSellingList(child.getChildId(), 1, 5);
+				allSell.put(child.getChildNick(), userSell);
+
+				// 아이별 거래완료 목록
+				List<MypageDTO> userComplete = mypageService.getCompleteList(child.getChildId(), 1, 5);
+				allComplete.put(child.getChildNick(), userComplete);
+
 			}
-		
-		//아이의 경우
-		else if(memberDTO.getMbRole() == Role.CHILD) {
+
+			mv.addObject("allWish", allWish);
+			mv.addObject("allSell", allSell);
+			mv.addObject("allComplete", allComplete);
+
+		}
+
+		// 아이의 경우
+		else if (memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-myList");
 			String userID = memberDTO.getMbId();
-			
+
 			// 관심/구매 목록
-			List<MypageDTO> userWish = imypageService.getWishAndReserveList(userID, 1, 100);
+			List<MypageDTO> userWish = mypageService.getWishAndReserveList(userID, 1, 100);
 			mv.addObject("userWish", userWish);
-			
-			//판매 목록
-			List<MypageDTO> userSell = imypageService.getSellingList(userID, 1, 100);
+
+			// 판매 목록
+			List<MypageDTO> userSell = mypageService.getSellingList(userID, 1, 100);
 			mv.addObject("userSell", userSell);
 			System.out.println(userSell);
 			System.out.println(userID);
-			//거래완료 목록
-			List<MypageDTO> userComplete = imypageService.getCompleteList(userID, 1, 100);
+			// 거래완료 목록
+			List<MypageDTO> userComplete = mypageService.getCompleteList(userID, 1, 100);
 			mv.addObject("userComplete", userComplete);
-			
-			
+
 		}
 		return mv;
 	}
-	
+
 //	@GetMapping("mypage/block")
 //	public ModelAndView indexBlocklist(Authentication auth) {
 //		ModelAndView mv = new ModelAndView();
@@ -252,7 +241,7 @@ public class MypageCotroller {
 //		
 //		return mv;
 //	}
-	
+
 //	@GetMapping("mypage/edit")
 //	public String indexEdit() {
 //		return "member/baby-mypage/baby-edit";
@@ -263,4 +252,3 @@ public class MypageCotroller {
 //		return "member/baby-mypage/baby-withdraw";
 //	}
 }
-
