@@ -58,17 +58,9 @@ body::after{ /* 가상 선택자  */
 
 .item{
 	padding: 4px;
-	justify-content: center;  ?
 	
 }
 
-/* .item:nth-child(4){
-	text-shadow: 0 0 #000, 0 0 #000, 0 0 #000, 0 0 #ffd400;
-} */
-/* .container:hover{
-	opacity: 1;
-	
-} */
 
 a{
 	justify-content: center;
@@ -81,6 +73,8 @@ a{
     max-width:100%;
     
     flex-direction: row;
+    
+   	width: 600px;
 }
 
 .thick {
@@ -100,36 +94,55 @@ h2, p{
 	color: white;
 }
 
-/* .item p{
-        background-color: #ffffff;
-        background-color: rgba( 255, 255, 255, 0.2 )
-} */
 
+#moving { 
+display: flex; 
+align-items: center; 
+justify-content: center; 
+width: 50px; 
+height: 50px; 
+animation: motion 2s infinite;
+
+/* 애니메이션 적용 */ }
+
+@keyframes motion { 
+
+0% {transform: rotate( -15deg );}
+25% {transform: rotate( -10eg );}
+50% {transform: rotate( 0deg );}
+75% {transform: rotate( 10deg );}
+85% {transform: rotate( 0deg );}
+100% {transform: rotate( -10deg );}
+} 
+ 
 </style>
 
 <body>
+	
  	<div id="wrap" class = "highlight">
  	<div class = "container">
 
   	 	<div class="item">
-	 		<h2 style = "text-align: center">iMint</h2>
+  	 		<img id = "moving" src = "/static/images/mint.png">
+	 		<h2 style = "text-align: center; width:225px;">iMint</h2>
 	 	</div>
 	 	<div class="item">
-	 		<a href = "/oauth2/authorization/google" class="btn btn-dark opacity-75" style="color: white" >아이 가입 / 로그인(BETA)</a>
+	 		<a href = "/oauth2/authorization/google" class="btn btn-dark opacity-75" style="color: white" >아이 가입 | 로그인(BETA)</a>
 	 	</div>
 	 	<div class="item">
-		 	<a href = "/oauth2/authorization/naver" class="btn btn-dark opacity-75" style="color: #2DB400">NAVER 가입 / 로그인</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> <!-- #2DB400 --> 
+		 	<a href = "/oauth2/authorization/naver" class="btn btn-dark opacity-75" style="color: #2DB400">NAVER 가입 | 로그인</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> <!-- #2DB400 --> 
 		</div>
 	 	<div class="item">
-			<a href = "/oauth2/authorization/kakao" class="btn btn-dark opacity-75" style="color: #F7E600">KAKAO 가입 / 로그인</a> <!-- #F7E600, #3A1D1D -->
+			<a href = "/oauth2/authorization/kakao" class="btn btn-dark opacity-75" style="color: #F7E600">KAKAO 가입 | 로그인</a> <!-- #F7E600, #3A1D1D -->
 		</div>
 		<div class="item">
 			<a href = "/main" class="btn btn-dark opacity-75" style="color:  white">둘러보기</a>
 		</div>	
-		
-				
  	</div>
 	</div>
+
+	<br>
+	<br>
 		<div class="fadeinleft" class="shadow p-3 mb-5 bg-body rounded">
 			<img src = "/static/images/mint.png">
 			<h3>
@@ -172,6 +185,5 @@ h2, p{
 
 	</script>
 	
-<!-- 	<script src="/static/js/login.js"></script> -->
 </body>
 </html>
