@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+body{
+	width:600px;
+	margin: auto;
+	justify-content: center; /* 수평 정렬  */
+	align-items: center; /* 수직 정렬  */
+	min-height: 100vh;	
+	
+	background-color: black;
+	/* opacity: 0.8; */
+}
+
+body::after{ /* 가상 선택자  */
+	width: 100%;
+  	height: 100%;
+  	content: "";
+	background: url('/static/images/background.png');
+	background-repeat: no-repeat; /* 적용 x */
+  	background-attachment: fixed;
+  	background-position: center;
+	position: absolute;
+  	top: 0;
+  	left: 0;
+  	z-index: -1;
+  	opacity: 0.7;
+  	/* filter: grayscale(100%); */
+}
+
+#wrap {
+	display: flex;
+	margin: auto;
+	justify-content: center; /* 수평 정렬  */
+	align-items: center; /* 수직 정렬  */
+	min-height: 100vh;	
+}
+
+.container {
+	display: flex;
+	justify-content: space-between;
+	justify-content: center;
+	margin: auto;
+	width: 250px;
+	flex-direction: column;
+}
+
+.item{
+	padding: 4px;
+}
+
+a{
+	justify-content: center;
+	width:250px;
+}
+ 
+/* 움직이는 효과 with JS */ 
+.fadeinleft {
+    opacity:0;
+    margin-left:-300px;    
+    max-width:100%;
+    
+    flex-direction: row;
+    
+   	width: 600px;
+}
+
+.thick {
+	 font-weight: bold;
+}
+
+img{
+	width: 100px;
+	float: left;
+}
+
+h3 {
+	color: #3387a8;
+	color: white;
+}
+
+h2, p{
+	color: white;
+}
+
+/* 애니메이션 적용 */
+#moving { 
+display: flex; 
+align-items: center; 
+justify-content: center; 
+width: 50px; 
+height: 50px; 
+animation: motion 2s infinite;
+}
+
+@keyframes motion { 
+	0% {transform: rotate( -15deg );}
+	20% {transform: rotate( -10eg );}
+	40% {transform: rotate( -5eg );}
+	50% {transform: rotate( 0deg );}
+	60% {transform: rotate( 5deg );}
+	75% {transform: rotate( 10deg );}
+	85% {transform: rotate( 0deg );}
+	100% {transform: rotate( -10deg );}
+} 
+
+/* 푸터  */
+.mint-footer{
+	background-color: black !important; 
+}
+
+.mint-footer a{
+	color : white !important;
+}
