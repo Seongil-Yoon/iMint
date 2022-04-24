@@ -88,11 +88,43 @@ function selectChild(event){
 	const selected = event.target.id;
 	const childTitle = document.getElementById('child-define');
 	
-	console.log(childTitle);
-	
 	childTitle.innerHTML = "내 아이 " + selected + "님의 거래 관련 목록입니다";
 }
 
 childSelected.forEach(item => item.addEventListener('click', selectChild));
 
 
+//드롭다운에서 내 아이 선택 시 해당 아이에 해당하는 내용이 보여지도록 함
+function showChild(event){
+	const selected = event.target.id;
+	
+	console.log(selected);
+	
+	removeShowList();
+	
+	targetList = document.getElementsByClassName(selected);
+	
+	console.log(targetList);
+	/*parentlist = $(listTarget).parents(".show");
+	childlist= $(parentlist).find("div.item-list");
+	*/
+
+	console.log(targetList[0]);
+	
+	for(i = 0; i < targetList.length; i++){
+		targetList[i].classList.add('show-list');	
+		console.log(targetList[i]);
+	}
+}
+
+function removeShowList(){
+	targetList = document.querySelectorAll('.item-list');
+	
+	var i;
+	
+	for(i = 0; i < targetList.length; i++){
+		targetList[i].classList.remove('show-list');
+	}
+}
+
+childSelected.forEach(item => item.addEventListener('click', showChild));

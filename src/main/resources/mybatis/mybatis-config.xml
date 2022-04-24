@@ -11,13 +11,15 @@
 	<typeAliases>
 		<typeAlias type="multi.fclass.iMint.admin.dto.AdminDTO" alias="adminDTO" />
 		<typeAlias type="multi.fclass.iMint.block.dto.BlockDTO" alias="blockDTO" />
-		<typeAlias type="multi.fclass.iMint.chat.dto.ChatRoomDTO" alias="chatRoomDTO" />
 		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsDTO" alias="goodsDTO" />
 		<typeAlias type="multi.fclass.iMint.goods.dto.GoodsImagesDTO" alias="goodsImagesDTO" />
 		<typeAlias type="multi.fclass.iMint.member.dto.MemberDTO" alias="memberDTO" />
 		<typeAlias type="multi.fclass.iMint.rating.dto.RatingDTO" alias="ratingDTO" />
+		<typeAlias type="multi.fclass.iMint.chat.dto.ChatMessageDTO" alias="ChatMessageDTO" />
+		<typeAlias type="multi.fclass.iMint.chat.dto.ChatCheckDTO" alias="ChatCheckDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageDTO" alias="MypageDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageChatroomDTO" alias="MypageChatroomDTO" />
+		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageChildDTO" alias="MypageChildDTO" />
 		<typeAlias type="multi.fclass.iMint.wishlist.dto.WishlistDTO" alias="WishlistDTO" />
 		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionChatroomDTO" alias="TransactionChatroomDTO" />
 		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionCheckDTO" alias="TransactionCheckDTO" />

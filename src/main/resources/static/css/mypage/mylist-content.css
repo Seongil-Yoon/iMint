@@ -28,3 +28,13 @@
     height: 100px;
     line-height: 6;
 }
+ .item-list-guard{
+	display: none;
+}
+
+/* 선택한 아이만 보이게 함 */
+.show-list{
+	display: grid !important;
+    opacity: 1 !important;
+    transition: all 1000 ease-in;
+} 

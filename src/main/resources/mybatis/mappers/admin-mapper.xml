@@ -8,5 +8,11 @@
 	select mb_nick, mb_email, mb_role, mb_guard, mb_join_date from imint.member
 </select>
 
+<select id="selectmemberstats" resultType="adminDTO">
+	SELECT mb_location, SUM(mb_isdelete) mb_withdraw_all, count(mb_id) as mb_cnt_all
+	FROM imint.member
+	GROUP BY mb_location
+</select>
+
 
 </mapper>

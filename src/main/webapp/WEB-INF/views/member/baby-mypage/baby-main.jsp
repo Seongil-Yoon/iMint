@@ -31,7 +31,7 @@
     <div class="container-main">
         <h2 class="welcome-message">${userNickName}님 안녕하세요!</h2>
         <!-- 보호자 로그인시 숨김 -->
-        <h2 class="transaction-summary">최근 3달간 판매금액은 ~원이고, 구매금액은 ~원입니다.</h2>
+        <h2 class="transaction-summary">최근 3달간 판매금액은 ${totalSell}원이고, 구매금액은 ${totalBuy}원입니다.</h2>
         <!-- 거래 관련 -->
         <div class="container-transaction">
             <div class="transaction">
@@ -60,6 +60,15 @@
         <!-- 회원 상태 -->
         <div class="container-summary">
             <h5 class="text-summary">${userNickName}님은 아이 회원입니다.</h5>
+            <c:choose>
+            	<c:when test="${userPhoto.equals('null')} || ${userPhoto == null}">
+            		<img src="/static/images/default-icon.jpeg">
+            		<p>사진 없음</p>
+            	</c:when>
+            	<c:otherwise>
+            		<img src="${userPhoto}">
+            	</c:otherwise>
+            </c:choose>
             <p>이메일: ${userEmail}</p>
             <p>관심사: ${userInterest}</p>
             <a class="btn btn-primary" href="#">자세히</a>

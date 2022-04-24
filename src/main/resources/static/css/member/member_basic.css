@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+body{
+	width: 100%;
+	margin: auto;
+	justify-content: center; /* 수평 정렬  */
+	align-items: center; /* 수직 정렬  */
+	min-height: 100vh;	
+	
+}
+
+#wrap {
+	display: flex;
+	margin: auto;
+	justify-content: center; /* 수평 정렬  */
+	align-items: center; /* 수직 정렬  */
+	min-height: 100vh;	
+}
+
+.container {
+	display: flex;
+	/* justify-content: space-between; */
+	justify-content: center; /* 수평 정렬  */
+	align-items: center;  /* 수직 정렬  */
+	margin: auto;
+	width: 600px;
+	flex-direction: column;
+}
+
+.item{
+	padding: 4px;
+}
+
+h3{
+	text-align: center;
+}

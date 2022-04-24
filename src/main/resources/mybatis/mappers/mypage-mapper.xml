@@ -3,6 +3,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.mypage.dao.IMypageDAO">
+	<!-- 내 아이 목록 -->
+	<select id="getMyChildrenList" resultType="MypageChildDTO">
+		SELECT
+			mb_id AS child_id,
+			mb_nick AS child_nick
+		FROM
+			`imint`.`member`
+		WHERE
+			mb_guard LIKE #{myId}
+	</select>
+
 	<!-- 관심 + 구매예약 목록 -->
 	<select id="getWishAndReserveList" resultType="MypageDTO">
 		SELECT
@@ -113,6 +124,7 @@
 	<select id="getCompleteList" resultType="MypageDTO">
 		SELECT
 			IF(trx.mb_id LIKE #{myId}, "buy", "sell") AS category,
+			g.seller_nick,
 			g.goods_id,
 		    g.goods_title,
 		    g.goods_price,
@@ -141,6 +153,7 @@
 	<!-- 채팅방 목록(임시) -->
 	<select id="getChatroomList" resultType="MypageChatroomDTO">
 	SELECT
+		cr.id,
 	    g.goods_id,
 	    IF(g.seller_id LIKE #{myId}, cr.buyer_id, g.seller_id) AS opponent_id,
 	    IF(g.seller_id LIKE #{myId}, mbbuy.mb_nick, g.seller_nick) AS opponent_nick,
@@ -156,7 +169,25 @@
 	    JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
 	    JOIN (SELECT mb_id, mb_thumbnail FROM `imint`.`member`) AS mbsell on g.seller_id = mbsell.mb_id
 	    JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
-	    LEFT JOIN (SELECT chatroom_id, message, send_date FROM `imint`.`chat_messages` WHERE deleted = FALSE ORDER BY send_date DESC LIMIT 1) AS cm ON cr.id = cm.chatroom_id
+	    LEFT JOIN
+	    	(SELECT
+	    		chatroom_id,
+	    		message,
+	    		send_date
+	    	FROM
+	    		(SELECT
+	    			chatroom_id,
+	    			message,
+	    			send_date,
+	    			ROW_NUMBER() OVER(PARTITION BY chatroom_id ORDER BY send_date DESC) AS recent
+	    		FROM
+	    			`imint`.`chat_messages`
+	    		WHERE
+	    			is_deleted = FALSE) AS r
+	    	WHERE
+	    		r.recent = 1
+	    	ORDER BY
+	    		send_date DESC) AS cm ON cr.id = cm.chatroom_id
 	WHERE
 		cr.isdelete = FALSE
 	    AND gi.goods_images_isdelete = FALSE

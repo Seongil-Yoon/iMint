@@ -15,19 +15,19 @@
 	</select>
 	
 	<!-- 해당 상품 관심등록여부 조회 -->
-	<select id="checkMyWishlist" parameterType="Map" resultType="WishlistDTO">
+	<select id="checkMyWishlist" resultType="WishlistDTO">
 		SELECT
 			wishlist_id,
 			wishlist_isdelete AS deleted
 		FROM
 			`imint`.`wishlist`
 		WHERE
-			mb_id = #{myId}
+			mb_id LIKE #{myId}
 			AND goods_id = #{goodsId}
 	</select>
 	
 	<!-- 해당 상품 관심등록: DB에 없을 때 -->
-	<insert id="insertWishlist" parameterType="Map">
+	<insert id="insertWishlist">
 		INSERT INTO
 			`imint`.`wishlist`(mb_id, goods_id)
 		VALUES
@@ -42,7 +42,7 @@
 			wishlist_create_date = CURRENT_TIMESTAMP,
 			wishlist_isdelete = FALSE
 		WHERE
-			mb_id = #{myId}
+			mb_id LIKE #{myId}
 			AND goods_id = #{goodsId}
 	</update>
 	
@@ -53,7 +53,7 @@
 		SET
 			wishlist_isdelete = TRUE
 		WHERE
-			mb_id = #{myId}
+			mb_id LIKE #{myId}
 			AND goods_id = #{goodsId}
 	</update>
 </mapper>
