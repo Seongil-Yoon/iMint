@@ -16,6 +16,7 @@
 		<typeAlias type="multi.fclass.iMint.member.dto.MemberDTO" alias="memberDTO" />
 		<typeAlias type="multi.fclass.iMint.rating.dto.RatingDTO" alias="ratingDTO" />
 		<typeAlias type="multi.fclass.iMint.chat.dto.ChatMessageDTO" alias="ChatMessageDTO" />
+		<typeAlias type="multi.fclass.iMint.chat.dto.ChatCheckDTO" alias="ChatCheckDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageDTO" alias="MypageDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageChatroomDTO" alias="MypageChatroomDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageChildDTO" alias="MypageChildDTO" />
