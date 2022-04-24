@@ -60,6 +60,15 @@
         <!-- 회원 상태 -->
         <div class="container-summary">
             <h5 class="text-summary">${userNickName}님은 아이 회원입니다.</h5>
+            <c:choose>
+            	<c:when test="${userPhoto.equals('null')} || ${userPhoto == null}">
+            		<img src="/static/images/default-icon.jpeg">
+            		<p>사진 없음</p>
+            	</c:when>
+            	<c:otherwise>
+            		<img src="${userPhoto}">
+            	</c:otherwise>
+            </c:choose>
             <p>이메일: ${userEmail}</p>
             <p>관심사: ${userInterest}</p>
             <a class="btn btn-primary" href="#">자세히</a>

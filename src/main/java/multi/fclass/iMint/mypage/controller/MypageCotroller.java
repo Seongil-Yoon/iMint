@@ -83,6 +83,7 @@ public class MypageCotroller {
 		String userLocation = memberDTO.getMbLocation();
 		String userGuard = memberDTO.getMbGuard();
 		String userPin = memberDTO.getMbPin();
+		String userPhoto = memberDTO.getMbThumbnail();
 
 		MemberDTO userGuardNick = securityDAO.findByMbId(userGuard);
 		List<MypageChildDTO> userChilds = mypageService.getMyChildrenList(mbId);
@@ -95,6 +96,9 @@ public class MypageCotroller {
 		mv.addObject("userGuard", userGuardNick);
 		mv.addObject("userPin", userPin);
 		mv.addObject("userChilds", userChilds);
+		mv.addObject("userPhoto", userPhoto);
+		
+		System.out.println("사진" + userPhoto);
 
 		// 거래 관련 정보
 		List<MypageDTO> userWish = mypageService.getWishAndReserveList(mbId, 1, 5);
