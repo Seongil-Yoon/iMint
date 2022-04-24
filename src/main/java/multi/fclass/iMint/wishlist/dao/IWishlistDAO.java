@@ -1,7 +1,5 @@
 package multi.fclass.iMint.wishlist.dao;
 
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Mapper;
 
 import multi.fclass.iMint.wishlist.dto.WishlistDTO;
@@ -15,12 +13,12 @@ public interface IWishlistDAO {
 
 	public int countWishlist(int goodsId);
 
-	public WishlistDTO checkMyWishlist(Map<String, Object> params);
+	public WishlistDTO checkMyWishlist(String myId, int goodsId);
 
-	public int insertWishlist(Map<String, Object> params);
+	public int insertWishlist(String myId, int goodsId);
 
-	public int updateWishlist(Map<String, Object> params);
+	public int updateWishlist(String myId, int goodsId);
 
-	public int removeWishlist(Map<String, Object> params);
+	public int removeWishlist(String myId, int goodsId);
 
 }
