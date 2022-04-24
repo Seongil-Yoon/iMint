@@ -6,8 +6,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -120,13 +127,24 @@ public class MypageCotroller {
 
 	@PostMapping("mypage/location")
 	public String indexLocationResult(Authentication auth, String mbLocationOrGuard) {
-
+		
 		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId); //보호자 본인
 
 		memberDTO.setMbLocation(mbLocationOrGuard);
 
 		memberDAO.updatelocation(memberDTO);
+		
+		
+		List<MemberDTO> childs = securityDAO.findByMbGuard(mbId); // 연결된 아이
+		
+					
+			for(MemberDTO child : childs){
+				System.out.println(child);
+				child.setMbLocation(mbLocationOrGuard);
+				System.out.println(mbLocationOrGuard);
+				memberDAO.updatelocation(child);
+			};
 
 		return "redirect:/mypage";
 	}
@@ -148,34 +166,6 @@ public class MypageCotroller {
 			System.out.println(userChilds);
 			mv.addObject("userChilds", userChilds);
 
-			// cnt로 구현 시도
-
-//			int cnt = 0;
-//			
-//			for (MemberDTO child: userChilds) {
-//				String dtoNick = child.getMbNick();
-//				MemberDTO dto = securityDAO.findByMbNick(dtoNick);
-//				String childID = dto.getMbId(); //닉네임을 ID로 변환
-//				System.out.println(childID);
-//				
-//				//아이별 관심/구매 목록 불러오기
-//				List<MypageDTO> userWish = imypageService.getWishAndReserveList(childID, 1, 5);
-//				mv.addObject("cnt" + cnt, userWish); //cnt0, cnt1.. 처럼 key값 저장
-//				
-//				
-//				System.out.println(userWish);
-//				System.out.println("cnt" + cnt);
-//				
-//				
-//				//아이별 판매 목록
-//				List<MypageDTO> userSell = imypageService.getSellingList(childID, 1, 5);
-//				mv.addObject("userSell", userSell);
-//				
-//				//아이별 거래완료 목록
-//				List<MypageDTO> userComplete = imypageService.getCompleteList(childID, 1, 5);
-//				mv.addObject("userComplete", userComplete);
-//				
-//				cnt += 1;
 
 			// 맵으로 구현
 			Map<String, List<MypageDTO>> allWish = new HashMap<String, List<MypageDTO>>();
