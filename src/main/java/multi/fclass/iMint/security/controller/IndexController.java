@@ -106,7 +106,7 @@ public class IndexController {
 
 	// 회원가입은 총 4단계 
 	// 회원가입 2(보호자, 아이 모두): sns 가입(회원가입 1)후 register 페이지로 이동
-	@GetMapping("/register")
+	@GetMapping("/register/2")
 	public ModelAndView registersns(Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
         log.info("---------- register ---------");
@@ -145,7 +145,7 @@ public class IndexController {
 	}
 	
 	// 회원가입 3(보호자, 아이 모두. 로직은 분리)
-	@PostMapping("/register") //
+	@PostMapping("/register/3") 
 	public ModelAndView registersns(HttpServletRequest req, String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
 		ModelAndView mv = new ModelAndView();
@@ -170,49 +170,6 @@ public class IndexController {
 	}
 	
 
-	// 회원가입 3(보호자): 내 동네 설정 -> 보호자, 관리자 권한 부여
-
-//	@ResponseBody
-////	@RequestMapping(value = "/mypage/location", method = RequestMethod.GET, produces = {"application/json;charset=utf-8"})
-//	@RequestMapping("/mypage/location")
-//	public ModelAndView GUARDlocation(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest, String mbLocation) { // String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest
-//		
-//		ModelAndView mv = new ModelAndView();
-//		
-//		User user = parseMbId.getMemberMbId(mbId);
-//		System.out.println(mbId);
-//		System.out.println(mbNick);
-//		System.out.println(mbRole);
-//
-//		//		user.setMbNick(mbNick);
-////		user.setMbRole(mbRole);
-////		user.setMbEmail(mbEmail);
-////		user.setMbInterest(mbInterest);
-////		user.setMbLocation(mbLocation);
-////		userdao.savedetails(mbId, mbNick, mbRole, mbEmail, mbInterest, mbLocation, null); // 1차 저장 
-//		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
-//		mv.setViewName("member/guard-mypage/guard-location");
-//		return mv;
-//	}
-//	
-//	// 회원가입 3(아이): 보호자 연결 설정 -> 아이, 관리자 권한 부여
-//	//@PreAuthorize("hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')")
-//	@GetMapping("/register/connect")		
-//	public ModelAndView babyconnect(String mbId, String mbNick, Role mbRole, String mbEmail, String mbInterest) {
-//		ModelAndView mv = new ModelAndView();
-//		User user = userdao.findByMbId(mbId);
-//		user.setMbId(mbId);
-//		user.setMbNick(mbNick);
-//		user.setMbRole(mbRole);
-//		user.setMbEmail(mbEmail);
-//		user.setMbInterest(mbInterest);
-//		
-//		mv.addObject("user", user);  // 객체 추가할 때 user 객체 
-//		mv.setViewName("member/register_connect");
-//		return mv;
-//	}
-
-	
 	// 회원가입 4(최종. 보호자, 아이 모두)
 	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
 	// 회원가입 후 다시 로그인 요청
@@ -278,11 +235,12 @@ public class IndexController {
 					mv.setViewName("member/login");
 				}
 				else { // 보호자의 입력정보가 틀리면 다시 보내기
-					mv.setViewName("redirect:/register");
+					mv.setViewName("member/register_connect");
 				}
 			} catch (NullPointerException e) {
 				e.printStackTrace();
-				mv.setViewName("redirect:/register");	// 보호자의 입력정보가 틀리면 다시 보내기
+				mv.setViewName("member/register_connect");	// 보호자의 입력정보가 틀리면 다시 보내기
+				mv.addObject("err", "정확한 보호자의 닉네임, Pin을 입력해주세요.");
 			}			
 				return mv;
 		}	
@@ -316,41 +274,4 @@ public class IndexController {
 	} // catch end
 		
 	}
-//	
-//    @RequestMapping("/log-test")
-//    public String logTest(){
-//        // 로그 라이브러리 이용한 출력
-//        log.trace("trace log={}", name);
-//        log.debug("debug log={}", name);
-//        log.info("info log={}", name);
-//        log.warn("warn log={}", name);
-//        log.error("error log={}", name);
-//
-//        return "ok";
-//    }
-		
-	// SecuritConfig에서 secured어노테이션 활성화: securedEnabled = true
-	// @Secured: 권한 
-//	@Secured("ROLE_ADMIN")
-//	@GetMapping("/info")
-//	public @ResponseBody String info() {
-//		return "개인정보";
-//	}
-
-	// SecuritConfig에서 preAuthorize 어노테이션 활성화: prePostEnabled = true 
-	// @PreAuthorize: 해당 메서드가 실행되기 직전에 실행 
-	// 여러개 걸고 싶을 떄 hasRole 사용 
-//	@PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-//	@GetMapping("/data")
-//	public @ResponseBody String data() {
-//		return "데이터";
-//	}
-//	
-
-	
-//	@GetMapping("/admin")
-//	public @ResponseBody String admin() {
-//		return "admin";
-//	}
-
 }
