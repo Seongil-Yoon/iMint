@@ -1,22 +1,5 @@
 var stompClient = null;
-
-function getChatMessages(chatroomId, pageNumber, numberOfItems) {
-	$.ajax({
-		url: "/chat/get",
-		type: "GET",
-		data: {
-			"chatroomId": chatroomId,
-			"pageNumber": pageNumber,
-			"numberOfItems": numberOfItems
-		},
-		dataType: "JSON",
-		success: function(result) {
-			for (let i = 0; i < result.length; i++) {
-				$("#greetings").append("<tr><td>" + result[i].senderNick + ": " + result[i].message + "</td></tr>");
-			}
-		}
-	});
-}
+connect();
 
 function setConnected(connected) {
 	$("#connect").prop("disabled", connected);
@@ -27,19 +10,18 @@ function setConnected(connected) {
 	else {
 		$("#conversation").hide();
 	}
+	$("#greetings").html("");
 }
 
 function connect() {
-	var socket = new SockJS('/ws');
+	var socket = new SockJS('/chat');
 	stompClient = Stomp.over(socket);
-	stompClient.connect({ "user-name": myId }, function(frame) {
+	stompClient.connect({}, function(frame) {
 		setConnected(true);
 		console.log('Connected: ' + frame);
 		stompClient.subscribe('/chat/chatroom/' + chatroomId, function(chatMessage) {
-			showGreeting(JSON.parse(chatMessage.body));
+			showGreeting(JSON.parse(chatMessage.body).message);
 		});
-	}, function() {
-
 	});
 }
 
@@ -52,12 +34,11 @@ function disconnect() {
 }
 
 function sendName() {
-	stompClient.send("/chat/send/chatroom/" + chatroomId, {}, JSON.stringify({ 'message': $("#name").val() }));
-	$("#name").val("")
+	stompClient.send("/chat/chatroom/" + chatroomId, {}, JSON.stringify({ 'chatroomId': chatroomId, 'message': $("#name").val() }));
 }
 
-function showGreeting(chatMessage) {
-	$("#greetings").prepend("<tr><td>" + chatMessage.senderNick + ": " + chatMessage.message + "</td></tr>");
+function showGreeting(message) {
+	$("#greetings").append("<tr><td>" + message + "</td></tr>");
 }
 
 $(function() {
@@ -67,6 +48,4 @@ $(function() {
 	$("#connect").click(function() { connect(); });
 	$("#disconnect").click(function() { disconnect(); });
 	$("#send").click(function() { sendName(); });
-	connect();
-	getChatMessages(chatroomId, 0, 50);
 });

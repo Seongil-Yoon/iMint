@@ -3,95 +3,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.chat.dao.IChatDAO">
-	<!-- 전송된 메세지 저장 -->
-	<insert id="sendChatMessage" parameterType="ChatMessageDTO">
-		INSERT INTO
-			`imint`.`chat_messages`
-		VALUES
-			(NULL, #{chatroomId}, #{senderId}, #{message}, #{read} , #{sendDate}, #{isDeleted})
-		<selectKey keyProperty="id" order="AFTER" resultType="Integer">
-			SELECT MAX(id) FROM `imint`.`chat_messages`
-		</selectKey>
-	</insert>
-
-	<!-- 채팅방 메세지 가져오기 -->
 	<select id="getChatMessages" resultType="ChatMessageDTO">
 		SELECT
-			cm.id,
-			cm.chatroom_id,
-			cm.sender_id,
-			mb.mb_nick AS sender_nick,
-			if(is_deleted = TRUE, "삭제된 메세지입니다.", cm.message) AS message,
-			cm.is_read,
-			cm.send_date,
-			cm.is_deleted
+			id,
+			chatroom_id,
+			sender_id,
+			if(deleted = TRUE, "삭제된 메세지입니다.", message) AS message,
+			read,
+			send_date,
+			deleted
 		FROM
-			`imint`.`chat_messages` AS cm
-			JOIN `imint`.`member` AS mb ON cm.sender_id = mb.mb_id
+			`imint`.`chat_messages`
 		WHERE
 			chatroom_id = #{chatroomId}
-		ORDER BY
-			send_date DESC
-		LIMIT
-			#{startIndex}, #{numberOfItems}
 	</select>
-	
-	<!-- 회원 여부 조회 -->
-	<select id="checkMember" resultType="String">
-		SELECT
-			mb_nick
-		FROM
-			`imint`.`member`
-		WHERE
-			mb_id LIKE #{myId}
-	</select>
-	
-	<!-- 채팅방 입장가능여부 조회 -->
-	<select id="checkChatJoinable" resultType="Integer">
-		SELECT
-			count(*)
-		FROM
-			`imint`.`chatroom` AS cr
-			JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
-		WHERE
-			cr.isdelete = FALSE
-			AND cr.id = #{chatroomId}
-			AND (cr.buyer_id LIKE #{myId} OR g.seller_id LIKE #{myId})
-	</select>
-	
-	<!-- 채팅방 입장 조건 확인을 위한 정보 조회 -->
-	<select id="checkChatOpenable" resultType="ChatCheckDTO">
-		SELECT
-			g.seller_id,
-			cr.resrv_date,
-			cr.buyer_id AS resrv_buyer_id,
-			trx.trx_complete_date AS comp_date,
-			trx.mb_id AS comp_buyer_id
-		FROM
-			`imint`.`goods` AS g
-			LEFT JOIN (SELECT goods_id, resrv_date, buyer_id, id FROM `imint`.`chatroom` WHERE resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
-			LEFT JOIN (SELECT goods_id, trx_complete_date, mb_id FROM `imint`.`transaction` WHERE trx_complete_date IS NOT NULL) AS trx ON g.goods_id = trx.goods_id
-		WHERE
-			g.goods_id = #{goodsId}
-	</select>
-	
-	<!-- 생성된 채팅방 조회 -->
-	<select id="getBuyerChatroom" resultType="Integer">
-		SELECT
-			id
-		FROM
-			`imint`.`chatroom`
-		WHERE
-			isdelete = FALSE
-			AND goods_id = #{goodsId}
-			AND buyer_id LIKE #{myId}
-	</select>
-	
-	<!-- 채팅방 생성 -->
-	<insert id="createChatroom">
-		INSERT INTO
-			`imint`.`chatroom`(goods_id, buyer_id)
-		VALUES
-			(#{goodsId}, #{myId})
-	</insert>
 </mapper>
