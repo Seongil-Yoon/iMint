@@ -39,6 +39,6 @@
     </select>  
     
     <select id="findByMbGuard" resultType="multi.fclass.iMint.member.dto.MemberDTO">
-        SELECT mb_nick FROM imint.member WHERE mb_guard = #{mbGuard}
+        SELECT * FROM imint.member WHERE mb_guard = #{mbGuard}
     </select>  
 </mapper>
