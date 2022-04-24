@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 
@@ -32,7 +33,7 @@
 			<div class="col-md-6">
 				<form class="form-inline">
 					<div class="form-group">
-						<label for="name">What is your name?</label> <input type="text" id="name" class="form-control" placeholder="Your name here...">
+						<label for="name">Say something!</label> <input type="text" id="name" class="form-control" placeholder="Input message here...">
 					</div>
 					<button id="send" class="btn btn-default" type="submit">Send</button>
 				</form>
@@ -54,12 +55,13 @@
 	</div>
 
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
+	<script>
+		let chatroomId = "${param.id}";
+		let myId = "${sessionScope.memberDTO.mbId}";
+	</script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<script src="/static/js/chat/chatroom.js"></script>
-	<script>
-		let chatroomId = ${ param.id }
-	</script>
 </body>
 
 </html>
