@@ -45,7 +45,7 @@
 		    latitude = latitude.toFixed(5);
 	    	longitude = pos.coords.longitude;
 	    	longitude = longitude.toFixed(5);
-	    	alert("현재 위치는 : " + latitude + ", "+ longitude);
+	    	// alert("현재 위치는 : " + latitude + ", "+ longitude);
 	    	
 		/* 카카오 지도 API */
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -67,7 +67,7 @@
 		
 		
 	    /* 좌표로 구정보 얻기 : 카카오 API*/
-	    $("#mylocation_btn").on('click', function(){
+/* 	    $("#mylocation_btn").on('click', function(){ */
 
  			 $.ajax({
 				url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&output_coord=WGS84&x=' + longitude +'&y=' + latitude,
@@ -84,7 +84,7 @@
  						var secLocation = JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
  						var len = secLocation.length;
  						contentStr += " " + secLocation.substring(1,len-1);
- 						alert(contentStr);
+// 						alert(contentStr);
 
  					$("#guappend").html("현재 " + contentStr + "에 있어요");
  					$("#guappend2").val(contentStr);
@@ -104,7 +104,7 @@
 			}); // ajax 	 
 			
 			
-		}); // onclick
+/* 		}); // onclick */
 
 
 	}); // navigator
@@ -115,7 +115,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=services,clusterer,drawing"></script>	
  		<br>
 	 	<div class="buttons">
-		 	<button type = "button" id = "mylocation_btn" class="btn btn-primary btn-sm">내위치 조회</button>
+<!-- 		 	<button type = "button" id = "mylocation_btn" class="btn btn-primary btn-sm">내위치 조회</button> -->
 		 
 		 	<form id = "confirm_form">
 				<input type = hidden id = "guappend2" name = "mbLocationOrGuard" >
