@@ -106,6 +106,25 @@ public class MypageCotroller {
 		List<MypageDTO> userComplete = mypageService.getCompleteList(mbId, 1, 5);
 		mv.addObject("userComplete", userComplete);
 
+		
+		//구매, 판매 금액 표시
+		int totalSell = 0;
+		int totalBuy = 0;
+		
+		for(MypageDTO complete : userComplete) {
+			System.out.println(complete.getSellerNick());
+			System.out.println(userNickName);
+			if(complete.getSellerNick().equals(userNickName)) {
+				totalSell += complete.getGoodsPrice();
+			}
+			else {
+				totalBuy += complete.getGoodsPrice();
+			}
+		}
+		
+		mv.addObject("totalSell", totalSell);
+		mv.addObject("totalBuy", totalBuy);
+		
 		return mv;
 	}
 
@@ -214,10 +233,9 @@ public class MypageCotroller {
 			mv.addObject("userComplete", userComplete);
 			
 			
-			for(MypageDTO complete : userComplete) {
-				System.out.println(complete.getSellerNick());
-			}
-			System.out.println(userNick);
+			
+			
+			
 
 		}
 		return mv;
