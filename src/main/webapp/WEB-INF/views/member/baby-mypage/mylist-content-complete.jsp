@@ -51,11 +51,24 @@
 	  <div class="interest">
 	    <p class="text">관심 ${done.wishes}</p>
 	  </div>
-	  <div class="price">
-	   <p class="text text-price">${done.goodsPrice}</p>
-	  </div>
-	  <div class="link">
-	    <p class="text text-link">바로가기</p>
-	  </div>
+	  
+	  <c:choose>
+	  	<c:when test="${done.sellerNick == userNick}">
+		  <div class="price">
+		   <p class="text text-price">${done.goodsPrice}</p>
+		  </div>
+		  <div class="link">
+		    <p class="text text-link"></p>
+		  </div>
+		</c:when>
+		<c:otherwise>
+			<div class="price">
+		   <p class="text text-price"></p>
+		  </div>
+		  <div class="link">
+		    <p class="text text-link">${done.goodsPrice}</p>
+		  </div>
+		</c:otherwise>
+	  </c:choose>
 	  </c:forEach>
 	</div>

@@ -124,6 +124,7 @@
 	<select id="getCompleteList" resultType="MypageDTO">
 		SELECT
 			IF(trx.mb_id LIKE #{myId}, "buy", "sell") AS category,
+			g.seller_nick,
 			g.goods_id,
 		    g.goods_title,
 		    g.goods_price,

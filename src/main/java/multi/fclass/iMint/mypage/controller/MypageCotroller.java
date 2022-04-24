@@ -197,6 +197,8 @@ public class MypageCotroller {
 		else if (memberDTO.getMbRole() == Role.CHILD) {
 			mv.setViewName("member/baby-mypage/baby-myList");
 			String userID = memberDTO.getMbId();
+			String userNick = memberDTO.getMbNick();
+			mv.addObject("userNick", userNick);
 
 			// 관심/구매 목록
 			List<MypageDTO> userWish = mypageService.getWishAndReserveList(userID, 1, 100);
@@ -206,10 +208,16 @@ public class MypageCotroller {
 			List<MypageDTO> userSell = mypageService.getSellingList(userID, 1, 100);
 			mv.addObject("userSell", userSell);
 			System.out.println(userSell);
-			System.out.println(userID);
+			
 			// 거래완료 목록
 			List<MypageDTO> userComplete = mypageService.getCompleteList(userID, 1, 100);
 			mv.addObject("userComplete", userComplete);
+			
+			
+			for(MypageDTO complete : userComplete) {
+				System.out.println(complete.getSellerNick());
+			}
+			System.out.println(userNick);
 
 		}
 		return mv;

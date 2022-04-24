@@ -37,7 +37,7 @@
 <!-- 항목별 내용 -->
 <c:forEach items="${allSell}" var="sells" varStatus="status">
 	<c:forEach items="${sells.value}" var="sell">
-		<div class="item-list ${sells.key}">
+		<div class="item-list item-list-guard ${sells.key}">
 			<div class="checkbox">
 				<input type="checkbox" class="select-targets" name="selected" />
 			</div>

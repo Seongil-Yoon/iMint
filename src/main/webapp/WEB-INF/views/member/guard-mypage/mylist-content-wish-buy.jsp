@@ -37,7 +37,7 @@
 <!-- 항목별 내용 -->
 <c:forEach items="${allWish}" var="wishes" varStatus="status">
 	<c:forEach items="${wishes.value}" var="wish">
-		<div class="item-list ${wishes.key}">
+		<div class="item-list item-list-guard ${wishes.key}">
 			<div class="checkbox">
 				<input type="checkbox" class="select-targets" name="selected" />
 			</div>
