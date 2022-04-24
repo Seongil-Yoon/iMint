@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import multi.fclass.iMint.common.code.ErrorCode;
 import multi.fclass.iMint.common.exception.HandlableException;
+import multi.fclass.iMint.common.exception.hadler.ForbiddenException;
+import multi.fclass.iMint.common.exception.hadler.NotFoundException;
+import multi.fclass.iMint.common.exception.hadler.UnauthorizedException;
 import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
@@ -36,7 +39,7 @@ public class GoodsCotroller {
 
 	@Autowired
 	ParseMbId parseService;
-	
+
 	@Autowired
 	IGoodsDAO goodsDAO;
 
@@ -47,40 +50,42 @@ public class GoodsCotroller {
 		if (auth != null) {
 			mbId = parseService.parseMbId(auth);
 			memberDTO = parseService.getMemberMbId(mbId);
+			model.addAttribute("member", memberDTO);
+			model.addAttribute("userLocation", memberDTO.getMbLocation());
 		}
-
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
 		model.addAttribute("countWishes", wishService.countWishes(goodsId));
-		model.addAttribute("member", memberDTO);
 		return "goods/goods-detail";
 	}
 
 	@GetMapping("goods/write")
 	public String goodsWriteView(Authentication auth, Model model) {
 		if (auth == null) {
-			throw new HandlableException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
 
 		model.addAttribute("member", memberDTO);
+		model.addAttribute("userLocation", memberDTO.getMbLocation());
 		return "goods/goods-write";
 	}
 
 	@GetMapping("goods/modify")
 	public String goodsModifyView(@RequestParam("goodsId") int goodsId, Authentication auth, Model model) {
 		if (auth == null) {
-			throw new HandlableException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
 //		GoodsDTO goodsDTO = goodsDAO.goods(goodsId);
 //		if (mbId.isEmpty() || !mbId.equals(goodsDTO.getSellerId())) {
-//			throw new HandlableException(ErrorCode.FORBIDDEN);
+//			throw new UnauthorizedException(ErrorCode.FORBIDDEN);
 //		}
 
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
 		model.addAttribute("member", memberDTO);
+		model.addAttribute("userLocation", memberDTO.getMbLocation());
 		return "goods/goods-modify";
 	}
 
@@ -95,7 +100,7 @@ public class GoodsCotroller {
 	public GoodsDTO goodsWrite(Authentication auth, @RequestPart("GoodsDTO") GoodsDTO goodsDTO,
 			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
 		if (auth == null) {
-			throw new HandlableException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
 		int goodsId = goodsSevice.goodsWrite(mbId, goodsDTO, files);
@@ -109,18 +114,20 @@ public class GoodsCotroller {
 
 	@ResponseBody
 	@PostMapping("goods/modify")
-	public GoodsDTO goodsModify(Authentication auth,@RequestParam("goodsId") int goodsId, @RequestPart("GoodsDTO") GoodsDTO goodsDTO,
+	public GoodsDTO goodsModify(Authentication auth, @RequestParam("goodsId") int goodsId,
+			@RequestPart("GoodsDTO") GoodsDTO goodsDTO,
 			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
 		if (auth == null) {
-			throw new HandlableException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
 		if (!mbId.equals(goodsDTO.getSellerId())) {
 			System.out.println("불일치");
-			throw new HandlableException(ErrorCode.FORBIDDEN);
+//			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+			throw new ForbiddenException(ErrorCode.FORBIDDEN);
 		}
 		goodsSevice.goodsModify(mbId, goodsDTO, files);
-		
+
 		// 브라우저단에서 location.href로 상품상세
 		return goodsDTO;
 	}

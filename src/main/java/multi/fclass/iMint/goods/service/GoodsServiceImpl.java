@@ -1,16 +1,23 @@
 package multi.fclass.iMint.goods.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import multi.fclass.iMint.common.code.ErrorCode;
 import multi.fclass.iMint.common.exception.HandlableException;
+import multi.fclass.iMint.common.exception.hadler.ForbiddenException;
+import multi.fclass.iMint.common.exception.hadler.NotFoundException;
+import multi.fclass.iMint.common.exception.hadler.UnauthorizedException;
 import multi.fclass.iMint.common.service.IFileService;
 import multi.fclass.iMint.common.service.IUtilService;
 import multi.fclass.iMint.goods.dao.IGoodsDAO;
@@ -35,6 +42,9 @@ public class GoodsServiceImpl implements IGoodsService {
 	@Autowired
 	HttpSession httpSession;
 
+	@Value("${root}")
+	String root;
+
 	@Override
 	public GoodsDTO goods(int goodsId) {
 		return goodsDAO.goods(goodsId);
@@ -54,7 +64,7 @@ public class GoodsServiceImpl implements IGoodsService {
 //		String sellerId = (String) httpSession.getAttribute("mbId");
 //		String sellerNick = (String) httpSession.getAttribute("mbNick");
 		if (!mbId.equals(goodsDto.getSellerId())) {
-			throw new HandlableException(ErrorCode.FORBIDDEN);
+			throw new ForbiddenException(ErrorCode.FORBIDDEN);
 		}
 		goodsDAO.goodsInsert(goodsDto);
 		int goodsId = goodsDto.getGoodsId();
@@ -77,17 +87,28 @@ public class GoodsServiceImpl implements IGoodsService {
 	@Override
 	public int goodsModify(String mbId, GoodsDTO goodsDto, List<MultipartFile> files) {
 		System.out.println(mbId + "," + goodsDto.getSellerId());
-		if (!mbId.equals(goodsDto.getSellerId())) {
-			throw new HandlableException(ErrorCode.FORBIDDEN);
-		}
+//		if (!mbId.equals(goodsDto.getSellerId())) {
+//			throw new ForbiddenException(ErrorCode.FORBIDDEN);
+//		}
 		int updateRows = 0;
 		int goodsId = -1;
 		goodsId = goodsDAO.goods(goodsDto.getGoodsId()).getGoodsId();
 		if (goodsId == -1) {
 			// 수정할 게시글이 없으므로 not found
-			throw new HandlableException(ErrorCode.NOT_FOUND);
+			throw new NotFoundException(ErrorCode.NOT_FOUND);
 		}
 		goodsDAO.goodsUpdate(goodsDto);
+
+		List<GoodsImagesDTO> images = goodsDAO.goodsImageList(goodsId);
+		List<String> imagesPath = new ArrayList<String>();
+		try {
+			for (GoodsImagesDTO imageDTO : images) {
+				imagesPath.add(URLDecoder.decode(imageDTO.getGoodsImagesPath(), "UTF-8"));
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		fileService.rmFiles(imagesPath);
 		updateRows = goodsDAO.goodsImagesDelete(goodsId);
 
 		if (files != null && !files.isEmpty()) {
@@ -111,19 +132,14 @@ public class GoodsServiceImpl implements IGoodsService {
 		int result = 0;
 
 		if (goodsDTO == null) {
-			throw new HandlableException(ErrorCode.NOT_FOUND);
+			throw new NotFoundException(ErrorCode.NOT_FOUND);
 		}
 		if (mbId.isEmpty() || goodsDTO.getSellerId().equals(mbId) == false) {
 			// 로그인한 아이디와 작성자 아이디가 달라서 권한없음 오류보냄
-			throw new HandlableException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		} else {
 			// 로그인 아이디 와 작성자 아이디 가 같아서 글삭제
-//			List<GoodsImagesDTO> images = goodsDAO.goodsImageList(goodsId);
-//			List<String> imagesPath = new ArrayList<String>();
-//			for (GoodsImagesDTO imageDTO : images) {
-//				imagesPath.add(imageDTO.getGoodsImagesPath());
-//			}
-//	deleteCnt = fileService.rmFiles(imagesPath);
+
 			// 실제파일은 삭제하지 않고, DB의 isdelete값만 1로 변경
 			System.out.println("상품삭제 : " + goodsId + ", " + mbId);
 			goodsDAO.goodsIsdelete(goodsId, mbId);

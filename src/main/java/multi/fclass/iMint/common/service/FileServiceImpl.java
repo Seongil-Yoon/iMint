@@ -18,6 +18,10 @@ import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 
+/**
+ * @author Seongil, Yoon
+ *
+ */
 @Service
 public class FileServiceImpl implements IFileService {
 	@Autowired
@@ -49,7 +53,8 @@ public class FileServiceImpl implements IFileService {
 		// imagesPath는 DB에서 조회해서 완성된 경로
 		int idx = 0;
 		for (String path : imagesPath) {
-			File f = new File(root + path);
+			System.out.println(root.concat(path));
+			File f = new File(root.concat(path));
 			if (!f.exists()) {
 				return idx;
 			}

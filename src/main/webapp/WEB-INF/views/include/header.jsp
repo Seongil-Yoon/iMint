@@ -14,6 +14,7 @@
 			</a>
 
 			<!-- 위치 -->
+			<input style="display: none;" type="hidden" id="userLocation" value="${userLocation}" />
 			<span class="navbar-text location-text"> ${userLocation} </span>
 
 			<div class="collapse navbar-collapse justify-content-center" id="navbarScroll">

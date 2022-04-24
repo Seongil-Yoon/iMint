@@ -4,10 +4,11 @@
 
 <mapper namespace="multi.fclass.iMint.goods.dao.IGoodsDAO">
 
-	<!-- &lt;는 < 와 같다 게시글 18개씩 조회 -->
+	<!-- &gt;는 >, &lt;는 < 게시글 18개씩 조회 -->
 	<select id="goodsList" resultType="goodsDTO">
 		SELECT * FROM `imint`.`goods`
 		WHERE goods_id &lt; #{lastBoard} 
+		AND `goods_location` = #{mb_location}
 		AND `goods_isdelete` = 0
 		ORDER BY `goods_create_date` DESC 
 		LIMIT 18;

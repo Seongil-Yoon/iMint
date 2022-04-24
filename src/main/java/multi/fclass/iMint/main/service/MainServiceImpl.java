@@ -26,11 +26,11 @@ public class MainServiceImpl implements IMainService {
 	WishlistServiceImpl wishService;
 
 	@Override
-	public List<HashMap<String, Object>> goodsListMap(int lastBoard) {
+	public List<HashMap<String, Object>> goodsListMap(int lastBoard, String mbLocation) {
 		List<HashMap<String, Object>> listMap = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
 
-		List<GoodsDTO> goodsList = goodsDAO.goodsList(lastBoard);
+		List<GoodsDTO> goodsList = goodsDAO.goodsList(lastBoard, mbLocation);
 		GoodsImagesDTO goodsThumbnail = null;
 		for (int i = 0; i < goodsList.size(); i++) {
 			map = new HashMap<String, Object>();
