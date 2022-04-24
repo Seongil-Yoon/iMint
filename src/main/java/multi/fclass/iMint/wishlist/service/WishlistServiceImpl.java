@@ -1,7 +1,5 @@
 package multi.fclass.iMint.wishlist.service;
 
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +23,7 @@ public class WishlistServiceImpl implements IWishlistService {
 
 	@Override
 	public String checkWish(String myId, int goodsId) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("myId", myId); // 사용자 ID
-		map.put("goodsId", goodsId); // 상품 ID
-		WishlistDTO wishlistDTO = wishlistDAO.checkMyWishlist(map);
+		WishlistDTO wishlistDTO = wishlistDAO.checkMyWishlist(myId, goodsId);
 
 		if (wishlistDTO == null) {
 			// wishlist 테이블에 등록된 적 없을 때
@@ -44,14 +39,11 @@ public class WishlistServiceImpl implements IWishlistService {
 
 	@Override
 	public String addWish(String myId, int goodsId) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("myId", myId); // 사용자 ID
-		map.put("goodsId", goodsId); // 상품 ID
 		String check = checkWish(myId, goodsId);
 
 		if (check.equals("false")) {
 			// wishlist 테이블에 등록된 적 없을 때 = INSERT
-			if (wishlistDAO.insertWishlist(map) == 1) {
+			if (wishlistDAO.insertWishlist(myId, goodsId) == 1) {
 				// INSERT 성공
 				return "success";
 			} else {
@@ -60,7 +52,7 @@ public class WishlistServiceImpl implements IWishlistService {
 			}
 		} else if (check.equals("deleted")) {
 			// wishlist 테이블에 등록된 적 있지만 삭제이력이 있을 때 = UPDATE
-			if (wishlistDAO.updateWishlist(map) == 1) {
+			if (wishlistDAO.updateWishlist(myId, goodsId) == 1) {
 				// UPDATE 성공
 				return "success";
 			} else {
@@ -75,14 +67,11 @@ public class WishlistServiceImpl implements IWishlistService {
 
 	@Override
 	public String removeWish(String myId, int goodsId) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("myId", myId); // 사용자 ID
-		map.put("goodsId", goodsId); // 상품 ID
 		String check = checkWish(myId, goodsId);
 
-		if (check.equals("success")) {
+		if (check.equals("true")) {
 			// wishlist 테이블에 등록되었고 삭제되지 않았을 때 = REMOVE
-			if (wishlistDAO.removeWishlist(map) == 1) {
+			if (wishlistDAO.removeWishlist(myId, goodsId) == 1) {
 				// UPDATE 성공
 				return "success";
 			} else {
