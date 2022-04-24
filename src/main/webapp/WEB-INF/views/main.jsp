@@ -13,7 +13,6 @@
 
 <body>
 	<jsp:include page="include/header.jsp" flush="false" />
-
 	<section class="container">
 		<ul id="goodsList">
 			<!-- JS영역 -->
@@ -22,7 +21,7 @@
 
 
 	<jsp:include page="libs/libsScript.jsp" flush="false" />
-	<script src="/static/js/main.js"></script>
+	<script  type="text/javascript" src="/static/js/main.js"></script>
 </body>
 
 </html>

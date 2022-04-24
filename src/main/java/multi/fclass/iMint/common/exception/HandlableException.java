@@ -1,7 +1,5 @@
 package multi.fclass.iMint.common.exception;
 
-import javax.servlet.http.HttpServletRequest;
-
 import multi.fclass.iMint.common.code.ErrorCode;
 
 /**

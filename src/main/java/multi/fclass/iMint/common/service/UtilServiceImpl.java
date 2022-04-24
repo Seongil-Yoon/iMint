@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 
+/**
+ * @author Seongil, Yoon
+ *
+ */
 @Service
 public class UtilServiceImpl implements IUtilService {
 	
