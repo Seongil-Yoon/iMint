@@ -62,7 +62,7 @@
             <h5 class="text-summary">${userNickName}님은 아이 회원입니다.</h5>
             <c:choose>
             	<c:when test="${userPhoto.equals('null')} || ${userPhoto == null}">
-            		<img src="/static/images/default-icon.jpeg">
+            		<img src="/static/images/default-icon.jpeg" alt="">
             		<p>사진 없음</p>
             	</c:when>
             	<c:otherwise>
