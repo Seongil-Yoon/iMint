@@ -9,11 +9,16 @@
 	<jsp:include page="../libs/libsStyles.jsp" flush="false" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/member_basic.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/admin_member.css">
+
+
+<link href="${pageContext.request.contextPath}/static/libs/c3.css" rel="stylesheet">
+
 </head>
 
-
 <body>
-
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
 
 	<hr>
 
@@ -24,7 +29,7 @@
 		<h3>회원 리스트</h3>
 		<div class="container-aside-main">
 		<jsp:include page="admin_asideBar.jsp" flush="false" />
-		</div>
+		
 		
 		<div class = "container-main">
 		<table class="table table-hover" id = "table">
@@ -52,6 +57,7 @@
 						
 		</div>	
 
+	</div>
 	</div>
 	</div>
 	

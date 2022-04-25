@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+.container-aside-main{
+	display: grid;
+	grid-template-columns: 0.5fr 3.5fr;
+	grid-gap: 1.3rem;
+	justify-content: center;
+}
