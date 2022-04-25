@@ -1,9 +1,5 @@
 
 $(document).ready(function() {
-	<c:if test="${!empty register ? true : false}">
-		alert(${register} + "님 회원가입을 축하합니다! 로그인 후 사이트를 이용해주세요.");
-  	</c:if>
-	
 	$(window).scroll(function() {
 		$('.fadeinleft').each(function(i) {
 
