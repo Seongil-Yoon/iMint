@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import multi.fclass.iMint.admin.dao.IAdminDAO;
 import multi.fclass.iMint.admin.dto.AdminDTO;
-import multi.fclass.iMint.admin.dto.ExcelUtil;
 import multi.fclass.iMint.admin.service.AdminServiceImpl;
 import multi.fclass.iMint.common.service.IFileService;
 import multi.fclass.iMint.member.dto.MemberDTO;
@@ -78,7 +77,7 @@ public class AdminCotroller {
 	}
 	
 	// 회원 통계  
-	@RequestMapping("/admin/stats/member")
+	@GetMapping("/admin/stats/member")
 	public ModelAndView stats(Authentication auth) {
 		
 		ModelAndView mv = new ModelAndView();
@@ -95,91 +94,35 @@ public class AdminCotroller {
 				mv.setViewName("admin/stats_member");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return mv;
 	}
 	
-	// 회원 통계 excel
-	@RequestMapping("/admin/stats/member/download")
-	public ModelAndView statsdown(Authentication auth) throws FileNotFoundException, IOException {
-		
-		ModelAndView mv = new ModelAndView();
+	@PostMapping("/admin/stats/member")
+	@ResponseBody
+	public Map<String, List<String>> stats() {
+		Map<String, List<String>> map = new HashMap();
 
-        List<Map<String, Object>> datas = new ArrayList<>();
+		List<String> location = new ArrayList();
+		List<String> regist = new ArrayList();
+		List<String> withdraw = new ArrayList();
 		
-		try {
-			String mbId = parseMbId.parseMbId(auth);
-			MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-			
-			if (memberDTO.getMbRole() == Role.ADMIN) {
-				
-				List<AdminDTO> memberstats = adminDAO.selectmemberstats();
-				
-				for(AdminDTO adminDTO : memberstats) {
-			        Map<String, Object> data = new HashMap<>();
-			        data.put("동네", adminDTO.getMbLocation());
-			        data.put("탈퇴회원", adminDTO.getMbWithdrawAll());
-			        data.put("가입회원", adminDTO.getMbCntAll());
-			        
-			        datas.add(data);
-				}
-				
-		        ExcelUtil excelUtil = new ExcelUtil();
-
-		        String filepath = root + "/" + directory + "/" + "stats";
-				List<String> path = new ArrayList<String>();
-				path.add(root);
-				path.add(directory);
-				path.add("stats");
-				
-				// 폴더 생성 
-				fileService.mkDir(path);
-				
-		        excelUtil.createExcelToFile(datas, filepath);
-		        
-				mv.addObject("memberstats", memberstats);
-				mv.setViewName("admin/stats_member");
-			}
-		} catch (Exception e) {
+		List<AdminDTO> memberstats = adminDAO.selectmemberstats();
+		
+		for(AdminDTO adminDTO: memberstats) {
+			location.add(adminDTO.getMbLocation());
+			regist.add(adminDTO.getMbCntAll());
+			withdraw.add(adminDTO.getMbWithdrawAll());
 		}
-
-		return mv;
-	}	
-	// ajax로 변경요망..
-//	@RequestMapping(value = "/productinsert", method = RequestMethod.GET)
-//	public String insertproduct() {
-//		return "manager_product_insert";
-//	}
-//	
-//	@RequestMapping(value = "/productinsert", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
-//	public ModelAndView insertproduct(String name, String category, String color, int code, int price, int count) {
-//		ModelAndView mv = new ModelAndView();
-//		ProductDTO dto = new ProductDTO(name, category, color, code, price, count);
-//		int insertRow = service.insertproduct(dto);
-//		mv.addObject("insertRow", insertRow);
-//		mv.setViewName("manager_product_result");
-//		return mv;
-//	}
-//
-//	@RequestMapping(value = "/productdelete", method = RequestMethod.GET)
-//	public String deleteproduct() {
-//		return "manager_product_delete"; 
-////		
-//	}
-//
-//	
-//	@RequestMapping(value = "/productdelete", method = RequestMethod.POST)
-//	public String deleteproduct(int code) {
-////		// 삭제
-//		int deletrow = service.deleteproduct(code);
-//		if(deletrow == 1) { // 삭제되었으면 전체 회원가입 출력 
-////			//	redirect:컨트롤러url매핑값 -> 해당 Url의 메서드 사용. 이렇게 해서 전체 조회 
-//			return "redirect:/productlist"; 
-//		}
-//		return "redirect:/productinsert"; 
-////		
-//	}
-
+		
+		map.put("location", location);
+		map.put("regist", regist);
+		map.put("withdraw", withdraw);
+		
+		System.out.println(map);
+		return map;
+	};
 
 }

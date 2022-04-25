@@ -25,5 +25,4 @@ public class AdminDTO {
 	String mbWithdrawAll;
 	
 	String mbCntAll;
-
 }
