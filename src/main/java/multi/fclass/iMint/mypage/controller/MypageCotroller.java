@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.mypage.dao.IMypageDAO;
+import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
 import multi.fclass.iMint.mypage.dto.MypageChildDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
 import multi.fclass.iMint.mypage.service.IMypageService;
@@ -60,6 +61,9 @@ public class MypageCotroller {
 
 	@Autowired
 	IMypageService mypageService;
+	
+
+	
 
 // 마이페이지 - 메인
 
@@ -235,6 +239,10 @@ public class MypageCotroller {
 			// 거래완료 목록
 			List<MypageDTO> userComplete = mypageService.getCompleteList(userID, 1, 100);
 			mv.addObject("userComplete", userComplete);
+			
+			//채팅 목록
+			List<MypageChatroomDTO> userChat = mypageService.getChatroomList(userID, 1, 100);
+			mv.addObject("userChat", userChat);
 			
 			
 			
