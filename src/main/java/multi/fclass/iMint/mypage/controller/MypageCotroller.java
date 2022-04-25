@@ -198,6 +198,7 @@ public class MypageCotroller {
 			Map<String, List<MypageDTO>> allWish = new HashMap<String, List<MypageDTO>>();
 			Map<String, List<MypageDTO>> allSell = new HashMap<String, List<MypageDTO>>();
 			Map<String, List<MypageDTO>> allComplete = new HashMap<String, List<MypageDTO>>();
+			Map<String, List<MypageChatroomDTO>> allChat = new HashMap<String, List<MypageChatroomDTO>>();
 
 			for (MypageChildDTO child : userChilds) {
 				// 아이별 관심/구매 목록 불러오기
@@ -211,12 +212,17 @@ public class MypageCotroller {
 				// 아이별 거래완료 목록
 				List<MypageDTO> userComplete = mypageService.getCompleteList(child.getChildId(), 1, 5);
 				allComplete.put(child.getChildNick(), userComplete);
+				
+				// 아이별 거래완료 목록
+				List<MypageChatroomDTO> userChat = mypageService.getChatroomList(child.getChildId(), 1, 5);
+				allChat.put(child.getChildNick(), userChat);
 
 			}
 
 			mv.addObject("allWish", allWish);
 			mv.addObject("allSell", allSell);
 			mv.addObject("allComplete", allComplete);
+			mv.addObject("allChat", allChat);
 
 		}
 

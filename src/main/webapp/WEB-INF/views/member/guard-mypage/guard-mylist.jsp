@@ -114,28 +114,32 @@
 		                            </div>
 		                        </div>
 		                        <!-- 항목별 내용 -->
-		                        <div class="item-list-chat">
-		                            <div class="checkbox">
-		                                <input type="checkbox" class="select-targets" name="selected"/>
-		                            </div>
-		                            <div class="person">
-		                                <p class="person-photo">사진(예정)</p>
-		                                <div class="person-detail">
-		                                    <p class="item-person-nickname">상대방 닉네임</p>
-		                                    <p class="item-person-chat">마지막 채팅</p>
-		                                    <div class="item-detail">
-		                                        <p class="item-subject">상품명</p>
-		                                        <p class="item-price">가격</p>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="interest">
-		                                <!-- <p class="text">관심 2</p> -->
-		                            </div>
-		                            <div class="link">
-		                                <p class="text">바로가기</p>
-		                            </div>
-		                        </div>
+		                        <c:forEach items="${allChat}" var="chats" varStatus="status">
+									<c:forEach items="${chats.value}" var="chat">
+				                        <div class="item-list-chat item-list-guard ${chats.key }">
+				                            <div class="checkbox">
+				                                <input type="checkbox" class="select-targets" name="selected"/>
+				                            </div>
+				                            <div class="person">
+				                                <img src="${chat.opponentThumbnail}" class="person-photo">
+				                                <div class="person-detail">
+				                                    <p class="item-person-nickname">${chat.opponentNick}</p>
+				                                    <p class="item-person-chat">${chat.message}</p>
+				                                    <div class="item-detail">
+				                                        <p class="item-subject">${chat.goodsTitle}</p>
+				                                        <p class="item-price">${chat.goodsPrice}</p>
+		                                    		</div>
+		                                		</div>
+				                            </div>
+				                            <div class="interest">
+				                                <!-- <p class="text">관심 2</p> -->
+				                            </div>
+				                            <div class="link">
+				                                <p class="text">바로가기</p>
+				                            </div>
+				                        </div>
+				                     </c:forEach>
+								</c:forEach>
 		                    </div>
 		                </div>
 		            </div>
