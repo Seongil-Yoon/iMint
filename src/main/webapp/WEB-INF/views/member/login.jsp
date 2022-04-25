@@ -14,7 +14,9 @@
 	
  	<div id="wrap" class = "highlight">
  	<div class = "container">
-
+	 	<div class="item">
+	 		${register}
+	 	</div>
   	 	<div class="item">
   	 		<img id = "moving" src = "/static/images/mint.png">
 	 		<h2 style = "text-align: center; width:225px;">iMint</h2>

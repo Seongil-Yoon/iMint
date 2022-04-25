@@ -120,7 +120,7 @@
 		 	<form id = "confirm_form">
 				<input type = hidden id = "guappend2" name = "mbLocationOrGuard" >
 				<input type = hidden id = "mbRole" name = "mbRole" value = ${memberDTO.mbRole }>
-			 	<input type = "submit" id = "confirm_btn" class="btn btn-primary btn-sm" value = "확인했어요">
+			 	<input type = "submit" id = "confirm_btn" class="btn btn-primary" value = "확인했어요">
 			</form>
 		</div>
 	</div>

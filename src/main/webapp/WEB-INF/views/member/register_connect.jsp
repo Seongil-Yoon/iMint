@@ -8,6 +8,7 @@
 	<title>Insert title here</title>
 	<jsp:include page="../libs/libsStyles.jsp" flush="false" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/member_basic.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/member_register_connect.css">
 </head>
 
 <body>
@@ -18,16 +19,16 @@
  	<div class = "container">
  	<form action = "/" method = "post">
  	<div class = "item">
- 		<input type = text name = "mbLocationOrGuard" placeholder = "보호자 닉네임을 입력해주세요" >
+ 		<input type = text name = "mbLocationOrGuard" placeholder = "보호자 닉네임을 입력해주세요." >
  	</div>
  	<div class = "item">
- 		<input type = text name = "guardPin" placeholder = "보호자 계정의 8자리 인증번호를 입력해주세요.(보호자 계정의 마이페이지에서 확인할 수 있어요)"> <!-- 보호자 닉네임 == Pin인지 확인하기  -->
+ 		<input type = text name = "guardPin" placeholder = "보호자 계정 마이페이지 내 8자리 Pin번호를 입력해주세요."> <!-- 보호자 닉네임 == Pin인지 확인하기  -->
  	</div>
  	<div class = "item">
  		<input type = submit class="btn btn-primary" value = "회원가입 완료">
  	</div>
  	<div class = "item">
-		<span>${err} </span>
+		<span style = "color: red;">${err} </span>
 	</div>
  	 	
 	</form>

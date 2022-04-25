@@ -63,11 +63,12 @@ h3 {
 /*  */
 .location-text{
 	/* margin-right: 3rem; */
+	width: 100px;
 }
 
 /* 검색창 위치 조정 */
 .search{
-	/* margin-left: 1rem; */
+	
 	justify-content:center;
 }
 
@@ -76,6 +77,10 @@ h3 {
 	width: 300px;
 } 
 
+.form-control{
+	margin-right: 0.5rem; 
+}
+
 /* 검색창 버튼*/
 .search-btn{
 	margin-right: 0.5rem;
@@ -83,7 +88,59 @@ h3 {
 
 /* 상품 등록 버튼 */
 .add-btn{
-	margin-left: 5rem;
+	margin-left: 2rem;
+}
+
+.carrot_header{
+	padding-bottom: 2rem;
+}
+
+/* 말풍선 효과 */
+.arrow_box {
+  display: none;
+  position: absolute;
+  width: 100px;
+  padding: 8px;
+  top: 100%;
+  left: 0;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+}
+
+.arrow_box:after {
+  position: absolute;
+
+  bottom: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  border: solid transparent;
+  border-color: rgba(51, 51, 51, 0);
+  border-bottom-color: #333;
+  border-width: 10px;
+  pointer-events: none;
+  content: ' ';
+}
+
+/* p#arrow-voice{
+	margin-left: 6fr;
+}
+
+p#arrow-text{
+	margin-left: 640px;
+} */
+
+#search-voice:hover + p#arrow-voice{
+	display: block;
+}
+
+#search-text:hover + p#arrow-text{
+	display: block;
 }
 
 /* 푸터 */
