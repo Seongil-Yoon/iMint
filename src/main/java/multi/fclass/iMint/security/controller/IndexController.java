@@ -77,7 +77,7 @@ public class IndexController {
 				mv.setViewName("redirect:/admin/member");
 			}
 			else {
-				mv.setViewName("main");	// 권한이 인증인 회원이면 메인으로 이동
+				mv.setViewName("redirect:/main");	// 권한이 인증인 회원이면 메인으로 이동
 			}
 			mv.addObject("memberDTO", memberDTO);
 		} catch (Exception e) { // 비로그인 상태이면 로그인 페이지로 이동

@@ -9,11 +9,11 @@
   	<span class="navbar-text mint-footer-text">
         <a href='https://www.notion.so/iMint-8268bf915a6f409e8008c60e83b4c9f7' target='_blank'>Notion</a> |
         <a href='https://github.com/Seongil-Yoon/iMint' target='_blank'>Github</a>
-	    <p>
-	        <span>돈조월급조다조</span>
-	        <span>Copyright 2022. All Rights Reserved.</span>
-	    </p>
-    </span>
-      </div>
-</nav>
+        <p>
+          <span>돈조월급조다조</span>
+          <span>Copyright 2022. All Rights Reserved.</span>
+        </p>
+      </span>
+    </div>
+  </nav>
 </footer>

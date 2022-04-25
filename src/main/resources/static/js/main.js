@@ -1,34 +1,139 @@
-let lastBoard = 20000; //게시글 18개씩 불러 오기 위해 lastBoard 값넣는 변수 초기값 은  20000
+let lastBoard = 999999; //게시글 18개씩 불러 오기 위해 lastBoard 값넣는 변수 초기값 은  20000
 let mainScrollTime = true; //스크롤 중복 방지 변수
 let end = true //게시글 없을 경우 데이터 가져오지 않는 변수
 let countWish = 0;
-
-
+let crtLocation = undefined;
+/* 현재 위치 받기  */
+let position = {
+	latitude: undefined,
+	longitude: undefined
+}
+let crtLocationCallback = undefined;
 
 //on load html 이미지나 자바스크립트 링크가 다오고 실행됨
-$(window).on('load', function () {
-	start(); //처음 4개 출력
-	$(window).scroll(function () { //스크롤 감지 이벤트
+function getMyLocation() {
+	crtLocation = $("#userLocation").val();
+	console.log(crtLocation);
+	if (crtLocation == undefined || crtLocation == "") {
 
-		let scroll = $(document).scrollTop(); //현재 스크롤 값
-		let documentHeight = $(document).height(); //문서 전체높이
-		let windowHeight = window.innerHeight; //윈도우 높이
-		//윈도우 높이에 스크롤값을 계속더해서 문서 전체 길이에서 100 px 앞에 스크롤이 왔을때 데이터 불러옴
-		if ((windowHeight + scroll) >= documentHeight - 100) {
-			if (mainScrollTime == true && end == true) {
-				start();
-			}
+		function geolocationPromis() {
+			return new Promise(function (resolve, reject) {
+				let options = {
+					enableHighAccuracy: true,
+					timeout: 5000,
+					maximumAge: 0
+				};
+
+				function success(pos) {
+					let crd = pos.coords;
+					position.latitude = crd.latitude;
+					position.latitude = position.latitude.toFixed(5);
+					position.longitude = crd.longitude;
+					position.longitude = position.longitude.toFixed(5);
+					resolve(position);
+				}
+
+				function error(err) {
+					console.warn(`ERROR(${err.code}): ${err.message}`);
+				}
+				navigator.geolocation.getCurrentPosition(success, error, options);
+			});
 		}
-	})
-});
 
+		function kakaoAjax(position) {
+			return new Promise(function (resolve, reject) {
+				$.ajax({
+					url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&output_coord=WGS84&x=' + position.longitude + '&y=' + position.latitude,
+					headers: {
+						'Authorization': 'KakaoAK 81c7bda99c1d17edaf364c7a1fe1b80d'
+					},
+					type: 'GET',
+
+					success: function (response) {
+						crtLocation = "";
+						crtLocation += JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
+						let len = crtLocation.length;
+						crtLocation = crtLocation.substring(1, len - 1)
+						$(".location-text").html(crtLocation);
+						$("#userLocation").val(crtLocation);
+						console.log("getMyLocation() 실행 : " + crtLocation);
+
+						resolve(crtLocation);
+					}, // success
+					error: function (error) {
+						//서버오류 500  찾는 자료없음 404  권한없음  401
+						if (error.status == 404) {
+							swal('찾는 자료가 없습니다', '', 'error');
+
+						} else if (error.status == 401) {
+							swal('유효하지 않은 인증입니다', '', 'error');
+
+						} else if (error.status == 403) {
+							swal('접근 권한이 없습니다', '', 'error');
+
+						} else if (error.status == 500) {
+							swal('서버 오류 관리자에게 문의 하세요', '', 'error');
+						}
+					}
+				}); // ajax 	
+			});
+
+		}
+
+		function loadScroll(crtLocation) {
+			return new Promise(function (resolve, reject) {
+				resolve(localStorage.setItem("crtLocation", crtLocation));
+				
+
+				// $(window).on('load', function () {
+				start(crtLocation); //처음 4개 출력
+				$(window).scroll(function () { //스크롤 감지 이벤트
+					let scroll = $(document).scrollTop(); //현재 스크롤 값
+					let documentHeight = $(document).height(); //문서 전체높이
+					let windowHeight = window.innerHeight; //윈도우 높이
+					//윈도우 높이에 스크롤값을 계속더해서 문서 전체 길이에서 100 px 앞에 스크롤이 왔을때 데이터 불러옴
+					if ((windowHeight + scroll) >= documentHeight - 100) {
+						if (mainScrollTime == true && end == true) {
+							start(crtLocation);
+						}
+					}
+				})
+				// });
+			});
+		}
+		let result = geolocationPromis()
+			.then(kakaoAjax)
+			.then(loadScroll);
+
+		console.log(result);
+
+	} else {
+		console.log("위치조회X");
+		$(window).on('load', function () {
+			start(crtLocation); //처음 4개 출력
+			$(window).scroll(function () { //스크롤 감지 이벤트
+				let scroll = $(document).scrollTop(); //현재 스크롤 값
+				let documentHeight = $(document).height(); //문서 전체높이
+				let windowHeight = window.innerHeight; //윈도우 높이
+				//윈도우 높이에 스크롤값을 계속더해서 문서 전체 길이에서 100 px 앞에 스크롤이 왔을때 데이터 불러옴
+				if ((windowHeight + scroll) >= documentHeight - 100) {
+					if (mainScrollTime == true && end == true) {
+						start(crtLocation);
+					}
+				}
+			})
+		});
+	}
+
+}
 
 function start() {
 	//무한 스크롤 중복 방지
 	mainScrollTime = false;
 
 	$.ajax({
-		url: "/goods-list/" + lastBoard,
+		// crtLocation는 컨트롤러에서 Auth객체가 없을때만 처리
+		url: `/goods-list/${lastBoard}?userLocation=${crtLocation}`,
 		type: "GET",
 		dataType: "json", //json 으로 받기
 		success: function (result) {
@@ -63,9 +168,11 @@ function start() {
 
 				$("#goodsList").append(html);
 			}
-
-			//다음 게시글 18개 가져 오기 위해 마지막 게시글 기본키 값 넘겨줌
-			lastBoard = result[result.length - 1].goods.goodsId;
+			if (result[result.length - 1] != undefined) {
+				//다음 게시글 18개 가져 오기 위해 마지막 게시글 기본키 값 넘겨줌
+				console.log(lastBoard);
+				lastBoard = result[result.length - 1].goods.goodsId;
+			}
 
 			setTimeout(function () {
 				mainScrollTime = true;
@@ -114,9 +221,19 @@ function timeForToday(value) {
 }
 
 //숫자 가격화 함수
-function fomatPrice(strNum){
-	return strNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 세자리 콤마
+function fomatPrice(strNum) {
+	return strNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 세자리 콤마
 }
+
+function main() {
+	getMyLocation();
+	// loadScroll();
+}
+main();
+
+
+
+
 
 // function countWishlist(goodId) {
 // 	return new Promise(function (resolve, reject) {
