@@ -99,7 +99,7 @@ public class IndexController {
 		log.info("memberDTO : {}", memberDTO);
 		log.info("exception : {}", ade); // 로그 기록
 		
-		mv.setViewName("err/deniedpage");
+		mv.setViewName("err/403");
 		
 		return mv;
 	}
