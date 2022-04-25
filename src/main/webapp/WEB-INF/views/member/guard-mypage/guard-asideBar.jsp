@@ -22,11 +22,6 @@
                 <p class="tab-text">내 아이목록</p>
             </div>
         </a><br>
-        <a class="content" href="/mypage/block">
-            <div class="aside-tab-item">
-                <p class="tab-text">내아이 차단목록</p>
-            </div>
-        </a><br>
         <a class="content" href="/mypage/edit">
             <div class="aside-tab-item">
                 <p class="tab-text">회원정보 수정</p>
