@@ -34,9 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.exceptionHandling()
 			.accessDeniedPage("/err/denied-page"); // 접근 불가 페이지 (나중에 핸들러로 바꿀 수도)
 		
-		
 		http.authorizeRequests()
-			.antMatchers("/", "/main", "/login/**", "/static/**").permitAll() // 비로그인시 첫화면, 둘러보기만 허용
+			.antMatchers("/", "/main/**", "/login/**", "/static/**", "/logout/**").permitAll() // 비로그인시 첫화면, 둘러보기만 허용
 
 			// 아이 회원가입(test)
 			.antMatchers("/register/child/test").access("hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
@@ -48,14 +47,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/mypage/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
 			
 			
+			.antMatchers("/goods/detail**").permitAll()
+			.antMatchers("/goods-list/**").permitAll()
 			.antMatchers("/goods/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
-			.antMatchers("/goods-list/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
+//			.antMatchers("/goods-list/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
 			.antMatchers("/chat/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN') // 뷰 
 			.antMatchers("/chatting/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 웹소켓 
 			
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
-            
-			.anyRequest().denyAll(); // // 허용가능 외 나머지는 인증 받아야 접근 가능(접근불가) 
+			.anyRequest().authenticated();
+//			.anyRequest().denyAll(); // // 허용가능 외 나머지는 인증 받아야 접근 가능(접근불가) 
 //			.anyRequest().permitAll(); // 임시 허용
 			
 //		http.formLogin()
@@ -91,8 +92,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	   public void configure(WebSecurity web) throws Exception {
 	      web.ignoring()
-	         .mvcMatchers("/static/**")
-	         .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	      	.antMatchers("/favicon.ico", "/static/**", "/error")
+	        .mvcMatchers("/static/**")
+	        .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	   }
 	
 	// 세션 변경
@@ -100,6 +102,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-    
+	}
+
 }
