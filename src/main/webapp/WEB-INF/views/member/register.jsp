@@ -23,7 +23,7 @@
  	<form id = "change_url">
  		<div class="item">닉네임 <input type = text name = "mbNick" id = "mbNick" value = ${memberDTO.mbNick } placeholder = ${memberDTO.mbNick } class = "memberInfo"> <input type="button" id = "nick_btn" class="btn btn-primary" value = "중복확인"><p id = "nickappend"></p>
  		</div>
- 		<div class="item">이메일 <input type = text name = "mbEmail" id = "mbEmail" value = ${memberDTO.mbEmail } class = "memberInfo">
+ 		<div class="item">이메일 <input type = text name = "mbEmail" id = "mbEmail" value = ${memberDTO.mbEmail } class = "memberInfo"><input type="button" id = "email_btn" class="btn btn-primary" value = "이메일 확인"><p id = "emailappend"></p>
  		</div>
  		<br>
  		<div class="item" id = "interest">관심사 <select name = "mbInterest" id = "mbInterest" class = "memberInfo"
