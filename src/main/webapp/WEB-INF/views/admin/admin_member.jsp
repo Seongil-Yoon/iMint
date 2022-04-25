@@ -9,22 +9,19 @@
 	<jsp:include page="../libs/libsStyles.jsp" flush="false" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/member_basic.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/admin_member.css">
+
 </head>
 
-
 <body>
-
-
 	<hr>
-
-	<div class = "container">
 
  	<!-- 아티클 시작 -->
 	<div class="container-page">
 		<h3>회원 리스트</h3>
 		<div class="container-aside-main">
 		<jsp:include page="admin_asideBar.jsp" flush="false" />
-		</div>
+		
 		
 		<div class = "container-main">
 		<table class="table table-hover" id = "table">
@@ -32,7 +29,6 @@
 		<!-- HTML 태그에 속성으로 이벤트 리스너를 등록 -->
 		<th><input type = "checkbox" name = "member_check" value="0" 
 									onclick='selectAll(this)'></th>
-		<th>No.</th>
 		<th>닉네임</th>
 		<th>이메일</th>
 		<th>권한</th>
@@ -43,7 +39,7 @@
 		<tbody id = "member_list">
 		<!-- 등록된 회원 리스트 삽입  -->
 		<c:forEach items="${memberlist }" var="memberDTO">
-		<tr><td class = "table_cnt"><input type = "checkbox" name = "member_check" ></td><td>${memberDTO.mbNo }</td><td>${memberDTO.mbNick }</td><td>${memberDTO.mbEmail}</td><td>${memberDTO.mbRole}</td><td>${memberDTO.mbGuard }</td><td>${memberDTO.mbJoinDate}</td></tr>
+		<tr><td class = "table_cnt"><input type = "checkbox" name = "member_check" ></td><td>${memberDTO.mbNick }</td><td>${memberDTO.mbEmail}</td><td>${memberDTO.mbRole}</td><td>${memberDTO.mbGuard }</td><td>${memberDTO.mbJoinDate}</td></tr>
 		</c:forEach>
 		
 		</tbody>
