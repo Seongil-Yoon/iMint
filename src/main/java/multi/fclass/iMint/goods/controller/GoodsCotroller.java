@@ -43,7 +43,7 @@ public class GoodsCotroller {
 	@Autowired
 	IGoodsDAO goodsDAO;
 
-	@GetMapping("goods/detail")
+	@GetMapping("/goods/detail")
 	public String goodsDetail(Authentication auth, @RequestParam("goodsId") int goodsId, Model model) {
 		String mbId = null;
 		MemberDTO memberDTO = null;
@@ -55,10 +55,10 @@ public class GoodsCotroller {
 		}
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
 		model.addAttribute("countWishes", wishService.countWishes(goodsId));
-		return "goods/goods-detail";
+		return "/goods/goods-detail";
 	}
 
-	@GetMapping("goods/write")
+	@GetMapping("/goods/write")
 	public String goodsWriteView(Authentication auth, Model model) {
 		if (auth == null) {
 			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
@@ -68,10 +68,10 @@ public class GoodsCotroller {
 
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("userLocation", memberDTO.getMbLocation());
-		return "goods/goods-write";
+		return "/goods/goods-write";
 	}
 
-	@GetMapping("goods/modify")
+	@GetMapping("/goods/modify")
 	public String goodsModifyView(@RequestParam("goodsId") int goodsId, Authentication auth, Model model) {
 		if (auth == null) {
 			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
@@ -86,17 +86,17 @@ public class GoodsCotroller {
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("userLocation", memberDTO.getMbLocation());
-		return "goods/goods-modify";
+		return "/goods/goods-modify";
 	}
 
 	@ResponseBody
-	@GetMapping("goods/detail-images")
+	@GetMapping("/goods/detail-images")
 	public List<GoodsImagesDTO> goodsDetailImages(@RequestParam("goodsId") int goodsId) {
 		return goodsSevice.goodsImageList(goodsId);
 	}
 
 	@ResponseBody
-	@PostMapping("goods/write")
+	@PostMapping("/goods/write")
 	public GoodsDTO goodsWrite(Authentication auth, @RequestPart("GoodsDTO") GoodsDTO goodsDTO,
 			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
 		if (auth == null) {
@@ -113,7 +113,7 @@ public class GoodsCotroller {
 	}
 
 	@ResponseBody
-	@PostMapping("goods/modify")
+	@PostMapping("/goods/modify")
 	public GoodsDTO goodsModify(Authentication auth, @RequestParam("goodsId") int goodsId,
 			@RequestPart("GoodsDTO") GoodsDTO goodsDTO,
 			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
@@ -132,11 +132,11 @@ public class GoodsCotroller {
 		return goodsDTO;
 	}
 
-	@GetMapping("goods/delete")
+	@GetMapping("/goods/delete")
 	public String goodsDelete(Authentication auth, @RequestParam("goodsId") int goodsId) {
 		String mbId = parseService.parseMbId(auth);
 		goodsSevice.goodsDelete(goodsId, mbId);
 
-		return "main";
+		return "/main";
 	}
 }
