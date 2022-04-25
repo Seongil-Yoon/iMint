@@ -72,7 +72,7 @@ public class IndexController {
 			String mbId = parseMbId.parseMbId(auth);
 			MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 			if(memberDTO.getMbRole() == Role.UN_CHILD || memberDTO.getMbRole() == Role.UN_GUARD) { // 권한이 미인증 회원이면 회원가입 마치도록 이동 
-				mv.setViewName("member/register/2");							
+				mv.setViewName("member/register");							
 			}
 			else if(memberDTO.getMbRole() == Role.ADMIN) {
 				mv.addObject(memberDTO);
