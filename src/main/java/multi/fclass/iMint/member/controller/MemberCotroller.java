@@ -33,6 +33,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
+import multi.fclass.iMint.common.code.ErrorCode;
+import multi.fclass.iMint.common.exception.hadler.UnauthorizedException;
 import multi.fclass.iMint.common.service.IFileService;
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.MemberDTO;
@@ -83,7 +85,11 @@ public class MemberCotroller {
 	public ModelAndView updateuser(Authentication auth) {
 		
 		ModelAndView mv = new ModelAndView();
-
+		// 비 로그인
+		if (auth == null) {
+					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
+		
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
@@ -103,7 +109,11 @@ public class MemberCotroller {
 	public ModelAndView updateuser(Authentication auth, MultipartFile thumbnail, String nickname, String interest) throws IOException {
 		
 		ModelAndView mv = new ModelAndView();
-
+		// 비 로그인
+		if (auth == null) {
+					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
+		
 		String mbId = parseMbId.parseMbId(auth);
 
 		// 컷 부분 
@@ -126,7 +136,11 @@ public class MemberCotroller {
 	public ModelAndView	deleteuser(Authentication auth) {
 		
 		ModelAndView mv = new ModelAndView();
-
+		// 비 로그인
+		if (auth == null) {
+					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
+		
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
@@ -144,6 +158,10 @@ public class MemberCotroller {
 	
 	@PostMapping("/mypage/withdraw")
 	public String deleteuserresult(HttpServletRequest req, Authentication auth) {
+		// 비 로그인
+		if (auth == null) {
+					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
 		
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
@@ -184,6 +202,11 @@ public class MemberCotroller {
 	public Map<String, String> delete(Authentication auth) throws IOException {
 
 		Map<String, String> map = new HashMap<String, String>();
+		
+		// 비 로그인
+		if (auth == null) {
+					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
 		
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);

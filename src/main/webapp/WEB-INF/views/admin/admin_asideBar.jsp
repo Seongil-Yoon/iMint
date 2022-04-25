@@ -13,12 +13,12 @@
 	<!-- 어사이드바 컨테이너 -->
     <div class="aside-container">
         <div class="aside-tab-item">
-        <a class="content" href="http://localhost:8081/admin/member">
+        <a class="content" href="/admin/member">
                 <span class="tab-text">회원 관리</span>
         </a>
         </div>
         <div class="aside-tab-item">
-        <a class="content" href="http://localhost:8081/admin/stats/member">
+        <a class="content" href="/admin/stats/member">
                 <span class="tab-text">회원 통계</span>
         </a>
         </div>

@@ -28,6 +28,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.common.code.ErrorCode;
+import multi.fclass.iMint.common.exception.hadler.UnauthorizedException;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.GenerateCertCharacter;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
@@ -108,7 +110,11 @@ public class IndexController {
 	// 회원가입 2(보호자, 아이 모두): sns 가입(회원가입 1)후 register 페이지로 이동
 	@GetMapping("/register/2")
 	public ModelAndView registersns(Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
-
+		// 비 로그인
+		if (auth == null) {
+					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
+		
         log.info("---------- register ---------");
 		log.info("memberDTO : {}", memberDTO);
 		
@@ -128,8 +134,10 @@ public class IndexController {
 	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
 		Map<String, String> map = new HashMap<String, String>();
-		
-		System.out.println(nickcheck);
+		// 비 로그인
+		if (auth == null) {
+					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
 		
 		if (securityDAO.findByMbNick(nickcheck) == null || securityDAO.findByMbNick(nickcheck).getMbId().equals(mbId) ) { // 없거나, 본인이면
 			map.put("result", "ok");
@@ -146,9 +154,13 @@ public class IndexController {
 	
 	// 회원가입 3(보호자, 아이 모두. 로직은 분리)
 	@PostMapping("/register/3") 
-	public ModelAndView registersns(HttpServletRequest req, String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+	public ModelAndView registersns(HttpServletRequest req, Authentication auth, String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
 		ModelAndView mv = new ModelAndView();
+		// 비 로그인
+		if (auth == null) {
+					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
 		
 		// 유저 정보 업데이트 
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
@@ -177,6 +189,10 @@ public class IndexController {
 	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard, String guardPin) {
 	
 	ModelAndView mv = new ModelAndView();
+	// 비 로그인
+	if (auth == null) {
+				throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+	}
 	
 	String mbId = parseMbId.parseMbId(auth);
 	MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
