@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body{
-	width:600px;
+	width: 960px;
 	margin: auto;
 	justify-content: center; /* 수평 정렬  */
 	align-items: center; /* 수직 정렬  */
@@ -56,19 +56,19 @@ a{
 /* 움직이는 효과 with JS */ 
 .fadeinleft {
     opacity:0;
-    margin-left:-300px;    
+    margin-left:-480px;    
     max-width:100%;
     
     flex-direction: row;
     
-   	width: 600px;
+   	width: 960px;
 }
 
 .thick {
 	 font-weight: bold;
 }
 
-img{
+.mint{
 	width: 100px;
 	float: left;
 }
@@ -110,4 +110,20 @@ animation: motion 2s infinite;
 
 .mint-footer a{
 	color : white !important;
+}
+
+/* 좌우 배치  */
+.service{
+	width: 420px;
+}
+
+.cover{
+	display: flex; 
+	flex-wrap: wrap;
+}
+
+.cover_item{
+	flex: 1 1 45%;
+	margin: auto;
+	padding: 20px;
 }
