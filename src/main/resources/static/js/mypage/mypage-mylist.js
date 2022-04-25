@@ -118,7 +118,7 @@ function showChild(event){
 }
 
 function removeShowList(){
-	targetList = document.querySelectorAll('.item-list');
+	targetList = document.querySelectorAll('.item-list-guard');
 	
 	var i;
 	
