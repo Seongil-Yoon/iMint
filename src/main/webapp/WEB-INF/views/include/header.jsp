@@ -8,16 +8,26 @@
 <nav class="carrot_header">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
+		
 			<!-- 로고 -->
 			<a class="navbar-brand" href="/main"> <!-- <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"> --> 아이민트로고
 			</a>
-
+			
+			
+			
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+			<div class="collapse navbar-collapse" id="navbar">
 			<!-- 위치 -->
 			<span class="navbar-text location-text"> ${userLocation} </span>
-
 			<div class="collapse navbar-collapse justify-content-center" id="navbarScroll">
+			
+
+			
 
 				<!-- 검색창 -->
+	
       <form class="d-flex search" action="/search?" method="GET">
       <div class="input-group">
         <select class="form-select" id="js-searchOption" name="searchOption">
@@ -27,7 +37,7 @@
           <option value="content">내용</option>
           <option value="writer">글쓴이</option>
         </select>
-        <input type="search" class="form-control" aria-label="Text input with dropdown button"  placeholder="찾고 싶은 물품명을 입력해 주세요!">
+        <input type="search" class="form-control" aria-label="Text input with dropdown button"  placeholder="무엇을 찾아 볼까요?">
       </div>
 
           <button class="btn btn-primary search-btn" type="submit">
@@ -40,11 +50,12 @@
 
 				<!-- 상품 등록 -->
 				<form class="">
-					<a class="btn btn-primary add-btn" href="/goods/write">상품 등록</a>
+					<a class="btn btn-primary add-btn" href="/goods/write">✏️ 상품 등록하기</a>
 				</form>
-			</div>
-
-			<ul class="navbar-nav justify-content-end">
+		</div>
+			
+			<!-- <div class="justify-content-end"> -->
+			<ul class="navbar-nav justify-content-end ">
 				<sec:authorize access="isAnonymous()">
 					<li class="nav-item"><a class="nav-link" href="/">로그인</a></li>
 					<li class="nav-item"><a class="nav-link" href="/">회원가입</a></li>
@@ -56,5 +67,7 @@
 			</ul>
 
 		</div>
+		</div>
+		<!-- </div> -->
 	</nav>
 </nav>

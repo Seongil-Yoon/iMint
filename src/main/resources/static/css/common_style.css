@@ -67,7 +67,7 @@ h3 {
 
 /* 검색창 위치 조정 */
 .search{
-	/* margin-left: 1rem; */
+	
 	justify-content:center;
 }
 
@@ -76,6 +76,10 @@ h3 {
 	width: 300px;
 } 
 
+.form-control{
+	margin-right: 0.5rem; 
+}
+
 /* 검색창 버튼*/
 .search-btn{
 	margin-right: 0.5rem;
@@ -83,7 +87,7 @@ h3 {
 
 /* 상품 등록 버튼 */
 .add-btn{
-	margin-left: 5rem;
+	margin-left: 2rem;
 }
 
 /* 푸터 */
