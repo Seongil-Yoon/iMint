@@ -22,3 +22,4 @@ function resizeArrowBox(){
     }
 
 window.addEventListener('resize', resizeArrowBox);
+window.addEventListener('load', resizeArrowBox);
