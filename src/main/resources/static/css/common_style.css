@@ -63,6 +63,7 @@ h3 {
 /*  */
 .location-text{
 	/* margin-right: 3rem; */
+	width: 100px;
 }
 
 /* 검색창 위치 조정 */
