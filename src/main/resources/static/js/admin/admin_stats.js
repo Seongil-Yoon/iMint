@@ -45,7 +45,6 @@ $(document).ready(function() {
 				location_arr[i] = location_arr[i].substr(1, location_arr[i].length-2);
 			}
 		}
-		alert(regist_arr);	
 		} // success
 	}); // ajax
 	
@@ -71,5 +70,5 @@ setTimeout(function () {
     	}
     
     }); // chart	
-}, 1500);
+}, 1300);
 }); // document

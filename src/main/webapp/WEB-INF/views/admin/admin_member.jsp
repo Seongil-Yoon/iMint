@@ -11,18 +11,10 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/admin_member.css">
 
-
-<link href="${pageContext.request.contextPath}/static/libs/c3.css" rel="stylesheet">
-
 </head>
 
 <body>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
-
 	<hr>
-
-	<div class = "container">
 
  	<!-- 아티클 시작 -->
 	<div class="container-page">
@@ -37,7 +29,6 @@
 		<!-- HTML 태그에 속성으로 이벤트 리스너를 등록 -->
 		<th><input type = "checkbox" name = "member_check" value="0" 
 									onclick='selectAll(this)'></th>
-		<th>No.</th>
 		<th>닉네임</th>
 		<th>이메일</th>
 		<th>권한</th>
@@ -48,7 +39,7 @@
 		<tbody id = "member_list">
 		<!-- 등록된 회원 리스트 삽입  -->
 		<c:forEach items="${memberlist }" var="memberDTO">
-		<tr><td class = "table_cnt"><input type = "checkbox" name = "member_check" ></td><td>${memberDTO.mbNo }</td><td>${memberDTO.mbNick }</td><td>${memberDTO.mbEmail}</td><td>${memberDTO.mbRole}</td><td>${memberDTO.mbGuard }</td><td>${memberDTO.mbJoinDate}</td></tr>
+		<tr><td class = "table_cnt"><input type = "checkbox" name = "member_check" ></td><td>${memberDTO.mbNick }</td><td>${memberDTO.mbEmail}</td><td>${memberDTO.mbRole}</td><td>${memberDTO.mbGuard }</td><td>${memberDTO.mbJoinDate}</td></tr>
 		</c:forEach>
 		
 		</tbody>
@@ -57,7 +48,6 @@
 						
 		</div>	
 
-	</div>
 	</div>
 	</div>
 	

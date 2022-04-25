@@ -6,3 +6,7 @@
 	grid-gap: 1.3rem;
 	justify-content: center;
 }
+
+tbody th, td{
+	text-align: center;
+}

@@ -8,8 +8,10 @@
 	<title>Insert title here</title>
 	<jsp:include page="../libs/libsStyles.jsp" flush="false" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/member_basic.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/admin_member.css">
+	<!-- c3.js -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>
-	<!-- javascript -->     
 	<script src="https://d3js.org/d3.v3.min.js"></script>     
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
 
@@ -17,11 +19,17 @@
 
 <body>
 	
-		<div>
-				
+
+ 	<!-- 아티클 시작 -->
+	<div class="container-page">
 		<h3>회원 통계</h3>
 		<hr>
-
+		<div class="container-aside-main">
+		<jsp:include page="admin_asideBar.jsp" flush="false" />
+		
+		
+		<div class = "container-main">
+				
 		<table class="table table-hover" id = "table">
 		<tr> 
 		<th>동네</th>
@@ -39,10 +47,9 @@
 		</table>
 		
 		<div id = "chart"></div>
-		
-		<!-- <a href = "/admin/stats/member/download"><input type = "button" class="btn btn-primary" value = "excel"></a>				 -->
-	</div>	
-	
+		</div>
+	</div>
+	</div>		
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/admin/admin_stats.js"></script>
 </body>
