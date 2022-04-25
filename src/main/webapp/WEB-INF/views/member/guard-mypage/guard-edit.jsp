@@ -42,9 +42,9 @@
 		                <h5 class="lables-text">프로필 사진 변경</h5>
 		            </div>
 		            <div class="buttons buttons-photo">
-		            	<input name = "thumbnail" type="file" id="photo-update-guard">
+		            	<input name = "thumbnail" type="file" id="photo-update-guard" class="buttons-text">
 		            	<input name = "mbId" type="hidden" id="mbId">
-		            	<input type= "button" class="btn btn-primary" name = "thumbnail_delete_btn" id="thumbnail_delete_btn" value = "기존 프로필 사진 삭제">
+		            	<input type= "button" class="btn btn-primary" name = "thumbnail_delete_btn" id="thumbnail_delete_btn" value = "프로필 사진 삭제">
 		            </div>
 		        </div>
 		        
