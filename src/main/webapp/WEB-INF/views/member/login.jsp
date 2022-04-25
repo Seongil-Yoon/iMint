@@ -18,7 +18,7 @@
 	 		${register}
 	 	</div>
   	 	<div class="item">
-  	 		<img id = "moving" src = "/static/images/mint.png">
+  	 		<img id = "moving" class = "mint" src = "/static/images/mint.png">
 	 		<h2 style = "text-align: center; width:225px;">iMint</h2>
 	 	</div>
 	 	<div class="item">
@@ -38,17 +38,19 @@
 
 	<br>
 	<br>
-		<div class="fadeinleft" class="shadow p-3 mb-5 bg-body rounded">
-			<img src = "/static/images/mint.png">
+	<div class = "fadeinleft" class="shadow p-3 mb-5 bg-body rounded">
+	<div class = "cover">
+		   	<img class = "cover_item service" src = "/static/images/login_map.png">	
+		   	<div class = "cover_item">
 			<h3>
 			안전
 			</h3>
 			<p class="lh-lg">아이민트에서 아이들간의 <span class="thick">안전</span>한 지역 중고거래를 체험하세요.<br>
-   				아이들끼리만 거래하고, 아이들끼리만 채팅할 수 있습니다.<br></p>
-   			<br>
-   			<br>
+   				아이들끼리만 거래하고, 아이들끼리만 채팅할 수 있습니다.
+   			</p>
+   			</div>
 
-   			<img src = "/static/images/mint.png">	
+		   	<div class = "cover_item">		   	
 			<h3>
 			연동
 			</h3>
@@ -56,7 +58,20 @@
     		아이들이 어떤 <span class="thick">활동</span>을 하고 있는지 <span class="thick">궁금</span>하신가요?<br>
     		연동된 보호자 계정으로 아이들과 함께 연습할 수 있습니다.
     		</p>
-		</div>	
+    		</div>
+		   	<img class = "cover_item service" src = "/static/images/login_map.png">	
+   			    		
+		   	<img class = "cover_item service" src = "/static/images/login_map.png">	
+		   	<div class = "cover_item">
+			<h3>
+			지역
+			</h3>
+   			<p class="lh-lg">	
+			지역 인증을 통해 멀리 가지 않고<br><span class="thick">가까운 이웃과 거래</span>할 수 있습니다.
+    		</p>
+    		</div>
+	</div>	
+	</div>	
 	<br>
 	<br>
 	

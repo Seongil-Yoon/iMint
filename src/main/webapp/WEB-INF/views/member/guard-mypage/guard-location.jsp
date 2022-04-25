@@ -45,7 +45,6 @@
 		    latitude = latitude.toFixed(5);
 	    	longitude = pos.coords.longitude;
 	    	longitude = longitude.toFixed(5);
-	    	// alert("현재 위치는 : " + latitude + ", "+ longitude);
 	    	
 		/* 카카오 지도 API */
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
