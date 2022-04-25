@@ -204,7 +204,7 @@ public class IndexController {
 			//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 			session.setAttribute(HttpSessionSecurityContextRepository.
 			                       SPRING_SECURITY_CONTEXT_KEY, context);
-			
+			mv.addObject("register", memberDTO.getMbNick());
 			mv.setViewName("member/login");
 
 		}	
@@ -231,7 +231,8 @@ public class IndexController {
 					//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 					session.setAttribute(HttpSessionSecurityContextRepository.
 					                       SPRING_SECURITY_CONTEXT_KEY, context);
-					
+
+					mv.addObject("register", memberDTO.getMbNick());
 					mv.setViewName("member/login");
 				}
 				else { // 보호자의 입력정보가 틀리면 다시 보내기
@@ -248,22 +249,6 @@ public class IndexController {
 			mv.setViewName("redirect:/mypage/location");
 			return mv;
 		}	
-
-//			// DB저장
-//			securityDAO.updateregister4(memberDTO);
-//		
-//			// 세션 수정
-//		    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
-//		    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
-//			// 세션에 변경사항 저장
-//			SecurityContext context = SecurityContextHolder.getContext();
-//			// UsernamePasswordAuthenticationToken
-//			context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
-//			HttpSession session = req.getSession(true);
-//			//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
-//			session.setAttribute(HttpSessionSecurityContextRepository.
-//			                       SPRING_SECURITY_CONTEXT_KEY, context);
-		
 			return mv;
 
 	} // try end 

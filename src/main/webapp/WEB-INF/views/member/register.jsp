@@ -40,7 +40,7 @@
  		<br>
  		<input type = hidden name = "mbId" id = "mbId" value = ${memberDTO.mbId }>
  		<input type = hidden name = "mbRole" id = "mbRole" value = ${memberDTO.mbRole }>
-    	<input type = "submit" id = "register_btn" value = "회원가입" class="btn btn-primary item">
+    	<input type = "button" id = "register_btn" value = "회원가입" class="btn btn-primary item">
 	</form>
 	</div>
 	<br>
