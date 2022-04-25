@@ -22,4 +22,6 @@ public class MypageChatroomDTO {
 	private String message; // 마지막 메세지 내용
 	private LocalDateTime lastUpdateDate; // 마지막 업데이트 일시(채팅방 생성일시 or 마지막 메세지 전송일시)
 
+	private String goodsTitle;
+	private int goodsPrice;
 }

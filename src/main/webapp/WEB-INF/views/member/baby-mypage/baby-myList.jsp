@@ -81,6 +81,7 @@
                         	</div>
 	                        <!-- 항목명 -->
 		                        <div class="item-lables-chat">
+		                        
 		                            <div class="checkbox">
 		                                <h6 class="lables-checkbox">선택</h6>
 		                            </div>
@@ -95,18 +96,27 @@
 		                            </div>
 		                        </div>
 		                        <!-- 항목별 내용 -->
+		                        
+		                        <c:choose>
+		                       	<c:when test="${userChat.size() == 0}">
+		                       	
+		                       	<br><p>진행 중인 채팅이 없어요. 지금 시작해 보세요!</p>
+		                       	</c:when>
+		                       	<c:otherwise>
+		                        <c:forEach items="${userChat}" var="chat">
 		                        <div class="item-list-chat">
 		                            <div class="checkbox">
 		                                <input type="checkbox" name="selected"/>
 		                            </div>
 		                            <div class="person">
-		                                <p class="person-photo">사진(예정)</p>
+		                            	<img src="${chat.opponentThumbnail}" class="person-photo">
+		                                
 		                                <div class="person-detail">
-		                                    <p class="item-person-nickname">상대방 닉네임</p>
-		                                    <p class="item-person-chat">마지막 채팅</p>
+		                                    <p class="item-person-nickname">${chat.opponentNick}</p>
+		                                    <p class="item-person-chat">${chat.message}</p>
 		                                    <div class="item-detail">
-		                                        <p class="item-subject">상품명</p>
-		                                        <p class="item-price">가격</p>
+		                                        <p class="item-subject">${chat.goodsTitle}</p>
+		                                        <p class="item-price">${chat.goodsPrice}</p>
 		                                    </div>
 		                                </div>
 		                            </div>
@@ -116,7 +126,12 @@
 		                            <div class="link">
 		                                <p class="text">바로가기</p>
 		                            </div>
-		                        </div>
+		                          </div>
+		                            </c:forEach>
+		                            </c:otherwise>
+		                            </c:choose>
+		                            
+		                        
 		                    </div>
 		                </div>
 		            </div>
