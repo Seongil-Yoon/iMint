@@ -105,68 +105,11 @@ public class MemberCotroller {
 		ModelAndView mv = new ModelAndView();
 
 		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		String mbRole = memberDTO.getMbRole().toString();
-		String provider = memberDTO.getMbProvider();
-		
-		// 전체 저장경로 + 파일 이름 
-		// ex. ../GUARD/naver/naver_sdfklw242.jpg
-		String mbThumbnail = null;
-		
-		// 파일 업로드
-		try {		
-		String savePath = root + "/" + directory + "/" + memberImagePath + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
 
-		List<String> path = new ArrayList<String>();
-		path.add(root);
-		path.add(directory);
-		path.add(memberImagePath);
-		path.add(mbRole);
-		path.add(provider);
-		
-		// 폴더 생성 
-		fileService.mkDir(path);
+		// 컷 부분 
+		MemberDTO memberDTO = memberService.updateuser(mbId, thumbnail, nickname, interest);
 
-			if(!thumbnail.isEmpty()) {
-				
-				// 원래 파일 명에서 확장자(.) 추출 
-				String ext = thumbnail.getOriginalFilename().substring(thumbnail.getOriginalFilename().indexOf("."));
-	
-				// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
-				String newname = mbId + ext;
-				mbThumbnail = savePath + "/" + newname;
-
-				memberDTO.setMbThumbnail(mbThumbnail);			
-				
-				// 파일 업로드
-				File serverfile = new File(mbThumbnail);
-				thumbnail.transferTo(serverfile);
-				
-			} // if end
-			else { // 전달된 파일이 없으면 
-				if(memberDTO.getMbThumbnail() != null) { // 원래 파일있으면
-					mbThumbnail = memberDTO.getMbThumbnail(); // 원래 파일 유지
-				}
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		if (!nickname.equals("")) {
-			System.out.println("전달된 닉네임 있음");
-			memberDTO.setMbNick(nickname);		
-		}
-
-		if (!interest.equals("")) {
-			System.out.println("전달된 관심사 있음");
-			memberDTO.setMbInterest(interest);		
-		}
-				
 		mv.addObject("memberDTO", memberDTO);
-		
-//		memberDAO.updatemember(mbId, mbThumbnail, nickname, interest);
-		memberDAO.updatemember(memberDTO);
 		
 		if(memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("redirect:/mypage");

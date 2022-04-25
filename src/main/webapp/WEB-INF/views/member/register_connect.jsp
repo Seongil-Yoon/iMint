@@ -28,7 +28,7 @@
  		<input type = submit class="btn btn-primary" value = "회원가입 완료">
  	</div>
  	<div class = "item">
-		<span>${err} </span>
+		<span style = "color: red;">${err} </span>
 	</div>
  	 	
 	</form>
