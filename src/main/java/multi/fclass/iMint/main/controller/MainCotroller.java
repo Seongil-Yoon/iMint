@@ -34,6 +34,7 @@ public class MainCotroller {
 		if (auth != null) {
 			String mbId = parseService.parseMbId(auth);
 			MemberDTO memberDTO = parseService.getMemberMbId(mbId);
+			model.addAttribute("mbRole",memberDTO.getMbRole());
 			model.addAttribute("userLocation", memberDTO.getMbLocation());
 		}
 		return "main";

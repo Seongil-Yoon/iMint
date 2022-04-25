@@ -4,6 +4,15 @@
     background-color: beige;
 }
 
+.container>.goods-category {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
 ul#goodsList {
     list-style: none;
     width: 100%;

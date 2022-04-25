@@ -43,7 +43,11 @@
 
 				<!-- 상품 등록 -->
 				<form class="">
-					<a class="btn btn-primary add-btn" href="/goods/write">상품 등록</a>
+					<sec:authorize access="isAuthenticated()">
+						<c:if test="${mbRole eq 'CHILD'}">
+							<a class="btn btn-primary add-btn" href="/goods/write">상품 등록</a>
+						</c:if>
+					</sec:authorize>
 				</form>
 			</div>
 

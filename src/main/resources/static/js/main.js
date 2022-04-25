@@ -51,9 +51,13 @@ function getMyLocation() {
 
 					success: function (response) {
 						crtLocation = "";
-						crtLocation += JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
+						crtLocation += JSON.stringify(response.documents[0].address.region_1depth_name); /* 파싱 한다음에 JSON.stringify */
 						let len = crtLocation.length;
 						crtLocation = crtLocation.substring(1, len - 1)
+
+						let secLocation = JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
+						len = secLocation.length;
+						crtLocation += " " + secLocation.substring(1, len - 1);
 						$(".location-text").html(crtLocation);
 						$("#userLocation").val(crtLocation);
 						console.log("getMyLocation() 실행 : " + crtLocation);
@@ -83,7 +87,7 @@ function getMyLocation() {
 		function loadScroll(crtLocation) {
 			return new Promise(function (resolve, reject) {
 				resolve(localStorage.setItem("crtLocation", crtLocation));
-				
+
 
 				// $(window).on('load', function () {
 				start(crtLocation); //처음 4개 출력

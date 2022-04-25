@@ -14,6 +14,40 @@
 <body>
 	<jsp:include page="include/header.jsp" flush="false" />
 	<section class="container">
+		<div class="goods-category">
+			<label for="">
+				<input type="radio" name="" id="">
+			</label>
+			<label for="">
+				<input type="radio" name="" id="">
+			</label>
+			<label for="">
+				<input type="radio" name="" id="">
+			</label>
+			<label for="">
+				<input type="radio" name="" id="">
+			</label>
+			<label for="">
+				<input type="radio" name="" id="">
+			</label>
+			<label for="">
+				<input type="radio" name="" id="">
+			</label>
+			<label for="">
+				<input type="radio" name="" id="">
+			</label>
+			<label for="">
+				<input type="radio" name="" id="">
+			</label>
+			<!-- <span>전체</span>
+			<span>문구</span>
+			<span>완구</span>
+			<span>도서</span>
+			<span>교구</span>
+			<span>의류</span>
+			<span>기방/신발/잡화</span>
+			<span>기타</span> -->
+		</div>
 		<ul id="goodsList">
 			<!-- JS영역 -->
 		</ul>
@@ -21,7 +55,7 @@
 
 
 	<jsp:include page="libs/libsScript.jsp" flush="false" />
-	<script  type="text/javascript" src="/static/js/main.js"></script>
+	<script type="text/javascript" src="/static/js/main.js"></script>
 </body>
 
 </html>

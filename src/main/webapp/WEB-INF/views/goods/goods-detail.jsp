@@ -108,7 +108,7 @@
 			</div>
 			<div>
 				<c:choose>
-					<c:when test="${member.mbId == null}">
+					<c:when test="${member.mbId == null || member.mbRole eq 'GUARD'}">
 						<!-- 둘러보기 -->
 					</c:when>
 					<c:when test="${member.mbId == goods.sellerId}">
