@@ -70,7 +70,7 @@
     align-items: center;
 }
 
-input.buttons-text {
+.buttons-text {
     height: 30px;
     width: 250px;
 }
