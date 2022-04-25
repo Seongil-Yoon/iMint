@@ -23,7 +23,7 @@
 			<div class="collapse navbar-collapse" id="navbar">
 			<!-- 위치 -->
 			<input style="display: none;" type="hidden" id="userLocation" value="${userLocation}" />
-			<span class="navbar-text location-text"> ${userLocation} </span>
+			<span class="navbar-text location-text collapse navbar-collapse"> ${userLocation} </span>
 			<div class="collapse navbar-collapse justify-content-center" id="navbarScroll">
 			
 
