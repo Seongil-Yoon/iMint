@@ -6,12 +6,25 @@
 
 	<!-- &gt;는 >, &lt;는 < 게시글 18개씩 조회 -->
 	<select id="goodsList" resultType="goodsDTO">
-		SELECT * FROM `imint`.`goods`
-		WHERE goods_id &lt; #{lastBoard} 
-		AND `goods_location` = #{mb_location}
-		AND `goods_isdelete` = 0
-		ORDER BY `goods_create_date` DESC 
-		LIMIT 18;
+		<choose>
+			<when test="goods_category == 'all'">
+				SELECT * FROM `imint`.`goods`
+				WHERE goods_id &lt; #{lastBoard} 
+				AND `goods_location` = #{mb_location}
+				AND `goods_isdelete` = 0
+				ORDER BY `goods_create_date` DESC 
+				LIMIT 18;
+			</when>
+			<otherwise>
+				SELECT * FROM `imint`.`goods`
+				WHERE goods_id &lt; #{lastBoard} 
+				AND `goods_category` like CONCAT('%',#{goods_category},'%')
+				AND `goods_location` = #{mb_location}
+				AND `goods_isdelete` = 0
+				ORDER BY `goods_create_date` DESC 
+				LIMIT 18;
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="goodsThumbnail" resultType="goodsImagesDTO">

@@ -9,6 +9,7 @@ let position = {
 	longitude: undefined
 }
 let crtLocationCallback = undefined;
+let goodsCategoryVal = $("input[id='paramGoodsCategory']").val();
 
 //on load html 이미지나 자바스크립트 링크가 다오고 실행됨
 function getMyLocation() {
@@ -51,14 +52,18 @@ function getMyLocation() {
 
 					success: function (response) {
 						crtLocation = "";
-						crtLocation += JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
+						crtLocation += JSON.stringify(response.documents[0].address.region_1depth_name); /* 파싱 한다음에 JSON.stringify */
 						let len = crtLocation.length;
 						crtLocation = crtLocation.substring(1, len - 1)
+
+						let secLocation = JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
+						len = secLocation.length;
+						crtLocation += " " + secLocation.substring(1, len - 1);
 						$(".location-text").html(crtLocation);
 						$("#userLocation").val(crtLocation);
 						console.log("getMyLocation() 실행 : " + crtLocation);
 
-						resolve(crtLocation);
+						resolve(localStorage.setItem("crtLocation", crtLocation));
 					}, // success
 					error: function (error) {
 						//서버오류 500  찾는 자료없음 404  권한없음  401
@@ -80,13 +85,28 @@ function getMyLocation() {
 
 		}
 
-		function loadScroll(crtLocation) {
+		/* 
+		* 로컬스토리지 사용으로 미사용
+		function selectCategoryPromise(crtLocation) {
 			return new Promise(function (resolve, reject) {
-				resolve(localStorage.setItem("crtLocation", crtLocation));
-				
+				goodsCategoryVal = $("input[id='paramGoodsCategory']").val();
+				goodsCategoryVal = "all"
+				console.log(goodsCategoryVal);
+				resolve(crtLocation);
+				resolve(goodsCategoryVal);
+				// $("input[name='goodsCategory']").on("click", function () {
+				// 	goodsCategoryVal = $("input[name='goodsCategory']:checked").val();
+				// 	location.href = `/main?goodsCategory=${goodsCategoryVal}`
+				// })
+			});
+		}
 
+		function loadScroll(crtLocation, goodsCategoryVal) {
+			return new Promise(function (resolve, reject) {
+				// resolve(localStorage.setItem("crtLocation", crtLocation));
+				console.log(goodsCategoryVal);
 				// $(window).on('load', function () {
-				start(crtLocation); //처음 4개 출력
+				start(crtLocation, goodsCategoryVal); //처음 4개 출력
 				$(window).scroll(function () { //스크롤 감지 이벤트
 					let scroll = $(document).scrollTop(); //현재 스크롤 값
 					let documentHeight = $(document).height(); //문서 전체높이
@@ -94,7 +114,7 @@ function getMyLocation() {
 					//윈도우 높이에 스크롤값을 계속더해서 문서 전체 길이에서 100 px 앞에 스크롤이 왔을때 데이터 불러옴
 					if ((windowHeight + scroll) >= documentHeight - 100) {
 						if (mainScrollTime == true && end == true) {
-							start(crtLocation);
+							start(crtLocation, goodsCategoryVal);
 						}
 					}
 				})
@@ -102,8 +122,30 @@ function getMyLocation() {
 			});
 		}
 		let result = geolocationPromis()
-			.then(kakaoAjax)
-			.then(loadScroll);
+		 	.then(kakaoAjax)
+		 	.then(loadScroll);
+		*/
+
+
+		let result = geolocationPromis()
+			.then(kakaoAjax);
+
+		console.log("위치조회O");
+		$(window).on('load', function () {
+			crtLocation = localStorage.getItem("crtLocation");
+			start(crtLocation); //처음 4개 출력
+			$(window).scroll(function () { //스크롤 감지 이벤트
+				let scroll = $(document).scrollTop(); //현재 스크롤 값
+				let documentHeight = $(document).height(); //문서 전체높이
+				let windowHeight = window.innerHeight; //윈도우 높이
+				//윈도우 높이에 스크롤값을 계속더해서 문서 전체 길이에서 100 px 앞에 스크롤이 왔을때 데이터 불러옴
+				if ((windowHeight + scroll) >= documentHeight - 100) {
+					if (mainScrollTime == true && end == true) {
+						start(crtLocation);
+					}
+				}
+			})
+		});
 
 		console.log(result);
 
@@ -133,7 +175,7 @@ function start() {
 
 	$.ajax({
 		// crtLocation는 컨트롤러에서 Auth객체가 없을때만 처리
-		url: `/goods-list/${lastBoard}?userLocation=${crtLocation}`,
+		url: `/goods-list/${goodsCategoryVal}/${lastBoard}?userLocation=${crtLocation}`,
 		type: "GET",
 		dataType: "json", //json 으로 받기
 		success: function (result) {
@@ -225,9 +267,17 @@ function fomatPrice(strNum) {
 	return strNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 세자리 콤마
 }
 
+function selectCategory() {
+	$("input[name='goodsCategory']").on("click", function () {
+		goodsCategoryVal = $("input[name='goodsCategory']:checked").val();
+		location.href = `/main?goodsCategory=${goodsCategoryVal}`
+	})
+}
+
 function main() {
 	getMyLocation();
 	// loadScroll();
+	selectCategory();
 }
 main();
 

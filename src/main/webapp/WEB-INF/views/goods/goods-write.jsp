@@ -69,7 +69,7 @@
 						<option value="도서">도서</option>
 						<option value="교구">교구</option>
 						<option value="의류">의류</option>
-						<option value="가방/신발/잡화">가방/신발/잡화</option>
+						<option value="가방,신발,잡화">가방,신발,잡화</option>
 						<option value="기타">기타</option>
 					</select>
 					<label for="floatingSelect">상품 카테고리</label>
