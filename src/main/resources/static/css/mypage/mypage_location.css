@@ -21,7 +21,7 @@
 /* 페이지 타이틀 */
 .title{
 	width: 1300px;
-    padding-top: 3rem;
+    padding-top: 5rem;
 }
 
 /* 어사이드 바*/
@@ -51,9 +51,9 @@
 
 /* 버튼 */
 .buttons{
-	display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1.3rem;
+	display: block;
+    /* grid-template-columns: 1fr 1fr; */
+   /*  grid-gap: 1.3rem; */
     /* width: 1300px; */
    	justify-content: center;
    	text-align: center;
@@ -61,6 +61,7 @@
    	place-items: center;
 }
 
-.btn{
-	width:100px;
+#confirm_btn{
+	width:150px;
+	font-weight: 400;
 }

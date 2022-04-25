@@ -42,12 +42,14 @@
         </select>
         <input type="search" class="form-control" aria-label="Text input with dropdown button"  placeholder="무엇을 찾아 볼까요?">
       </div>
-					<button class="btn btn-primary search-btn" type="submit">
+					<button class="btn btn-primary search-btn" type="submit" id="search-voice">
 						<img class="searchIcon" src="/static/images/mic.png" alt="">
 					</button>
-					<button class="btn btn-primary search-btn" type="submit">
+					<p class="arrow_box" id="arrow-voice">음성으로 찾아 보세요!</p>
+					<button class="btn btn-primary search-btn" type="submit" id="search-text">
 						<img class="searchIcon" src="/static/images/search.png" alt="">
 					</button>
+					<p class="arrow_box" id="arrow-text">텍스트로 찾아 보세요!</p>
 				</form>
 
 				<!-- 상품 등록 -->
