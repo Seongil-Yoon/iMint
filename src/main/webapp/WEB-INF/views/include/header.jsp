@@ -24,7 +24,7 @@
 			<!-- 위치 -->
 			<input style="display: none;" type="hidden" id="userLocation" value="${userLocation}" />
 			<span class="navbar-text location-text collapse navbar-collapse"> ${userLocation} </span>
-			<div class="collapse navbar-collapse justify-content-center" id="navbarScroll">
+			<div class="collapse navbar-collapse " id="navbarScroll">
 			
 
 			
@@ -57,7 +57,7 @@
 		</div>
 			
 			<!-- <div class="justify-content-end"> -->
-			<ul class="navbar-nav justify-content-end ">
+			<ul class="navbar-nav ">
 				<sec:authorize access="isAnonymous()">
 					<li class="nav-item"><a class="nav-link" href="/">로그인</a></li>
 					<li class="nav-item"><a class="nav-link" href="/">회원가입</a></li>
@@ -70,6 +70,6 @@
 
 		</div>
 		</div>
-		<!-- </div> -->
+		<!-- </div> --> 
 	</nav>
 </nav>
