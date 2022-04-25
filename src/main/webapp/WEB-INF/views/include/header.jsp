@@ -14,22 +14,24 @@
 				<!-- <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"> --> 아이민트로고
 			</a>
 			
-			
-			
+			<!-- 반응형 드롭다운 버튼 -->
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      			<span class="navbar-toggler-icon"></span>
+    		</button>
+    		
+    		
 			<div class="collapse navbar-collapse" id="navbar">
 			<!-- 위치 -->
 			<input style="display: none;" type="hidden" id="userLocation" value="${userLocation}" />
-			<span class="navbar-text location-text"> ${userLocation} </span>
+			<span class="navbar-text location-text navbar-collapse"> ${userLocation} </span>
+			
 			<div class="collapse navbar-collapse justify-content-center" id="navbarScroll">
 			
 
 			
 
 				<!-- 검색창 -->
-<<<<<<< HEAD
+
 	
       <form class="d-flex search" action="/search?" method="GET">
       <div class="input-group">
@@ -42,20 +44,7 @@
         </select>
         <input type="search" class="form-control" aria-label="Text input with dropdown button"  placeholder="무엇을 찾아 볼까요?">
       </div>
-=======
-				<form class="d-flex search" action="/search?" method="GET">
-					<div class="input-group">
-						<select class="form-select" id="js-searchOption" name="searchOption">
-							<option value="all" selected>전체</option>
-							<option value="titleContent">제목+내용</option>
-							<option value="title">제목</option>
-							<option value="content">내용</option>
-							<option value="writer">글쓴이</option>
-						</select>
-						<input type="search" class="form-control" aria-label="Text input with dropdown button"
-							placeholder="찾고 싶은 물품명을 입력해 주세요!">
-					</div>
->>>>>>> 2ae5ae83f86ba989c3e515c1bf70291914f98267
+
 
 					<button class="btn btn-primary search-btn" type="submit">
 						<img class="searchIcon" src="/static/images/mic.png" alt="">
@@ -85,6 +74,5 @@
 
 		</div>
 		</div>
-		<!-- </div> -->
 	</nav>
 </nav>
