@@ -14,8 +14,16 @@
 	
  	<div id="wrap" class = "highlight">
  	<div class = "container">
-	 	<div class="item">
-	 		${register}
+		<div class="item" id = "registration">
+        <c:if test="${not empty register}"> 
+   <!--          <img class = "registrations balloons" src = "/static/images/confetti.png"> -->
+            <span class = "registrations" style = "width: 120px;"> 
+            회원가입 완료
+            </span> 
+<!--             <img class = "registrations balloons" src = "/static/images/confetti.png">
+ -->            
+        </c:if>	 	
+	 		
 	 	</div>
   	 	<div class="item">
   	 		<img id = "moving" class = "mint" src = "/static/images/mint.png">
@@ -40,7 +48,7 @@
 	<br>
 	<div class = "fadeinleft" class="shadow p-3 mb-5 bg-body rounded">
 	<div class = "cover">
-		   	<img class = "cover_item service" src = "/static/images/login_map.png">	
+		   	<img class = "cover_item service" src = "/static/images/login_chat.png">	
 		   	<div class = "cover_item">
 			<h3>
 			안전
@@ -59,7 +67,7 @@
     		연동된 보호자 계정으로 아이들과 함께 연습할 수 있습니다.
     		</p>
     		</div>
-		   	<img class = "cover_item service" src = "/static/images/login_map.png">	
+		   	<img class = "cover_item service" src = "/static/images/login_transaction.png">	
    			    		
 		   	<img class = "cover_item service" src = "/static/images/login_map.png">	
 		   	<div class = "cover_item">
