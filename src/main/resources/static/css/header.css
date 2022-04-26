@@ -20,11 +20,12 @@ nav.carrot_header {
 
 form.search {}
 
-form.search select.form-select{
-    flex : 1;
+form.search select.form-select {
+    flex: 1;
 }
-form.search input.form-control{
-    flex : 4;
+
+form.search input.form-control {
+    flex: 4;
 }
 
 form.search button.search-btn {
@@ -38,4 +39,14 @@ form.search button.search-btn {
 form.search img.searchIcon {
     width: 25px;
     height: 25px;
+}
+
+.navbar-brand {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.imint-logo {
+    /* width: ; */
+    height: 40px;
 }

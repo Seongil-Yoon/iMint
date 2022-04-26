@@ -21,23 +21,26 @@ public class MainServiceImpl implements IMainService {
 
 	@Autowired
 	IGoodsDAO goodsDAO;
-	
+
 	@Autowired
 	WishlistServiceImpl wishService;
 
 	@Override
-	public List<HashMap<String, Object>> goodsListMap(String goodsCategory,int lastBoard, String mbLocation) {
+	public List<HashMap<String, Object>> goodsListMap(String goodsCategory, int lastBoard, String mbLocation,
+			String searchOption, String keyword) {
+		System.out.println(goodsCategory + ", " + searchOption + ", " + keyword);
 		List<HashMap<String, Object>> listMap = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
 
-		List<GoodsDTO> goodsList = goodsDAO.goodsList(goodsCategory, lastBoard, mbLocation);
+		List<GoodsDTO> goodsList = goodsDAO.goodsList(goodsCategory, lastBoard, mbLocation, searchOption, keyword);
 		GoodsImagesDTO goodsThumbnail = null;
 		for (int i = 0; i < goodsList.size(); i++) {
 			map = new HashMap<String, Object>();
 			map.put("goods", goodsList.get(i));
 			goodsThumbnail = goodsDAO.goodsThumbnail(goodsList.get(i).getGoodsId());
-			if(goodsThumbnail == null) {
-				goodsThumbnail = new GoodsImagesDTO(null, goodsList.get(i).getGoodsId(), "/static/images/noimage.png", true, "noimage.png", null);
+			if (goodsThumbnail == null) {
+				goodsThumbnail = new GoodsImagesDTO(null, goodsList.get(i).getGoodsId(), "/static/images/noimage.png",
+						true, "noimage.png", null);
 			}
 			map.put("goodsImage", goodsThumbnail);
 			map.put("countWishes", wishService.countWishes(goodsList.get(i).getGoodsId()));

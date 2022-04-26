@@ -30,15 +30,21 @@ public class MainCotroller {
 	ParseMbId parseService;
 
 	@GetMapping("main")
-	public String mainPage(Authentication auth, @RequestParam(defaultValue = "all") String goodsCategory, Model model) {
+	public String mainPage(Authentication auth, @RequestParam(defaultValue = "all") String goodsCategory,
+			@RequestParam(value = "searchOption", required = false) String searchOption,
+			@RequestParam(value = "keyword", required = false) String keyword, Model model) {
 		if (auth != null) {
 			String mbId = parseService.parseMbId(auth);
 			MemberDTO memberDTO = parseService.getMemberMbId(mbId);
 			model.addAttribute("mbRole", memberDTO.getMbRole());
 			model.addAttribute("userLocation", memberDTO.getMbLocation());
-			model.addAttribute("goodsCategory",goodsCategory);
+			model.addAttribute("goodsCategory", goodsCategory);
+			model.addAttribute("searchOption", searchOption);
+			model.addAttribute("keyword", keyword);
 		}
-		model.addAttribute("goodsCategory",goodsCategory);
+		model.addAttribute("goodsCategory", goodsCategory);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("keyword", keyword);
 		return "main";
 	}
 
@@ -46,15 +52,18 @@ public class MainCotroller {
 	@GetMapping("goods-list/{goodsCategory}/{lastBoard}")
 	public List<HashMap<String, Object>> goodsListMap(Authentication auth,
 			@PathVariable(required = false) String goodsCategory, @PathVariable int lastBoard,
-			@RequestParam("userLocation") String userLocation) {
+			@RequestParam("userLocation") String userLocation,
+			@RequestParam(value = "searchOption", required = false) String searchOption,
+			@RequestParam(value = "keyword", required = false) String keyword) {
 		MemberDTO memberDTO = null;
+//		System.out.println(searchOption + "," + keyword);
 		if (auth == null) {
 			System.out.println("auth객체가 null");
-			return mainService.goodsListMap(goodsCategory, lastBoard, userLocation);
+			return mainService.goodsListMap(goodsCategory, lastBoard, userLocation, searchOption, keyword);
 		}
 		String mbId = parseService.parseMbId(auth);
 		memberDTO = parseService.getMemberMbId(mbId);
-		return mainService.goodsListMap(goodsCategory, lastBoard, memberDTO.getMbLocation());
+		return mainService.goodsListMap(goodsCategory, lastBoard, memberDTO.getMbLocation(), searchOption, keyword);
 	}
 
 }
