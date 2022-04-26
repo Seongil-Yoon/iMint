@@ -16,27 +16,19 @@
 <nav class="carrot_header">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
-
 			<!-- 로고 -->
-			<a class="navbar-brand" href="/main">
-				<img class="imint-logo" src="/static/images/iMint_Black.png" alt="">
-			</a>
-
+			<a class="navbar-brand" href="/main"> <img class="imint-logo" src="/static/images/iMint_Black.png" alt=""></a>
 			<!-- 반응형 드롭다운 버튼 -->
-
-
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-				aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false"
+				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbar">
 				<!-- 위치 -->
-				<input style="display: none;" type="hidden" id="userLocation" value="${userLocation}" />
-				<span class="navbar-text location-text collapse navbar-collapse"> ${userLocation} </span>
+				<input style="display: none;" type="hidden" id="userLocation" value="${userLocation}" /> <span
+					class="navbar-text location-text collapse navbar-collapse"> ${userLocation} </span>
 				<div class="collapse navbar-collapse " id="navbarScroll">
-
 					<!-- 검색창 -->
-
 					<form class="d-flex search" method="GET">
 						<div class="input-group">
 							<select class="form-select" id="js-searchOption" name="searchOption">
@@ -65,7 +57,6 @@
 						</button>
 						<p class="arrow_box" id="arrow-text">텍스트로 찾아 보세요!</p>
 					</form>
-
 					<!-- 상품 등록 -->
 					<form class="">
 						<sec:authorize access="isAuthenticated()">
@@ -75,7 +66,6 @@
 						</sec:authorize>
 					</form>
 				</div>
-
 				<!-- <div class="justify-content-end"> -->
 				<ul class="navbar-nav ">
 					<sec:authorize access="isAnonymous()">
@@ -87,7 +77,6 @@
 						<li class="nav-item"><a class="nav-link" href="/mypage">마이페이지</a></li>
 					</sec:authorize>
 				</ul>
-
 			</div>
 		</div>
 		<!-- </div> -->
@@ -114,5 +103,7 @@
 		검색
 	</button>
 </article>
-
 <div class="voicepopup-overlay" tabindex="-1" style="opacity: 0; display: none;"></div>
+
+<!-- 채팅 -->
+<jsp:include page="../chat/chatbox.jsp" flush="false" />

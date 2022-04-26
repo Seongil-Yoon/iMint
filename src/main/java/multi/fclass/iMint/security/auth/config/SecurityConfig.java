@@ -51,8 +51,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/goods-list/**").permitAll()
 			.antMatchers("/goods/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
 //			.antMatchers("/goods-list/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
-			.antMatchers("/chat/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN') // 뷰 
-			.antMatchers("/chatting/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 웹소켓 
+			
+			.antMatchers("/ws/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 웹소켓
+			.antMatchers("/chat/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN') // 채팅
+			
+			.antMatchers("/wishlist/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
+			.antMatchers("/transaction/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
 			
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
 			.anyRequest().authenticated();

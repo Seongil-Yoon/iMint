@@ -14,12 +14,12 @@ public interface IChatService {
 
 	public boolean isChatroomJoinable(String myId, int chatroomId);
 
-	public String isChatOpenable(String myId, int goodsId);
+	public String isChatroomOpenable(String myId, int goodsId);
 
 	public int getChatroom(String myId, int goodsId);
 
 	public int sendChatMessage(ChatMessageDTO chatMessage);
 
-	public List<ChatMessageDTO> getChatMessages(String myId, int chatroomId, int pageNumber, int numberOfItems);
+	public List<ChatMessageDTO> getChatroomMessages(String myId, int chatroomId, int pageNumber, int numberOfItems);
 
 }

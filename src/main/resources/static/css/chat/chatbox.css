@@ -1,0 +1,348 @@
+:root {
+    --total-width: 300px;
+    --total-height: 480px;
+    --title-height: 40px;
+    --chatroom-height: 80px;
+}
+
+#chatbox-openbtn {
+    z-index: 99;
+    display: none;
+    position: fixed;
+    user-select: none;
+    bottom: 16.8px;
+    right: 16.8px;
+    width: calc(var(--title-height) + 20px);
+    height: calc(var(--title-height) + 20px);
+    background-color: #cdf0ea;
+    border-radius: 2.5rem;
+    text-align: center;
+    line-height: calc(var(--title-height) + 20px);
+    color: #3387a8;
+}
+
+#chatbox-openbtn:hover {
+    cursor: pointer;
+}
+
+#chatbox-main {
+    z-index: 99;
+    user-select: none;
+    display: none;
+    position: fixed;
+    bottom: 16.8px;
+    right: 16.8px;
+    width: calc(var(--total-width) + 2px);
+    height: calc(var(--total-height) + 2px);
+    background-color: #cdf0ea;
+    border: 1px solid #9b9b9b;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+#chatbox-main img {
+    -webkit-user-drag: none;
+}
+
+#chatbox-list,
+#chatbox-view {
+    background-color: white;
+}
+
+.chatbox-title {
+    width: var(--total-width);
+    height: var(--title-height);
+    background-color: #cdf0ea;
+}
+
+.chatbox-title span {
+    padding-left: 10px;
+    line-height: var(--title-height);
+    color: #3387a8;
+}
+
+.chatbox-title .title {
+    float: left;
+}
+
+.chatbox-closebtn {
+    width: 50px;
+    text-align: center;
+    padding-right: 10px;
+    float: right;
+}
+
+.chatbox-closebtn:hover {
+    cursor: pointer;
+}
+
+#chatbox-list-chatrooms {
+    width: calc(var(--total-width) + 16.8px);
+    height: calc(var(--total-height) - var(--title-height) + 2px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.chatbox-chatrooms-chatroom {
+    width: var(--total-width);
+    height: var(--chatroom-height);
+    float: left;
+}
+
+.chatbox-chatrooms-chatroom:hover {
+    background-color: #eeeeee;
+    cursor: pointer;
+}
+
+.chatbox-chatrooms-chatroom img {
+    width: var(--chatroom-height);
+    height: var(--chatroom-height);
+    padding: 5px;
+    float: left;
+}
+
+.chatbox-chatroom-profile {
+    border-radius: 2.5rem;
+}
+
+.chatbox-chatroom-goods {
+    border-radius: 1rem;
+}
+
+.chatbox-chatrooms-chatroom p {
+    width: calc(var(--total-width) - var(--chatroom-height) * 2);
+    height: var(--chatroom-height);
+    padding: 5px;
+    float: left;
+    margin-bottom: 0px;
+}
+
+.chatbox-chatrooms-chatroom span {
+    width: 130px;
+}
+
+.chatbox-chatroom-nickname {
+    display: -webkit-box;
+    font-weight: bold;
+    font-size: 14px;
+    overflow: hidden;
+    word-break: break-word;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    height: 20px;
+    margin: 2.5px 0;
+}
+
+.chatbox-chatroom-lastmessage {
+    display: -webkit-box;
+    font-size: 13px;
+    overflow: hidden;
+    word-break: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    height: 40px;
+    margin: 2.5px 0;
+    color: #9b9b9b;
+}
+
+#chatbox-view {
+    display: none;
+}
+
+#chatbox-view-detail {
+    width: var(--total-width);
+    height: calc(var(--chatroom-height) + 1px);
+    border-bottom: 1px solid #9b9b9b;
+}
+
+#chatbox-view-detail img {
+    width: var(--chatroom-height);
+    height: var(--chatroom-height);
+    padding: 5px;
+    float: left;
+    border-radius: 1rem;
+}
+
+#chatbox-view-detail p {
+    width: calc(var(--total-width) - var(--chatroom-height) * 2);
+    height: var(--chatroom-height);
+    padding: 5px;
+    float: left;
+    margin-bottom: 0px;
+}
+
+#chatbox-view-detail span {
+    width: 130px;
+}
+
+#chatbox-detail-goodstitle {
+    display: -webkit-box;
+    font-weight: bold;
+    font-size: 14px;
+    overflow: hidden;
+    word-break: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    height: 40px;
+    margin: 2.5px 0;
+}
+
+#chatbox-detail-goodsprice {
+    display: -webkit-box;
+    font-size: 13px;
+    overflow: hidden;
+    word-break: break-word;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    height: 20px;
+    margin: 2.5px 0;
+}
+
+#chatbox-detail-goodsstatus {
+    width: calc(var(--chatroom-height) - 10px);
+    height: 25px;
+    border: 2.5px solid #008800;
+    border-radius: 0.5rem;
+    text-align: center;
+    line-height: 20px;
+    margin: 5px 5px 2.5px 5px;
+    float: left;
+    font-size: 15px;
+    color: #008800;
+}
+
+#chatbox-detail-suggestible {
+    width: calc(var(--chatroom-height) - 10px);
+    height: 40px;
+    border: 2.5px solid #cc0000;
+    border-radius: 0.5rem;
+    text-align: center;
+    line-height: 17.5px;
+    margin: 2.5px 5px 5px 5px;
+    float: left;
+    font-size: 15px;
+    color: #cc0000;
+}
+
+#chatbox-view-trxbtns {
+    width: var(--total-width);
+    height: 30px;
+    border-bottom: 1px solid #9b9b9b;
+    float: left;
+}
+
+#chatbox-view-trxbtns .chatbox-trxbtn:nth-child(2n) {
+    border-left: 1px solid #9b9b9b;
+}
+
+.chatbox-trxbtn {
+    width: calc(var(--total-width) / 2 - 0.5px);
+    height: 100%;
+    font-size: 13px;
+    float: left;
+    text-align: center;
+    line-height: 29px;
+}
+
+.chatbox-trxbtn:hover {
+    background-color: #eeeeee;
+    cursor: pointer;
+}
+
+#chatbox-view-chatmessages {
+    width: calc(var(--total-width) + 16.8px);
+    height: calc(
+        var(--total-height) - var(--title-height) - var(--chatroom-height) * 2 -
+            30px
+    );
+    background-color: white;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.chatbox-chatmessages-chatmessage {
+    overflow: auto;
+    width: var(--total-width);
+    padding: 5px 10px;
+}
+
+.chatbox-chatmessage-message {
+    max-width: calc(var(--total-width) - var(--chatroom-height));
+    min-height: 39.5px;
+    border: 1px solid #9b9b9b;
+    border-radius: 0.5rem;
+    padding: 9px;
+    font-size: 13px;
+}
+
+.chatbox-chatmessages-chatmessage.left .chatbox-chatmessage-message {
+    background-color: white;
+    color: black;
+    float: left;
+}
+
+.chatbox-chatmessages-chatmessage.right .chatbox-chatmessage-message {
+    background-color: #cdf0ea;
+    color: #3387a8;
+    float: right;
+}
+
+.chatbox-chatmessage-chatinfo {
+    width: 60px;
+    font-size: 12px;
+    height: 15px;
+    line-height: 15px;
+}
+
+.chatbox-chatmessages-chatmessage.left .chatbox-chatmessage-chatinfo {
+    float: left;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.chatbox-chatmessages-chatmessage.right .chatbox-chatmessage-chatinfo {
+    float: right;
+    text-align: right;
+    padding-right: 5px;
+}
+
+#chatbox-view-send {
+    width: var(--total-width);
+    height: calc(var(--chatroom-height) + 1px);
+    border-top: 1px solid #9b9b9b;
+    overflow: hidden;
+}
+
+#chatbox-view-send textarea {
+    width: calc(var(--total-width) - var(--title-height) - 20px);
+    height: calc(var(--chatroom-height) - 21.5px);
+    border: none;
+    resize: none;
+    overflow: hidden;
+    margin: 10.75px;
+    font-family: "Noto Sans Kr", sans-serif;
+    font-size: 13px;
+    float: left;
+}
+
+#chatbox-view-send textarea:focus {
+    outline: none;
+}
+
+#chatbox-send-sendbtn {
+    width: calc(var(--title-height) - 10px);
+    height: calc(var(--chatroom-height) - 40px);
+    float: left;
+    text-align: center;
+    margin: 20px 4.25px;
+    line-height: calc(var(--chatroom-height) - 45px);
+    border-left: 1px solid #9b9b9b;
+}
+
+#chatbox-send-sendbtn:hover {
+    cursor: pointer;
+}

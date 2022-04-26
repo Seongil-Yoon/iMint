@@ -26,7 +26,7 @@ public class ChatServiceImpl implements IChatService {
 
 	@Override
 	public boolean isChatroomJoinable(String myId, int chatroomId) {
-		if (chatDAO.checkChatJoinable(myId, chatroomId) == 1) {
+		if (chatDAO.checkChatroomJoinable(myId, chatroomId) == 1) {
 			return true;
 		} else {
 			return false;
@@ -34,8 +34,8 @@ public class ChatServiceImpl implements IChatService {
 	}
 
 	@Override
-	public String isChatOpenable(String myId, int goodsId) {
-		ChatCheckDTO ccDTO = chatDAO.checkChatOpenable(goodsId);
+	public String isChatroomOpenable(String myId, int goodsId) {
+		ChatCheckDTO ccDTO = chatDAO.checkChatroomOpenable(goodsId);
 		if (myId.equals(ccDTO.getSellerId())) {
 			return "seller";
 		} else if (ccDTO.getCompDate() != null && !myId.equals(ccDTO.getCompBuyerId())) {
@@ -49,7 +49,7 @@ public class ChatServiceImpl implements IChatService {
 
 	@Override
 	public int getChatroom(String myId, int goodsId) {
-		if (isChatOpenable(myId, goodsId).equals("buyer")) {
+		if (isChatroomOpenable(myId, goodsId).equals("buyer")) {
 			Integer chatroomId = chatDAO.getBuyerChatroom(myId, goodsId);
 			if (chatroomId == null) {
 				if (chatDAO.createChatroom(myId, goodsId) == 1) {
@@ -66,11 +66,11 @@ public class ChatServiceImpl implements IChatService {
 
 	@Override
 	public int sendChatMessage(ChatMessageDTO chatMessage) {
-		return chatDAO.sendChatMessage(chatMessage);
+		return chatDAO.sendChatroomMessage(chatMessage);
 	}
 
 	@Override
-	public List<ChatMessageDTO> getChatMessages(String myId, int chatroomId, int pageNumber, int numberOfItems) {
+	public List<ChatMessageDTO> getChatroomMessages(String myId, int chatroomId, int pageNumber, int numberOfItems) {
 		if (pageNumber < 1) {
 			pageNumber = 1;
 		}
@@ -78,7 +78,7 @@ public class ChatServiceImpl implements IChatService {
 			numberOfItems = 0;
 		}
 
-		return chatDAO.getChatMessages(chatroomId, (pageNumber - 1) * numberOfItems, numberOfItems);
+		return chatDAO.getChatroomMessages(chatroomId, (pageNumber - 1) * numberOfItems, numberOfItems);
 	}
 
 }

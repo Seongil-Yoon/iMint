@@ -4,7 +4,7 @@
 
 <mapper namespace="multi.fclass.iMint.chat.dao.IChatDAO">
 	<!-- 전송된 메세지 저장 -->
-	<insert id="sendChatMessage" parameterType="ChatMessageDTO">
+	<insert id="sendChatroomMessage" parameterType="ChatMessageDTO">
 		INSERT INTO
 			`imint`.`chat_messages`
 		VALUES
@@ -15,7 +15,7 @@
 	</insert>
 
 	<!-- 채팅방 메세지 가져오기 -->
-	<select id="getChatMessages" resultType="ChatMessageDTO">
+	<select id="getChatroomMessages" resultType="ChatMessageDTO">
 		SELECT
 			cm.id,
 			cm.chatroom_id,
@@ -47,7 +47,7 @@
 	</select>
 	
 	<!-- 채팅방 입장가능여부 조회 -->
-	<select id="checkChatJoinable" resultType="Integer">
+	<select id="checkChatroomJoinable" resultType="Integer">
 		SELECT
 			count(*)
 		FROM
@@ -60,7 +60,7 @@
 	</select>
 	
 	<!-- 채팅방 입장 조건 확인을 위한 정보 조회 -->
-	<select id="checkChatOpenable" resultType="ChatCheckDTO">
+	<select id="checkChatroomOpenable" resultType="ChatCheckDTO">
 		SELECT
 			g.seller_id,
 			cr.resrv_date,

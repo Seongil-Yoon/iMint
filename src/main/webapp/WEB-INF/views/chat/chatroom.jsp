@@ -55,10 +55,7 @@
 	</div>
 
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
-	<script>
-		let chatroomId = "${param.id}";
-		let myId = "${sessionScope.memberDTO.mbId}";
-	</script>
+	
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<script src="/static/js/chat/chatroom.js"></script>

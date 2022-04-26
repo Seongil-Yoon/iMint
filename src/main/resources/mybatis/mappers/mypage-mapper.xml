@@ -150,7 +150,7 @@
 			#{startIndex}, #{numberOfItems}
 	</select>
 	
-	<!-- 채팅방 목록(임시) -->
+	<!-- 채팅방 목록 -->
 	<select id="getChatroomList" resultType="MypageChatroomDTO">
 	SELECT
 		cr.id,
