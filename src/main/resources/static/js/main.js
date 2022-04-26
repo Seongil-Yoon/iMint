@@ -245,6 +245,8 @@ function goodsSearch() {
 	})
 }
 
+
+
 function main() {
 	getMyLocation();
 	// loadScroll();
@@ -259,16 +261,16 @@ const tabItems = document.querySelectorAll('.tab-item');
 console.log(selected);
 const spanItems = document.querySelectorAll('.hide-sm');
 
-function selectItem(e){
+function selectItem(e) {
 	console.log("확인");
-	
-	for(item of spanItems){
-		if(item.innerText == selected){
+
+	for (item of spanItems) {
+		if (item.innerText == selected) {
 			removeSelected();
 			const parent = item.parentNode;
 			parent.classList.add('selected');
 			console.log(parent.classList)
-		}else if(item.innerText == '전체'){
+		} else if (item.innerText == '전체') {
 			removeSelected();
 			const first = document.querySelector('#tab-1');
 			first.classList.add('selected');
@@ -276,8 +278,8 @@ function selectItem(e){
 	}
 }
 
-function removeSelected(){
-    tabItems.forEach(item => item.classList.remove('selected'))
+function removeSelected() {
+	tabItems.forEach(item => item.classList.remove('selected'))
 }
 
 window.onload = selectItem;

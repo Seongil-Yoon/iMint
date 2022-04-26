@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import "header-search.css";
 
 .header-space {
     height: 90px;
