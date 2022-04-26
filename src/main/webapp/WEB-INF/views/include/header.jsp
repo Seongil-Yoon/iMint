@@ -5,7 +5,12 @@
 <!-- 헤더 css,js 불러오기는 libs.jsp파일 -->
 <!--/*여기는 맨 위에 있는 바 부분*/ -->
 <input style="display: none;" type="hidden" id="paramGoodsCategory" value="${goodsCategory}" />
-<input style="display: none;" type="hidden" id="searchOption" value="${searchOption}" />
+<c:if test="${empty searchOption}">
+	<input style="display: none;" type="hidden" id="searchOption" value="all" />
+</c:if>
+<c:if test="${not empty searchOption}">
+	<input style="display: none;" type="hidden" id="searchOption" value="${searchOption}" />
+</c:if>
 <input style="display: none;" type="hidden" id="keyword" value="${keyword}" />
 <div class="header-space"></div>
 <nav class="carrot_header">

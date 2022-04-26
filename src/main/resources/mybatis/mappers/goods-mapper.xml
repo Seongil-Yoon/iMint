@@ -8,28 +8,30 @@
 	<select id="goodsList" resultType="goodsDTO">
 		<choose>
 			<when test="goods_category == 'all'">
-				<if test="option == 'all'">
-					SELECT * FROM `imint`.`goods`
-					WHERE goods_id &lt; #{lastBoard} 
-					AND (
-						`goods_title` LIKE CONCAT('%',#{keyword},'%')
-						OR `goods_content` LIKE CONCAT('%',#{keyword},'%')
-						OR `seller_nick` LIKE CONCAT('%',#{keyword},'%')
-					)
-					AND `goods_location` = #{mb_location}
-					AND `goods_isdelete` = 0
-					ORDER BY `goods_create_date` DESC 
-					LIMIT 18;
-				</if>
-				<if test="option != 'all'">
-					SELECT * FROM `imint`.`goods`
-					WHERE goods_id &lt; #{lastBoard} 
-					AND ${option} LIKE CONCAT('%',#{keyword},'%')
-					AND `goods_location` = #{mb_location}
-					AND `goods_isdelete` = 0
-					ORDER BY `goods_create_date` DESC 
-					LIMIT 18;
-				</if>
+				<choose>
+					<when test="option == 'all'">
+						SELECT * FROM `imint`.`goods`
+						WHERE goods_id &lt; #{lastBoard} 
+						AND (
+							`goods_title` LIKE CONCAT('%',#{keyword},'%')
+							OR `goods_content` LIKE CONCAT('%',#{keyword},'%')
+							OR `seller_nick` LIKE CONCAT('%',#{keyword},'%')
+						)
+						AND `goods_location` = #{mb_location}
+						AND `goods_isdelete` = 0
+						ORDER BY `goods_create_date` DESC 
+						LIMIT 18;
+					</when>
+					<otherwise>
+						SELECT * FROM `imint`.`goods`
+						WHERE goods_id &lt; #{lastBoard} 
+						AND ${option} LIKE CONCAT('%',#{keyword},'%')
+						AND `goods_location` = #{mb_location}
+						AND `goods_isdelete` = 0
+						ORDER BY `goods_create_date` DESC 
+						LIMIT 18;
+					</otherwise>
+				</choose>
 			</when>
 			<otherwise>
 				<choose>
