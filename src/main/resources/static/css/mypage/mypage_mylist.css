@@ -21,12 +21,12 @@
 /* 페이지 타이틀 */
 .title{
 	width: 1300px;
-    padding-top: 5rem;
+    padding-top: 2rem;
 }
 
 /* 어사이드 바*/
 .container-aside{
-	padding-top: 5rem;
+	padding-top: 3rem;
 	height: 700px;
 }
 
@@ -89,6 +89,18 @@
 }
 
 /* 상단 탭 선택 시 JS로 계속 선택되어있게 하는 부분 */
+.selected-tab{
+    background-color: #CDF0EA;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* width: 200px;
+    height: 70px; */
+    border-radius: 10px;
+    color: #3387a8;
+    font-weight: bold;
+}
+
 .selected{
     background-color: #CDF0EA;
     align-items: center;

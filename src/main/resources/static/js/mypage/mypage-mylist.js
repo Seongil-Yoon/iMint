@@ -7,12 +7,13 @@ const tabContentItems = document.querySelectorAll('.tab-content-item');
 function selectItem(e) {
     removeShow();
     removeSelected();
+    removeSelected2();
     // Grab content item from DOM
     const tabContentItem = document.querySelector(`#${this.id}-content`);
     const tabItem = document.querySelector(`#${this.id}`);
     // Add show class
     tabContentItem.classList.add('show');
-    tabItem.classList.add('selected');
+    tabItem.classList.add('selected-tab');
 }
 
 function removeShow(){
@@ -20,6 +21,10 @@ function removeShow(){
 }
 
 function removeSelected(){
+    tabItems.forEach(item => item.classList.remove('selected-tab'))
+}
+
+function removeSelected2(){
     tabItems.forEach(item => item.classList.remove('selected'))
 }
 

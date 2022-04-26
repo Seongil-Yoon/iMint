@@ -29,9 +29,9 @@
  	<!-- 어사이드 끝 -->
  	
     <div class="container-main">
-        <h2 class="welcome-message">${userNickName}님 안녕하세요!</h2>
+        <h2 class="welcome-message">${userNickName}님, 안녕하세요!</h2>
         <!-- 보호자 로그인시 숨김 -->
-        <h2 class="transaction-summary">총 판매금액은 ${totalSell}원이고, 구매금액은 ${totalBuy}원입니다.</h2>
+        <h3 class="transaction-summary">총 판매금액은 ${totalSell}원이고, 구매금액은 ${totalBuy}원입니다.</h3>
         <!-- 거래 관련 -->
         <div class="container-transaction">
             <div class="transaction">
