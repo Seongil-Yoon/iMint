@@ -2,8 +2,10 @@ let stompClient = null;
 
 $(function () {
     if (chatRole == "CHILD" || chatRole == "GUARD") {
-        $("#chatbox-openbtn").show();
-        connectWS(chatId);
+        setTimeout(function () {
+			$("#chatbox-openbtn").show();
+            connectWS(chatId);
+        }, 500);
     }
 
     // 이벤트 등록: 채팅 버튼 누르면 채팅 버튼 숨기고 채팅박스 표시
