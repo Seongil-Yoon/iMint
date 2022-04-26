@@ -253,7 +253,35 @@ function main() {
 }
 main();
 
+//카테고리를 선택하면 배경 색이 바뀌어 있도록 함
+const selected = document.querySelector('#id-finder').className;
+const tabItems = document.querySelectorAll('.tab-item');
+console.log(selected);
+const spanItems = document.querySelectorAll('.hide-sm');
 
+function selectItem(e){
+	console.log("확인");
+	
+	for(item of spanItems){
+		if(item.innerText == selected){
+			removeSelected();
+			const parent = item.parentNode;
+			parent.classList.add('selected');
+			console.log(parent.classList)
+		}else if(item.innerText == '전체'){
+			removeSelected();
+			const first = document.querySelector('#tab-1');
+			first.classList.add('selected');
+		}
+	}
+
+}
+
+function removeSelected(){
+    tabItems.forEach(item => item.classList.remove('selected'))
+}
+
+window.onload = selectItem;
 
 
 

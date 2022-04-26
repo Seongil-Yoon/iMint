@@ -1,9 +1,10 @@
 @charset "UTF-8";
 
 .container {
-    background-color: beige;
+    background-color: white;
 }
 
+/* 카테고리 */
 .container>article.goods-category {
     display: flex;
     justify-content: space-around;
@@ -12,6 +13,7 @@
     padding: 0px;
     margin: 0px;
 }
+
 
 article.goods-category input {
     display: none;
@@ -23,9 +25,16 @@ article.goods-category .tab-item {
     justify-content: center;
     text-align: center;
     border-radius: 10px;
+   	height: 3rem;
+   	margin-bottom: 2.5rem;
 }
 
-.tab-item:hover {
+span.hide-sm{
+	margin: 2rem;
+	line-height: 2.8rem;
+}
+
+article.goods-category .tab-item:hover {
     background-color: #CDF0EA;
     align-items: center;
     justify-content: center;

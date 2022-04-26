@@ -14,6 +14,7 @@
 <body>
 	<jsp:include page="include/header.jsp" flush="false" />
 	<section class="container">
+		<div class="${goodsCategory}" id="id-finder"></div>
 		<article class="goods-category">
 			<label id="tab-1" class="tab-item selected">
 				<input type="radio" name="goodsCategory" id="" value="all" checked>

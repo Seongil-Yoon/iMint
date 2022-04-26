@@ -1,12 +1,12 @@
 @charset "UTF-8";
 
 .header-space {
-    height: 56px;
+    height: 90px;
 }
 
 @media screen and (max-width: 992px) {
     .header-space {
-        height: 96px;
+        height: 80px;
     }
 }
 
@@ -18,7 +18,7 @@ nav.carrot_header {
     z-index: 5;
 }
 
-form.search {}
+
 
 form.search select.form-select {
     flex: 1;
