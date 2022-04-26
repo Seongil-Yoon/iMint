@@ -7,7 +7,9 @@ body{
 	align-items: center; /* 수직 정렬  */
 	min-height: 100vh;	
 	
-	background-color: black;
+/* 	background-color: black; */
+/*  	background-color: white;
+ */	
 	/* opacity: 0.8; */
 }
 
@@ -15,8 +17,9 @@ body::after{ /* 가상 선택자  */
 	width: 100%;
   	height: 100%;
   	content: "";
-	background: url('/static/images/background.png');
-	background-repeat: no-repeat; /* 적용 x */
+	background: url('/static/images/background2.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
   	background-attachment: fixed;
   	background-position: center;
 	position: absolute;
@@ -24,7 +27,7 @@ body::after{ /* 가상 선택자  */
   	left: 0;
   	z-index: -1;
   	opacity: 0.7;
-  	/* filter: grayscale(100%); */
+  	filter: grayscale(20%); 
 }
 
 #wrap {
@@ -74,12 +77,14 @@ a{
 }
 
 h3 {
-	color: #3387a8;
-	color: white;
+/* 	color: #3387a8; */
+ 	color: #3387a8;
+	-webkit-text-stroke: 0.5px gray;
 }
 
 h2, p{
-	color: white;
+	/* color: white; */
+	color: #3387a8;
 }
 
 /* 애니메이션 적용 */
@@ -104,13 +109,13 @@ animation: motion 2s infinite;
 } 
 
 /* 푸터  */
-.mint-footer{
-	background-color: black !important; 
-}
+/* .mint-footer{
+	background-color: white !important; 
+} */
 
-.mint-footer a{
-	color : white !important;
-}
+.mint-footer a, .mint-footer span{
+	color : black !important;
+} 
 
 /* 좌우 배치  */
 .service{
