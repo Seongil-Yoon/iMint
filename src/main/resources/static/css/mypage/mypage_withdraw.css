@@ -3,6 +3,7 @@
 /* 페이지 전체 컨테이너 */
 .container-page{
 	width: 1200px;
+	height: 600px;
 	margin:auto;
 	padding-left: 3rem;
 	padding-right: 3rem;
@@ -36,7 +37,7 @@
     display: block;
     text-align: center;
     padding: 3rem;
-    height: 500px;
+    height: 550px;
     border: 1px;
      background-color: #F9F9F9;
     border-radius: 15px;

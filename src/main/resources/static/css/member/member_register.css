@@ -3,3 +3,25 @@
 .memberInfo{
 width: 250px;
 }
+
+/* 전체 컨테이너 */
+.container-all{
+	height: 600px;
+}
+
+/* 버튼 */
+.buttons{
+ width: 100px;	
+ font-weight: 600px;
+}
+
+#mbEmail{
+	margin-right:0.25rem;
+}
+
+.register-container{
+	 align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+

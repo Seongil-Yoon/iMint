@@ -15,15 +15,16 @@
 </head>
 
 <body>
+	<div class="container-all">
  	<jsp:include page="../include/header.jsp" flush="false" />
  	<h3>회원가입(SNS연동)</h3>	
  	<hr>
 	<br>
 	<div class = "container">
  	<form id = "change_url">
- 		<div class="item">닉네임 <input type = text name = "mbNick" id = "mbNick" value = ${memberDTO.mbNick } placeholder = ${memberDTO.mbNick } class = "memberInfo"> <input type="button" id = "nick_btn" class="btn btn-primary" value = "중복확인"><p id = "nickappend"></p>
+ 		<div class="item">닉네임 <input type = text name = "mbNick" id = "mbNick" value = ${memberDTO.mbNick } placeholder = ${memberDTO.mbNick } class = "memberInfo"> <input type="button" id = "nick_btn" class="btn btn-primary buttons" value = "중복확인"><p id = "nickappend"></p>
  		</div>
- 		<div class="item">이메일 <input type = text name = "mbEmail" id = "mbEmail" value = ${memberDTO.mbEmail } class = "memberInfo"><input type="button" id = "email_btn" class="btn btn-primary" value = "이메일 확인"><p id = "emailappend"></p>
+ 		<div class="item">이메일 <input type = text name = "mbEmail" id = "mbEmail" value = ${memberDTO.mbEmail } class = "memberInfo"><input type="button" id = "email_btn" class="btn btn-primary buttons" value = "이메일 확인"><p id = "emailappend"></p>
  		</div>
  		<br>
  		<div class="item" id = "interest">관심사 <select name = "mbInterest" id = "mbInterest" class = "memberInfo"
@@ -40,8 +41,11 @@
  		<br>
  		<input type = hidden name = "mbId" id = "mbId" value = ${memberDTO.mbId }>
  		<input type = hidden name = "mbRole" id = "mbRole" value = ${memberDTO.mbRole }>
-    	<input type = "button" id = "register_btn" value = "회원가입" class="btn btn-primary item">
+ 		<div class="register-container">
+    		<input type = "button" id = "register_btn" value = "회원가입" class="btn btn-primary item buttons">
+    	</div>
 	</form>
+	</div>
 	</div>
 	<br>
 	<br>
