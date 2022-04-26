@@ -16,16 +16,16 @@ public interface IChatDAO {
 
 	public String checkMember(String myId);
 
-	public Integer checkChatJoinable(String myId, int chatroomId);
+	public Integer checkChatroomJoinable(String myId, int chatroomId);
 
-	public ChatCheckDTO checkChatOpenable(int goodsId);
+	public ChatCheckDTO checkChatroomOpenable(int goodsId);
 
 	public Integer getBuyerChatroom(String myId, int goodsId);
 
 	public Integer createChatroom(String myId, int goodsId);
 
-	public Integer sendChatMessage(ChatMessageDTO chatMessage);
+	public Integer sendChatroomMessage(ChatMessageDTO chatMessage);
 
-	public List<ChatMessageDTO> getChatMessages(int chatroomId, int startIndex, int numberOfItems);
+	public List<ChatMessageDTO> getChatroomMessages(int chatroomId, int startIndex, int numberOfItems);
 
 }

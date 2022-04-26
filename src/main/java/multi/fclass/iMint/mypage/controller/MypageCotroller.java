@@ -193,7 +193,6 @@ public class MypageCotroller {
 			System.out.println(userChilds);
 			mv.addObject("userChilds", userChilds);
 
-
 			// 맵으로 구현
 			Map<String, List<MypageDTO>> allWish = new HashMap<String, List<MypageDTO>>();
 			Map<String, List<MypageDTO>> allSell = new HashMap<String, List<MypageDTO>>();
