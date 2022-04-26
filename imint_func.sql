@@ -14,8 +14,8 @@
 
 
 -- imint 데이터베이스 구조 내보내기
-CREATE DATABASE IF NOT EXISTS `imint_v1.1.2` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `imint_v1.1.2`;
+CREATE DATABASE IF NOT EXISTS `imint` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `imint`;
 
 -- 테이블 imint.admin 구조 내보내기
 CREATE TABLE IF NOT EXISTS `admin` (
@@ -42,36 +42,38 @@ CREATE TABLE IF NOT EXISTS `block` (
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- imint.chatroom definition
-CREATE TABLE `imint_v1.1.2`.`chatroom` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '채팅방 ID',
-  `goods_id` int NOT NULL COMMENT '상품 ID',
+-- 테이블 imint.chatroom 구조 내보내기
+CREATE TABLE IF NOT EXISTS `chatroom` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '채팅방 ID',
+  `goods_id` int(11) NOT NULL COMMENT '상품 ID',
   `buyer_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '구매희망자 ID',
   `resrv_date` datetime DEFAULT NULL COMMENT '상품 예약일시',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '채팅방 생성일시',
-  `isdelete` tinyint NOT NULL DEFAULT '0' COMMENT '채팅방 삭제여부',
+  `isdelete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '채팅방 삭제여부',
   PRIMARY KEY (`id`),
   KEY `chatroom_FK` (`goods_id`),
   KEY `chatroom_FK_1` (`buyer_id`),
   CONSTRAINT `chatroom_FK` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`),
   CONSTRAINT `chatroom_FK_1` FOREIGN KEY (`buyer_id`) REFERENCES `member` (`mb_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci COMMENT='채팅방 테이블';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci COMMENT='채팅방 테이블';
 
--- imint.chat_messages definition
-CREATE TABLE `imint_v1.1.2`.`chat_messages` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '메세지 ID',
-  `chatroom_id` int NOT NULL COMMENT '채팅방 ID',
-  `sender_id` varchar(100) NOT NULL COMMENT '메세지 전송 회원 ID',
-  `message` text NOT NULL COMMENT '메세지 내용',
-  `is_read` tinyint NOT NULL DEFAULT '0' COMMENT '메세지 읽음여부',
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 imint.chat_messages 구조 내보내기
+CREATE TABLE IF NOT EXISTS `chat_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '메세지 ID',
+  `chatroom_id` int(11) NOT NULL COMMENT '채팅방 ID',
+  `sender_id` varchar(100) COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '메세지 전송 회원 ID',
+  `message` text COLLATE utf8mb4_da_0900_ai_ci NOT NULL COMMENT '메세지 내용',
+  `is_read` tinyint(4) NOT NULL DEFAULT '0' COMMENT '메세지 읽음여부',
   `send_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '메세지 전송일시',
-  `is_deleted` tinyint NOT NULL DEFAULT '0' COMMENT '메세지 삭제여부',
+  `is_deleted` tinyint(4) NOT NULL DEFAULT '0' COMMENT '메세지 삭제여부',
   PRIMARY KEY (`id`),
   KEY `chat_messages_FK` (`chatroom_id`),
   KEY `chat_messages_FK_1` (`sender_id`),
   CONSTRAINT `chat_messages_FK` FOREIGN KEY (`chatroom_id`) REFERENCES `chatroom` (`id`),
   CONSTRAINT `chat_messages_FK_1` FOREIGN KEY (`sender_id`) REFERENCES `member` (`mb_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci COMMENT='채팅 메세지 테이블';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci COMMENT='채팅 메세지 테이블';
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -92,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `goods` (
   PRIMARY KEY (`goods_id`,`seller_id`,`seller_nick`) USING BTREE,
   KEY `FK_goods_member` (`seller_id`,`seller_nick`),
   CONSTRAINT `FK_goods_member` FOREIGN KEY (`seller_id`, `seller_nick`) REFERENCES `member` (`mb_id`, `mb_nick`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11300 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11302 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -107,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `goods_images` (
   PRIMARY KEY (`goods_images_id`,`goods_id`) USING BTREE,
   KEY `FK_goods_images_goods` (`goods_id`),
   CONSTRAINT `FK_goods_images_goods` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -133,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `member` (
   UNIQUE KEY `mb_nick` (`mb_nick`),
   KEY `mb_guard` (`mb_guard`),
   CONSTRAINT `FK_member_member` FOREIGN KEY (`mb_guard`) REFERENCES `member` (`mb_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_da_0900_ai_ci;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -153,6 +155,55 @@ CREATE TABLE IF NOT EXISTS `rating` (
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
+-- 함수 imint.replaceCamelCase 구조 내보내기
+DELIMITER //
+CREATE FUNCTION `replaceCamelCase`(
+	`p_str` VARCHAR(30)
+) RETURNS varchar(30) CHARSET utf8mb4
+    DETERMINISTIC
+BEGIN
+declare v_pos int;
+declare v_len int;
+declare cnt int;
+declare tmp varchar(30);
+declare ret varchar(30);
+
+set v_pos=1;
+set v_len=1+char_length( p_str );
+set ret = '';
+set cnt = 0;
+
+if p_str REGEXP('[^_]') then
+while (v_pos<v_len)
+do
+    set tmp = SUBSTR(p_str, v_pos, 1);
+
+    if tmp REGEXP BINARY '[A-Z]' = 1 then
+
+        if cnt >= 0 then
+            set ret = concat(ret, '_');
+        end if;
+
+        set ret = concat(ret, lower(tmp));
+        set cnt = cnt + 1;
+    else
+        set ret = concat(ret, tmp);
+    end if;
+
+    set v_pos = v_pos + 1;
+
+end while;
+
+else 
+set ret = p_str;
+end if;
+
+RETURN ret;
+
+
+end//
+DELIMITER ;
+
 -- 프로시저 imint.testdata 구조 내보내기
 DELIMITER //
 CREATE PROCEDURE `testdata`()
@@ -160,11 +211,9 @@ BEGIN
 		DECLARE i INT;
 
 		SET i = 1;
-		WHILE i < 100 DO
-				#DELETE FROM `imint_v1.1.2`.`goods` WHERE  `goods_id` > 85;
-				INSERT INTO `imint_v1.1.2`.`goods` (`seller_id`, `seller_nick`, `goods_title`, `goods_content`, `goods_price`, `goods_category`, `goods_suggestible`, `goods_location`,`goods_create_date`) 
-				VALUES ('google_102592663151810141035', '윤성일1966', CONCAT('상품',i), CONCAT('상품설명',i), '156156', '문구', '1', '대구 중구',DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL i SECOND));
-				#INSERT INTO `imint_v1.1.2`.`goods` (`mb_id`, `goods_title`, `goods_price`, `goods_location`, `goods_status`) VALUES ('sub1234', CONCAT('상품',i+3), '123123', '대구', 'wait');
+		WHILE i < 36 DO 			
+				#ADD(CURRENT_TIMESTAMP(),INTERVAL i)
+				INSERT INTO `imint`.`goods` (`mb_id`, `goods_title`, `goods_price`, `goods_location`, `goods_status`) VALUES ('sub1234', CONCAT('상품',i+3), '123123', '대구', 'wait');
 				SET i = i + 1;
 		END WHILE;	
 	
@@ -176,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `trx_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '거래ID',
   `trx_isdelete` tinyint(1) DEFAULT '0' COMMENT '예약취소시간',
   `trx_complete_date` datetime DEFAULT NULL COMMENT '거래완료시간',
-  `mb_id` varchar(64) COLLATE utf8mb4_da_0900_ai_ci DEFAULT NULL COMMENT '구매자ID',
+  `mb_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_da_0900_ai_ci DEFAULT NULL COMMENT '구매자ID',
   `goods_id` int(11) NOT NULL COMMENT '상품ID',
   PRIMARY KEY (`trx_id`) USING BTREE,
   KEY `transaction_FK` (`mb_id`),

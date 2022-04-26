@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 
 public interface IMainService {
-	public List<HashMap<String, Object>> goodsListMap(String goodsCategory, int lastBoard, String mbLocation);
+	public List<HashMap<String, Object>> goodsListMap(String goodsCategory, int lastBoard, String mbLocation,
+			String searchOption, String keyword);
 
 }

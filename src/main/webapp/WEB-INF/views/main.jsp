@@ -12,7 +12,6 @@
 </head>
 
 <body>
-	<input style="display: none;" type="hidden" id="paramGoodsCategory" value="${goodsCategory}" />
 	<jsp:include page="include/header.jsp" flush="false" />
 	<section class="container">
 		<article class="goods-category">

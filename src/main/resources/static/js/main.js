@@ -85,28 +85,10 @@ function getMyLocation() {
 
 		}
 
-		/* 
-		* 로컬스토리지 사용으로 미사용
-		function selectCategoryPromise(crtLocation) {
+		function loadScroll() {
 			return new Promise(function (resolve, reject) {
-				goodsCategoryVal = $("input[id='paramGoodsCategory']").val();
-				goodsCategoryVal = "all"
-				console.log(goodsCategoryVal);
-				resolve(crtLocation);
-				resolve(goodsCategoryVal);
-				// $("input[name='goodsCategory']").on("click", function () {
-				// 	goodsCategoryVal = $("input[name='goodsCategory']:checked").val();
-				// 	location.href = `/main?goodsCategory=${goodsCategoryVal}`
-				// })
-			});
-		}
-
-		function loadScroll(crtLocation, goodsCategoryVal) {
-			return new Promise(function (resolve, reject) {
-				// resolve(localStorage.setItem("crtLocation", crtLocation));
-				console.log(goodsCategoryVal);
-				// $(window).on('load', function () {
-				start(crtLocation, goodsCategoryVal); //처음 4개 출력
+				crtLocation = localStorage.getItem("crtLocation");
+				start(); //처음 4개 출력
 				$(window).scroll(function () { //스크롤 감지 이벤트
 					let scroll = $(document).scrollTop(); //현재 스크롤 값
 					let documentHeight = $(document).height(); //문서 전체높이
@@ -114,39 +96,19 @@ function getMyLocation() {
 					//윈도우 높이에 스크롤값을 계속더해서 문서 전체 길이에서 100 px 앞에 스크롤이 왔을때 데이터 불러옴
 					if ((windowHeight + scroll) >= documentHeight - 100) {
 						if (mainScrollTime == true && end == true) {
-							start(crtLocation, goodsCategoryVal);
+							start();
 						}
 					}
 				})
-				// });
 			});
 		}
-		let result = geolocationPromis()
-		 	.then(kakaoAjax)
-		 	.then(loadScroll);
-		*/
 
 
 		let result = geolocationPromis()
-			.then(kakaoAjax);
+			.then(kakaoAjax)
+			.then(loadScroll);
 
-		console.log("위치조회O");
-		$(window).on('load', function () {
-			crtLocation = localStorage.getItem("crtLocation");
-			start(crtLocation); //처음 4개 출력
-			$(window).scroll(function () { //스크롤 감지 이벤트
-				let scroll = $(document).scrollTop(); //현재 스크롤 값
-				let documentHeight = $(document).height(); //문서 전체높이
-				let windowHeight = window.innerHeight; //윈도우 높이
-				//윈도우 높이에 스크롤값을 계속더해서 문서 전체 길이에서 100 px 앞에 스크롤이 왔을때 데이터 불러옴
-				if ((windowHeight + scroll) >= documentHeight - 100) {
-					if (mainScrollTime == true && end == true) {
-						start(crtLocation);
-					}
-				}
-			})
-		});
-
+		console.log("비동기코드보다 먼저 실행됨");
 		console.log(result);
 
 	} else {
@@ -172,10 +134,11 @@ function getMyLocation() {
 function start() {
 	//무한 스크롤 중복 방지
 	mainScrollTime = false;
-
+	let searchOption = $("input[id='searchOption']").val();
+	let keyword = $("input[id='keyword']").val();
 	$.ajax({
 		// crtLocation는 컨트롤러에서 Auth객체가 없을때만 처리
-		url: `/goods-list/${goodsCategoryVal}/${lastBoard}?userLocation=${crtLocation}`,
+		url: `/goods-list/${goodsCategoryVal}/${lastBoard}?userLocation=${crtLocation}&searchOption=${searchOption}&keyword=${keyword}`,
 		type: "GET",
 		dataType: "json", //json 으로 받기
 		success: function (result) {
@@ -274,10 +237,19 @@ function selectCategory() {
 	})
 }
 
+function goodsSearch() {
+	$("#search-text").on("click", function (e) {
+		let searchOption = $("select[name='searchOption']").val();
+		let keyword = $("input[name='keyword']").val();
+		location.href = `/main?goodsCategory=${goodsCategoryVal}&searchOption=${searchOption}&keyword=${keyword}`
+	})
+}
+
 function main() {
 	getMyLocation();
 	// loadScroll();
 	selectCategory();
+	goodsSearch();
 }
 main();
 

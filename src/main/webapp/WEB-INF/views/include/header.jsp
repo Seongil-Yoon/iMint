@@ -4,6 +4,9 @@
 <!DOCTYPE html>
 <!-- 헤더 css,js 불러오기는 libs.jsp파일 -->
 <!--/*여기는 맨 위에 있는 바 부분*/ -->
+<input style="display: none;" type="hidden" id="paramGoodsCategory" value="${goodsCategory}" />
+<input style="display: none;" type="hidden" id="searchOption" value="${searchOption}" />
+<input style="display: none;" type="hidden" id="keyword" value="${keyword}" />
 <div class="header-space"></div>
 <nav class="carrot_header">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -11,7 +14,7 @@
 
 			<!-- 로고 -->
 			<a class="navbar-brand" href="/main">
-				<!-- <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"> --> 아이민트로고
+				<img class="imint-logo" src="/static/images/iMint_Black.png" alt="">
 			</a>
 
 			<!-- 반응형 드롭다운 버튼 -->
@@ -29,23 +32,23 @@
 
 					<!-- 검색창 -->
 
-					<form class="d-flex search" action="/search?" method="GET">
+					<form class="d-flex search" method="GET">
 						<div class="input-group">
 							<select class="form-select" id="js-searchOption" name="searchOption">
 								<option value="all" selected>전체</option>
-								<option value="titleContent">제목+내용</option>
-								<option value="title">제목</option>
-								<option value="content">내용</option>
-								<option value="writer">글쓴이</option>
+								<!-- <option value="titleContent">제목+내용</option> -->
+								<option value="goods_title">제목</option>
+								<option value="goods_content">내용</option>
+								<option value="seller_nick">글쓴이</option>
 							</select>
-							<input type="search" class="form-control" aria-label="Text input with dropdown button"
-								placeholder="무엇을 찾아 볼까요?">
+							<input type="search" class="form-control" id="keyword" name="keyword"
+								aria-label="Text input with dropdown button" value="" placeholder="무엇을 찾아 볼까요?">
 						</div>
-						<button class="btn btn-primary search-btn" type="submit" id="search-voice">
+						<button type="button" class="btn btn-primary search-btn" type="submit" id="search-voice">
 							<img class="searchIcon" src="/static/images/mic.png" alt="">
 						</button>
 						<p class="arrow_box" id="arrow-voice">음성으로 찾아 보세요!</p>
-						<button class="btn btn-primary search-btn" type="submit" id="search-text">
+						<button type="button" class="btn btn-primary search-btn" type="submit" id="search-text">
 							<img class="searchIcon" src="/static/images/search.png" alt="">
 						</button>
 						<p class="arrow_box" id="arrow-text">텍스트로 찾아 보세요!</p>
