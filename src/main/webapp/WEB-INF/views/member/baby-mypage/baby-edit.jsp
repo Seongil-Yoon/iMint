@@ -55,7 +55,7 @@
 		            </div>
 		            <div class="buttons buttons-nickname">
 		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-child">
-		                    <input type="submit" class="btn btn-primary" value="닉네임 중복 확인" id="nickname-check-child"/>
+		                    <input type="button" class="btn btn-primary" value="닉네임 중복 확인" id="nickname-check-child"/>
 		            </div>
 		        </div>
 		        
@@ -71,6 +71,7 @@
 		        
 		        <!-- 변경하기 버튼 -->
 		            <br>
+		            <div id="nickappend"></div>
 		            <br>
 		            <input type="submit" class="btn btn-primary" value="회원정보 수정하기" id="update-complete-child"/>
 		        </form>
@@ -79,7 +80,7 @@
 		</div>
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
-	<script src ="/static/js/mypage/mypage-edit.js"></script>
+	<script src="/static/js/mypage/mypage-edit.js" type="text/javascript"></script>
 	<script src="/static/js/baby-main.js"></script>
 		<script>
 	$("#thumbnail_delete_btn").on('click', function(){

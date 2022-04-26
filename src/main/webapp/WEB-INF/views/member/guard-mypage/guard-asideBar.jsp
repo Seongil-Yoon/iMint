@@ -34,6 +34,7 @@
         </a>
     </div>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
+	
 	<script src="/static/js/baby-main.js"></script>
 </body>
 </html>

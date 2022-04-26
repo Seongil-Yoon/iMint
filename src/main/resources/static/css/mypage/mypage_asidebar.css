@@ -32,6 +32,13 @@
     cursor: pointer;
 }    
 
+.selected {
+    background-color: #CDF0EA;
+    color: #3387a8;
+    font-weight: bold;
+    border-radius: 10px;
+}  
+
 .aside-title{
 	margin-top: 1rem;
 	margin-bottom:0.5rem;

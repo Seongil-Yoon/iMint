@@ -158,6 +158,7 @@ public class MemberCotroller {
 	}
 	
 	
+	
 	@GetMapping("/mypage/withdraw")
 	public ModelAndView	deleteuser(Authentication auth) {
 		

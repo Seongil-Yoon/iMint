@@ -141,6 +141,7 @@
     </div>
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
+	<script src="/static/js/mypage/mypage-aside.js"></script>
 	<script src="/static/js/mypage/mypage-mylist.js"></script>
 </body>
 </html>

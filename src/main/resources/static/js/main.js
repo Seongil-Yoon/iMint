@@ -274,7 +274,6 @@ function selectItem(e){
 			first.classList.add('selected');
 		}
 	}
-
 }
 
 function removeSelected(){
