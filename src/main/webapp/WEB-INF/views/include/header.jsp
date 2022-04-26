@@ -46,8 +46,15 @@
 								<option value="goods_content">내용</option>
 								<option value="seller_nick">글쓴이</option>
 							</select>
-							<input type="search" class="form-control" id="keyword" name="keyword"
-								aria-label="Text input with dropdown button" value="" placeholder="무엇을 찾아 볼까요?">
+							<c:if test="${empty param.keyword}">
+								<input type="search" class="form-control" id="keyword" name="keyword"
+									aria-label="Text input with dropdown button" value="" placeholder="무엇을 찾아 볼까요?">
+							</c:if>
+							<c:if test="${not empty param.keyword}">
+								<input type="search" class="form-control" id="keyword" name="keyword"
+									aria-label="Text input with dropdown button" value="${param.keyword}"
+									placeholder="${param.keyword}">
+							</c:if>
 						</div>
 						<button type="button" class="btn btn-primary search-btn" type="submit" id="search-voice">
 							<img class="searchIcon" src="/static/images/mic.png" alt="">
@@ -86,3 +93,26 @@
 		<!-- </div> -->
 	</nav>
 </nav>
+
+<article class="voice-popup" id="voicePopup">
+	<div class="btn-group suggestible" role="group" aria-label="Basic radio toggle button group">
+		<input type="radio" class="btn-check" name="suggestible" value="음성질문시작" id="record" autocomplete="off"
+			value="false">
+		<label class="btn btn-outline-primary" for="record">음성질문시작</label>
+		<input type="radio" class="btn-check" name="suggestible" value="음성질문종료 및 검색" id="stop" autocomplete="off"
+			value="true">
+		<label class="btn btn-outline-primary" for="stop">음성질문종료</label>
+	</div>
+	<br>
+	<br>
+	<div id="sound"></div>
+	<br>
+	<input type="search" class="form-control" id="voiceResult" name="voiceResult"
+		aria-label="Text input with dropdown button" value="" placeholder="무엇을 찾아 볼까요?">
+	<br>
+	<button type="button" class="btn btn-primary" id="voiceDoneAndSearch">
+		검색
+	</button>
+</article>
+
+<div class="voicepopup-overlay" tabindex="-1" style="opacity: 0; display: none;"></div>

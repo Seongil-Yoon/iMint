@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.voice-popup {
+    display: none;
+    position: fixed;
+    width: 76%;
+    height: max-content;
+    left: 12%;
+    top: 17%;
+    text-align: center;
+    background-color: white;
+    border-radius: 1rem;
+    border: 1px solid rgb(155, 155, 155);
+    padding: 17px;
+    z-index: 99999;
+}
+
+.voicepopup-overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10000;
+}
