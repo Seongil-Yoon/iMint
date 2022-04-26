@@ -131,6 +131,32 @@ public class MemberCotroller {
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/edit/nickname")
+	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+		System.out.println(nickcheck);
+		Map<String, String> map = new HashMap<String, String>();
+		// 비 로그인
+		if (auth == null) {
+					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
+		
+		if (nickcheck.equals("") ){
+			map.put("result", "blank");		
+			System.out.println("blank");
+		}
+		else if (securityDAO.findByMbNick(nickcheck) == null || securityDAO.findByMbNick(nickcheck).getMbId().equals(mbId) ) { // 없거나, 본인이면
+			System.out.println("ok");
+			map.put("result", "ok");
+			map.put("nickcheck", nickcheck);
+		}
+		else{
+			map.put("result", "duplicated");	
+			System.out.println("duplicated");
+		}
+		return map;		
+	}
+	
 	
 	@GetMapping("/mypage/withdraw")
 	public ModelAndView	deleteuser(Authentication auth) {

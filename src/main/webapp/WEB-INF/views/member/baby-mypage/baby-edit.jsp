@@ -42,7 +42,7 @@
 		                <h5 class="lables-text">프로필 사진 변경</h5>
 		            </div>
 		            <div class="buttons buttons-photo">
-		                <input name = "thumbnail" type="file" id="photo-update-child">
+		                <input name = "thumbnail" type="file" id="photo-update-child" class="buttons-text">
 		            	<input name = "mbId" type="hidden" id="mbId">
 		            	<input type= "button" class="btn btn-primary" name = "thumbnail_delete_btn" id="thumbnail_delete_btn" value = "프로필 사진 삭제">
 		            </div>
@@ -55,7 +55,7 @@
 		            </div>
 		            <div class="buttons buttons-nickname">
 		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-child">
-		                    <input type="submit" class="btn btn-primary" value="확인" id="nickname-check-child"/>
+		                    <input type="submit" class="btn btn-primary" value="닉네임 중복 확인" id="nickname-check-child"/>
 		            </div>
 		        </div>
 		        
@@ -79,6 +79,7 @@
 		</div>
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
+	<script src ="/static/js/mypage/mypage-edit.js"></script>
 	<script src="/static/js/baby-main.js"></script>
 		<script>
 	$("#thumbnail_delete_btn").on('click', function(){

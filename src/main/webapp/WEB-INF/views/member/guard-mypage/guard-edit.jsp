@@ -82,6 +82,7 @@
 		        
 		        <!-- 변경하기 버튼 -->
 		            <br>
+		            <div id="nickappend"></div>
 		            <br>
 		            <input type="submit" class="btn btn-primary" value= "회원정보 수정하기" id="update-complete-guard"/>
 		        </form>
@@ -91,6 +92,7 @@
 		</div>
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
+	<script src="/static/js/mypage/mypage-edit.js" type="text/javascript"></script>
 	<script src="/static/js/baby-main.js"></script>
 	<script>
 	$("#thumbnail_delete_btn").on('click', function(){
