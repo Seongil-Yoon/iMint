@@ -53,7 +53,7 @@
 	 			<!-- 상단 탭 -->
 	        <section class="tabs">
 	            <div class="container">
-	                <div id="tab-1" class="tab-item selected">
+	                <div id="tab-1" class="tab-item selected-tab selected">
 	                    <p class="hide-sm">관심/구매예약</p>
 	                </div>
 	                <div id="tab-2" class="tab-item">
