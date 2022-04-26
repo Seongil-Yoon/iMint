@@ -83,6 +83,7 @@
     border-style: solid;
     /* border-color: rgb(155, 155, 155); */
     border-color: white;
+    background-color: white;
 }
 
 .tag {
