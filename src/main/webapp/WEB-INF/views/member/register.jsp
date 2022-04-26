@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>iMint :: 회원가입</title>
 	<jsp:include page="../libs/libsStyles.jsp" flush="false" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/member_basic.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/member/member_register.css">
