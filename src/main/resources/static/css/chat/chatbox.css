@@ -10,11 +10,12 @@
     display: none;
     position: fixed;
     user-select: none;
-    bottom: 16.8px;
-    right: 16.8px;
+    bottom: 20px;
+    right: 20px;
     width: calc(var(--title-height) + 20px);
     height: calc(var(--title-height) + 20px);
     background-color: #cdf0ea;
+    border: 1px solid #9b9b9b;
     border-radius: 2.5rem;
     text-align: center;
     line-height: calc(var(--title-height) + 20px);
