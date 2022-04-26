@@ -30,16 +30,16 @@
 	 		<h2 style = "text-align: center; width:225px;">iMint</h2>
 	 	</div>
 	 	<div class="item">
-	 		<a href = "/oauth2/authorization/google" class="btn btn-dark opacity-75" style="color: white" >아이 가입 | 로그인(BETA)</a>
+	 		<a href = "/oauth2/authorization/google" class="btn btn-secondary opacity-75" style="color: #white" >아이 가입 | 로그인(BETA)</a>
 	 	</div>
 	 	<div class="item">
-		 	<a href = "/oauth2/authorization/naver" class="btn btn-dark opacity-75" style="color: #2DB400">NAVER 가입 | 로그인</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> <!-- #2DB400 --> 
+		 	<a href = "/oauth2/authorization/naver" class="btn btn-secondary opacity-75" style="color: #2DB400">NAVER 가입 | 로그인</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> <!-- #2DB400 --> 
 		</div>
 	 	<div class="item">
-			<a href = "/oauth2/authorization/kakao" class="btn btn-dark opacity-75" style="color: #F7E600">KAKAO 가입 | 로그인</a> <!-- #F7E600, #3A1D1D -->
+			<a href = "/oauth2/authorization/kakao" class="btn btn-secondary opacity-75" style="color: #F7E600">KAKAO 가입 | 로그인</a> <!-- #F7E600, #3A1D1D -->
 		</div>
 		<div class="item">
-			<a href = "/main" class="btn btn-dark opacity-75" style="color:  white">둘러보기</a>
+			<a href = "/main" class="btn btn-secondary opacity-75" style="color:  #white">둘러보기</a>
 		</div>	
  	</div>
 	</div>
@@ -48,7 +48,8 @@
 	<br>
 	<div class = "fadeinleft" class="shadow p-3 mb-5 bg-body rounded">
 	<div class = "cover">
-		   	<img class = "cover_item service" src = "/static/images/login_chat.png">	
+<!-- 		<div class="shadow-lg p-3 mb-5 bg-body rounded">
+ -->		   	<img class = "shadow-lg p-3 mb-5 bg-body rounded cover_item service" src = "/static/images/login_chat.png">	
 		   	<div class = "cover_item">
 			<h3>
 			안전
@@ -57,7 +58,9 @@
    				아이들끼리만 거래하고, 아이들끼리만 채팅할 수 있습니다.
    			</p>
    			</div>
-
+<!-- 		</div> -->
+		
+<!-- 		<div class="shadow-lg p-3 mb-5 bg-body rounded">	 -->
 		   	<div class = "cover_item">		   	
 			<h3>
 			연동
@@ -67,9 +70,11 @@
     		연동된 보호자 계정으로 아이들과 함께 연습할 수 있습니다.
     		</p>
     		</div>
-		   	<img class = "cover_item service" src = "/static/images/login_transaction.png">	
-   			    		
-		   	<img class = "cover_item service" src = "/static/images/login_map.png">	
+		   	<img class = "shadow-lg p-3 mb-5 bg-body rounded cover_item service" src = "/static/images/login_transaction.png">	
+<!--     	</div> -->
+
+<!-- 		<div class="shadow-lg p-3 mb-5 bg-body rounded">   			    		 -->
+		   	<img class = "shadow-lg p-3 mb-5 bg-body rounded cover_item service" src = "/static/images/login_map.png">	
 		   	<div class = "cover_item">
 			<h3>
 			지역
@@ -78,6 +83,7 @@
 			지역 인증을 통해 멀리 가지 않고<br><span class="thick">가까운 이웃과 거래</span>할 수 있습니다.
     		</p>
     		</div>
+<!--     	</div>	 -->
 	</div>	
 	</div>	
 	<br>
