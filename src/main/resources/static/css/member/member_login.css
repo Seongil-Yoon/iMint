@@ -127,3 +127,36 @@ animation: motion 2s infinite;
 	margin: auto;
 	padding: 20px;
 }
+
+/* 애니메이션 적용2: 풍선  */
+#registration{
+	display: flex; 
+}
+
+.registrations:nth-child(2n-1) {
+	flex: 1 1 0;
+	flex-shrink: 0;
+	width: 30px;	
+}
+.registrations:nth-child(2) {
+	flex: 2 1 0;
+}
+
+.balloons { 
+align-items: center; 
+justify-content: center; 
+width: 30px; 
+height: 30px; 
+animation: motion 2s infinite;
+}
+
+@keyframes congraturations { 
+	0% {transform: rotate( -15deg );}
+	20% {transform: rotate( -10eg );}
+	40% {transform: rotate( -5eg );}
+	50% {transform: rotate( 0deg );}
+	60% {transform: rotate( 5deg );}
+	75% {transform: rotate( 10deg );}
+	85% {transform: rotate( 0deg );}
+	100% {transform: rotate( -10deg );}
+} 
