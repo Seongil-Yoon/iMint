@@ -31,7 +31,7 @@ import multi.fclass.iMint.wishlist.service.WishlistServiceImpl;
  *
  */
 @Controller
-public class GoodsCotroller {
+public class GoodsController {
 	@Autowired
 	GoodsServiceImpl goodsSevice;
 	@Autowired

@@ -38,8 +38,15 @@
 								<option value="goods_content">내용</option>
 								<option value="seller_nick">글쓴이</option>
 							</select>
-							<input type="search" class="form-control" id="keyword" name="keyword"
-								aria-label="Text input with dropdown button" value="" placeholder="무엇을 찾아 볼까요?">
+							<c:if test="${empty param.keyword}">
+								<input type="search" class="form-control" id="keyword" name="keyword"
+									aria-label="Text input with dropdown button" value="" placeholder="무엇을 찾아 볼까요?">
+							</c:if>
+							<c:if test="${not empty param.keyword}">
+								<input type="search" class="form-control" id="keyword" name="keyword"
+									aria-label="Text input with dropdown button" value="${param.keyword}"
+									placeholder="${param.keyword}">
+							</c:if>
 						</div>
 						<button type="button" class="btn btn-primary search-btn" type="submit" id="search-voice">
 							<img class="searchIcon" src="/static/images/mic.png" alt="">
@@ -96,7 +103,7 @@
 		검색
 	</button>
 </article>
-
 <div class="voicepopup-overlay" tabindex="-1" style="opacity: 0; display: none;"></div>
+
 <!-- 채팅 -->
 <jsp:include page="../chat/chatbox.jsp" flush="false" />

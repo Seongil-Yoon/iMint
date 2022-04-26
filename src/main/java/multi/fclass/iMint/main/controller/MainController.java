@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import multi.fclass.iMint.goods.service.GoodsServiceImpl;
+import multi.fclass.iMint.ai.service.sttServiceImpl;
 import multi.fclass.iMint.main.service.MainServiceImpl;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
@@ -21,7 +21,7 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
  * @author Seongil, Yoon 메인페이지와 관련된 로직
  */
 @Controller
-public class MainCotroller {
+public class MainController {
 
 	@Autowired
 	MainServiceImpl mainService;
@@ -65,5 +65,7 @@ public class MainCotroller {
 		memberDTO = parseService.getMemberMbId(mbId);
 		return mainService.goodsListMap(goodsCategory, lastBoard, memberDTO.getMbLocation(), searchOption, keyword);
 	}
+
+	
 
 }
