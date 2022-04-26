@@ -20,13 +20,14 @@
 
 /* 페이지 타이틀 */
 .title{
-	width: 1300px;
-    padding-top: 2rem;
+	width: 210px;
+    padding-bottom: 2rem;
 }
 
 /* 어사이드 바*/
 .container-aside{
 	padding-top: 3rem;
+	text-align: center;
 }
 
 /* 메인 컨테이너 */
@@ -35,7 +36,11 @@
     display: block;
     text-align: center;
     padding: 3rem;
+    height: 500px;
     border: 1px;
+     background-color: #F9F9F9;
+    border-radius: 15px;
+    margin-bottom: 2rem;
 }
 
 /* 안내 메시지 */
