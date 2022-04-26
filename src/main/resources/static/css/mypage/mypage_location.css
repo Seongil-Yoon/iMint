@@ -12,7 +12,7 @@
 .container-aside-main{
 	display: grid;
     grid-template-columns: 0.5fr 3.5fr;
-    grid-gap: 1.3rem;
+    grid-gap: 3rem;
     /* width: 1300px; */
    	justify-content: center;
    	
@@ -20,8 +20,9 @@
 
 /* 페이지 타이틀 */
 .title{
-	width: 1300px;
-    padding-top: 2rem;
+	width: 210px;
+    padding-bottom: 2rem;
+    text-align:center;
 }
 
 /* 어사이드 바*/
@@ -42,6 +43,9 @@
     text-align: center;
     padding: 3rem;
     border: 1px;
+    background-color: #F9F9F9;
+    border-radius: 15px;
+    height: 630px;
 }
 
 /* 맵 */
@@ -63,5 +67,5 @@
 
 #confirm_btn{
 	width:150px;
-	font-weight: 400;
+	font-weight: 600;
 }

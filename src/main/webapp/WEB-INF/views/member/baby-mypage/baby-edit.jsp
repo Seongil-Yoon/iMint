@@ -20,11 +20,11 @@
  	
  	<!-- 아티클 시작 -->
 	<div class="container-page">
-		<h1 class="title">마이페이지</h1>
-		<div class="container-aside-main">
-		
-			<!-- 어사이드 시작 -->
-			<div class="container-aside">
+	
+	<div class="container-aside-main">
+	<!-- 어사이드 시작 -->
+	<div class="container-aside">
+	<h2 class="title">마이페이지</h2>
 		 		<jsp:include page="baby-asideBar.jsp" flush="false" />
 		 	</div>
 		 	<!-- 어사이드 끝 -->
@@ -70,11 +70,14 @@
 		        </div>
 		        
 		        <!-- 변경하기 버튼 -->
+		         <div class="update-comlete-container">
 		            <br>
 		            <div id="nickappend"></div>
 		            <br>
 		            <input type="submit" class="btn btn-primary" value="회원정보 수정하기" id="update-complete-child"/>
+		        </div>
 		        </form>
+		        
 		    </div>
 		</div>
 		</div>

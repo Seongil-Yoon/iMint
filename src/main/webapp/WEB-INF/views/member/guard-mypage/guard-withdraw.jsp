@@ -19,10 +19,11 @@
  	<jsp:include page="../../include/header.jsp" flush="false" />
  	<!-- 아티클 시작 -->
 	<div class="container-page">
-		<h1 class="title">마이페이지</h1>
-		<div class="container-aside-main">
-			<!-- 어사이드 시작 -->
-			<div class="container-aside">
+	
+	<div class="container-aside-main">
+	<!-- 어사이드 시작 -->
+	<div class="container-aside">
+	<h2 class="title">마이페이지</h2>
 		 		<jsp:include page="guard-asideBar.jsp" flush="false" />
 		 	</div>
 		 	<!-- 어사이드 끝 -->
@@ -30,7 +31,11 @@
 		    <div class="container-main">
 				<div class="text">
 					<h2>회원을 탈퇴하시겠어요? 😢</h2>
-					<h2>탈퇴하시면 연동된 아이 계정이 모두 탈퇴되니, 신중하게 생각해 주세요.</h2>
+					<br>
+					<br>
+					<br>
+					<br>
+					<h3>탈퇴하시면 연동된 아이 계정이 모두 탈퇴되니,<br> 신중하게 생각해 주세요.</h3>
 				</div>
 				<div class="buttons">
 					<!-- <form action="#">

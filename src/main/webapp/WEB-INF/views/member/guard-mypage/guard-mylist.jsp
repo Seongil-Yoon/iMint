@@ -18,10 +18,11 @@
  	
  	<!-- 아티클 시작 -->
 	<div class="container-page">
-		<h1 class="title">마이페이지</h1>
-		<div class="container-aside-main">
-		<!-- 어사이드 시작 -->
-		<div class="container-aside">
+	
+	<div class="container-aside-main">
+	<!-- 어사이드 시작 -->
+	<div class="container-aside">
+	<h2 class="title">마이페이지</h2>
 	 	<jsp:include page="guard-asideBar.jsp" flush="false" />
 	 	</div>
 	 	<!-- 어사이드 끝 -->
@@ -35,6 +36,8 @@
                 			<h2>연결된 아이가 없습니다.</h2>
      					</c:when>
      					<c:otherwise>
+     					<h2 id="child-define">조회하실 아이를 선택해 주세요.</h2>
+     					<br>
      					<div class="dropdown">
 							  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 							    아이 선택
@@ -45,7 +48,7 @@
      							</c:forEach>
 							  </ul>
 							</div>
-     					<h2 id="child-define">내 아이 님의 거래 관련 목록입니다.</h2>
+     					
      					</c:otherwise>
                 	</c:choose>
 			   

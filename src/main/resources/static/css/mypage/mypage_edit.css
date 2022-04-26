@@ -11,7 +11,7 @@
 .container-aside-main{
 	display: grid;
     grid-template-columns: 0.5fr 3.5fr;
-    grid-gap: 1.3rem;
+    grid-gap: 3rem;
     /* width: 1300px; */
    	justify-content: center;
    	
@@ -19,9 +19,11 @@
 
 /* 페이지 타이틀 */
 .title{
-	width: 1300px;
-    padding-top: 2rem;
+	width: 210px;
+    padding-bottom: 2rem;
+    text-align: center;
 }
+
 
 /* 어사이드 바*/
 .container-aside{
@@ -34,6 +36,9 @@
     text-align: center;
     padding: 3rem;
     border: 1px;
+   background-color: #F9F9F9;
+    border-radius: 15px;
+    margin-bottom: 2rem;
 }
 
 
@@ -42,16 +47,23 @@
 	margin-bottom: 5rem;
 }
 
+/* 폼 컨테이너 */
+
+.container-form{
+	background-color: white;
+	border-radius: 1rem;
+}
+
 /* 각 항목별 컨테이너 */
 .container-context{
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 0.8fr 2fr;
     /* grid-gap: 1.5rem; */
     text-align: left;
     padding: 2rem;
     padding-right: 5.8rem;
    	padding-left: 5.8rem;
-    border-bottom: 1px solid #b3b3b3;
+    border-bottom: 1.2px solid #ededed;
 }
 
 #nickname-check-guard{
@@ -59,8 +71,8 @@
 }
 
 /* 비밀번호 입력 안내 레이블 */
-.lables-password{
-    justify-content: center;
+.lables-text{
+    width: 180px;
 }
 
 /* 비밀번호 입력 칸 */
@@ -85,4 +97,8 @@
 
 .password {
     margin-bottom: 0.2rem;
+}
+
+.update-comlete-container{
+	padding-bottom: 2rem;
 }

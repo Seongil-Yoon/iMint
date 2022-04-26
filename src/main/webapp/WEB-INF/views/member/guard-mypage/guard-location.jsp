@@ -18,18 +18,19 @@
  	<jsp:include page="../../include/header.jsp" flush="false" />
  	<!-- 아티클 시작 -->
 	<div class="container-page">
-	<h1 class="title">마이페이지</h1>
+	
 	<div class="container-aside-main">
 	<!-- 어사이드 시작 -->
 	<div class="container-aside">
+	<h2 class="title">마이페이지</h2>
  	<jsp:include page="guard-asideBar.jsp" flush="false" />
  	</div>
  	<!-- 어사이드 끝 -->
  	
     <div class="container-main">
-	<br>
-	<br>
 	<h3 id = "guappend"></h3>	
+	
+	<br><br>
 	
 	<div id="map" style="width:750px;height:350px;"></div>
 

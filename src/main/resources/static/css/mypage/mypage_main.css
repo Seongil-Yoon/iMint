@@ -12,27 +12,34 @@
 .container-aside-main{
 	display: grid;
     grid-template-columns: 0.5fr 3.5fr ;
-    grid-gap: 1.3rem;
+    grid-gap: 3rem;
     /* width: 1300px; */
    	justify-content: center;
-   	
+   	text-align: center;
 }
 
 /* 페이지 타이틀 */
 .title{
-	width: 1300px;
-    padding-top: 2rem;
+	width: 210px;
+    padding-bottom: 2rem;
 }
 
 /* 어사이드 바*/
 .container-aside{
 	padding-top: 3rem;
 	height: 700px;
+	text-align: center;
 }
 
 /* 사용자 안내 타이틀 */
 .welcome-message{
-    margin-bottom: 1rem;
+	text-align:center;
+}
+
+.welcome-hamster{
+	width: 40px;
+	text-align:right;
+	margin-left: 1.5rem;
 }
 
 /* 메인 컨테이너 */
@@ -42,6 +49,21 @@
     text-align: center;
     padding: 3rem;
     border: 1px;
+    background-color: #F9F9F9;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+}
+
+/* 웰컴 메시지 컨테이너 */
+.welcome-message-container{
+	display: grid;
+    grid-template-columns: 1fr 6fr;
+    grid-gap: 0.5rem;
+    width:400px;
+    margin:auto;
+    margin-bottom: 2rem;
+    align-items: center;
+    justify-content: center;
 }
 
 /* 컨테이너-거래 관련 (관심/구매예약, 판매목록, 거래완료)  */
@@ -59,7 +81,8 @@
     border: 1px;
     border-radius: 1rem;
     border-style: solid;
-    border-color: rgb(155, 155, 155);
+    /* border-color: rgb(155, 155, 155); */
+    border-color: white;
 }
 
 .tag {
@@ -72,7 +95,9 @@
     border: 1px;
     border-radius: 1rem;
     border-style: solid;
-    border-color: rgb(155, 155, 155);
+    /* border-color: rgb(155, 155, 155); */
+    border-color: white;
+    background-color: white;
     margin-bottom: 1rem;
     text-align: left;
     height: 230px;
@@ -94,7 +119,9 @@
     border: 1px;
     border-radius: 1rem;
     border-style: solid;
-    border-color: rgb(155, 155, 155);
+    /* border-color: rgb(155, 155, 155); */
+    border-color: white;
+    background-color: white;
     text-align: left;
     margin-bottom: 1rem;
 }
@@ -109,7 +136,9 @@
     border: 1px;
     border-radius: 1rem;
     border-style: solid;
-    border-color: rgb(155, 155, 155);
+    /* border-color: rgb(155, 155, 155); */
+    border-color: white;
+    background-color: white;
 }
 
 .container-authentication > h5 {

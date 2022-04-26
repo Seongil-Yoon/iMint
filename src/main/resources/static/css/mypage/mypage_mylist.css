@@ -12,7 +12,7 @@
 .container-aside-main{
 	display: grid;
     grid-template-columns: 0.5fr 3.5fr;
-    grid-gap: 1.3rem;
+    grid-gap: 3rem;
     /* width: 1300px; */
    	justify-content: center;
    	
@@ -20,14 +20,15 @@
 
 /* 페이지 타이틀 */
 .title{
-	width: 1300px;
-    padding-top: 2rem;
+	width: 210px;
+    padding-bottom: 2rem;
 }
 
 /* 어사이드 바*/
 .container-aside{
 	padding-top: 3rem;
 	height: 700px;
+	text-align: center;
 }
 
 /* 메인 컨테이너 */
@@ -37,11 +38,14 @@
     text-align: center;
     padding: 3rem;
     border: 1px;
+    background-color: #F9F9F9;
+    border-radius: 15px;
+    margin-bottom: 2rem;
 }
 
 /* 타이틀 (회원 정보 수정하시겠어요?) */
 .title-text{
-	margin-bottom: 6rem;
+	margin-bottom: 2rem;
 }
 
 /* 내 아이 선택 드롭다운 */
@@ -51,6 +55,7 @@
 
 .dropdown{
 	text-align:left;
+	margin-left: 1rem;
 	margin-bottom:2rem;
 }
 
@@ -66,7 +71,7 @@
 
 /* 상단 탭 개별 항목 컨테이너 */
 .tab-item{
-    background-color: #F9F9F9;
+    background-color:white;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -113,6 +118,10 @@
     font-weight: bold;
 }
 
+.tab-content-item{
+	
+}
+
 /* 상단 탭 글자 */
 .tabs p {
     display: block;
@@ -142,8 +151,11 @@
 
 .tab-content-item{
     padding: 2rem;
-    background-color: #F9F9F9;
-    border-radius: 10px;
+    border-radius: 1rem;
+    border-style: solid;
+    /* border-color: rgb(155, 155, 155); */
+    border-color: white;
+    background-color: white;
 }
 
 /* 버튼 */

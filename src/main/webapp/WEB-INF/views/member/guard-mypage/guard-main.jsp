@@ -20,16 +20,21 @@
  	
  	<!-- 아티클 시작 -->
 	<div class="container-page">
-	<h1 class="title">마이페이지</h1>
+	
 	<div class="container-aside-main">
 	<!-- 어사이드 시작 -->
 	<div class="container-aside">
+	<h2 class="title">마이페이지</h2>
  	<jsp:include page="guard-asideBar.jsp" flush="false" />
  	</div>
  	<!-- 어사이드 끝 -->
  	
     <div class="container-main">
-        <h2 class="welcome-message">${userNickName}님, 안녕하세요!</h2>
+    	<div class="welcome-message-container">
+    	<img class="welcome-hamster" src="/static/images/hamster.png">
+    	<h2 class="welcome-message">${userNickName}님, 안녕하세요!</h2>
+    	</div>
+        
         <!-- 보호자 로그인시 숨김 -->
        <!--  <h2 class="transaction-summary">최근 3달간 판매금액은 ~원이고, 구매금액은 ~원입니다.</h2>
         거래 관련
