@@ -13,7 +13,7 @@
 .container-aside-main{
 	display: grid;
     grid-template-columns: 0.5fr 3.5fr;
-    grid-gap: 1.3rem;
+    grid-gap: 3rem;
     /* width: 1300px; */
    	justify-content: center;
    	
