@@ -8,6 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MyWebConfig implements WebMvcConfigurer {
 	
+	@Value("${root}")
+	String root; // C:
 	@Value("${route}")
 	String route;
 	@Value("${directory}")
@@ -17,7 +19,7 @@ public class MyWebConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry
 			.addResourceHandler("/iMintImage/**")
-			.addResourceLocations("file:///" + directory + route);
+			.addResourceLocations("file:///" + root + route + directory + route);
 
 	}
 

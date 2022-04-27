@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			
 			.antMatchers("/goods/detail**").permitAll()
 			.antMatchers("/goods-list/**").permitAll()
+			.antMatchers("/iMintImage/**").permitAll()
 			.antMatchers("/goods/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
 //			.antMatchers("/goods-list/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
 			
