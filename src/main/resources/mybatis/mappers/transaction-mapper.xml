@@ -40,7 +40,7 @@
 			IF(cr.resrv_date IS NOT NULL, TRUE, FALSE) AS reserved,
 			cr.id AS chatroom_id,
 			cr.buyer_id,
-			cr.buyer_nick,
+			mb.mb_nick AS buyer_nick,
 			mb.mb_thumbnail
 		FROM
 			`imint`.`chatroom` AS cr
