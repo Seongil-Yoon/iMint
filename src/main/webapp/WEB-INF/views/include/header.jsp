@@ -85,10 +85,10 @@
 
 <article class="voice-popup" id="voicePopup">
 	<div class="btn-group suggestible" role="group" aria-label="Basic radio toggle button group">
-		<input type="radio" class="btn-check" name="suggestible" value="음성질문시작" id="record" autocomplete="off"
+		<input type="radio" class="btn-check" value="음성질문시작" id="record" autocomplete="off"
 			value="false">
 		<label class="btn btn-outline-primary" for="record">음성질문시작</label>
-		<input type="radio" class="btn-check" name="suggestible" value="음성질문종료 및 검색" id="stop" autocomplete="off"
+		<input type="radio" class="btn-check" value="음성질문종료 및 검색" id="stop" autocomplete="off"
 			value="true">
 		<label class="btn btn-outline-primary" for="stop">음성질문종료</label>
 	</div>
