@@ -108,7 +108,9 @@ function loadChatrooms() {
                     )
                     .append(
                         `<span class="chatbox-chatroom-lastmessage">` +
-                            result[i].message +
+                            (result[i].message === null
+                                ? ""
+                                : result[i].message) +
                             `</span>`
                     );
             }

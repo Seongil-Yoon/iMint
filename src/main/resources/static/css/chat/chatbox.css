@@ -10,8 +10,8 @@
     display: none;
     position: fixed;
     user-select: none;
-    bottom: 20px;
-    right: 20px;
+    bottom: 16.8px;
+    right: 16.8px;
     width: calc(var(--title-height) + 20px);
     height: calc(var(--title-height) + 20px);
     background-color: #cdf0ea;
