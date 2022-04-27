@@ -20,33 +20,8 @@ public class TransactionServiceImpl implements ITransactionService {
 	ITransactionDAO trxDAO;
 
 	@Override
-	public String checkReservation(String myId, int goodsId) {
-		TransactionCheckDTO trxCheckDTO = trxDAO.checkReservation(goodsId);
-
-		if (trxCheckDTO == null) {
-			return "error";
-		}
-
-		if (trxCheckDTO.getId() == null) {
-			if (trxCheckDTO.getSellerId().equals(myId)) {
-				// 예약가능(판매자)
-				return "?resrv";
-			} else {
-				// 예약가능(판매자 아님)
-				return "!resrv";
-			}
-		} else {
-			if (trxCheckDTO.getSellerId().equals(myId)) {
-				// 예약 중(판매자)
-				return "seller";
-			} else if (trxCheckDTO.getBuyerId().equals(myId)) {
-				// 예약 중(구매자)
-				return "buyer";
-			} else {
-				// 예약 중(판매자/구매자 아님)
-				return "resrv";
-			}
-		}
+	public String checkTransaction(String myId, int goodsId) {
+		return checkTransaction(myId, null, goodsId);
 	}
 
 	@Override
@@ -74,7 +49,7 @@ public class TransactionServiceImpl implements ITransactionService {
 				}
 			} else {
 				if (trxCheckDTO.getSellerId().equals(myId)) {
-					if (trxCheckDTO.getBuyerId().equals(opponentId)) {
+					if (opponentId != null && trxCheckDTO.getBuyerId().equals(opponentId)) {
 						// 예약 중, 상대방이 예약자(판매자)
 						return "resrv_seller_match";
 					} else {
@@ -100,7 +75,7 @@ public class TransactionServiceImpl implements ITransactionService {
 				}
 			} else {
 				if (trxCheckDTO.getSellerId().equals(myId)) {
-					if (trxCheckDTO.getBuyerId().equals(opponentId)) {
+					if (opponentId != null && trxCheckDTO.getBuyerId().equals(opponentId)) {
 						// 거래완료(판매자/구매자)
 						return "comp!_seller_match";
 					} else {
