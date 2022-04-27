@@ -98,8 +98,7 @@
     </div>
     
     <!-- 푸터 시작 -->
-	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
-	<script src="/static/js/baby-main.js"></script>
+	<jsp:include page="../../include/footer.jsp" flush="false"/>
 </body>
 </html>

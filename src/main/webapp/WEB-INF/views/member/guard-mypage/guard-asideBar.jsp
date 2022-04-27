@@ -6,7 +6,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>@@아기당근@@ :: 마이페이지</title>
-	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
 <body>
@@ -33,8 +32,5 @@
             </div>
         </a>
     </div>
-	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
-	
-	<script src="/static/js/baby-main.js"></script>
 </body>
 </html>
