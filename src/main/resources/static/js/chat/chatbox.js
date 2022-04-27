@@ -146,7 +146,7 @@ function setTrxbtns(isvisible) {
 // 함수: 거래 상태 조회
 function getTrxStatus(opponentId, goodsId, chatroomId) {
     $.ajax({
-        url: "transaction/trx/check",
+        url: "/transaction/trx/check",
         type: "GET",
         data: {
             opponentId: opponentId,
@@ -284,7 +284,8 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                     .css("border-color", "#9b9b9b")
                     .css("color", "#9b9b9b");
 
-                setTrxbtns(false);
+                    setTrxbtns(true);
+                    $("#chatbox-view-trxbtns").text("판매글이 삭제되었거나 잘못된 채팅방입니다.");
             }
 
             // 이벤트 등록: 예약하기
@@ -292,7 +293,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                 .off("click")
                 .on("click", function () {
                     $.ajax({
-                        url: "transaction/resrv/make",
+                        url: "/transaction/resrv/make",
                         type: "POST",
                         data: {
                             goodsId: goodsId,
@@ -310,7 +311,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                 .off("click")
                 .on("click", function () {
                     $.ajax({
-                        url: "transaction/resrv/cancel",
+                        url: "/transaction/resrv/cancel",
                         type: "POST",
                         data: {
                             goodsId: goodsId,
