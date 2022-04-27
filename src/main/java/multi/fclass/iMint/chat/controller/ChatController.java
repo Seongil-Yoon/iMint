@@ -9,7 +9,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import multi.fclass.iMint.chat.config.ChatPrincipal;
@@ -37,7 +37,7 @@ public class ChatController {
 	IMypageService mypageService;
 
 	// REST API: 채팅목록 불러오기
-	@RequestMapping("/chat/getchatrooms")
+	@GetMapping("/chat/getchatrooms")
 	@ResponseBody
 	public List<MypageChatroomDTO> chat(Authentication auth) {
 		String myId = parseService.parseMbId(auth);
@@ -45,7 +45,7 @@ public class ChatController {
 		return mypageService.getChatroomList(myId, 1, 10);
 	}
 
-	@RequestMapping("/chat/getchatmessages")
+	@GetMapping("/chat/getchatmessages")
 	@ResponseBody
 	public List<ChatMessageDTO> getChatMessages(Authentication auth, int chatroomId, int pageNumber,
 			int numberOfItems) {
@@ -58,7 +58,7 @@ public class ChatController {
 		return chatService.getChatroomMessages(myId, chatroomId, pageNumber, numberOfItems);
 	}
 
-	@RequestMapping("/chat/check")
+	@GetMapping("/chat/check")
 	@ResponseBody
 	public String checkChat(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
@@ -69,7 +69,7 @@ public class ChatController {
 		return out.toJSONString();
 	}
 
-	@RequestMapping("/chat/start")
+	@GetMapping("/chat/start")
 	@ResponseBody
 	public String startChat(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);

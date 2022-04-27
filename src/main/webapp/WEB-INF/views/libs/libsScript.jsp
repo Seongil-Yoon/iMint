@@ -18,8 +18,8 @@
 
 <!-- 채팅 스크립트 -->
 <script>
-	let chatId = "${sessionScope.memberDTO.mbId}";
-	let chatRole = "${sessionScope.memberDTO.mbRole}";
+	let chatboxMyId = "${sessionScope.memberDTO.mbId}";
+	let chatboxMyRole = "${sessionScope.memberDTO.mbRole}";
 </script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
