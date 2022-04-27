@@ -1,9 +1,10 @@
 let stompClient = null;
 
 $(function () {
+    // 인증된 회원이면 웹소켓 접속
     if (chatRole == "CHILD" || chatRole == "GUARD") {
         setTimeout(function () {
-			$("#chatbox-openbtn").show();
+            $("#chatbox-openbtn").show();
             connectWS(chatId);
         }, 500);
     }
@@ -22,6 +23,7 @@ $(function () {
         $("#chatbox-openbtn").show();
     });
 
+    // 이벤트 등록: 메세지 입력창 엔터로 보내기(SHIFT+엔터는 줄바꿈)
     $("#chatbox-view-send textarea")
         .keydown(function (event) {
             if (event.keyCode == 13) {
@@ -39,6 +41,23 @@ $(function () {
         });
 });
 
+// 함수: 웹소켓에 연결
+function connectWS(myId) {
+    let socket = new SockJS("/ws");
+    stompClient = Stomp.over(socket);
+    stompClient.connect(
+        { "user-name": myId },
+        function (frame) {
+            console.log("Connected: " + frame);
+        },
+        function () {
+            // 웹소켓 연결 끊김/오류 발생시 10초마다 재접속 시도
+            setTimeout(connectWS, 10000);
+        }
+    );
+}
+
+// 함수: 채팅방 목록 표시
 function loadChatrooms() {
     // 채팅방 목록 초기화
     $("#chatbox-list-chatrooms").html("");
@@ -55,9 +74,19 @@ function loadChatrooms() {
             // 채팅방 목록 갱신
             for (let i in result) {
                 $("#chatbox-list-chatrooms").append(
-                    `<div data-chatroomId="` +
+                    `<div class="chatbox-chatrooms-chatroom" data-chatroomId="` +
                         result[i].id +
-                        `" class="chatbox-chatrooms-chatroom"></div>`
+                        `" data-goodsId="` +
+                        result[i].goodsId +
+                        `" data-goodsTitle="` +
+                        result[i].goodsTitle +
+                        `" data-goodsPrice="` +
+                        result[i].goodsPrice +
+                        `" data-goodsSuggestible="` +
+                        result[i].goodsSuggestible +
+                        `" data-opponentId="` +
+                        result[i].opponentId +
+                        `"></div>`
                 );
                 $("div[data-chatroomId='" + result[i].id + "']")
                     .append(
@@ -70,16 +99,15 @@ function loadChatrooms() {
                         `<img class="chatbox-chatroom-goods" src="` +
                             result[i].goodsImagesPath +
                             `" />`
-                    );
-                $("div[data-chatroomId='" + result[i].id + "'] p")
+                    )
+                    .find("p")
                     .append(
                         `<span class="chatbox-chatroom-nickname">` +
                             result[i].opponentNick +
                             `</span>`
                     )
                     .append(
-                        `<span
-				class="chatbox-chatroom-lastmessage">` +
+                        `<span class="chatbox-chatroom-lastmessage">` +
                             result[i].message +
                             `</span>`
                     );
@@ -97,12 +125,177 @@ function loadChatrooms() {
     });
 }
 
+function setTrxbtns(flag) {
+    let defaultHeight =
+        parseInt($(":root").css("--total-height")) -
+        parseInt($(":root").css("--title-height")) -
+        parseInt($(":root").css("--chatroom-height")) * 2;
+
+    if (flag) {
+        $("#chatbox-view-chatmessages").height(defaultHeight - 30);
+        $("#chatbox-view-trxbtns").show();
+    } else {
+        $("#chatbox-view-chatmessages").height(defaultHeight);
+        $("#chatbox-view-trxbtns").html("");
+        $("#chatbox-view-trxbtns").hide();
+    }
+}
+
+// 함수: 거래 상태 조회
+function getTrxStatus(opponentId, goodsId) {
+    $.ajax({
+        url: "transaction/trx/check",
+        type: "GET",
+        data: {
+            opponentId: opponentId,
+            goodsId: goodsId,
+        },
+        dataType: "JSON",
+        success: function (trx) {
+            if (trx.check.includes("wait")) {
+                // 판매중
+                if (trx.check.includes("seller")) {
+                    // 판매중 - 판매자 시점
+                    $("#chatbox-detail-goodsstatus")
+                        .text("판매중")
+                        .css("border-color", "blue")
+                        .css("color", "blue");
+
+                    setTrxbtns(true);
+                    $("#chatbox-view-trxbtns")
+                        .append(
+                            `<div id="chatbox-trxbtns-makeresrv" class="chatbox-trxbtn short">예약하기</div>`
+                        )
+                        .append(
+                            `<div id="chatbox-trxbtns-cancelresrv" class="chatbox-trxbtn short">판매완료</div>`
+                        );
+                } else {
+                    // 판매중 - 기타 시점
+                    $("#chatbox-detail-goodsstatus")
+                        .text("구매가능")
+                        .css("border-color", "green")
+                        .css("color", "green");
+
+                    setTrxbtns(false);
+                }
+            } else if (trx.check.includes("resrv")) {
+                if (
+                    trx.check.includes("match") ||
+                    trx.check.includes("buyer")
+                ) {
+                    // 예약완료
+                    $("#chatbox-detail-goodsstatus")
+                        .text("예약완료")
+                        .css("border-color", "#FFBB00")
+                        .css("color", "#FFBB00");
+                    if (trx.check.includes("seller")) {
+                        // 예약완료 - 판매자 시점
+                        setTrxbtns(true);
+                        $("#chatbox-view-trxbtns")
+                            .append(
+                                `<div id="chatbox-trxbtns-comptrx" class="chatbox-trxbtn short">예약취소</div>`
+                            )
+                            .append(
+                                `<div id="chatbox-trxbtns-cancelresrv" class="chatbox-trxbtn short">판매완료</div>`
+                            );
+                    } else {
+                        // 예약완료 - 예약자 시점
+                        setTrxbtns(false);
+                    }
+                } else {
+                    // 예약중
+                    $("#chatbox-detail-goodsstatus")
+                        .text("예약중")
+                        .css("border-color", "#9b9b9b")
+                        .css("color", "#9b9b9b");
+
+                    setTrxbtns(true);
+                    if (trx.check.includes("seller")) {
+                        // 예약중 - 판매자 시점
+                        $("#chatbox-view-trxbtns").text(
+                            "다른 회원과 판매 예약중인 상품입니다."
+                        );
+                    } else {
+                        // 예약중 - 기타 시점
+                        $("#chatbox-view-trxbtns").text(
+                            "다른 회원이 구매 예약중인 상품입니다."
+                        );
+                    }
+                }
+            } else if (trx.check.includes("comp!")) {
+                // 판매완료(구매자 지정)
+                if (trx.check.includes("seller")) {
+                    $("#chatbox-detail-goodsstatus")
+                        .text("판매완료")
+                        .css("border-color", "blue")
+                        .css("color", "blue");
+
+                    if (trx.check.includes("match")) {
+                        // 판매완료 - 판매자:구매자 시점
+                        setTrxbtns(true);
+                        $("#chatbox-view-trxbtns").append(
+                            `<div id="chatbox-trxbtns-ratetrx" class="chatbox-trxbtn long">거래 평가하기</div>`
+                        );
+                    } else {
+                        // 판매완료 - 판매자:기타 시점
+                        setTrxbtns(true);
+                        $("#chatbox-view-trxbtns").text(
+                            "다른 회원에게 판매한 상품입니다."
+                        );
+                    }
+                } else {
+                    // 구매완료 - 구매자 시점
+                    $("#chatbox-detail-goodsstatus")
+                        .text("구매완료")
+                        .css("border-color", "#DD0000")
+                        .css("color", "#DD0000");
+
+                    setTrxbtns(true);
+                    $("#chatbox-view-trxbtns").append(
+                        `<div id="chatbox-trxbtns-ratetrx" class="chatbox-trxbtn long">거래 평가하기</div>`
+                    );
+                }
+            } else if (trx.check.includes("comp?")) {
+                // 판매완료(구매자 미지정) - 판매자 시점
+                $("#chatbox-detail-goodsstatus")
+                    .text("판매완료")
+                    .css("border-color", "blue")
+                    .css("color", "blue");
+
+                setTrxbtns(true);
+                $("#chatbox-view-trxbtns").append(
+                    `<div id="chatbox-trxbtns-addbuyer" class="chatbox-trxbtn long">구매자 선택</div>`
+                );
+            } else if (trx.check.includes("comp")) {
+                // 구매불가 - 기타 시점
+                $("#chatbox-detail-goodsstatus")
+                    .text("구매불가")
+                    .css("border-color", "#9b9b9b")
+                    .css("color", "#9b9b9b");
+
+                setTrxbtns(true);
+                $("#chatbox-view-trxbtns").text("이미 판매된 상품입니다.");
+            } else {
+                // 오류발생
+                $("#chatbox-detail-goodsstatus")
+                    .text("오류발생")
+                    .css("border-color", "#9b9b9b")
+                    .css("color", "#9b9b9b");
+
+                setTrxbtns(false);
+            }
+        },
+    });
+}
+
+// 함수: 채팅방(채팅화면) 표시
 function joinChatroom(chatroom) {
-    // 상품 정보 초기화
-    $("#chatbox-view-detail").html("");
+    let currentChatroomId = $(chatroom).attr("data-chatroomId");
+    let currentGoodsId = $(chatroom).attr("data-goodsId");
+    let currentOpponentId = $(chatroom).attr("data-opponentId");
+
     // 거래 버튼 초기화
-    $("#chatbox-view-trxbtns").html("");
-    $("#chatbox-view-trxbtns").hide();
+    setTrxbtns(false);
     // 채팅 메세지 초기화
     $("#chatbox-view-chatmessages").html("");
 
@@ -110,22 +303,38 @@ function joinChatroom(chatroom) {
     $("#chatbox-view-title .title").text(
         $(chatroom).find(".chatbox-chatroom-nickname").text() + "님과의 채팅"
     );
-
     // 상품 정보 갱신
-    $("#chatbox-view-detail")
-        .append(
-            `<img id="chatbox-detail-goods" src="` +
-                $(chatroom).find(".chatbox-chatroom-goods").attr("src") +
-                `" />`
-        )
-        .append("<p></p>");
+    $("#chatbox-detail-goods").attr(
+        "src",
+        $(chatroom).find(".chatbox-chatroom-goods").attr("src")
+    );
+    $("#chatbox-detail-goodstitle").text($(chatroom).attr("data-goodsTitle"));
+    $("#chatbox-detail-goodsprice").text(
+        $(chatroom)
+            .attr("data-goodsPrice")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+    );
+    if ($(chatroom).attr("data-goodsSuggestible") === "true") {
+        $("#chatbox-detail-suggestible")
+            .text("가격제안가능")
+            .css("border-color", "black")
+            .css("color", "black");
+    } else {
+        $("#chatbox-detail-suggestible")
+            .text("가격제안불가")
+            .css("border-color", "#9b9b9b")
+            .css("color", "#9b9b9b");
+    }
+
+    // 거래 정보 갱신
+    getTrxStatus(currentOpponentId, currentGoodsId);
 
     // DB에서 채팅 기록 조회
-    getChatmessages($(chatroom).attr("data-chatroomId"), 1, 30);
+    getChatmessages(currentChatroomId, 1, 30);
 
     // STOMP 채팅방 SUBSCRIBE
     let subscription = stompClient.subscribe(
-        "/chat/chatroom/" + $(chatroom).attr("data-chatroomId"),
+        "/chat/chatroom/" + currentChatroomId,
         function (chatmessage) {
             putChatmessage(JSON.parse(chatmessage.body), false);
         }
@@ -136,7 +345,7 @@ function joinChatroom(chatroom) {
         .off("click")
         .on("click", function () {
             stompClient.send(
-                "/chat/send/chatroom/" + $(chatroom).attr("data-chatroomId"),
+                "/chat/send/chatroom/" + currentChatroomId,
                 {},
                 JSON.stringify({
                     message: $("#chatbox-view-send textarea").val(),
@@ -156,8 +365,9 @@ function joinChatroom(chatroom) {
         });
 }
 
+// 함수: 기존 대화내용을 화면에 표시
 function getChatmessages(chatroomId, pageNumber, numberOfItems) {
-    // AJAX: 메세지 목록 요청
+    // AJAX: 기존 대화내용 조회
     $.ajax({
         url: "/chat/getchatmessages",
         type: "GET",
@@ -181,22 +391,7 @@ function getChatmessages(chatroomId, pageNumber, numberOfItems) {
     });
 }
 
-function connectWS(myId) {
-    // 웹소켓 연결
-    let socket = new SockJS("/ws");
-    stompClient = Stomp.over(socket);
-    stompClient.connect(
-        { "user-name": myId },
-        function (frame) {
-            console.log("Connected: " + frame);
-        },
-        function () {
-            // 웹소켓 연결 끊김/오류 발생시 10초마다 재접속 시도
-            setTimeout(connectWS, 10000);
-        }
-    );
-}
-
+// 함수: 개별 메세지를 화면에 표시
 function putChatmessage(chatmessage, isloading) {
     if (isloading) {
         // DB의 메세지 목록을 불러올 때는 앞쪽으로 추가

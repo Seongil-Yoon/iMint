@@ -157,6 +157,7 @@
 	    g.goods_id,
 	    g.goods_title,
 		g.goods_price,
+		g.goods_suggestible,
 	    IF(g.seller_id LIKE #{myId}, cr.buyer_id, g.seller_id) AS opponent_id,
 	    IF(g.seller_id LIKE #{myId}, mbbuy.mb_nick, g.seller_nick) AS opponent_nick,
 	    IF(g.seller_id LIKE #{myId}, mbbuy.mb_thumbnail, mbsell.mb_thumbnail) AS opponent_thumbnail,

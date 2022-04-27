@@ -206,27 +206,27 @@
 #chatbox-detail-goodsstatus {
     width: calc(var(--chatroom-height) - 10px);
     height: 25px;
-    border: 2.5px solid #008800;
+    border: 2.5px solid #9b9b9b;
     border-radius: 0.5rem;
     text-align: center;
     line-height: 20px;
     margin: 5px 5px 2.5px 5px;
     float: left;
     font-size: 15px;
-    color: #008800;
+    color: #9b9b9b;
 }
 
 #chatbox-detail-suggestible {
     width: calc(var(--chatroom-height) - 10px);
     height: 40px;
-    border: 2.5px solid #cc0000;
+    border: 2.5px solid #9b9b9b;
     border-radius: 0.5rem;
     text-align: center;
     line-height: 17.5px;
     margin: 2.5px 5px 5px 5px;
     float: left;
     font-size: 15px;
-    color: #cc0000;
+    color: #9b9b9b;
 }
 
 #chatbox-view-trxbtns {
@@ -234,6 +234,9 @@
     height: 30px;
     border-bottom: 1px solid #9b9b9b;
     float: left;
+    font-size: 13px;
+    text-align: center;
+    line-height: 29px;
 }
 
 #chatbox-view-trxbtns .chatbox-trxbtn:nth-child(2n) {
@@ -241,12 +244,16 @@
 }
 
 .chatbox-trxbtn {
-    width: calc(var(--total-width) / 2 - 0.5px);
     height: 100%;
-    font-size: 13px;
     float: left;
-    text-align: center;
-    line-height: 29px;
+}
+
+.chatbox-trxbtn.short {
+    width: calc(var(--total-width) / 2 - 0.5px);
+}
+
+.chatbox-trxbtn.long {
+    width: var(--total-width);
 }
 
 .chatbox-trxbtn:hover {
@@ -257,8 +264,7 @@
 #chatbox-view-chatmessages {
     width: calc(var(--total-width) + 16.8px);
     height: calc(
-        var(--total-height) - var(--title-height) - var(--chatroom-height) * 2 -
-            30px
+        var(--total-height) - var(--title-height) - var(--chatroom-height) * 2
     );
     background-color: white;
     overflow-x: hidden;

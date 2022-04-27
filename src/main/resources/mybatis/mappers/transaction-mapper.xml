@@ -26,7 +26,7 @@
 			trx.mb_id AS buyer_id
 		FROM
 			`imint`.`goods` AS g
-			LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id 
+			LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
 		WHERE
 			g.goods_isdelete = FALSE
 			AND (trx.trx_isdelete IS NULL OR trx.trx_isdelete = FALSE)
