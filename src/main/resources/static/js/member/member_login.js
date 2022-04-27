@@ -1,4 +1,4 @@
-
+// 로그인 페이지에서 스크롤을 아래로 내리면 fade in으로 나타나는 효과 
 $(document).ready(function() {
 	$(window).scroll(function() {
 		$('.fadeinleft').each(function(i) {

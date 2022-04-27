@@ -37,7 +37,7 @@
 		<th>탈퇴회원</th>
 
 		</tr>
-		<tbody id = "product_list">
+		<tbody id = "member_list">
 		<!-- 등록된 회원 리스트 삽입  -->
 		<c:forEach items="${memberstats }" var="adminDTO">
 		<tr><td>${adminDTO.mbLocation }</td><td>${adminDTO.mbCntAll}</td><td>${adminDTO.mbWithdrawAll}</td></tr>
@@ -46,6 +46,7 @@
 		</tbody>
 		</table>
 		
+		<!-- bar chart 그리는 위치  -->
 		<div id = "chart"></div>
 		</div>
 	</div>

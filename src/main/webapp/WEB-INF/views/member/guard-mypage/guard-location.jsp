@@ -50,7 +50,7 @@
 		/* 카카오 지도 API */
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
-		        center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표 // 현재좌표로 바꾸기 
+		        center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표 // 현재좌표
 		        level: 5, // 지도의 확대 레벨
 		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
 		    }; 
@@ -64,11 +64,6 @@
 		// 지도의 우측에 확대 축소 컨트롤을 추가한다
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 		
-		
-		
-	    /* 좌표로 구정보 얻기 : 카카오 API*/
-/* 	    $("#mylocation_btn").on('click', function(){ */
-
  			 $.ajax({
 				url: 'https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&output_coord=WGS84&x=' + longitude +'&y=' + latitude,
 			    headers : {'Authorization' : 'KakaoAK 81c7bda99c1d17edaf364c7a1fe1b80d'},
@@ -81,10 +76,9 @@
  						var len = firLocation.length;
  						contentStr = firLocation.substring(1,len-1);
 
- 						var secLocation = JSON.stringify(response.documents[0].address.region_2depth_name); /* 파싱 한다음에 JSON.stringify */
+ 						var secLocation = JSON.stringify(response.documents[0].address.region_2depth_name);
  						var len = secLocation.length;
  						contentStr += " " + secLocation.substring(1,len-1);
-// 						alert(contentStr);
 
  					$("#guappend").html("현재 " + contentStr + "에 있어요");
  					$("#guappend2").val(contentStr);
@@ -102,10 +96,6 @@
 			        console.log(e);
 			        }			     	
 			}); // ajax 	 
-			
-			
-/* 		}); // onclick */
-
 
 	}); // navigator
 	
@@ -115,7 +105,6 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=services,clusterer,drawing"></script>	
  		<br>
 	 	<div class="buttons">
-<!-- 		 	<button type = "button" id = "mylocation_btn" class="btn btn-primary btn-sm">내위치 조회</button> -->
 		 
 		 	<form id = "confirm_form">
 				<input type = hidden id = "guappend2" name = "mbLocationOrGuard" >
@@ -129,6 +118,6 @@
  
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
-	<!-- <script src="/static/js/guard-main.js"></script> -->
+	
 </body>
 </html>

@@ -20,6 +20,7 @@ public class KakaoUserInfo implements OAuth2UserInfo{
         this.attributesProfile = (Map<String, Object>)attributes.get("properties");
     }
 
+    // Provider(구글, 네이버, 카카오 중 1)
 	@Override
 	public String getMbProvider() {
 		return "kakao";
@@ -40,6 +41,7 @@ public class KakaoUserInfo implements OAuth2UserInfo{
 		return String.valueOf(attributes.get("id"));
 	}
 
+	// 네이버와 동일한 형식으로 연령대 출력 변경
 	@Override
 	public String getAgeRange() {
 		String result = (String) attributesAccount.get("age_range");

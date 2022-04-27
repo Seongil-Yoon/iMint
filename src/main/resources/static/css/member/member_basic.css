@@ -19,7 +19,6 @@ body{
 
 .container {
 	display: flex;
-	/* justify-content: space-between; */
 	justify-content: center; /* 수평 정렬  */
 	align-items: center;  /* 수직 정렬  */
 	margin: auto;

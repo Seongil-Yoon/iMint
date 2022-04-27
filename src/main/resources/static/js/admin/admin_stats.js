@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-//	var firArr = []; // 이중배열
 	var location_arr = [];
 	var regist_arr = [];
 	var withdraw_arr = [];
@@ -25,6 +24,7 @@ $(document).ready(function() {
 			regist = JSON.stringify(response.regist);
 			regist_arr = regist.split(',');
 			
+		// 받아온 json응답에서 텍스트만 남길 수 있도록 substr	
 		for(var i = 0; i< location_arr.length; i++){
 			if( i == 0) {
 				if( location_arr[0] == '[null'){
@@ -48,6 +48,7 @@ $(document).ready(function() {
 		} // success
 	}); // ajax
 	
+// 차트 그리기	
 setTimeout(function () {
 	var chart = c3.generate({
 	bindto: "#chart",
@@ -65,7 +66,7 @@ setTimeout(function () {
     },    
     axis: {
         x: {
-            type: 'category' // this needed to load string x value
+            type: 'category'
     	    }
     	}
     

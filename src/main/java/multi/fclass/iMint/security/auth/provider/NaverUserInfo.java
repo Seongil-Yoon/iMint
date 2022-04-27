@@ -16,6 +16,7 @@ public class NaverUserInfo implements OAuth2UserInfo{
         this.attributes = attributes;
     }
 
+    // Provider(구글, 네이버, 카카오 중 1)
 	@Override
 	public String getMbProvider() {
 		return "naver";
