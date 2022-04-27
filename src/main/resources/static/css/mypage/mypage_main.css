@@ -59,7 +59,7 @@
 	display: grid;
     grid-template-columns: 1fr 6fr;
     grid-gap: 0.5rem;
-    width:400px;
+    width:600px;
     margin:auto;
     margin-bottom: 2rem;
     align-items: center;

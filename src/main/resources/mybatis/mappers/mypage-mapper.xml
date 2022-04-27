@@ -70,18 +70,18 @@
 			FROM
 				`imint`.`wishlist` AS w
                 JOIN `imint`.`goods` AS g ON w.goods_id = g.goods_id
-				JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+				LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 				JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as wi on g.goods_id = wi.goods_id
 				LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
 				LEFT JOIN `imint`.`chatroom` AS cr ON g.goods_id = cr.goods_id
 			WHERE
 				w.wishlist_isdelete = FALSE
 				AND g.goods_isdelete = FALSE
-				AND gi.goods_images_isdelete = FALSE
+				AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 				AND (trx_isdelete = FALSE OR trx.trx_isdelete IS NULL)
 				AND (cr.isdelete = FALSE OR cr.isdelete IS NULL)
 				AND w.mb_id LIKE #{myId}
-                AND gi.goods_images_thumbnail = TRUE))
+                AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)))
 			AS result
 		ORDER BY
 			last_update_date DESC, goods_id DESC
@@ -104,16 +104,16 @@
 			IF(g.goods_status = "resrv", cr.resrv_date, g.goods_create_date) AS last_update_date
 		FROM
 			`imint`.`goods` AS g
-            JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
-            JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
+            LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+            LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
 		    LEFT JOIN `imint`.`chatroom` AS cr ON g.goods_id = cr.goods_id
 		WHERE
 			g.goods_isdelete = FALSE
-			AND gi.goods_images_isdelete = FALSE
+			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 			AND (cr.isdelete = FALSE OR cr.isdelete IS NULL)
 			AND g.seller_id LIKE #{myId}
 			AND (g.goods_status = "wait" OR g.goods_status = "resrv")
-            AND gi.goods_images_thumbnail = TRUE
+            AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
 		ORDER BY
 			last_update_date DESC, g.goods_id DESC
 		LIMIT
