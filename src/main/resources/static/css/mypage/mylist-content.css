@@ -38,3 +38,9 @@
     opacity: 1 !important;
     transition: all 1000 ease-in;
 } 
+
+.person-photo{
+	width: 70px;
+	margin-left: 6rem;
+	margin-bottom: 1rem;
+}

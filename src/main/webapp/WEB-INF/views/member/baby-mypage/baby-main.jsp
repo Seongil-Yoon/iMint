@@ -42,21 +42,21 @@
                 <h5 class="tag">관심/구매예약</h5>
                 <br>
                 ${userWish.size()} 건
-                <a class="btn btn-primary" href="#">자세히</a>
+                <a class="btn btn-primary" href="/mypage/mylist">자세히</a>
                 <!-- 관심/구매예약 요약 표  -->
             </div>
             <div class="transaction">
                 <h5 class="tag">판매목록</h5>
                 <br>
                 ${userSell.size()} 건
-                <a class="btn btn-primary" href="#">자세히</a>
+                <a class="btn btn-primary" href="/mypage/mylist">자세히</a>
                 <!-- 판매목록 요약 표  -->
             </div>
             <div class="transaction">
                 <h5 class="tag">거래완료</h5>
                 <br>
                 ${userComplete.size()} 건
-                <a class="btn btn-primary" href="#">자세히</a>
+                <a class="btn btn-primary" href="/mypage/mylist">자세히</a>
                 <!-- 거래완료 요약 표  -->
             </div>
         </div>
@@ -75,7 +75,7 @@
             </c:choose>
             <p>이메일: ${userEmail}</p>
             <p>관심사: ${userInterest}</p>
-            <a class="btn btn-primary" href="#">자세히</a>
+            <a class="btn btn-primary" href="/mypage/edit">자세히</a>
         </div>
         <div class="container-other-settings">
             <div class="settings connection">
