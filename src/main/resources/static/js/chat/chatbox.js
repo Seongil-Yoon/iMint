@@ -2,10 +2,10 @@ let stompClient = null;
 
 $(function () {
     // 인증된 회원이면 웹소켓 접속
-    if (chatRole == "CHILD" || chatRole == "GUARD") {
+    if (chatboxMyRole == "CHILD" || chatboxMyRole == "GUARD") {
         setTimeout(function () {
             $("#chatbox-openbtn").show();
-            connectWS(chatId);
+            connectWS(chatboxMyId);
         }, 500);
     }
 
@@ -42,11 +42,11 @@ $(function () {
 });
 
 // 함수: 웹소켓에 연결
-function connectWS(myId) {
+function connectWS(chatboxMyId) {
     let socket = new SockJS("/ws");
     stompClient = Stomp.over(socket);
     stompClient.connect(
-        { "user-name": myId },
+        { "user-name": chatboxMyId },
         function (frame) {
             console.log("Connected: " + frame);
         },
@@ -67,7 +67,7 @@ function loadChatrooms() {
         url: "/chat/getchatrooms",
         type: "GET",
         data: {
-            myId: chatId,
+            myId: chatboxMyId,
         },
         dataType: "JSON",
         success: function (result) {
@@ -125,24 +125,24 @@ function loadChatrooms() {
     });
 }
 
-function setTrxbtns(flag) {
+function setTrxbtns(isvisible) {
     let defaultHeight =
         parseInt($(":root").css("--total-height")) -
         parseInt($(":root").css("--title-height")) -
         parseInt($(":root").css("--chatroom-height")) * 2;
 
-    if (flag) {
+    $("#chatbox-view-trxbtns").html("");
+    if (isvisible) {
         $("#chatbox-view-chatmessages").height(defaultHeight - 30);
         $("#chatbox-view-trxbtns").show();
     } else {
         $("#chatbox-view-chatmessages").height(defaultHeight);
-        $("#chatbox-view-trxbtns").html("");
         $("#chatbox-view-trxbtns").hide();
     }
 }
 
 // 함수: 거래 상태 조회
-function getTrxStatus(opponentId, goodsId) {
+function getTrxStatus(opponentId, goodsId, chatroomId) {
     $.ajax({
         url: "transaction/trx/check",
         type: "GET",
@@ -167,7 +167,7 @@ function getTrxStatus(opponentId, goodsId) {
                             `<div id="chatbox-trxbtns-makeresrv" class="chatbox-trxbtn short">예약하기</div>`
                         )
                         .append(
-                            `<div id="chatbox-trxbtns-cancelresrv" class="chatbox-trxbtn short">판매완료</div>`
+                            `<div id="chatbox-trxbtns-comptrx" class="chatbox-trxbtn short">판매완료</div>`
                         );
                 } else {
                     // 판매중 - 기타 시점
@@ -193,10 +193,10 @@ function getTrxStatus(opponentId, goodsId) {
                         setTrxbtns(true);
                         $("#chatbox-view-trxbtns")
                             .append(
-                                `<div id="chatbox-trxbtns-comptrx" class="chatbox-trxbtn short">예약취소</div>`
+                                `<div id="chatbox-trxbtns-cancelresrv" class="chatbox-trxbtn short">예약취소</div>`
                             )
                             .append(
-                                `<div id="chatbox-trxbtns-cancelresrv" class="chatbox-trxbtn short">판매완료</div>`
+                                `<div id="chatbox-trxbtns-comptrx" class="chatbox-trxbtn short">판매완료</div>`
                             );
                     } else {
                         // 예약완료 - 예약자 시점
@@ -284,6 +284,70 @@ function getTrxStatus(opponentId, goodsId) {
 
                 setTrxbtns(false);
             }
+
+            // 이벤트 등록: 예약하기
+            $("#chatbox-trxbtns-makeresrv")
+                .off("click")
+                .on("click", function () {
+                    $.ajax({
+                        url: "transaction/resrv/make",
+                        type: "POST",
+                        data: {
+                            goodsId: goodsId,
+                            chatroomId: chatroomId,
+                        },
+                        dataType: "JSON",
+                        success: function (r) {
+                            getTrxStatus(opponentId, goodsId, chatroomId);
+                        },
+                    });
+                });
+
+            // 이벤트 등록: 예약취소
+            $("#chatbox-trxbtns-cancelresrv")
+                .off("click")
+                .on("click", function () {
+                    $.ajax({
+                        url: "transaction/resrv/cancel",
+                        type: "POST",
+                        data: {
+                            goodsId: goodsId,
+                            chatroomId: chatroomId,
+                        },
+                        dataType: "JSON",
+                        success: function (r) {
+                            getTrxStatus(opponentId, goodsId, chatroomId);
+                        },
+                    });
+                });
+
+            // 이벤트 등록: 판매완료
+            $("#chatbox-trxbtns-comptrx")
+                .off("click")
+                .on("click", function () {
+                    let popup = window.open(
+                        "/transaction/trx?goodsId=" + goodsId,
+                        "_blank",
+                        "top=500,left=500,width=500px,height=500px"
+                    );
+                    $(popup).on("beforeunload", function () {
+                        getTrxStatus(opponentId, goodsId, chatroomId);
+                    });
+                });
+
+            // 이벤트 등록: 구매자 지정
+            $("#chatbox-trxbtns-addbuyer")
+                .off("click")
+                .on("click", function () {
+                    getTrxStatus(opponentId, goodsId, chatroomId);
+                });
+
+            // 이벤트 등록: 평가하기
+            $("#chatbox-trxbtns-ratetrx")
+                .off("click")
+                .on("click", function () {
+                    getTrxStatus(opponentId, goodsId, chatroomId);
+                });
         },
     });
 }
@@ -327,7 +391,7 @@ function joinChatroom(chatroom) {
     }
 
     // 거래 정보 갱신
-    getTrxStatus(currentOpponentId, currentGoodsId);
+    getTrxStatus(currentOpponentId, currentGoodsId, currentChatroomId);
 
     // DB에서 채팅 기록 조회
     getChatmessages(currentChatroomId, 1, 30);
@@ -395,7 +459,7 @@ function getChatmessages(chatroomId, pageNumber, numberOfItems) {
 function putChatmessage(chatmessage, isloading) {
     if (isloading) {
         // DB의 메세지 목록을 불러올 때는 앞쪽으로 추가
-        if (chatmessage.senderId != chatId) {
+        if (chatmessage.senderId != chatboxMyId) {
             $("#chatbox-view-chatmessages").prepend(
                 `<div data-messageId="` +
                     chatmessage.id +
@@ -410,7 +474,7 @@ function putChatmessage(chatmessage, isloading) {
         }
     } else {
         // 웹소켓을 통해 메세지를 받았을 때는 뒤쪽으로 추가
-        if (chatmessage.senderId != chatId) {
+        if (chatmessage.senderId != chatboxMyId) {
             $("#chatbox-view-chatmessages").append(
                 `<div data-messageId="` +
                     chatmessage.id +
