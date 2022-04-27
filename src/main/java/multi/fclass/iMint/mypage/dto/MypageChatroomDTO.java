@@ -22,6 +22,7 @@ public class MypageChatroomDTO {
 	@Getter(AccessLevel.NONE)
 	private String opponentThumbnail; // 대화상대 썸네일 저장 경로
 	private String goodsLocation; // 판매 지역
+	@Getter(AccessLevel.NONE)
 	private String goodsImagesPath; // 대표 이미지 저장 경로
 	private String goodsImagesOriginname; // 대표 이미지 원래 이름
 	private String message; // 마지막 메세지 내용
@@ -32,6 +33,14 @@ public class MypageChatroomDTO {
 			return "/static/images/default-icon.jpeg";
 		} else {
 			return opponentThumbnail;
+		}
+	}
+
+	public String getGoodsImagesPath() {
+		if (goodsImagesPath == null || goodsImagesPath.equals("")) {
+			return "/static/images/noimage.png";
+		} else {
+			return goodsImagesPath;
 		}
 	}
 

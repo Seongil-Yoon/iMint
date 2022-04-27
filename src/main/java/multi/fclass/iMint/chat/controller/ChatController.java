@@ -44,7 +44,8 @@ public class ChatController {
 
 		return mypageService.getChatroomList(myId, 1, 10);
 	}
-
+	
+	// REST API: 메세지목록 불러오기
 	@GetMapping("/chat/getchatmessages")
 	@ResponseBody
 	public List<ChatMessageDTO> getChatMessages(Authentication auth, int chatroomId, int pageNumber,
@@ -58,6 +59,7 @@ public class ChatController {
 		return chatService.getChatroomMessages(myId, chatroomId, pageNumber, numberOfItems);
 	}
 
+	// REST API: 채팅방 생성/접속 가능한지 확인하기
 	@GetMapping("/chat/check")
 	@ResponseBody
 	public String checkChat(Authentication auth, Integer goodsId) {
@@ -68,7 +70,8 @@ public class ChatController {
 
 		return out.toJSONString();
 	}
-
+	
+	// REST API: 채팅방 접속 위해 채팅방 번호 확인하기
 	@GetMapping("/chat/start")
 	@ResponseBody
 	public String startChat(Authentication auth, Integer goodsId) {
