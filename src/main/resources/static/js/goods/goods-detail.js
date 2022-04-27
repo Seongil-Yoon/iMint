@@ -108,7 +108,7 @@ function wishHandler() {
 	$("#wishBtn").on("click", function () {
 		$.ajax({
 			url: `/wishlist/add?myId=${myId}&goodsId=${goodsId}`,
-			type: "GET", //데이터 전달방식
+			type: "POST", //데이터 전달방식
 			dataType: "json", //json 으로 받기
 			success: function (response, textStatus, jqxHR) {
 				if (response.result == "fail") {
@@ -141,7 +141,7 @@ function wishHandler() {
 	function removeWish() {
 		$.ajax({
 			url: `/wishlist/remove?myId=${myId}&goodsId=${goodsId}`,
-			type: "GET", //데이터 전달방식
+			type: "POST", //데이터 전달방식
 			dataType: "json", //json 으로 받기
 			success: function (result, textStatus, jqxHR) {
 				swal({
