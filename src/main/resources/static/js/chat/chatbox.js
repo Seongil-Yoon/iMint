@@ -325,8 +325,12 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
             $("#chatbox-trxbtns-comptrx")
                 .off("click")
                 .on("click", function () {
-                    let popup = window.open("/transaction/trx");
-                    $(popup.document).on("beforeunload", function () {
+                    let popup = window.open(
+                        "/transaction/trx?goodsId=" + goodsId,
+                        "_blank",
+                        "top=500,left=500,width=500px,height=500px"
+                    );
+                    $(popup).on("beforeunload", function () {
                         getTrxStatus(opponentId, goodsId, chatroomId);
                     });
                 });
@@ -335,10 +339,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
             $("#chatbox-trxbtns-addbuyer")
                 .off("click")
                 .on("click", function () {
-                    let popup = window.open("/transaction/trx");
-                    $(popup.document).on("beforeunload", function () {
-                        getTrxStatus(opponentId, goodsId, chatroomId);
-                    });
+                    getTrxStatus(opponentId, goodsId, chatroomId);
                 });
 
             // 이벤트 등록: 평가하기

@@ -11,8 +11,6 @@
 		</head>
 
 		<body>
-			<jsp:include page="../include/header.jsp" flush="false" />
-
 			<!-- 채팅방 목록이 전달되지 않은 경우(판매자가 아니거나, 이미 예약중 등 조건에 맞지 않는 경우) -->
 			<c:if test="${ empty chatroomList }">
 				<script type="text/javascript">
