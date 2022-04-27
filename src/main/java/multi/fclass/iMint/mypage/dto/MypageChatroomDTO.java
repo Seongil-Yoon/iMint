@@ -16,6 +16,7 @@ public class MypageChatroomDTO {
 	private int goodsId; // 판매글 ID
 	private String goodsTitle; // 판매글 제목
 	private int goodsPrice; // 판매 가격
+	private boolean goodsSuggestible; // 가격제안 가능여부
 	private String opponentId; // 대화상대 ID
 	private String opponentNick; // 대화상대 닉네임
 	@Getter(AccessLevel.NONE)

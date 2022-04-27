@@ -50,7 +50,7 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
-	public String checkTransaction(String myId, int goodsId) {
+	public String checkTransaction(String myId, String opponentId, int goodsId) {
 		TransactionCheckDTO trxCheckDTO = trxDAO.checkTransaction(goodsId);
 
 		if (trxCheckDTO == null) {
@@ -58,32 +58,61 @@ public class TransactionServiceImpl implements ITransactionService {
 		}
 
 		if (trxCheckDTO.getId() == null) {
-			if (trxCheckDTO.getSellerId().equals(myId)) {
-				// 판매 중(판매자)
-				return "?comp";
+			trxCheckDTO = trxDAO.checkReservation(goodsId);
+
+			if (trxCheckDTO == null) {
+				return "error";
+			}
+
+			if (trxCheckDTO.getId() == null) {
+				if (trxCheckDTO.getSellerId().equals(myId)) {
+					// 판매중(판매자)
+					return "wait_seller";
+				} else {
+					// 판매중(판매자 아님)
+					return "wait_other";
+				}
 			} else {
-				// 판매 중(판매자 아님)
-				return "!comp";
+				if (trxCheckDTO.getSellerId().equals(myId)) {
+					if (trxCheckDTO.getBuyerId().equals(opponentId)) {
+						// 예약 중, 상대방이 예약자(판매자)
+						return "resrv_seller_match";
+					} else {
+						// 예약 중(판매자)
+						return "resrv_seller";
+					}
+				} else if (trxCheckDTO.getBuyerId().equals(myId)) {
+					// 예약 중(구매자)
+					return "resrv_buyer";
+				} else {
+					// 예약 중(판매자/구매자 아님)
+					return "resrv_other";
+				}
 			}
 		} else {
 			if (trxCheckDTO.getBuyerId() == null) {
 				if (trxCheckDTO.getSellerId().equals(myId)) {
 					// 거래완료, 구매자 지정안함(판매자)
-					return "?seller";
+					return "comp?_seller";
 				} else {
-					// 거래완료, 구매자 지정안함(판매자 아님)
-					return "?permit";
+					// 거래완료, 구매자 지정안함(판매자/구매자 아님)
+					return "comp_other";
 				}
 			} else {
 				if (trxCheckDTO.getSellerId().equals(myId)) {
-					// 거래완료(판매자)
-					return "seller";
+					if (trxCheckDTO.getBuyerId().equals(opponentId)) {
+						// 거래완료(판매자/구매자)
+						return "comp!_seller_match";
+					} else {
+						// 거래완료(판매자)
+						return "comp!_seller";
+					}
 				} else if (trxCheckDTO.getBuyerId().equals(myId)) {
 					// 거래완료(구매자)
-					return "buyer";
+					return "comp!_buyer";
 				} else {
 					// 거래완료(판매자/구매자 아님)
-					return "!permit";
+					return "comp_other";
 				}
 			}
 		}
