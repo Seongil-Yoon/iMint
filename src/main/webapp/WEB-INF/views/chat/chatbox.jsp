@@ -3,13 +3,13 @@
 	<div id="chatbox-main">
 		<div id="chatbox-list">
 			<div id="chatbox-list-title" class="chatbox-title">
-				<span class="title">아이민트 채팅</span><span id="chatbox-close" class="chatbox-closebtn">↓</span>
+				<span class="chatbox-title-text">아이민트 채팅</span><span id="chatbox-close" class="chatbox-closebtn">↓</span>
 			</div>
 			<div id="chatbox-list-chatrooms"></div>
 		</div>
 		<div id="chatbox-view">
 			<div id="chatbox-view-title" class="chatbox-title">
-				<span class="title"></span><span id="chatview-close" class="chatbox-closebtn">←</span>
+				<span class="chatbox-title-text"></span><span id="chatview-close" class="chatbox-closebtn">←</span>
 			</div>
 			<div id="chatbox-view-detail">
 				<img id="chatbox-detail-goods" src="" />

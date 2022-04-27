@@ -364,7 +364,7 @@ function joinChatroom(chatroom) {
     $("#chatbox-view-chatmessages").html("");
 
     // 채팅창 제목표시줄 갱신
-    $("#chatbox-view-title .title").text(
+    $("#chatbox-view-title .chatbox-title-text").text(
         $(chatroom).find(".chatbox-chatroom-nickname").text() + "님과의 채팅"
     );
     // 상품 정보 갱신
