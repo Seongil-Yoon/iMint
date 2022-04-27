@@ -41,7 +41,17 @@
 			</c:choose>
 		</article>
 		<article class="row2">
-			<h2>${goods.goodsStatus}</h2>
+			<c:choose>
+				<c:when test="${goods.goodsStatus == 'wait'}">
+					<h2>판매중</h2>
+				</c:when>
+				<c:when test="${goods.goodsStatus == 'resrv'}">
+					<h2>예약중</h2>
+				</c:when>
+				<c:when test="${goods.goodsStatus == 'comp'}">
+					<h2>판매완료</h2>
+				</c:when>
+			</c:choose>
 			<div class="goods-info">
 				<div>
 					<span>${goods.sellerNick}</span>
