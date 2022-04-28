@@ -56,7 +56,12 @@
 		            <div class="buttons buttons-nickname">
 		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-child" placeholder="${memberDTO.mbNick}">
 		                    <input type="button" class="btn btn-primary" value="닉네임 중복 확인" id="nickname-check-child"/>
+		            
+		             
 		            </div>
+		            <div></div>
+		            <div id="nickappend"></div>
+		            <p id="arrow-box-nick"></p>
 		        </div>
 		        
 		        <!-- 관심사 수정  (3행)-->
@@ -82,7 +87,7 @@
 		        <!-- 변경하기 버튼 -->
 		         <div class="update-comlete-container">
 		            <br>
-		            <div id="nickappend"></div>
+		           
 		            <br>
 		            <input type="submit" class="btn btn-primary" value="회원정보 수정하기" id="update-complete-child"/>
 		        </div>

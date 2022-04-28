@@ -31,8 +31,7 @@
  	
     <div class="container-main">
     	<div class="welcome-message-container">
-    	<img class="welcome-hamster" src="/static/images/hamster.png">
-    	<h2 class="welcome-message">${userNickName}님, 안녕하세요!</h2>
+    	<h2 class="welcome-message"><img class="welcome-hamster" src="/static/images/hamster.png"> ${userNickName}님, 안녕하세요!</h2>
     	</div>
         
         <!-- 보호자 로그인시 숨김 -->
