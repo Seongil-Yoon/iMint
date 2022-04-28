@@ -16,12 +16,9 @@
  	<div class = "container">
 		<div class="item" id = "registration">
         <c:if test="${not empty register}"> 
-   <!--          <img class = "registrations balloons" src = "/static/images/confetti.png"> -->
-            <span class = "registrations" style = "width: 120px;"> 
+            <span class = "registrations" style = "text-align: center; width: 120px;"> 
             회원가입 완료
             </span> 
-<!--             <img class = "registrations balloons" src = "/static/images/confetti.png">
- -->            
         </c:if>	 	
 	 		
 	 	</div>
@@ -48,8 +45,7 @@
 	<br>
 	<div class = "fadeinleft" class="shadow p-3 mb-5 bg-body rounded">
 	<div class = "cover">
-<!-- 		<div class="shadow-lg p-3 mb-5 bg-body rounded">
- -->		   	<img class = "shadow-lg p-3 mb-5 bg-body rounded cover_item service" src = "/static/images/login_chat.png">	
+		   	<img class = "shadow-lg p-3 mb-5 bg-body rounded cover_item service" src = "/static/images/login_chat.png">	
 		   	<div class = "cover_item">
 			<h3>
 			안전
@@ -58,9 +54,7 @@
    				아이들끼리만 거래하고, 아이들끼리만 채팅할 수 있습니다.
    			</p>
    			</div>
-<!-- 		</div> -->
 		
-<!-- 		<div class="shadow-lg p-3 mb-5 bg-body rounded">	 -->
 		   	<div class = "cover_item">		   	
 			<h3>
 			연동
@@ -71,9 +65,7 @@
     		</p>
     		</div>
 		   	<img class = "shadow-lg p-3 mb-5 bg-body rounded cover_item service" src = "/static/images/login_transaction.png">	
-<!--     	</div> -->
 
-<!-- 		<div class="shadow-lg p-3 mb-5 bg-body rounded">   			    		 -->
 		   	<img class = "shadow-lg p-3 mb-5 bg-body rounded cover_item service" src = "/static/images/login_map.png">	
 		   	<div class = "cover_item">
 			<h3>
@@ -83,7 +75,6 @@
 			지역 인증을 통해 멀리 가지 않고<br><span class="thick">가까운 이웃과 거래</span>할 수 있습니다.
     		</p>
     		</div>
-<!--     	</div>	 -->
 	</div>	
 	</div>	
 	<br>

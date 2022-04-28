@@ -1,10 +1,7 @@
 package multi.fclass.iMint.admin.controller;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -76,7 +72,7 @@ public class AdminCotroller {
 		return mv;
 	}
 	
-	// 회원 통계  
+	// 회원 통계 페이지 이동  
 	@GetMapping("/admin/stats/member")
 	public ModelAndView stats(Authentication auth) {
 		
@@ -100,6 +96,7 @@ public class AdminCotroller {
 		return mv;
 	}
 	
+	// 회원 통계 페이지 결과 조회 
 	@PostMapping("/admin/stats/member")
 	@ResponseBody
 	public Map<String, List<String>> stats() {

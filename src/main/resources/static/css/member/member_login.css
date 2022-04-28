@@ -109,10 +109,6 @@ animation: motion 2s infinite;
 } 
 
 /* 푸터  */
-/* .mint-footer{
-	background-color: white !important; 
-} */
-
 .mint-footer a, .mint-footer span{
 	color : black !important;
 } 

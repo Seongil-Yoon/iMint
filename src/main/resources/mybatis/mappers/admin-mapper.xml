@@ -14,5 +14,4 @@
 	GROUP BY mb_location ORDER BY mb_location;
 </select>
 
-
 </mapper>
