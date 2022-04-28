@@ -253,7 +253,7 @@ public class IndexController {
 					mv.addObject("register", memberDTO.getMbNick());
 					mv.setViewName("member/login");
 				}
-				else { // 보호자의 입력정보가 틀리면 다시 보내기
+				else { // 보호자의 입력정보가 틀리면 보호자 연동 페이지로 다시 보내기
 					mv.setViewName("member/register_connect");
 				}
 			} catch (NullPointerException e) {
