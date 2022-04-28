@@ -63,18 +63,18 @@
         <!-- 보호자 로그인시 숨김 해제 -->
         <!-- 회원 상태 -->
         <div class="container-summary">
-            <h5 class="text-summary">${userNickName}님은 아이 회원입니다.</h5>
-            <c:choose>
-            	<c:when test="${userPhoto.equals('null')} || ${userPhoto == null}">
-            		<img src="/static/images/default-icon.jpeg" alt="">
-            		<p>사진 없음</p>
-            	</c:when>
-            	<c:otherwise>
-            		<img src="${userPhoto}">
-            	</c:otherwise>
-            </c:choose>
-            <p>이메일: ${userEmail}</p>
-            <p>관심사: ${userInterest}</p>
+        	<h5 class="text-summary">${userNickName}님은 아이 회원입니다.</h5>
+        		<div class="container-summary-text">
+	            
+	           	
+		            <img src="${userPhoto}" class="user-photo">
+		            
+		            <div class="container-summary-details">
+		            <p>이메일: ${userEmail}</p>
+		            <p>관심사: ${userInterest}</p>
+		            </div>
+		            
+           		</div>
             <a class="btn btn-primary" href="/mypage/edit">자세히</a>
         </div>
         <div class="container-other-settings">

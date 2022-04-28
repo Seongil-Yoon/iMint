@@ -61,8 +61,19 @@
         <!-- 회원 상태 -->
         <div class="container-summary">
             <h5 class="text-summary">${userNickName}님은 보호자 회원입니다.</h5>
-            <p>이메일: ${userEmail}</p>
-            <p>관심사: ${userInterest}</p>
+            <div class="container-summary-text">
+	            
+	           		
+	           				<img src="${userPhoto}" class="user-photo">
+	           		
+		            
+		            
+		            <div class="container-summary-details">
+		            <p>이메일: ${userEmail}</p>
+		            <p>관심사: ${userInterest}</p>
+		            </div>
+		            
+           		</div>
             <a class="btn btn-primary" href="/mypage/edit">자세히</a>
         </div>
         <div class="container-other-settings">
