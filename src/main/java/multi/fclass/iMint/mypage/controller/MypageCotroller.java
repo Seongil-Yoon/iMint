@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.mypage.dao.IMypageDAO;
@@ -214,12 +215,16 @@ public class MypageCotroller {
 				
 				// 아이별 거래완료 목록
 				List<MypageChatroomDTO> userChat = mypageService.getChatroomList(child.getChildId(), 1, 100);
+				//System.out.println(userChat);
+				
+				
 				allChat.put(child.getChildNick(), userChat);
 
 			}
 
 			mv.addObject("allWish", allWish);
 			mv.addObject("allSell", allSell);
+			
 			mv.addObject("allComplete", allComplete);
 			mv.addObject("allChat", allChat);
 
@@ -239,7 +244,7 @@ public class MypageCotroller {
 			// 판매 목록
 			List<MypageDTO> userSell = mypageService.getSellingList(userID, 1, 100);
 			mv.addObject("userSell", userSell);
-			System.out.println(userSell);
+			
 			
 			// 거래완료 목록
 			List<MypageDTO> userComplete = mypageService.getCompleteList(userID, 1, 100);
@@ -248,8 +253,13 @@ public class MypageCotroller {
 			//채팅 목록
 			List<MypageChatroomDTO> userChat = mypageService.getChatroomList(userID, 1, 100);
 			mv.addObject("userChat", userChat);
+			System.out.println(userChat);
 			
+			for(MypageChatroomDTO chats:userChat) {
 			
+				System.out.println(chats.getId());
+				
+			}
 			
 			
 			
