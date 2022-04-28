@@ -45,6 +45,24 @@ $(function () {
                 }
             }
         });
+
+    // 이벤트 등록: 새로운 메세지 버튼 클릭하면 맨 아래로 이동
+    $("#chatbox-view-alertnew").on("click", function () {
+        $("#chatbox-view-chatmessages").scrollTop(
+            $("#chatbox-view-chatmessages").prop("scrollHeight")
+        );
+    });
+
+    // 이벤트 등록: 스크롤이 맨 아래로 가면 새로운 메세지 알림 해제
+    $("#chatbox-view-chatmessages").scroll(function () {
+        if (
+            $("#chatbox-view-chatmessages").scrollTop() +
+                $("#chatbox-view-chatmessages").innerHeight() >=
+            $("#chatbox-view-chatmessages").prop("scrollHeight")
+        ) {
+            $("#chatbox-view-alertnew").hide();
+        }
+    });
 });
 
 // 함수: 웹소켓에 연결
@@ -467,6 +485,7 @@ function joinChatroom(chatroom) {
         "/chat/chatroom/" + currentChatroomId,
         function (chatmessage) {
             putChatmessage(JSON.parse(chatmessage.body), false);
+            $("#chatbox-view-alertnew").show();
         }
     );
 

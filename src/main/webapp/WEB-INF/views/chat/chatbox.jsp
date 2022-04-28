@@ -21,6 +21,7 @@
 			</div>
 			<div id="chatbox-view-trxbtns"></div>
 			<div id="chatbox-view-chatmessages"></div>
+			<div id="chatbox-view-alertnew">새로운 메세지</div>
 			<div id="chatbox-view-send">
 				<textarea></textarea>
 				<div id="chatbox-send-sendbtn">↑</div>

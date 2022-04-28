@@ -342,6 +342,26 @@
     padding-right: 5px;
 }
 
+#chatbox-view-alertnew {
+    position: absolute; 
+    display: none;
+    left: 40px;
+    bottom: 85px;
+    width: calc(var(--total-width) - 80px);
+    height: 22px;
+    border: 1px solid #9b9b9b;
+    border-radius: 0.5rem;
+    background-color: #cdf0ea;
+    color: #3387a8;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+}
+
+#chatbox-view-alertnew:hover {
+    cursor: pointer;
+}
+
 #chatbox-view-send {
     width: var(--total-width);
     height: calc(var(--chatroom-height) + 1px);
