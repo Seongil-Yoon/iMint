@@ -11,9 +11,14 @@
 <body>
 	<!-- 어사이드바 컨테이너 -->
     <div class="aside-container">
-        <a class="content" href="/mypage/mylist">
+    	<a class="content" href="/mypage">
             <div class="aside-tab-item">
                 <p class="tab-text">나의 아이민트</p>
+            </div>
+         </a><br>
+        <a class="content" href="/mypage/mylist">
+            <div class="aside-tab-item">
+                <p class="tab-text">나의 거래목록</p>
             </div>
         </a><br>
         <a class="content" href="/mypage/edit">
