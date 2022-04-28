@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>아이민트 :: 내동네설정</title>
+	<title>iMint :: 내동네설정</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_location.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />

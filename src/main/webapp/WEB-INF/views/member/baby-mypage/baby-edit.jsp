@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>아이민트 :: 회원정보수정</title>
+	<title>iMint :: 회원정보수정</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_edit.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
@@ -65,7 +65,17 @@
 		                <h5 class="lables-text">관심사 변경</h5>
 		            </div>
 		            <div class="buttons buttons-interest">
-		                    <input name = "interest" type="text" class="buttons-text" id="interest-update-child">
+		                    <!-- <input name = "interest" type="text" class="buttons-text" id="interest-update-child"> -->
+		                    <select name = "interest" id = "interest-update-child" class = "buttons-text"
+							aria-label="Floating label select example">
+						<option value="문구" selected>문구</option>
+						<option value="완구">완구</option>
+						<option value="도서">도서</option>
+						<option value="교구">교구</option>
+						<option value="의류">의류</option>
+						<option value="가방,신발,잡화">가방,신발,잡화</option>
+						<option value="기타">기타</option>
+						</select>
 		            </div>
 		        </div>
 		        
