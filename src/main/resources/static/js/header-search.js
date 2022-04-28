@@ -19,6 +19,9 @@ function voiceQues() {
     let sound = document.getElementById("sound");
     let constraints = undefined;
     let mediaRecorder = undefined;
+    
+    recordBtn.style.borderColor = "#CDF0EA";
+    recordBtn.style.color = "#CDF0EA";
 
     if (navigator.mediaDevices) { //true이면 녹음기, 카메라 지원 브라우저
         console.log("지원가능");
@@ -33,7 +36,7 @@ function voiceQues() {
             recordBtn.onclick = function () {
                 mediaRecorder.start();
                 recordBtn.style.color = "";
-                recordBtn.style.background = "#f28b82";
+                recordBtn.style.background = "";
             }
             stopBtn.onclick = function () {
                 mediaRecorder.stop();
