@@ -29,9 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     // login 페이지 변경
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable() // csrf: 페이지 위변조 방지. 유니크 키값 토큰넣어줌. form태그 안에 넣어주는 메서드 찾기. 비동기할 때도 참고.
+		http.csrf().disable() // csrf: 페이지 위변조 방지. 유니크 키값 토큰넣어줌. 
 			.exceptionHandling()
-			.accessDeniedPage("/err/denied-page"); // 접근 불가 페이지 (나중에 핸들러로 바꿀 수도)
+			.accessDeniedPage("/err/denied-page"); // 접근 불가 페이지
 		
 		http.authorizeRequests()
 			.antMatchers("/", "/main/**", "/login/**", "/static/**", "/logout/**").permitAll() // 비로그인시 첫화면, 메인 둘러보기만 허용
@@ -43,22 +43,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 			.antMatchers("/register/**").access("hasRole('ROLE_uncerti_GUARD') or hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
 
-			.antMatchers("/mypage/location").access("hasRole('ROLE_GUARD') or hasRole('ROLE_uncerti_GUARD')") /* or hasRole('ROLE_ADMIN') */
-			.antMatchers("/mypage/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // or hasRole('ROLE_ADMIN')
+			.antMatchers("/mypage/location").access("hasRole('ROLE_GUARD') or hasRole('ROLE_uncerti_GUARD')") 
+			.antMatchers("/mypage/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") 
 			
 			
 			.antMatchers("/goods/detail**").permitAll()
 			.antMatchers("/goods-list/**").permitAll()
 			.antMatchers("/iMintImage/**").permitAll()
-			.antMatchers("/goods/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
+			.antMatchers("/goods/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')")
 			
 			.antMatchers("/ws/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 웹소켓
-			.antMatchers("/chat/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN') // 채팅
+			.antMatchers("/chat/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')")  // 채팅
 			
-			.antMatchers("/wishlist/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
-			.antMatchers("/transaction/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") //  or hasRole('ROLE_ADMIN')
+			.antMatchers("/wishlist/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") 
+			.antMatchers("/transaction/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')")
 			
-			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 들어올 수 있다.
+			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 접근 가능 
 			.anyRequest().authenticated();
 		
 		// 기본 로그인 해제 

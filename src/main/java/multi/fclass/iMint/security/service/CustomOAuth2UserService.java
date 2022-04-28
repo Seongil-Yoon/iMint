@@ -27,7 +27,7 @@ import multi.fclass.iMint.security.dao.ISecurityDAO;
 
 @RequiredArgsConstructor
 @Service
-public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> { //  extends HttpServlet: include용 
+public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final ISecurityDAO securityDAO;
     private final HttpSession httpSession;
 
