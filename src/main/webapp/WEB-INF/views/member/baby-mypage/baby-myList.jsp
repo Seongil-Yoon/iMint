@@ -111,8 +111,9 @@
 		                                <p>${count.count }</p>
 		                            </div>
 		                            <div class="person">
+		                            	<div class="photo-container">
 		                            	<img src="${chat.opponentThumbnail}" class="person-photo">
-		                                
+		                                </div>
 		                                <div class="person-detail">
 		                                    <p class="item-person-nickname">${chat.opponentNick}</p>
 		                                    <p class="item-person-chat">${chat.message}</p>
