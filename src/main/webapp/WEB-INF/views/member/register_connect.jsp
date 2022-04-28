@@ -12,8 +12,6 @@
 </head>
 
 <body>
- 	<jsp:include page="../include/header.jsp" flush="false" />
- 	
  	<h3>보호자 계정 연동하기</h3>	
  	<hr>
  	<div class = "container">

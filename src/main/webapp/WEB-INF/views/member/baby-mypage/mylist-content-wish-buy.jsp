@@ -34,9 +34,16 @@
                             </div>
                         </div>
                         <!-- 항목별 내용 -->
-	<div class="item-list">
+                         <c:choose>
+		                       	<c:when test="${userWish.size() == 0}">
+		                       	
+		                       	<br><p>완료된 거래가 없어요. 지금 시작해 보세요!</p>
+		                       	</c:when>
+		                       	<c:otherwise>
+	
 	
 	<c:forEach items="${userWish}" var="wish" varStatus="count">
+	<div class="item-list">
 	  <div class="checkbox">
 	    <!-- <input type="checkbox" class="select-targets" name="selected"/> -->
 	    <p>${count.count }</p>
@@ -70,8 +77,10 @@
 	   <p class="text text-price">${wish.goodsPrice}</p>
 	  </div>
 	  <div class="link">
-	    <button type="button" id="linkItem" class="btn btn-primary btn-sm">바로가기</button>
+	    <button type="button" id="linkItem" class="btn btn-primary btn-sm" onclick="location.href = '/goods/detail?goodsId=' + '${wish.goodsId}'">바로가기</button>
 	  </div>
+	 </div>
 	 </c:forEach>
-	  
-	</div>
+	</c:otherwise>
+</c:choose>
+	

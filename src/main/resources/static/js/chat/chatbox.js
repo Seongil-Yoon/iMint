@@ -6,19 +6,24 @@ let currentPageNumber = null;
 let numberOfItems = 30;
 
 $(function () {
-    // 인증된 회원이면 웹소켓 접속
+    // 인증된 회원이면 채팅 버튼 표시
     if (chatboxMyRole == "CHILD" || chatboxMyRole == "GUARD") {
         setTimeout(function () {
             $("#chatbox-openbtn").show();
         }, 100);
+        if (chatboxMyRole == "GUARD") {
+            // 보호자 회원이면 아이 선택상자 추가
+            addChildSelect();
+        } else if (chatboxMyRole == "CHILD") {
+            // 아이 회원이면 즉시 웹소켓 접속
+            connectWS(chatboxMyId);
+        }
     }
 
-    // 보호자 회원이면 아이 선택 선택상자 추가
-    if (chatboxMyRole == "GUARD") {
-        addChildSelect();
-    } else {
-        connectWS(chatboxMyId);
-    }
+    // 이벤트 등록: 페이지를 떠날 때 웹소켓 접속 해제
+    $(window).on("beforeunload", function () {
+        disconnectWS();
+    });
 
     // 이벤트 등록: 채팅 버튼 누르면 채팅 버튼 숨기고 채팅박스 표시
     $("#chatbox-openbtn").on("click", function () {
@@ -67,7 +72,7 @@ $(function () {
             $("#chatbox-view-chatmessages").prop("scrollHeight")
         ) {
             $("#chatbox-view-alertnew").hide();
-        } else if ($("#chatbox-view-chatmessages").scrollTop() == 0) {
+        } else if ($("#chatbox-view-chatmessages").scrollTop() <= 50) {
             if (currentPageNumber > 0) {
                 currentPageNumber++;
                 getChatmessages(false);

@@ -8,24 +8,29 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>아이민트 :: 내동네설정</title>
+	<title>iMint :: 내동네설정</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_location.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
 </head>
 
 <body>
+	<div id="container-page-all">
+    <c:if test="${memberDTO.mbRole eq 'GUARD'}"> 
  	<jsp:include page="../../include/header.jsp" flush="false" />
  	<!-- 아티클 시작 -->
 	<div class="container-page">
-	
 	<div class="container-aside-main">
 	<!-- 어사이드 시작 -->
 	<div class="container-aside">
 	<h2 class="title">마이페이지</h2>
  	<jsp:include page="guard-asideBar.jsp" flush="false" />
- 	</div>
  	<!-- 어사이드 끝 -->
+ 	</div>
+ 	<!-- 아티클 끝(원래 전체를 감싸고 있었는데 c:if태그가 중간에 끼어들어서 에러발생으로 임시로 div태그를 미리 닫았습니다(정민) -->
+ 	
+ 	
+ 	</c:if>
  	
     <div class="container-main">
 	<h3 id = "guappend"></h3>	
@@ -33,7 +38,16 @@
 	<br><br>
 	
 	<div id="map" style="width:750px;height:350px;"></div>
-
+	<br><br>
+	 	<div class="buttons">
+		 
+		 	<form id = "confirm_form">
+				<input type = hidden id = "guappend2" name = "mbLocationOrGuard" >
+				<input type = hidden id = "mbRole" name = "mbRole" value = ${memberDTO.mbRole }>
+			 	<input type = "submit" id = "confirm_btn" class="btn btn-primary" value = "확인했어요">
+			</form>
+		</div>
+	
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13"></script>
 
 	<script>
@@ -103,18 +117,13 @@
 
  	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=LIBRARY"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=services,clusterer,drawing"></script>	
- 		<br>
-	 	<div class="buttons">
-		 
-		 	<form id = "confirm_form">
-				<input type = hidden id = "guappend2" name = "mbLocationOrGuard" >
-				<input type = hidden id = "mbRole" name = "mbRole" value = ${memberDTO.mbRole }>
-			 	<input type = "submit" id = "confirm_btn" class="btn btn-primary" value = "확인했어요">
-			</form>
-		</div>
+	</div>
+ 		
+	<c:if test="${memberDTO.mbRole eq 'GUARD'}"> 	
 	</div>
 	</div>
-	</div>
+	</c:if>
+</div>
  
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />

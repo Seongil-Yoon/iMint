@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+.container-page-all{
+	width: 1200px;
+	margin:auto;
+	padding-left: 3rem;
+	padding-right: 3rem;
+}
+
 /* 페이지 전체 컨테이너 */
 .container-page{
 	width: 1200px;
@@ -50,7 +57,12 @@
 
 /* 맵 */
 #map{
+	margin: auto;
 	margin-top: 6fr;
+	justify-content: center;
+   	text-align: center;
+   	align-items:center;
+   	
 }
 
 /* 버튼 */

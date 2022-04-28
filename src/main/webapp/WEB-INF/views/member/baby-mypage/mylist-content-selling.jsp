@@ -68,7 +68,7 @@
 	   <p class="text text-price">${sell.goodsPrice}</p>
 	  </div>
 	  <div class="link">
-	    <button type="button" id="linkItem" class="btn btn-primary btn-sm">바로가기</button>
+	    <button type="button" id="linkItem" class="btn btn-primary btn-sm" onclick="location.href = '/goods/detail?goodsId=' + '${sell.goodsId}'">바로가기</button>
 	  </div>
 	  </c:forEach>
 	</div>

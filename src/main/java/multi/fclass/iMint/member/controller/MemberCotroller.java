@@ -136,6 +136,7 @@ public class MemberCotroller {
 	@ResponseBody
 	@RequestMapping("/edit/nickname")
 	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+		
 		System.out.println(nickcheck);
 		Map<String, String> map = new HashMap<String, String>();
 		// 비 로그인

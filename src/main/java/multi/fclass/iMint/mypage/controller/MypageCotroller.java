@@ -201,19 +201,19 @@ public class MypageCotroller {
 
 			for (MypageChildDTO child : userChilds) {
 				// 아이별 관심/구매 목록 불러오기
-				List<MypageDTO> userWish = mypageService.getWishAndReserveList(child.getChildId(), 1, 5);
+				List<MypageDTO> userWish = mypageService.getWishAndReserveList(child.getChildId(), 1, 100);
 				allWish.put(child.getChildNick(), userWish);
 
 				// 아이별 판매 목록
-				List<MypageDTO> userSell = mypageService.getSellingList(child.getChildId(), 1, 5);
+				List<MypageDTO> userSell = mypageService.getSellingList(child.getChildId(), 1, 100);
 				allSell.put(child.getChildNick(), userSell);
 
 				// 아이별 거래완료 목록
-				List<MypageDTO> userComplete = mypageService.getCompleteList(child.getChildId(), 1, 5);
+				List<MypageDTO> userComplete = mypageService.getCompleteList(child.getChildId(), 1, 100);
 				allComplete.put(child.getChildNick(), userComplete);
 				
 				// 아이별 거래완료 목록
-				List<MypageChatroomDTO> userChat = mypageService.getChatroomList(child.getChildId(), 1, 5);
+				List<MypageChatroomDTO> userChat = mypageService.getChatroomList(child.getChildId(), 1, 100);
 				allChat.put(child.getChildNick(), userChat);
 
 			}

@@ -96,7 +96,7 @@ function selectChild(event){
 	const selected = event.target.id;
 	const childTitle = document.getElementById('child-define');
 	
-	childTitle.innerHTML = "내 아이 " + selected + "님의 거래 관련 목록입니다";
+	childTitle.innerHTML = "내 아이 " + selected + "님의 거래 목록입니다";
 }
 
 childSelected.forEach(item => item.addEventListener('click', selectChild));
