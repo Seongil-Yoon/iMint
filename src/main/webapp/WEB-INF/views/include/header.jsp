@@ -69,8 +69,7 @@
 				<!-- <div class="justify-content-end"> -->
 				<ul class="navbar-nav ">
 					<sec:authorize access="isAnonymous()">
-						<li class="nav-item"><a class="nav-link" href="/">로그인</a></li>
-						<li class="nav-item"><a class="nav-link" href="/">회원가입</a></li>
+						<li class="nav-item"><a class="nav-link" href="/">돌아가기</a></li>
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 						<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
