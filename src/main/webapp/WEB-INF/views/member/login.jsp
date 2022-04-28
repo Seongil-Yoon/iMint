@@ -23,8 +23,10 @@
 	 		
 	 	</div>
   	 	<div class="item">
-  	 		<img id = "moving" class = "mint" src = "/static/images/mint.png">
-	 		<h2 style = "text-align: center; width:225px;">iMint</h2>
+ 	 		<img id = "moving" class = "hamster" src = "/static/images/hamster.png">
+	 		<h2 style = "text-align: center; width:250px;">iMint</h2>
+<!--   	 		<img src = "/static/images/iMint_Black.png"> -->
+	 		
 	 	</div>
 	 	<div class="item">
 	 		<a href = "/oauth2/authorization/google" class="btn btn-secondary opacity-75" style="color: #white" >아이 가입 | 로그인(BETA)</a>

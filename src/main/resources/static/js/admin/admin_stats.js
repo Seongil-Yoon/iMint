@@ -71,5 +71,5 @@ setTimeout(function () {
     	}
     
     }); // chart	
-}, 1300);
+}, 1500);
 }); // document

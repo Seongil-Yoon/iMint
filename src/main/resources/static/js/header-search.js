@@ -19,6 +19,9 @@ function voiceQues() {
     let sound = document.getElementById("sound");
     let constraints = undefined;
     let mediaRecorder = undefined;
+    
+    recordBtn.style.borderColor = "#CDF0EA";
+    recordBtn.style.color = "#CDF0EA";
 
     //입력 받은 요소의 자식 노드를 모두 삭제하는 함수
     function removeAllchild(div) {
@@ -40,7 +43,7 @@ function voiceQues() {
             recordBtn.onclick = function () {
                 mediaRecorder.start();
                 recordBtn.style.color = "";
-                recordBtn.style.background = "#f28b82";
+                recordBtn.style.background = "";
             }
             stopBtn.onclick = function () {
                 mediaRecorder.stop();

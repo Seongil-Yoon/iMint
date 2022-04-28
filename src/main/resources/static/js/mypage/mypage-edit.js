@@ -52,13 +52,22 @@ $("#nickname-check-child").on('click', function() {
 			if (response.result == "ok") {
 				console.log("ok")
 				ajax_check = "ok";
+				//$("#arrow-box-nick").text('사용가능한 닉네임입니다.');
+				//$("#arrow-box-nick").css("display", "block");
 				$("#nickappend").html('<p style = "color: green;">사용가능한 닉네임입니다.</p>');
+				
 			} // if end 
 			else if(response.result == "blank"){
+				//$("#arrow-box-nick").text('변경할 닉네임을 입력해 주세요.');
+				//$("#arrow-box-nick").css("display", "block");
 				$("#nickappend").html('<p style = "color: red;">변경할 닉네임을 입력해 주세요.</p>');
 			}
 			
-			else {$("#nickappend").html('<p style = "color: red;">다른 사용자가 이미 사용중인 닉네임입니다.</p>');
+			else {
+				//$("#arrow-box-nick").text('이미 사용중인 닉네임입니다.');
+				//$("#arrow-box-nick").css("display", "block");
+				$("#nickappend").html('<p style = "color: red;">이미 사용중인 닉네임입니다.</p>');
+				
 			}
 		}, // success end 
 		error:function(){

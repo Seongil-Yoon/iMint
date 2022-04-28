@@ -138,6 +138,36 @@ p#arrow-text{
 	display: block;
 }
 
+/* 음성 검색 */
+
+.btn-outline-primary{
+	background-color: #F9F9F9;
+    color: black;
+    border-color: #F9F9F9;
+}
+
+.btn-outline-primary:hover{
+	background-color: #CDF0EA;
+    color: #3387a8;
+    border-color: white;
+}
+
+
+
+.btn-check:checked+.btn-outline-primary, .btn-outline-primary:active{
+	background-color: #CDF0EA;
+    color: #3387a8;
+    border-color: white;
+}
+
+.btn-check:notchecked+.btn-outline-primary{
+	background-color:  #F9F9F9;
+    color: black;
+    border-color:  #F9F9F9;
+}
+
+
+
 /* 푸터 */
 
 .fixed-bottom {
