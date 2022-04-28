@@ -101,7 +101,7 @@ public class OAuthAttributes {
 		}
     }
     
-    // 아이 테스트용(구글은 연령대를 못 받아와서 원래는 미사용) 
+    // 구글 로그인. 아이 테스트용(구글은 연령대를 못 받아와서 원래는 미사용이나 테스트용도로 이용) 
     public static OAuthAttributes ofGoogle(String userNameAttributeName,
                                            Map<String, Object> attributes) {
     	System.out.println("구글 로그인 호출");
@@ -109,7 +109,7 @@ public class OAuthAttributes {
             	.mbId ("google_"+(String) attributes.get("sub"))
             	.mbProvider ("goole") 
             	.mbGuard (null)
-            	.mbNick ((String) attributes.get("name")) // 임시 
+            	.mbNick ((String) attributes.get("name"))
             	.mbEmail ((String) attributes.get("email")) 
             	.mbIsdelete (false) 
                 .mbRole(Role.UN_CHILD) // 테스트용으로 구글이 아이라 가정 
@@ -118,6 +118,7 @@ public class OAuthAttributes {
                 .build();
     }
     
+    // 네이버 로그인 
     public static OAuthAttributes ofNaver(String userNameAttributeName,
             Map<String, Object> attributes) {
     	
@@ -149,7 +150,7 @@ public class OAuthAttributes {
 	                .build();
     }
 
-    
+    // 카카오 로그인 
     public static OAuthAttributes ofKakao(String userNameAttributeName,
             Map<String, Object> attributes) {
     	System.out.println("카카오 로그인 호출");
@@ -179,6 +180,7 @@ public class OAuthAttributes {
 					.build();
 	}
     
+    // MemberDTO 객체
     public MemberDTO toEntity() {
         return MemberDTO.builder()
         		.mbId (mbId)

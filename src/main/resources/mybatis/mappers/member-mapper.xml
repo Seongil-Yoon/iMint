@@ -18,7 +18,7 @@
         WHERE (mb_id = #{mbId});
     </update>
 
-<!-- 회원사진 업로드	 -->
+<!-- 회원사진 업로드 -->
     <update id = "updatethumbnail" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
         SET mb_thumbnail = #{mbThumbnail}

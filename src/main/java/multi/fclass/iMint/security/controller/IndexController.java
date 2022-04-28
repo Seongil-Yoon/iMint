@@ -41,8 +41,8 @@ import multi.fclass.iMint.security.parsing.role.ParseMbRole;
  *
  */
 
-@Slf4j // 로그
-@Controller // 뷰 반환
+@Slf4j
+@Controller 
 public class IndexController {
 
 	@Autowired
@@ -131,9 +131,10 @@ public class IndexController {
 	
 	@ResponseBody
 	@RequestMapping("/register/nickname")
-	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { 
 
 		Map<String, String> map = new HashMap<String, String>();
+		
 		// 비 로그인
 		if (auth == null) {
 					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
@@ -182,10 +183,10 @@ public class IndexController {
 	}
 	
 
-	// 회원가입 4(최종. 보호자, 아이 모두)
-	// 회원가입 마치면 부모-> 위치 설정 , 아이 -> 보호자 연동 후 권한을 인증으로 변경
-	// 회원가입 후 다시 로그인 요청
-	@PostMapping({"", "/"}) // register/complete
+	// 회원가입 4(최종 회원가입 단계. 보호자, 아이 모두)
+	// 부모-> 위치 설정 , 아이 -> 보호자 연동이 각각 끝나면 Role를 인증으로 변경
+	// 회원가입 완료되면 다시 로그인 요청
+	@PostMapping({"", "/"}) 
 	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard, String guardPin) {
 	
 	ModelAndView mv = new ModelAndView();
@@ -199,7 +200,7 @@ public class IndexController {
 	mv.addObject("memberDTO", memberDTO);
 
 	try {
-		// mbLocation 받아오기 
+		// 미인증 보호자(UN_GUARD)인 경우 mbLocation 받아오기, 회원가입 마치면 GUARD로 권한 업그레이드 
 		if (memberDTO.getMbRole() == Role.UN_GUARD) { // 보호자 
 			memberDTO.setMbGuard(null);
 			memberDTO.setMbLocation(mbLocationOrGuard);

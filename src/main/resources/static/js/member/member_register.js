@@ -1,6 +1,6 @@
 var ajax_check = "";
 
-/* ajax로 닉네임 중복확인 */
+// ajax로 닉네임 중복확인
 $("#nick_btn").on('click', function() {
 	var mbNick = $("#mbNick").val();
 	$.ajax({

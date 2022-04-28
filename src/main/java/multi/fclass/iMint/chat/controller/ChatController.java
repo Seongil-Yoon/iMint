@@ -51,7 +51,7 @@ public class ChatController {
 
 		return mypageService.getChatroomList(myId, 1, 10);
 	}
-
+  
 	// REST API: 메세지목록 불러오기
 	@GetMapping("/chat/getchatmessages")
 	@ResponseBody

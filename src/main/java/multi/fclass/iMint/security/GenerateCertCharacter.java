@@ -6,7 +6,7 @@ import java.util.Random;
  *
  */
 
-public class GenerateCertCharacter{ // 보호자 8자리 영문+숫자 인증 번호 생성
+public class GenerateCertCharacter{ // 보호자 8자리 영문+숫자 인증 번호 생성(보호자 계정이 회원가입 최종 단계가 끝나면 자동 부여)
 	
     private int certCharLength = 8;
     private final char[] characterTable = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 

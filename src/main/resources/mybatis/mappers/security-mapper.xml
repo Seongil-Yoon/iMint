@@ -2,42 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="multi.fclass.iMint.security.dao.ISecurityDAO">
 
+<!-- 회원가입1: 유저가 최초 SNS 로그인시 자동 가입 진행 -->
     <insert id="savesns" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         INSERT INTO imint.member(mb_id, mb_provider, mb_guard ,mb_nick,  mb_email, mb_join_date, mb_ratings_total,mb_isdelete, mb_role) 
         VALUES
         (#{mbId}, #{mbProvider}, #{mbGuard}, #{mbNick}, #{mbEmail} ,now(),25, 0 , #{mbRole});
     </insert>
-        
+
+<!-- 회원가입3: 닉네임, 이메일, 관심사 설정  -->        
     <update id="updateregister3" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
         SET mb_id = #{mbId}, mb_nick = #{mbNick}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}
         WHERE (mb_id = #{mbId});
     </update>
 
+<!-- 회원가입4: 최종 회원가입. 보호자는 내 동네 설정, 아이는 보호자 계정 연동 단계. 이 단계가 완료되면 Role을 각각 업그레이드 -->
     <update id="updateregister4" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
         SET mb_role = #{mbRole}, mb_location = #{mbLocation}, mb_guard = #{mbGuard}, mb_pin = #{mbPin}
         WHERE (mb_id = #{mbId});
     </update>
-    
+
+<!-- 회원 정보 수정 -->    
     <update id="updatedetails" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
         SET mb_nick = #{mbNick}, mb_email = #{mbEmail}, mb_interest = #{mbInterest}
         WHERE (mb_id = #{mbId});
     </update>
-    
+
+<!-- mbId(식별값)으로 유저 조회 -->    
     <select id="findByMbId" resultType="multi.fclass.iMint.member.dto.MemberDTO">
         SELECT * FROM imint.member WHERE mb_id = #{mbId}
     </select>
-    
+   
+<!-- 이메일로 유저 조회 -->
     <select id="findByMbEmail" resultType="multi.fclass.iMint.member.dto.MemberDTO">
         SELECT * FROM imint.member WHERE mb_email = #{mbEmail}
     </select>
 
+<!-- 닉네임으로 유저 조회 -->
     <select id="findByMbNick" resultType="multi.fclass.iMint.member.dto.MemberDTO">
         SELECT * FROM imint.member WHERE mb_nick = #{mbNick}
     </select>  
     
+<!--     연동된 보호자의 mbId(식별값)으로 유저 조회. 아이만 해당. -->
     <select id="findByMbGuard" resultType="multi.fclass.iMint.member.dto.MemberDTO">
         SELECT * FROM imint.member WHERE mb_guard = #{mbGuard}
     </select>  

@@ -27,7 +27,7 @@ import multi.fclass.iMint.security.dao.ISecurityDAO;
 
 @RequiredArgsConstructor
 @Service
-public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> { //  extends HttpServlet: include용 
+public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final ISecurityDAO securityDAO;
     private final HttpSession httpSession;
 
@@ -38,7 +38,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
         
 		// 구글 로그인 버튼 클릭 -> 구글 로그인 창 -> 로그인 완료 -> code 리턴(OAuth-Client라이브러리) -> Access Token 요청
-		// userRequest(Access Token등 정보를 포함한) 정보 -> 구글로부터 회원 프로필 받아야 할 때 loadUser메서드 사용 
 		System.out.println("getAttributes: " + oAuth2User.getAttributes()); // 사용자 정보
 
 		// code를 통해 구성한 정보
@@ -78,7 +77,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         );
     }
     
-    // 유저가 있는지 확인 
+    // 유저가 최초 로그인인지, 기존 유저인지 확인
     private MemberDTO SaveOrUpdate(OAuthAttributes attributes) {
     	
         MemberDTO memberDTO;
@@ -87,6 +86,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             System.out.println("이미 가입되어 있는 회원입니다.");
             memberDTO = securityDAO.findByMbId(attributes.getMbId());
         }
+        
+        // 최초 로그인한 유저면 자동 가입 실행
         else {
         	memberDTO = attributes.toEntity();
         	memberDTO.setMbNick(memberDTO.getMbNick() +  + (int)(Math.random() * 10000 + 1)); // 닉네임에 랜덤값 추가

@@ -42,15 +42,6 @@ public class BlockCotroller {
 		// 차단한 사용자
 		MemberDTO blockMember = parseMbId.getMemberMbId(blockNick);
 
-		
-		
-//		if(memberDTO.getMbRole() == Role.GUARD) {
-//			mv.setViewName("member/guard-mypage/guard-withdraw"); 
-//		}
-//		else if(memberDTO.getMbRole() == Role.CHILD) {
-//			mv.setViewName("member/baby-mypage/baby-withdraw");
-//		}
-		
 		mv.addObject("memberDTO", memberDTO);
 		mv.addObject("blockMember", blockMember);
 
@@ -71,15 +62,6 @@ public class BlockCotroller {
 		// 차단해제된 사용자
 		MemberDTO unblockMember = parseMbId.getMemberMbId(unblockNick);
 
-		
-		
-//		if(memberDTO.getMbRole() == Role.GUARD) {
-//			mv.setViewName("member/guard-mypage/guard-withdraw"); 
-//		}
-//		else if(memberDTO.getMbRole() == Role.CHILD) {
-//			mv.setViewName("member/baby-mypage/baby-withdraw");
-//		}
-		
 		mv.addObject("memberDTO", memberDTO);
 		mv.addObject("unblockMember", unblockMember);
 		

@@ -2,18 +2,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <!-- 버튼 -->
-<div class="buttons">
+<!-- <div class="buttons">
 	<h6 class="select-title">전체선택</h6>
 	<input type="checkbox" class="selectAllbtn" name="selected" />
 	<button type="button" id="edit" class="btn btn-secondary btn-sm">수정</button>
 	<button type="button" id="delete" class="btn btn-secondary btn-sm">삭제</button>
-</div>
+</div> -->
 <!-- 항목명 -->
 
 <div class="item-lables">
-	<div class="checkbox">
-		<h6 class="lables-checkbox">선택</h6>
-	</div>
+	 <div class="checkbox">
+		<h6 class="lables-checkbox">No.</h6>
+	</div> 
 	<div class="status">
 		<h6 class="lables-status">구분</h6>
 	</div>
@@ -36,11 +36,12 @@
 
 <!-- 항목별 내용 -->
 <c:forEach items="${allWish}" var="wishes" varStatus="status">
-	<c:forEach items="${wishes.value}" var="wish">
+	<c:forEach items="${wishes.value}" var="wish" varStatus="count">
 		<div class="item-list item-list-guard ${wishes.key}">
 			<div class="checkbox">
-				<input type="checkbox" class="select-targets" name="selected" />
-			</div>
+				<!-- <input type="checkbox" class="select-targets" name="selected" /> -->
+				<p class="count">${count.count }</p>
+			</div> 
 			<div class="status">
 				<p class="text">
 					<c:choose>
@@ -60,7 +61,7 @@
 				<img class="photo" src="${wish.goodsImagesPath}">
 			</div>
 			<div class="subject">
-				<p class="text">${wish.goodsTitle}</p>
+				<p class="text subject-text">${wish.goodsTitle}</p>
 			</div>
 			<div class="interest">
 				<p class="text">${wish.wishes}</p>
@@ -69,7 +70,8 @@
 				<p class="text text-price">${wish.goodsPrice}</p>
 			</div>
 			<div class="link">
-				<p class="text text-link">바로가기</p>
+				<button type="button" id="linkItem" class="btn btn-primary btn-sm">바로가기</button>
+				
 			</div>
 		</div>
 	</c:forEach>

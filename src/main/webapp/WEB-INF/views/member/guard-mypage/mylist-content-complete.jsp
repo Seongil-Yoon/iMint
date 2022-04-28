@@ -2,17 +2,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <!-- 버튼 -->
-<div class="buttons">
+<!-- <div class="buttons">
 	<h6 class="select-title">전체선택</h6>
 	<input type="checkbox" class="selectAllbtn" name="selected" />
 	<button type="button" id="edit" class="btn btn-secondary btn-sm">수정</button>
 	<button type="button" id="delete" class="btn btn-secondary btn-sm">삭제</button>
-</div>
+</div> -->
 <!-- 항목명 -->
 
 <div class="item-lables">
 	<div class="checkbox">
-		<h6 class="lables-checkbox">선택</h6>
+		<h6 class="lables-checkbox">No.</h6>
 	</div>
 	<div class="status">
 		<h6 class="lables-status">구분</h6>
@@ -37,10 +37,11 @@
 <!-- 항목별 내용 -->
 
 	<c:forEach items="${allComplete}" var="dones" varStatus="status">
-		<c:forEach items="${dones.value}" var="done">
+		<c:forEach items="${dones.value}" var="done" varStatus="count">
 		<div class="item-list item-list-guard ${dones.key }">
 			<div class="checkbox">
-				<input type="checkbox" class="select-targets" name="selected" />
+				<!-- <input type="checkbox" class="select-targets" name="selected" /> -->
+				<p class="count">${count.count}</p>
 			</div>
 			<div class="status">
 				<p class="text">거래 완료</p>
@@ -49,7 +50,7 @@
 				<img class="photo" src="${done.goodsImagesPath}">
 			</div>
 			<div class="subject">
-				<p class="text">${done.goodsTitle}</p>
+				<p class="text subject-text">${done.goodsTitle}</p>
 			</div>
 			<div class="interest">
 				<p class="text">${done.wishes}</p>

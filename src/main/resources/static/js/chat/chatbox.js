@@ -367,7 +367,6 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                 $("#chatbox-view-trxbtns").text(
                     "판매글이 삭제되었거나 잘못된 채팅방입니다."
                 );
-            }
 
             // 이벤트 등록: 예약하기
             $("#chatbox-trxbtns-makeresrv")
