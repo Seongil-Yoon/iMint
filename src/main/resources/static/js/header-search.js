@@ -20,6 +20,13 @@ function voiceQues() {
     let constraints = undefined;
     let mediaRecorder = undefined;
 
+    //입력 받은 요소의 자식 노드를 모두 삭제하는 함수
+    function removeAllchild(div) {
+        while (div.hasChildNodes()) {
+            div.removeChild(div.firstChild);
+        }
+    }
+
     if (navigator.mediaDevices) { //true이면 녹음기, 카메라 지원 브라우저
         console.log("지원가능");
         constraints = {
@@ -52,13 +59,15 @@ function voiceQues() {
                 let audio = document.createElement("audio");
                 audio.setAttribute("controls", "");
                 audio.controls = true;
-                try {
-                    if (sound.querySelector("audio") !== null) {
-                        sound.removeChild(audio);
-                    } else {
-                        sound.appendChild(audio);
-                    }
-                } catch (error) {}
+                removeAllchild(sound);
+                sound.appendChild(audio);
+                // try {
+                //     if (sound.querySelector("audio") !== null) {
+                //         sound.removeChild(audio);
+                //     } else {
+                //         sound.appendChild(audio);
+                //     }
+                // } catch (error) {}
 
                 console.log(chunks);
                 //녹음 데이터 가져오기

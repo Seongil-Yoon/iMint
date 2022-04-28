@@ -37,7 +37,7 @@
 						aria-label="readonly input example" readonly name="goodsLocation">
 					<label for="floatingInputValue">현재위치</label>
 				</div>
-				<div class="roundBox" id="thumbnail">
+				<!-- <div class="roundBox" id="thumbnail">
 					<div>
 						<div>
 							<label for="thumbnailFile">상품 대표사진 올리기</label>
@@ -49,12 +49,12 @@
 					</div>
 					<input class="form-control" type="text" id="thumbnailFileName" value="파일명 : "
 						aria-label="readonly input example" readonly>
-					<!-- <label id="thumbnailFileName">파일명 : </label> -->
 					<input type="file" name="thumbnailFile" id="thumbnailFile">
-				</div>
+				</div> -->
 				<div class="roundBox" id="otherImages">
 					<button type="button" class="btn-plus" aria-label="Close" id="upload-popup-btn">
 					</button>
+					<label for="upload-popup-btn">상품 사진 올리기</label>
 				</div>
 			</div>
 			<div class="row2">
@@ -94,7 +94,7 @@
 			</div>
 			<div class="row4">
 				<div class="form-floating content">
-					<textarea class="form-control" placeholder="100자 이내" id="floatingTextarea" name="goodsContent" 
+					<textarea class="form-control" placeholder="100자 이내" id="floatingTextarea" name="goodsContent"
 						required>${goods.goodsContent}</textarea>
 					<label for="floatingTextarea">글 내용 입력하기(100자 이내)</label>
 				</div>
