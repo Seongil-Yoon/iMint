@@ -109,7 +109,7 @@ public class IndexController {
 	// 회원가입은 총 4단계 
 	// 회원가입 2(보호자, 아이 모두): sns 가입(회원가입 1)후 register 페이지로 이동
 	@GetMapping("/register/2")
-	public ModelAndView registersns(Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+	public ModelAndView registersns(Authentication auth) { 
 		// 비 로그인
 		if (auth == null) {
 					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
@@ -129,6 +129,7 @@ public class IndexController {
 		return mv;
 	}
 	
+	// 회원가입 2에서 닉네임 중복 확인(비동기)
 	@ResponseBody
 	@RequestMapping("/register/nickname")
 	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { 
@@ -140,12 +141,12 @@ public class IndexController {
 					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		
-		if (securityDAO.findByMbNick(nickcheck) == null || securityDAO.findByMbNick(nickcheck).getMbId().equals(mbId) ) { // 없거나, 본인이면
+		if (nickcheck.trim().isEmpty()){ // 입력된 문자가 없으면(입력된 값 전체가 공백이면)
+			map.put("result", "blank");		
+		}
+		else if (securityDAO.findByMbNick(nickcheck) == null || securityDAO.findByMbNick(nickcheck).getMbId().equals(mbId) ) { // 입력된 닉네임을 사용중인 회원이 없거나, 본인이면
 			map.put("result", "ok");
 			map.put("nickcheck", nickcheck);
-		}
-		else if(nickcheck.equals("") ){
-			map.put("result", "blank");			
 		}
 		else{
 			map.put("result", "duplicated");			
@@ -252,7 +253,7 @@ public class IndexController {
 					mv.addObject("register", memberDTO.getMbNick());
 					mv.setViewName("member/login");
 				}
-				else { // 보호자의 입력정보가 틀리면 다시 보내기
+				else { // 보호자의 입력정보가 틀리면 보호자 연동 페이지로 다시 보내기
 					mv.setViewName("member/register_connect");
 				}
 			} catch (NullPointerException e) {

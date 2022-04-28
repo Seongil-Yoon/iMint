@@ -81,7 +81,6 @@
 	<br>
 	
 	<jsp:include page="../include/footer.jsp" flush="false"/>
-	
  	<jsp:include page="../libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/member/member_login.js"></script>
 

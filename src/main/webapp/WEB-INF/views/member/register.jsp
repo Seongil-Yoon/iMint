@@ -16,8 +16,7 @@
 
 <body>
 	<div class="container-all">
- 	<jsp:include page="../include/header.jsp" flush="false" />
- 	<h3>회원가입(SNS연동)</h3>	
+ 	<h3>회원가입</h3>	
  	<hr>
 	<br>
 	<div class = "container">
@@ -27,17 +26,19 @@
  		<div class="item">이메일 <input type = text name = "mbEmail" id = "mbEmail" value = ${memberDTO.mbEmail } class = "memberInfo"><input type="button" id = "email_btn" class="btn btn-primary buttons" value = "이메일 확인"><p id = "emailappend"></p>
  		</div>
  		<br>
- 		<div class="item" id = "interest">관심사 <select name = "mbInterest" id = "mbInterest" class = "memberInfo"
-				aria-label="Floating label select example">
-			<option value="문구" selected>문구</option>
-			<option value="완구">완구</option>
-			<option value="도서">도서</option>
-			<option value="교구">교구</option>
-			<option value="의류">의류</option>
-			<option value="가방,신발,잡화">가방,신발,잡화</option>
-			<option value="기타">기타</option>
-			</select> 		
- 		</div>
+        <c:if test="${memberDTO.mbRole eq 'UN_CHILD'}"> 
+	 		<div class="item" id = "interest">관심사 <select name = "mbInterest" id = "mbInterest" class = "memberInfo"
+					aria-label="Floating label select example">
+				<option value="문구" selected>문구</option>
+				<option value="완구">완구</option>
+				<option value="도서">도서</option>
+				<option value="교구">교구</option>
+				<option value="의류">의류</option>
+				<option value="가방,신발,잡화">가방,신발,잡화</option>
+				<option value="기타">기타</option>
+				</select> 		
+	 		</div>
+ 		</c:if>
  		<br>
  		<input type = hidden name = "mbId" id = "mbId" value = ${memberDTO.mbId }>
  		<input type = hidden name = "mbRole" id = "mbRole" value = ${memberDTO.mbRole }>

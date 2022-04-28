@@ -15,17 +15,21 @@
 </head>
 
 <body>
+    <c:if test="${memberDTO.mbRole eq 'GUARD'}"> 
  	<jsp:include page="../../include/header.jsp" flush="false" />
  	<!-- 아티클 시작 -->
 	<div class="container-page">
 	
-	<div class="container-aside-main">
 	<!-- 어사이드 시작 -->
 	<div class="container-aside">
 	<h2 class="title">마이페이지</h2>
  	<jsp:include page="guard-asideBar.jsp" flush="false" />
- 	</div>
  	<!-- 어사이드 끝 -->
+ 	</div>
+ 	<!-- 아티클 끝(원래 전체를 감싸고 있었는데 c:if태그가 중간에 끼어들어서 에러발생으로 임시로 div태그를 미리 닫았습니다(정민) -->
+ 	</div>
+ 	
+ 	</c:if>
  	
     <div class="container-main">
 	<h3 id = "guappend"></h3>	
@@ -112,8 +116,6 @@
 			 	<input type = "submit" id = "confirm_btn" class="btn btn-primary" value = "확인했어요">
 			</form>
 		</div>
-	</div>
-	</div>
 	</div>
  
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
