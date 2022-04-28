@@ -109,10 +109,9 @@
 			`imint`.`goods` AS g
             LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
             LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
-		    LEFT JOIN `imint`.`chatroom` AS cr ON g.goods_id = cr.goods_id
+		    LEFT JOIN (SELECT goods_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
 		WHERE
 			g.goods_isdelete = FALSE
-			AND (cr.isdelete = FALSE OR cr.isdelete IS NULL)
 			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 			AND g.seller_id LIKE #{myId}
 			AND (g.goods_status LIKE "wait" OR g.goods_status LIKE "resrv")
