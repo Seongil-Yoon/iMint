@@ -8,9 +8,7 @@ let numberOfItems = 30;
 $(function () {
     // 인증된 회원이면 채팅 버튼 표시
     if (chatboxMyRole == "CHILD" || chatboxMyRole == "GUARD") {
-        setTimeout(function () {
-            $("#chatbox-openbtn").show();
-        }, 100);
+        $("#chatbox-openbtn").show();
         if (chatboxMyRole == "GUARD") {
             // 보호자 회원이면 아이 선택상자 추가
             addChildSelect();
@@ -19,11 +17,6 @@ $(function () {
             connectWS(chatboxMyId);
         }
     }
-
-    // 이벤트 등록: 페이지를 떠날 때 웹소켓 접속 해제
-    $(window).on("beforeunload", function () {
-        disconnectWS();
-    });
 
     // 이벤트 등록: 채팅 버튼 누르면 채팅 버튼 숨기고 채팅박스 표시
     $("#chatbox-openbtn").on("click", function () {
@@ -40,21 +33,18 @@ $(function () {
     });
 
     // 이벤트 등록: 메세지 입력창 엔터로 보내기(SHIFT+엔터는 줄바꿈)
-    $("#chatbox-view-send textarea")
-        .keydown(function (event) {
-            if (event.keyCode == 13) {
-                if (!event.shiftKey) {
-                    $("#chatbox-send-sendbtn").trigger("click");
-                }
+    $("#chatbox-view-send textarea").keypress(function (event) {
+        if (event.keyCode == 10 || event.keyCode == 13) {
+            event.preventDefault();
+            if (!event.shiftKey) {
+                $("#chatbox-send-sendbtn").trigger("click");
+            } else {
+                $("#chatbox-view-send textarea").val(
+                    $("#chatbox-view-send textarea").val() + "\n"
+                );
             }
-        })
-        .keyup(function (event) {
-            if (event.keyCode == 13) {
-                if (!event.shiftKey) {
-                    $("#chatbox-view-send textarea").val("");
-                }
-            }
-        });
+        }
+    });
 
     // 이벤트 등록: 새로운 메세지 버튼 클릭하면 맨 아래로 이동
     $("#chatbox-view-alertnew").on("click", function () {
@@ -67,9 +57,10 @@ $(function () {
     //              스크롤이 맨 위로 가면 추가 메세지 불러오기
     $("#chatbox-view-chatmessages").scroll(function () {
         if (
-            $("#chatbox-view-chatmessages").scrollTop() +
-                $("#chatbox-view-chatmessages").innerHeight() >=
-            $("#chatbox-view-chatmessages").prop("scrollHeight")
+            Math.round(
+                $("#chatbox-view-chatmessages").scrollTop() +
+                    $("#chatbox-view-chatmessages").innerHeight()
+            ) >= $("#chatbox-view-chatmessages").prop("scrollHeight")
         ) {
             $("#chatbox-view-alertnew").hide();
         } else if ($("#chatbox-view-chatmessages").scrollTop() <= 50) {
@@ -85,23 +76,9 @@ $(function () {
 function connectWS(chatboxMyId) {
     let socket = new SockJS("/ws");
     stompClient = Stomp.over(socket);
-    stompClient.connect(
-        { "user-name": chatboxMyId },
-        function (frame) {
-            console.log("Connected: " + frame);
-        },
-        function () {
-            // 웹소켓 연결 끊김/오류 발생시 10초마다 재접속 시도
-            setTimeout(connectWS, 10000);
-        }
-    );
-}
-
-// 함수: 웹소켓 연결 해제
-function disconnectWS() {
-    if (stompClient !== null) {
-        stompClient.disconnect();
-    }
+    stompClient.connect({ "user-name": chatboxMyId }, function (frame) {
+        console.log("Connected: " + frame);
+    });
 }
 
 // 함수: 보호자 회원일 때 내 아이 선택 상자 추가
@@ -120,7 +97,6 @@ function addChildSelect() {
                     .on("change", function () {
                         chatboxMyId = $(this).val();
                         loadChatrooms();
-                        disconnectWS();
                         if (chatboxMyId != "내 아이 선택") {
                             connectWS(chatboxMyId);
                         }
@@ -223,9 +199,10 @@ function setExtraUIs(showTrxbtns) {
         parseInt($(":root").css("--chatroom-height")) * 2;
 
     if (chatboxMyRole == "GUARD") {
+        // 보호자 회원일 때 메세지 입력 상자 숨기기
         $("#chatbox-view-send").hide();
         $("#chatbox-view-trxbtns").hide();
-        $("#chatbox-view-chatmessages").height(defaultHeight + 81);
+        $("#chatbox-view-chatmessages").height(defaultHeight + 79);
     } else {
         $("#chatbox-view-trxbtns").html("");
         if (showTrxbtns) {
@@ -237,8 +214,6 @@ function setExtraUIs(showTrxbtns) {
         }
     }
 }
-
-// 함수: 보호자 회원일 때 메세지 입력 상자 숨기기
 
 // 함수: 거래 상태 조회
 function getTrxStatus() {
@@ -428,7 +403,7 @@ function getTrxStatus() {
                 .off("click")
                 .on("click", function () {
                     let popup = window.open(
-                        "/transaction/trx?goodsId=" + goodsId,
+                        "/transaction/trx?goodsId=" + currentGoodsId,
                         "_blank",
                         "top=500,left=500,width=500px,height=500px"
                     );
@@ -504,7 +479,12 @@ function joinChatroom(chatroom) {
         "/chat/chatroom/" + currentChatroomId,
         function (chatmessage) {
             putChatmessage(JSON.parse(chatmessage.body), false);
-            $("#chatbox-view-alertnew").show();
+            if (
+                $("#chatbox-view-chatmessages").prop("scrollHeight") >
+                $("#chatbox-view-chatmessages").height()
+            ) {
+                $("#chatbox-view-alertnew").show();
+            }
         }
     );
 
@@ -512,13 +492,15 @@ function joinChatroom(chatroom) {
     $("#chatbox-send-sendbtn")
         .off("click")
         .on("click", function () {
-            stompClient.send(
-                "/chat/send/chatroom/" + currentChatroomId,
-                {},
-                JSON.stringify({
-                    message: $("#chatbox-view-send textarea").val(),
-                })
-            );
+            if ($("#chatbox-view-send textarea").val().trim().length != 0) {
+                stompClient.send(
+                    "/chat/send/chatroom/" + currentChatroomId,
+                    {},
+                    JSON.stringify({
+                        message: $("#chatbox-view-send textarea").val(),
+                    })
+                );
+            }
             $("#chatbox-view-send textarea").val("");
         });
 
@@ -543,7 +525,7 @@ function directOpenChatroom() {
 }
 
 // 함수: 채팅방으로 즉시 입장
-function directJoinChatroom(chatroomId) {
+async function directJoinChatroom(chatroomId) {
     directOpenChatroom();
     setTimeout(function () {
         $(`div[data-chatroomId="` + chatroomId + `"]`).trigger("click");

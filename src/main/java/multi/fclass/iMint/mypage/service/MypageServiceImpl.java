@@ -42,54 +42,26 @@ public class MypageServiceImpl implements IMypageService {
 
 	// 관심 목록 조회 서비스
 	@Override
-	public List<MypageDTO> getWishAndReserveList(String myId, int pageNumber, int numberOfItems) {
-		if (pageNumber < 1) {
-			pageNumber = 1;
-		}
-		if (numberOfItems < 0) {
-			numberOfItems = 0;
-		}
-
-		return mypageDAO.getWishAndReserveList(myId, (pageNumber - 1) * numberOfItems, numberOfItems);
+	public List<MypageDTO> getWishAndReserveList(String myId) {
+		return mypageDAO.getWishAndReserveList(myId);
 	}
 
 	// 판매중 목록 조회 서비스
 	@Override
-	public List<MypageDTO> getSellingList(String myId, int pageNumber, int numberOfItems) {
-		if (pageNumber < 1) {
-			pageNumber = 1;
-		}
-		if (numberOfItems < 0) {
-			numberOfItems = 0;
-		}
-
-		return mypageDAO.getSellingList(myId, (pageNumber - 1) * numberOfItems, numberOfItems);
+	public List<MypageDTO> getSellingList(String myId) {
+		return mypageDAO.getSellingList(myId);
 	}
 
 	// 거래완료 목록 조회 서비스
 	@Override
-	public List<MypageDTO> getCompleteList(String myId, int pageNumber, int numberOfItems) {
-		if (pageNumber < 1) {
-			pageNumber = 1;
-		}
-		if (numberOfItems < 0) {
-			numberOfItems = 0;
-		}
-
-		return mypageDAO.getCompleteList(myId, (pageNumber - 1) * numberOfItems, numberOfItems);
+	public List<MypageDTO> getCompleteList(String myId) {
+		return mypageDAO.getCompleteList(myId);
 	}
 
 	// 채팅방 목록 조회 서비스
 	@Override
-	public List<MypageChatroomDTO> getChatroomList(String myId, int pageNumber, int numberOfItems) {
-		if (pageNumber < 1) {
-			pageNumber = 1;
-		}
-		if (numberOfItems < 0) {
-			numberOfItems = 0;
-		}
-
-		return mypageDAO.getChatroomList(myId, (pageNumber - 1) * numberOfItems, numberOfItems);
+	public List<MypageChatroomDTO> getChatroomList(String myId) {
+		return mypageDAO.getChatroomList(myId);
 	}
 
 }

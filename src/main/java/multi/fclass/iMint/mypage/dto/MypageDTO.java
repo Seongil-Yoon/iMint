@@ -1,5 +1,7 @@
 package multi.fclass.iMint.mypage.dto;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.time.LocalDateTime;
 
 import lombok.AccessLevel;
@@ -29,7 +31,13 @@ public class MypageDTO {
 		if (goodsImagesPath == null || goodsImagesPath.equals("")) {
 			return "/static/images/noimage.png";
 		} else {
-			return goodsImagesPath;
+			String out = goodsImagesPath;
+			try {
+				out = URLDecoder.decode(out, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			return out;
 		}
 	}
 

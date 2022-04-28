@@ -17,12 +17,12 @@ public interface IMypageDAO {
 
 	public List<MypageChildDTO> getMyChildrenList(String myId);
 
-	public List<MypageDTO> getWishAndReserveList(String myId, int startIndex, int numberOfItems);
+	public List<MypageDTO> getWishAndReserveList(String myId);
 
-	public List<MypageDTO> getSellingList(String myId, int startIndex, int numberOfItems);
+	public List<MypageDTO> getSellingList(String myId);
 
-	public List<MypageDTO> getCompleteList(String myId, int startIndex, int numberOfItems);
+	public List<MypageDTO> getCompleteList(String myId);
 
-	public List<MypageChatroomDTO> getChatroomList(String myId, int startIndex, int numberOfItems);
+	public List<MypageChatroomDTO> getChatroomList(String myId);
 
 }
