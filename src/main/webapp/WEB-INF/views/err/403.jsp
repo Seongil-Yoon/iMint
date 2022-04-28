@@ -20,7 +20,12 @@
       <h1>${status} - ${error}</h1><br>
       <h1>${message}</h1><br>
       <button type="button">
-        <a href="${path}">홈으로 돌아가기</a>
+        <c:if test="${empty path}">
+        	 <a href="/">로그인으로 돌아가기</a>
+        </c:if>
+        <c:if test="${not empty path}">
+	        <a href="${path}">홈으로 돌아가기</a>
+        </c:if>
       </button><br>
       <img src="/static/images/403.png" alt="">
     </div>

@@ -81,7 +81,7 @@ public class MemberServiceImpl implements IMemberService {
 	
 				// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
 				String newname = mbId + ext;
-				mbThumbnail = savePath + "/" + newname;
+				mbThumbnail = root + savePath + "/" + newname;
 
 				memberDTO.setMbThumbnail(mbThumbnail);			
 				

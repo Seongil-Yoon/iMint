@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>iMint :: 상품수정</title>
 	<jsp:include page="../libs/libsStyles.jsp" flush="false" />
 	<link rel="stylesheet" href="/static/css/goods/goods-modify.css" />
 	<jsp:include page="goods-libsStyles.jsp" flush="false" />
