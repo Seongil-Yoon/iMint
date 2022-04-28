@@ -25,13 +25,13 @@ article.goods-category .tab-item {
     justify-content: center;
     text-align: center;
     border-radius: 10px;
-   	height: 3rem;
-   	margin-bottom: 2.5rem;
+    height: 3rem;
+    margin-bottom: 2.5rem;
 }
 
-span.hide-sm{
-	margin: 2rem;
-	line-height: 2.8rem;
+span.hide-sm {
+    margin: 2rem;
+    line-height: 2.8rem;
 }
 
 article.goods-category .tab-item:hover {
@@ -114,9 +114,11 @@ li.goods-detail .goods-image>img {
     top: 0;
     bottom: 0;
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
     border-radius: 12px;
     border: 1px solid transparent;
+    object-fit: contain;
 }
 
 li.goods-detail .goods-info {

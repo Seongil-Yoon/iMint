@@ -1,5 +1,24 @@
-article.carousel{
+/* :root {
+    --goodsImage-height: 350px;
+} */
+
+article.carousel {
     width: 38.2%;
     margin: 0 auto;
     margin-bottom: 2%;
+}
+
+.goodsCaroImage {
+    height: 350px;
+    object-fit: contain;
+}
+
+.customCaroBtn {}
+
+span.customPrevIcon {
+    background-image: url("../../images/goods_slide_icon_left.png");
+}
+
+span.customNextIcon {
+    background-image: url("../../images/goods_slide_icon_right.png");
 }
