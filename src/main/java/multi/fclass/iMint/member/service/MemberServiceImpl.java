@@ -62,7 +62,7 @@ public class MemberServiceImpl implements IMemberService {
 		
 		// 파일 업로드
 		try {		
-		String savePath = root + "/" + directory + "/" + memberImagePath + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
+		String savePath = "/" + directory + "/" + memberImagePath + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
 
 		List<String> path = new ArrayList<String>();
 		path.add(root);
