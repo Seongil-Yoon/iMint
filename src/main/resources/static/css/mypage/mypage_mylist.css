@@ -183,7 +183,7 @@
 /* 채팅목록-항목명 정렬 */
 .item-lables-chat{
     display: grid;
-    grid-template-columns: 1fr 4fr 2fr 2fr ;
+    grid-template-columns: 1fr 5fr 1fr 2fr ;
     /* grid-gap: 0.5rem; */
     align-items: center;
     justify-content: center;
@@ -195,7 +195,7 @@
 /* 채팅목록-항목별 내용 정렬 */
 .item-list-chat{
     display: grid;
-    grid-template-columns: 1fr 4fr 2fr 2fr ;
+    grid-template-columns: 1fr 5fr 1fr 2fr ;
     grid-gap: 0/5rem;
     align-items: center;
     justify-content: center;
@@ -208,8 +208,8 @@
 /* 채팅목록 내 상대 사진, 상대 내용 2열 정렬 */
 .person{
     display: grid;
-    grid-template-columns: 2fr 1fr ;
-    grid-gap: 0/5rem;
+    grid-template-columns: 1fr 2fr ;
+    grid-gap: 1rem;
     align-items: center;
     justify-content: center;
     text-align: center;
