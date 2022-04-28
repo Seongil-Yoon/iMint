@@ -196,7 +196,7 @@
 		AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 	    AND (g.seller_id LIKE #{myId} OR cr.buyer_id LIKE #{myId})
 	    AND gi.goods_images_thumbnail = TRUE
-	    AND (g.seller_id NOT LIKE "google_105109371333645175867" OR cm.message IS NOT NULL)
+	    AND (g.seller_id NOT LIKE #{myId} OR cm.message IS NOT NULL)
 	ORDER BY
 		last_update_date DESC, cr.create_date DESC
 	</select>
