@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>아이민트 :: 회원정보수정</title>
+	<title>iMint :: 회원정보수정</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_edit.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
@@ -54,9 +54,14 @@
 		                <h5 class="lables-text">닉네임 변경</h5>
 		            </div>
 		            <div class="buttons buttons-nickname">
-		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-child">
+		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-child" placeholder="${memberDTO.mbNick}">
 		                    <input type="button" class="btn btn-primary" value="닉네임 중복 확인" id="nickname-check-child"/>
+		            
+		             
 		            </div>
+		            <div></div>
+		            <div id="nickappend"></div>
+		            <p id="arrow-box-nick"></p>
 		        </div>
 		        
 		        <!-- 관심사 수정  (3행)-->
@@ -65,14 +70,24 @@
 		                <h5 class="lables-text">관심사 변경</h5>
 		            </div>
 		            <div class="buttons buttons-interest">
-		                    <input name = "interest" type="text" class="buttons-text" id="interest-update-child">
+		                    <!-- <input name = "interest" type="text" class="buttons-text" id="interest-update-child"> -->
+		                    <select name = "interest" id = "interest-update-child" class = "buttons-text"
+							aria-label="Floating label select example">
+						<option value="문구" selected>문구</option>
+						<option value="완구">완구</option>
+						<option value="도서">도서</option>
+						<option value="교구">교구</option>
+						<option value="의류">의류</option>
+						<option value="가방,신발,잡화">가방,신발,잡화</option>
+						<option value="기타">기타</option>
+						</select>
 		            </div>
 		        </div>
 		        
 		        <!-- 변경하기 버튼 -->
 		         <div class="update-comlete-container">
 		            <br>
-		            <div id="nickappend"></div>
+		           
 		            <br>
 		            <input type="submit" class="btn btn-primary" value="회원정보 수정하기" id="update-complete-child"/>
 		        </div>

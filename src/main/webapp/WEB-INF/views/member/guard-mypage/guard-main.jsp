@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>아이민트 :: 마이페이지</title>
+	<title>iMint :: 마이페이지</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_main.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
@@ -31,8 +31,7 @@
  	
     <div class="container-main">
     	<div class="welcome-message-container">
-    	<img class="welcome-hamster" src="/static/images/hamster.png">
-    	<h2 class="welcome-message">${userNickName}님, 안녕하세요!</h2>
+    	<h2 class="welcome-message"><img class="welcome-hamster" src="/static/images/hamster.png"> ${userNickName}님, 안녕하세요!</h2>
     	</div>
         
         <!-- 보호자 로그인시 숨김 -->

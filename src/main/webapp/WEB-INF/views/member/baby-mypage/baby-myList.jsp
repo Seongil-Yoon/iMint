@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>아이민트 :: 마이페이지</title>
+	<title>iMint :: 마이페이지</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_mylist.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mylist-content.css">
@@ -30,7 +30,7 @@
 	 	<!-- 아티클 시작 -->
 	 	<div class="container-main">
 		 	<div class="title-text">
-			   <h2>${userNick}님의 아이민트 활동 내역입니다.</h2>
+			   <h2>${userNick}님의 거래 목록입니다.</h2>
 			</div>
 	 			<!-- 상단 탭 -->
 	        <section class="tabs">

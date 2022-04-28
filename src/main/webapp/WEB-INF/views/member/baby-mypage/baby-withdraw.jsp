@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>아이민트 :: 회원 탈퇴</title>
+	<title>iMint :: 회원 탈퇴</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_withdraw.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mypage/mypage_asidebar.css">
 	<jsp:include page="../../libs/libsStyles.jsp" flush="false" />
@@ -38,9 +38,9 @@
 						<input class="buttons-text"type="password" placeholder="비밀번호를 입력해 주세요.">
 						<input type="submit" class="btn btn-primary" value="확인"/>
 					</form> -->
-					<form action="/mypage/withdraw" method="post">
+					<form id="withdraw-form-child" method="post">
 						<br>
-						<input type="submit" class="btn btn-danger" value="아이민트 탈퇴하기" id="withdraw-complete-child"/>
+						<button type="button" class="btn btn-danger withdraw-complete" id="withdraw-complete-child">아이민트 탈퇴하기</button>
 					</form>
 				</div>
 			</div>
@@ -48,6 +48,6 @@
 	</div>
 	<jsp:include page="../../include/footer.jsp" flush="false"/>
 	<jsp:include page="../../libs/libsScript.jsp" flush="false" />
-	<script src="/static/js/baby-main.js"></script>
+	<script src="/static/js/mypage/mypage-withdraw-child.js"></script>
 </body>
 </html>

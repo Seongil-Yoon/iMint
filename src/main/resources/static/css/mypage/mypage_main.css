@@ -31,6 +31,8 @@
 	text-align: center;
 }
 
+
+
 /* 사용자 안내 타이틀 */
 .welcome-message{
 	text-align:center;
@@ -39,7 +41,7 @@
 .welcome-hamster{
 	width: 40px;
 	text-align:right;
-	margin-left: 1.5rem;
+	margin-bottom: 0.5rem;
 }
 
 /* 메인 컨테이너 */
@@ -56,9 +58,10 @@
 
 /* 웰컴 메시지 컨테이너 */
 .welcome-message-container{
-	display: grid;
+	/* display: grid;
     grid-template-columns: 1fr 6fr;
-    grid-gap: 0.5rem;
+    grid-gap: 0.5rem; */
+   	display: inline-block;
     width:600px;
     margin:auto;
     margin-bottom: 2rem;

@@ -201,6 +201,7 @@ public class MypageCotroller {
 
 			for (MypageChildDTO child : userChilds) {
 				// 아이별 관심/구매 목록 불러오기
+
 				List<MypageDTO> userWish = mypageService.getWishAndReserveList(child.getChildId());
 				allWish.put(child.getChildNick(), userWish);
 
