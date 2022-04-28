@@ -55,7 +55,7 @@
 		            </div>
 		            <div class="buttons buttons-nickname">
 		                <!-- ajax로 비동기 닉네임 중복확인 체크 하면 될듯해요~register뷰, indexcontroller register/nickname 참고(정민) --> 
-		            	<input name = "nickname" class="buttons-text" type="text" id="nickname-update-guard">
+		            	<input name = "nickname" class="buttons-text" type="text" id="nickname-update-guard" placeholder="${memberDTO.mbNick}">
 		                <input type = "button" class="btn btn-primary" value="닉네임 중복확인" id="nickname-check-guard"/> <!-- submit빼고, 닉네임 중복확인으로 변경했습니다(정민) -->
 		            </div>
 		        </div>
