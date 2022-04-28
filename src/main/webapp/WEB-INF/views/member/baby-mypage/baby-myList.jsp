@@ -125,7 +125,7 @@
 		                                <!-- <p class="text">관심 2</p> -->
 		                            </div>
 		                            <div class="link">
-		                                <p class="text">바로가기</p>
+		                                <p class="text" onclick="directJoinChatroom(<c:out value='${chat.id}' />)">바로가기</p>
 		                            </div>
 		                          </div>
 		                            </c:forEach>

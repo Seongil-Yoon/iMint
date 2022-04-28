@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import multi.fclass.iMint.chat.config.ChatPrincipal;
@@ -44,7 +45,8 @@ public class ChatController {
 
 		return mypageService.getChatroomList(myId, 1, 10);
 	}
-
+	
+	// REST API: 메세지목록 불러오기
 	@GetMapping("/chat/getchatmessages")
 	@ResponseBody
 	public List<ChatMessageDTO> getChatMessages(Authentication auth, int chatroomId, int pageNumber,
@@ -58,7 +60,8 @@ public class ChatController {
 		return chatService.getChatroomMessages(myId, chatroomId, pageNumber, numberOfItems);
 	}
 
-	@GetMapping("/chat/check")
+	// REST API: 채팅방 생성/접속 가능한지 확인하기
+	@GetMapping("/chat/checkmychatroom")
 	@ResponseBody
 	public String checkChat(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
@@ -68,8 +71,9 @@ public class ChatController {
 
 		return out.toJSONString();
 	}
-
-	@GetMapping("/chat/start")
+	
+	// REST API: 채팅방 접속 위해 채팅방 번호 확인하기
+	@PostMapping("/chat/getmychatroom")
 	@ResponseBody
 	public String startChat(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
