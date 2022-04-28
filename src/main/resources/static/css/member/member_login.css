@@ -72,6 +72,7 @@ a{
 .hamster{
 	width: 100px;
 	float: left;
+	
 }
 
 h3 {
@@ -130,6 +131,15 @@ footer{
 	padding: 20px;
 }
 
+/* 말풍선 */
+.registrations{
+	
+    width: 150px;
+    height: 40;
+    background: rgba(255, 255, 255, 0.84);
+    border-radius: 0.4em;
+}
+
 /* 애니메이션 적용2: 풍선  */
 #registration{
 	display: flex; 
@@ -162,3 +172,7 @@ animation: motion 2s infinite;
 	85% {transform: rotate( 0deg );}
 	100% {transform: rotate( -10deg );}
 } 
+
+.btn-secondary{
+	background-color: rgba(0,0,0,0.55);
+}

@@ -23,19 +23,19 @@
 	 		
 	 	</div>
   	 	<div class="item">
- 	 		<img id = "moving" class = "hamster" src = "/static/images/hamster.png">
-	 		<h2 style = "text-align: center; width:250px;">iMint</h2>
+ 	 		
+	 		<h2 style = "text-align: center; width:250px;"><img id = "moving" class = "hamster" src = "/static/images/hamster.png">iMint</h2>
 <!--   	 		<img src = "/static/images/iMint_Black.png"> -->
 	 		
 	 	</div>
 	 	<div class="item">
-	 		<a href = "/oauth2/authorization/google" class="btn btn-secondary opacity-75" style="color: #white" >아이 가입 | 로그인(BETA)</a>
+	 		<a href = "/oauth2/authorization/google" class="btn btn-secondary " style="color: #white" >아이 가입 | 로그인(BETA)</a>
 	 	</div>
 	 	<div class="item">
-		 	<a href = "/oauth2/authorization/naver" class="btn btn-secondary opacity-75" style="color: #2DB400">NAVER 가입 | 로그인</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> <!-- #2DB400 --> 
+		 	<a href = "/oauth2/authorization/naver" class="btn btn-secondary " style="color: #2DB400">NAVER 가입 | 로그인</a> <!-- 클릭하면 application.yml에 authorization-uri으로 등록한 주소로 이동 --> <!-- #2DB400 --> 
 		</div>
 	 	<div class="item">
-			<a href = "/oauth2/authorization/kakao" class="btn btn-secondary opacity-75" style="color: #F7E600">KAKAO 가입 | 로그인</a> <!-- #F7E600, #3A1D1D -->
+			<a href = "/oauth2/authorization/kakao" class="btn btn-secondary " style="color: #F7E600">KAKAO 가입 | 로그인</a> <!-- #F7E600, #3A1D1D -->
 		</div>
 		<div class="item">
 			<a href = "/main" class="btn btn-secondary opacity-75" style="color:  #white">둘러보기</a>

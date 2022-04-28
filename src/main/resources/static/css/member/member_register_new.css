@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+.memberInfo{
+width: 250px;
+}
+
+/* 전체 컨테이너 */
+.container-all{
+	height: 600px;
+}
+
+.container{
+	margin-top: 16%;
+	 align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 700px;
+    margin-bottom: 15%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: rgba(0,0,0,0.55);
+    border-radius: 10px;
+    color: white;
+    
+}
+
+body::after{ /* 가상 선택자  */
+	width: 100%;
+  	height: 100%;
+  	content: "";
+	background: url('/static/images/background2.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+  	background-attachment: fixed;
+  	background-position: center;
+	position: absolute;
+  	top: 0;
+  	left: 0;
+  	z-index: -1;
+  	opacity: 0.65;
+  	filter: grayscale(20%); 
+}
+
+/* 버튼 */
+.buttons{
+ width: 100px;	
+ font-weight: 600px;
+}
+
+#mbEmail{
+	margin-right:0.25rem;
+}
+
+#interest{
+	/* width: 676px; */
+	margin-right: 6.4rem;
+}
+
+.register-container{
+	 align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.pin{
+	width:400px;
+	margin-bottom:1rem;
+}
+
