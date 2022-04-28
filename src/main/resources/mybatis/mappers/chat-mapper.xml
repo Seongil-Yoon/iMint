@@ -31,7 +31,7 @@
 		WHERE
 			chatroom_id = #{chatroomId}
 		ORDER BY
-			send_date DESC
+			send_date DESC, id DESC
 		LIMIT
 			#{startIndex}, #{numberOfItems}
 	</select>
