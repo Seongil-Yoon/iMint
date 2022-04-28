@@ -27,6 +27,7 @@
  		<div class="item">이메일 <input type = text name = "mbEmail" id = "mbEmail" value = ${memberDTO.mbEmail } class = "memberInfo"><input type="button" id = "email_btn" class="btn btn-primary buttons" value = "이메일 확인"><p id = "emailappend"></p>
  		</div>
  		<br>
+        <c:if test="${memberDTO.mbRole eq 'UN_CHILD'}"> 
  		<div class="item" id = "interest">관심사 <select name = "mbInterest" id = "mbInterest" class = "memberInfo"
 				aria-label="Floating label select example">
 			<option value="문구" selected>문구</option>
@@ -38,6 +39,7 @@
 			<option value="기타">기타</option>
 			</select> 		
  		</div>
+ 		</c:if>
  		<br>
  		<input type = hidden name = "mbId" id = "mbId" value = ${memberDTO.mbId }>
  		<input type = hidden name = "mbRole" id = "mbRole" value = ${memberDTO.mbRole }>
