@@ -109,6 +109,7 @@ h2, p{
 	color : black !important;
 } 
 
+/* 푸터 가로 꽉 차게 */
 footer{
 	align-self: stretch !important; 
 }
