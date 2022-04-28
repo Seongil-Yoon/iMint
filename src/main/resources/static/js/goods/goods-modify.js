@@ -52,7 +52,7 @@ function goodsWrite() {
     }));
 
     (function () {
-        formData.append("files", thumbnailFile);
+        // formData.append("files", thumbnailFile);
         for (i = 0; i < fileBuffer.length; i++) {
             formData.append("files", fileBuffer[i]);
         }
@@ -225,11 +225,11 @@ function main() {
         document.getElementsByName("suggestible")[1].checked = true;
     }
 
-    $("#thumbnailFile").on("change", function () {
-        thumbnailFile = this.files[0];
-        console.log(thumbnailFile);
-        $("#thumbnailFileName").val(`파일명 : ${thumbnailFile.name}`);
-    })
+    // $("#thumbnailFile").on("change", function () {
+    //     thumbnailFile = this.files[0];
+    //     console.log(thumbnailFile);
+    //     $("#thumbnailFileName").val(`파일명 : ${thumbnailFile.name}`);
+    // })
 
     getGoodsImages();
     uploadPopupBtn.addEventListener('click', fileUpload);

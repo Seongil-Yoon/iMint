@@ -4,7 +4,10 @@
 
 
 .container {
-    background-color: beige;
+    /* background-color: beige; */
+    background-color: #F9F9F9;
+    padding: 3rem;
+    border-radius: 15px;
 }
 
 section.container h2,
@@ -61,7 +64,8 @@ article.goods-content-wrap>textarea {
     border: 1px;
     border-radius: 1rem;
     border-style: solid;
-    border-color: rgb(155, 155, 155);
+    border-color: white;
+    background-color: white;
     margin-left: 10.7%;
     margin-right: 10.7%;
     padding: 1.5rem;

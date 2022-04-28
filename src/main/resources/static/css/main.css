@@ -143,11 +143,11 @@ li.goods-detail span.goods-price {
 }
 
 li.goods-detail span.goods-status {
-    font-size: 15px;
-    font-weight: normal;
-    line-height: 1.5;
-    margin-bottom: 4px;
-    color: #212529;
+    /* font-size: 15px; */
+    font-weight: lighter;
+    /* line-height: 1.5; */
+    /* margin-bottom: 4px; */
+    /* color: #212529; */
 }
 
 li.goods-detail span.goods-location {

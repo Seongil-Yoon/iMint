@@ -42,7 +42,7 @@ function goodsWrite() {
     }));
 
     (function () {
-        formData.append("files", thumbnailFile);
+        // formData.append("files", thumbnailFile);
         for (i = 0; i < fileBuffer.length; i++) {
             formData.append("files", fileBuffer[i]);
         }
@@ -172,15 +172,17 @@ const dataURLtoFile = (dataurl, fileName) => {
 
 
 function main() {
-    $("#thumbnailFile").on("change", function () {
-        thumbnailFile = this.files[0];
-        console.log(thumbnailFile);
-        $("#thumbnailFileName").val(`파일명 : ${thumbnailFile.name}`);
-    })
+    // $("#thumbnailFile").on("change", function () {
+    //     thumbnailFile = this.files[0];
+    //     console.log(thumbnailFile);
+    //     $("#thumbnailFileName").val(`파일명 : ${thumbnailFile.name}`);
+    // })
 
     filePond();
     uploadPopupBtn.addEventListener('click', fileUpload);
     submitBtn.addEventListener('click', goodsWrite); //비동기 폼전송 부분
+
+   
 }
 
 main();

@@ -157,7 +157,16 @@ function start() {
 								</div>
 								<div>
 									<span class="goods-price">${fomatPrice(result[i].goods.goodsPrice)}원</span>
-									<span class="goods-status">${goodsStatusConvert(result[i].goods.goodsStatus)}</span>
+									${
+										(function(goodsStatus){
+											if (goodsStatus == "wait") 
+												return `<span class="badge rounded-pill bg-success goods-status">판매중</span>`;
+											 else if (goodsStatus == "resrv") 
+												return `<span class="badge rounded-pill bg-warning text-dark goods-status">예약중</span>`;
+											 else if (goodsStatus == "comp") 
+												return `<span class="badge rounded-pill bg-secondary goods-status">판매완료</span>`;
+										})(result[i].goods.goodsStatus)
+									}
 								</div>
 								<div>
 									<span class="goods-location">${result[i].goods.goodsLocation}</span>
@@ -194,16 +203,6 @@ function start() {
 			}
 		}
 	});
-}
-
-function goodsStatusConvert(goodsStatus) {
-	if (goodsStatus == "wait") {
-		return "판매중";
-	} else if (goodsStatus == "resrv") {
-		return "예약중";
-	} else if (goodsStatus == "comp") {
-		return "판매완료"
-	}
 }
 
 //시간차이 계산 함수

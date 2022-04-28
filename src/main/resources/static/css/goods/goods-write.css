@@ -4,12 +4,17 @@
 
 
 .container {
-    background-color: beige;
+    /* background-color: beige; */
+    padding-right: 5%;
+    padding-left: 5%;
 }
 
 .container form {
-    padding-left: 10%;
-    padding-right: 10%;
+    background-color: #F9F9F9;
+    padding: 3rem;
+    border-radius: 15px;
+    /* padding-left: 10%; */
+    /* padding-right: 10%; */
 }
 
 .container>form>div {
@@ -84,19 +89,21 @@
 
 
 .row1>#otherImages {
-    flex: 2;
+    flex: 3;
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
 .row1>#otherImages>.btn-plus {
     margin: 0 auto;
     box-sizing: content-box;
-    width: 3em;
-    height: 3em;
+    width: 7em;
+    height: 7em;
     padding: 0.25em 0.25em;
     color: #000;
-    background: transparent url("/static/images/plus.png") center/3em auto no-repeat;
+    background: transparent url("/static/images/fileupload.png") center/6em auto no-repeat;
+    /* background: transparent url("/static/images/plus.png") center/3em auto no-repeat; */
     border: 0;
     border-radius: 0.25rem;
     opacity: .5;

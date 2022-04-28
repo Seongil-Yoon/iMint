@@ -50,6 +50,7 @@ public class GoodsController {
 		if (auth != null) {
 			mbId = parseService.parseMbId(auth);
 			memberDTO = parseService.getMemberMbId(mbId);
+			model.addAttribute("mbRole", memberDTO.getMbRole());
 			model.addAttribute("member", memberDTO);
 			model.addAttribute("userLocation", memberDTO.getMbLocation());
 		}
@@ -65,7 +66,7 @@ public class GoodsController {
 		}
 		String mbId = parseService.parseMbId(auth);
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
-
+		model.addAttribute("mbRole", memberDTO.getMbRole());
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("userLocation", memberDTO.getMbLocation());
 		return "/goods/goods-write";
@@ -78,11 +79,11 @@ public class GoodsController {
 		}
 		String mbId = parseService.parseMbId(auth);
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
-//		GoodsDTO goodsDTO = goodsDAO.goods(goodsId);
-//		if (mbId.isEmpty() || !mbId.equals(goodsDTO.getSellerId())) {
-//			throw new UnauthorizedException(ErrorCode.FORBIDDEN);
-//		}
-
+		GoodsDTO goodsDTO = goodsDAO.goods(goodsId);
+		if (mbId.isEmpty() || !mbId.equals(goodsDTO.getSellerId())) {
+			throw new ForbiddenException(ErrorCode.FORBIDDEN);
+		}
+		model.addAttribute("mbRole", memberDTO.getMbRole());
 		model.addAttribute("goods", goodsSevice.goods(goodsId));
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("userLocation", memberDTO.getMbLocation());
@@ -104,7 +105,6 @@ public class GoodsController {
 		}
 		String mbId = parseService.parseMbId(auth);
 		int goodsId = goodsSevice.goodsWrite(mbId, goodsDTO, files);
-		System.out.println("작성된 상품글ID : " + goodsId);
 		if (goodsId != -1) {
 			goodsDTO.setGoodsId(goodsId);
 		}
@@ -122,8 +122,6 @@ public class GoodsController {
 		}
 		String mbId = parseService.parseMbId(auth);
 		if (!mbId.equals(goodsDTO.getSellerId())) {
-			System.out.println("불일치");
-//			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 			throw new ForbiddenException(ErrorCode.FORBIDDEN);
 		}
 		goodsSevice.goodsModify(mbId, goodsDTO, files);
@@ -134,6 +132,9 @@ public class GoodsController {
 
 	@GetMapping("/goods/delete")
 	public String goodsDelete(Authentication auth, @RequestParam("goodsId") int goodsId) {
+		if (auth == null) {
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
 		String mbId = parseService.parseMbId(auth);
 		goodsSevice.goodsDelete(goodsId, mbId);
 

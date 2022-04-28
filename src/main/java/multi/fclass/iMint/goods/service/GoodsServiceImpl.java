@@ -86,10 +86,10 @@ public class GoodsServiceImpl implements IGoodsService {
 
 	@Override
 	public int goodsModify(String mbId, GoodsDTO goodsDto, List<MultipartFile> files) {
-		System.out.println(mbId + "," + goodsDto.getSellerId());
-//		if (!mbId.equals(goodsDto.getSellerId())) {
-//			throw new ForbiddenException(ErrorCode.FORBIDDEN);
-//		}
+		if (!mbId.equals(goodsDto.getSellerId())) {
+			// Auth객체의 id와 상품등록자의 id가 불일치 - 권한X
+			throw new ForbiddenException(ErrorCode.FORBIDDEN);
+		}
 		int updateRows = 0;
 		int goodsId = -1;
 		goodsId = goodsDAO.goods(goodsDto.getGoodsId()).getGoodsId();
@@ -134,14 +134,13 @@ public class GoodsServiceImpl implements IGoodsService {
 		if (goodsDTO == null) {
 			throw new NotFoundException(ErrorCode.NOT_FOUND);
 		}
-		if (mbId.isEmpty() || goodsDTO.getSellerId().equals(mbId) == false) {
+		if (mbId.isEmpty() || !goodsDTO.getSellerId().equals(mbId)) {
 			// 로그인한 아이디와 작성자 아이디가 달라서 권한없음 오류보냄
-			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+			throw new ForbiddenException(ErrorCode.FORBIDDEN);
 		} else {
 			// 로그인 아이디 와 작성자 아이디 가 같아서 글삭제
 
 			// 실제파일은 삭제하지 않고, DB의 isdelete값만 1로 변경
-			System.out.println("상품삭제 : " + goodsId + ", " + mbId);
 			goodsDAO.goodsIsdelete(goodsId, mbId);
 			goodsDAO.goodsImagesIsdelete(goodsId);
 			result = 1;
