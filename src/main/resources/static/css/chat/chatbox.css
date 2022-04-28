@@ -6,7 +6,7 @@
 }
 
 #chatbox-openbtn {
-    z-index: 99;
+    z-index: 2000;
     display: none;
     position: fixed;
     user-select: none;
@@ -15,11 +15,11 @@
     width: calc(var(--title-height) + 20px);
     height: calc(var(--title-height) + 20px);
     background-color: #cdf0ea;
-    border: 1px solid #9b9b9b;
     border-radius: 2.5rem;
     text-align: center;
     line-height: calc(var(--title-height) + 20px);
     color: #3387a8;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
 }
 
 #chatbox-openbtn:hover {
@@ -27,18 +27,18 @@
 }
 
 #chatbox-main {
-    z-index: 99;
+    z-index: 2000;
     user-select: none;
     display: none;
     position: fixed;
     bottom: 16.8px;
     right: 16.8px;
-    width: calc(var(--total-width) + 2px);
-    height: calc(var(--total-height) + 2px);
+    width: var(--total-width);
+    height: var(--total-height);
     background-color: #cdf0ea;
-    border: 1px solid #9b9b9b;
     border-radius: 1rem;
     overflow: hidden;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
 }
 
 #chatbox-main img {
@@ -73,7 +73,7 @@
 
 #chatbox-title-select {
     display: inline-block;
-    max-width: 137px;
+    max-width: 135px;
     height: 32px;
     margin: 4px 9px;
     padding: 5px 25px 5px 5px;
@@ -104,7 +104,7 @@
 
 #chatbox-list-chatrooms {
     width: calc(var(--total-width) + 16.8px);
-    height: calc(var(--total-height) - var(--title-height) + 2px);
+    height: calc(var(--total-height) - var(--title-height));
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -343,7 +343,7 @@
 }
 
 #chatbox-view-alertnew {
-    position: absolute; 
+    position: absolute;
     display: none;
     left: 40px;
     bottom: 85px;
@@ -364,7 +364,7 @@
 
 #chatbox-view-send {
     width: var(--total-width);
-    height: calc(var(--chatroom-height) + 1px);
+    height: calc(var(--chatroom-height) - 1px);
     border-top: 1px solid #9b9b9b;
     overflow: hidden;
 }
@@ -375,7 +375,7 @@
     border: none;
     resize: none;
     overflow: hidden;
-    margin: 10.75px;
+    margin: 9.75px 10px;
     font-family: "Noto Sans Kr", sans-serif;
     font-size: 13px;
     float: left;
@@ -386,12 +386,13 @@
 }
 
 #chatbox-send-sendbtn {
-    width: calc(var(--title-height) - 10px);
-    height: calc(var(--chatroom-height) - 40px);
+    width: var(--title-height);
+    height: var(--title-height);
     float: left;
     text-align: center;
-    margin: 20px 4.25px;
-    line-height: calc(var(--chatroom-height) - 45px);
+    margin: 19px 0;
+    padding: 5px 10px;
+    line-height: calc(var(--title-height) - 10px);
     border-left: 1px solid #9b9b9b;
 }
 

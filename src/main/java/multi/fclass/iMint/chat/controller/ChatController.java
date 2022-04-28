@@ -49,7 +49,7 @@ public class ChatController {
 			}
 		}
 
-		return mypageService.getChatroomList(myId, 1, 10);
+		return mypageService.getChatroomList(myId);
 	}
   
 	// REST API: 메세지목록 불러오기
