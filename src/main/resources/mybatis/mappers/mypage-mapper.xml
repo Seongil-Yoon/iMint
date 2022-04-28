@@ -42,7 +42,7 @@
 			FROM
 				`imint`.`chatroom` AS cr
                 JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
-				JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
+				LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
 				LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 				LEFT JOIN (SELECT goods_id, trx_complete_date FROM `imint`.`transaction` WHERE trx_isdelete = FALSE AND mb_id LIKE #{myId}) AS trx ON g.goods_id = trx.goods_id
 			WHERE
@@ -76,7 +76,7 @@
 			FROM
 				`imint`.`wishlist` AS w
                 JOIN `imint`.`goods` AS g ON w.goods_id = g.goods_id
-				JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as wi on g.goods_id = wi.goods_id
+				LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as wi on g.goods_id = wi.goods_id
 				LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 				LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
 				LEFT JOIN (SELECT goods_id, buyer_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
@@ -138,7 +138,7 @@
 		FROM
 			`imint`.`transaction` AS trx
 			JOIN `imint`.`goods` AS g ON trx.goods_id = g.goods_id
-			JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
+			LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
 			LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 		WHERE
 			trx.trx_isdelete = FALSE
