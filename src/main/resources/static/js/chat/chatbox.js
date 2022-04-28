@@ -286,7 +286,10 @@ function getTrxStatus() {
                             );
                     } else {
                         // 예약완료 - 예약자 시점
-                        setExtraUIs(false);
+                        setExtraUIs(true);
+                        $("#chatbox-view-trxbtns").text(
+                            "구매 예약중인 상품입니다."
+                        );
                     }
                 } else {
                     // 예약중
@@ -318,10 +321,13 @@ function getTrxStatus() {
 
                     if (trx.check.includes("match")) {
                         // 판매완료 - 판매자:구매자 시점
+                        /*
                         setExtraUIs(true);
                         $("#chatbox-view-trxbtns").append(
                             `<div id="chatbox-trxbtns-ratetrx" class="chatbox-trxbtn long">거래 평가하기</div>`
                         );
+                        */
+                        setExtraUIs(false);
                     } else {
                         // 판매완료 - 판매자:기타 시점
                         setExtraUIs(true);
@@ -330,16 +336,18 @@ function getTrxStatus() {
                         );
                     }
                 } else {
-                    // 구매완료 - 구매자 시점
+                    // 구매완료 - 구매자:판매자 시점
                     $("#chatbox-detail-goodsstatus")
                         .text("구매완료")
                         .css("border-color", "#DD0000")
                         .css("color", "#DD0000");
-
+                    /*
                     setExtraUIs(true);
                     $("#chatbox-view-trxbtns").append(
                         `<div id="chatbox-trxbtns-ratetrx" class="chatbox-trxbtn long">거래 평가하기</div>`
                     );
+                    */
+                    setExtraUIs(false);
                 }
             } else if (trx.check.includes("comp?")) {
                 // 판매완료(구매자 미지정) - 판매자 시점
@@ -347,11 +355,13 @@ function getTrxStatus() {
                     .text("판매완료")
                     .css("border-color", "blue")
                     .css("color", "blue");
-
+                /*
                 setExtraUIs(true);
                 $("#chatbox-view-trxbtns").append(
                     `<div id="chatbox-trxbtns-addbuyer" class="chatbox-trxbtn long">구매자 선택</div>`
                 );
+                */
+                setExtraUIs(false);
             } else if (trx.check.includes("comp")) {
                 // 구매불가 - 기타 시점
                 $("#chatbox-detail-goodsstatus")
@@ -378,52 +388,75 @@ function getTrxStatus() {
             $("#chatbox-trxbtns-makeresrv")
                 .off("click")
                 .on("click", function () {
-                    $.ajax({
-                        url: "/transaction/resrv/make",
-                        type: "POST",
-                        data: {
-                            goodsId: currentGoodsId,
-                            chatroomId: currentChatroomId,
-                        },
-                        dataType: "JSON",
-                        success: function (r) {
-                            getTrxStatus();
-                        },
-                    });
+                    let choice = confirm(
+                        "예약을 할 때에는 상대방과 충분히 대화를 한 후에 결정해주세요.\n\n정말로 예약하시겠습니까?"
+                    );
+
+                    if (choice) {
+                        $.ajax({
+                            url: "/transaction/resrv/make",
+                            type: "POST",
+                            data: {
+                                goodsId: currentGoodsId,
+                                chatroomId: currentChatroomId,
+                            },
+                            dataType: "JSON",
+                            success: function (r) {
+                                getTrxStatus();
+                            },
+                        });
+                    }
                 });
 
             // 이벤트 등록: 예약취소
             $("#chatbox-trxbtns-cancelresrv")
                 .off("click")
                 .on("click", function () {
-                    $.ajax({
-                        url: "/transaction/resrv/cancel",
-                        type: "POST",
-                        data: {
-                            goodsId: currentGoodsId,
-                            chatroomId: currentChatroomId,
-                        },
-                        dataType: "JSON",
-                        success: function (r) {
-                            getTrxStatus();
-                        },
-                    });
+                    let choice = confirm(
+                        "예약을 취소할 때에는 상대방과 충분히 대화를 한 후에 결정해주세요.\n\n정말로 예약을 취소하시겠습니까?"
+                    );
+
+                    if (choice) {
+                        $.ajax({
+                            url: "/transaction/resrv/cancel",
+                            type: "POST",
+                            data: {
+                                goodsId: currentGoodsId,
+                                chatroomId: currentChatroomId,
+                            },
+                            dataType: "JSON",
+                            success: function (r) {
+                                getTrxStatus();
+                            },
+                        });
+                    }
                 });
 
             // 이벤트 등록: 판매완료
             $("#chatbox-trxbtns-comptrx")
                 .off("click")
                 .on("click", function () {
-                    let popup = window.open(
-                        "/transaction/trx?goodsId=" + currentGoodsId,
-                        "_blank",
-                        "top=500,left=500,width=500px,height=500px"
+                    let choice = confirm(
+                        "판매를 완료하면 더 이상 취소할 수 없습니다.\n\n정말로 이 구매자에게 판매하였습니까?"
                     );
-                    $(popup).on("beforeunload", function () {
-                        getTrxStatus();
-                    });
+
+                    if (choice) {
+                        $.ajax({
+                            url: "/transaction/trx/complete",
+                            type: "POST",
+                            data: {
+                                buyerId: currentOpponentId,
+                                goodsId: currentGoodsId,
+                            },
+                            dataType: "JSON",
+                            success: function (r) {
+                                getTrxStatus();
+                            },
+                        });
+                    }
                 });
 
+            /*
             // 이벤트 등록: 구매자 지정
             $("#chatbox-trxbtns-addbuyer")
                 .off("click")
@@ -437,6 +470,7 @@ function getTrxStatus() {
                 .on("click", function () {
                     getTrxStatus();
                 });
+            */
         },
     });
 }
