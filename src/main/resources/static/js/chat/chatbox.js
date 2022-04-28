@@ -97,7 +97,6 @@ function addChildSelect() {
                     .on("change", function () {
                         chatboxMyId = $(this).val();
                         loadChatrooms();
-                        disconnectWS();
                         if (chatboxMyId != "내 아이 선택") {
                             connectWS(chatboxMyId);
                         }
@@ -200,9 +199,10 @@ function setExtraUIs(showTrxbtns) {
         parseInt($(":root").css("--chatroom-height")) * 2;
 
     if (chatboxMyRole == "GUARD") {
+        // 보호자 회원일 때 메세지 입력 상자 숨기기
         $("#chatbox-view-send").hide();
         $("#chatbox-view-trxbtns").hide();
-        $("#chatbox-view-chatmessages").height(defaultHeight + 81);
+        $("#chatbox-view-chatmessages").height(defaultHeight + 79);
     } else {
         $("#chatbox-view-trxbtns").html("");
         if (showTrxbtns) {
@@ -214,8 +214,6 @@ function setExtraUIs(showTrxbtns) {
         }
     }
 }
-
-// 함수: 보호자 회원일 때 메세지 입력 상자 숨기기
 
 // 함수: 거래 상태 조회
 function getTrxStatus() {
