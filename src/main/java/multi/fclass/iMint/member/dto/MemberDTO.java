@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -52,10 +54,18 @@ public class MemberDTO {
 
 	// 아이등록인증PIN
 	private String mbPin;
-
+	
+	@Getter(AccessLevel.NONE)
 	// 프로필사진
 	private String mbThumbnail;
-
+	
+	public String getMbThumbnail() {
+		if (mbThumbnail == null || mbThumbnail.equals("")) {
+			return "/static/images/default-icon.jpeg";
+		} else {
+			return mbThumbnail;
+		}
+	}
 	// 탈퇴여부
 	private Boolean mbIsdelete;
 	

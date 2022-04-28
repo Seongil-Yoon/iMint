@@ -42,7 +42,7 @@
 .person-photo{
 	width: 90px;
 	height: 90px;
-	object-fit: cover;
+	object-fit: contain;
 	margin-left: 3rem; 
 	margin-bottom: 1rem;
 }

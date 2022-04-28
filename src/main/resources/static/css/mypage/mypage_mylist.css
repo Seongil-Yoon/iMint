@@ -244,7 +244,7 @@
 img.photo{
 	width: 90px;
 	height: 90px;
-	object-fit: cover;
+	object-fit: contain;
 }
 
 

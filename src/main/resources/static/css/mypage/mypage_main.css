@@ -107,6 +107,13 @@
     height: 230px;
 }
 
+/* 회원 상태창 열 구분 */
+.container-summary-text{
+	display: grid;
+    grid-template-columns:1fr 4fr;
+    grid-gap: 1.3rem;
+}
+
 .text-summary {
     margin-bottom: 2rem;
 }
@@ -150,4 +157,10 @@
 }
 .btn {
     float: right;
+}
+
+.user-photo{
+	width: 90px;
+	height: 90px;
+	object-fit: cover;
 }

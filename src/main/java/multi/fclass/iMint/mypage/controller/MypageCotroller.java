@@ -88,6 +88,7 @@ public class MypageCotroller {
 		String userGuard = memberDTO.getMbGuard();
 		String userPin = memberDTO.getMbPin();
 		String userPhoto = memberDTO.getMbThumbnail();
+		System.out.println(userPhoto);
 
 		MemberDTO userGuardNick = securityDAO.findByMbId(userGuard);
 		List<MypageChildDTO> userChilds = mypageService.getMyChildrenList(mbId);
