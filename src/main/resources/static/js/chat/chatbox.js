@@ -177,6 +177,12 @@ function loadChatrooms() {
                                 : result[i].message) +
                             `</span>`
                     );
+                if (result[i].message === null) {
+                    $("div[data-chatroomId='" + result[i].id + "']").css(
+                        "display",
+                        "none"
+                    );
+                }
             }
 
             // 이벤트 등록: 채팅방 목록 누르면 채팅 화면 표시

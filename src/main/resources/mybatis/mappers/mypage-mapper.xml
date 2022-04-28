@@ -79,14 +79,15 @@
 				JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as wi on g.goods_id = wi.goods_id
 				LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 				LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
-				LEFT JOIN (SELECT goods_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
+				LEFT JOIN (SELECT goods_id, buyer_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
 			WHERE
 				w.wishlist_isdelete = FALSE
 				AND g.goods_isdelete = FALSE
 				AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 				AND (trx_isdelete = FALSE OR trx.trx_isdelete IS NULL)
 				AND w.mb_id LIKE #{myId}
-                AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)))
+                AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
+                AND (cr.buyer_id IS NULL OR cr.buyer_id NOT LIKE #{myId})))
 			AS result
 		ORDER BY
 			last_update_date DESC, goods_id DESC
@@ -194,6 +195,7 @@
 		AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 	    AND (g.seller_id LIKE #{myId} OR cr.buyer_id LIKE #{myId})
 	    AND gi.goods_images_thumbnail = TRUE
+	    AND (g.seller_id NOT LIKE "google_105109371333645175867" OR cm.message IS NOT NULL)
 	ORDER BY
 		last_update_date DESC, cr.create_date DESC
 	</select>
