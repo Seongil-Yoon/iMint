@@ -153,7 +153,17 @@ function start() {
 							</div>
 							<div class="goods-info">
 								<div>
-									<span class="goods-title">${result[i].goods.goodsTitle}</span>
+									<span class="goods-title">${
+										(function(goodsTitle){
+											let text_ = "";
+											if(goodsTitle.length >= 15){
+												text_ = goodsTitle.substr(0, 15);
+												return  text_ + "..";
+											}else{
+												return goodsTitle;
+											}
+										})(result[i].goods.goodsTitle)
+									}</span>
 								</div>
 								<div>
 									<span class="goods-price">${fomatPrice(result[i].goods.goodsPrice)}원</span>
@@ -256,13 +266,6 @@ function goodsSearch() {
 
 
 
-function main() {
-	getMyLocation();
-	// loadScroll();
-	selectCategory();
-	goodsSearch();
-}
-main();
 
 //카테고리를 선택하면 배경 색이 바뀌어 있도록 함
 const selected = document.querySelector('#id-finder').className;
@@ -291,8 +294,17 @@ function removeSelected() {
 	tabItems.forEach(item => item.classList.remove('selected'))
 }
 
-window.onload = selectItem;
 
+
+function main() {
+	getMyLocation();
+	// loadScroll();
+	selectCategory();
+	goodsSearch();
+
+}
+window.onload = selectItem;
+main();
 
 
 // function countWishlist(goodId) {
