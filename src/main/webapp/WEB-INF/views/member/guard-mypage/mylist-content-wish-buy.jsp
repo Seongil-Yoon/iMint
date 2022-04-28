@@ -70,7 +70,8 @@
 				<p class="text text-price">${wish.goodsPrice}</p>
 			</div>
 			<div class="link">
-				<p class="text text-link">바로가기</p>
+				<button type="button" id="linkItem" class="btn btn-primary btn-sm">바로가기</button>
+				
 			</div>
 		</div>
 	</c:forEach>
