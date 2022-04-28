@@ -17,7 +17,7 @@
 <body>
 	<div class="container-all">
  	<jsp:include page="../include/header.jsp" flush="false" />
- 	<h3>회원가입(SNS연동)</h3>	
+ 	<h3>회원가입</h3>	
  	<hr>
 	<br>
 	<div class = "container">
