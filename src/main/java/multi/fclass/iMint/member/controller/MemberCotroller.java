@@ -80,7 +80,7 @@ public class MemberCotroller {
 	@Value("${memberImagePath}")
 	String memberImagePath;
 	
-	//URL 매핑 수정(회원가입 수정/탈퇴-> 보호자, 아이 구분 x)
+	// 회원 정보 수정 페이지 진입
 	@GetMapping("/mypage/edit")
 	public ModelAndView updateuser(Authentication auth) {
 		
@@ -105,6 +105,7 @@ public class MemberCotroller {
 		return mv;
 	}
 	
+	// 회원 정보 수정 결과 
 	@PostMapping("/mypage/edit")
 	public ModelAndView updateuser(Authentication auth, MultipartFile thumbnail, String nickname, String interest) throws IOException {
 		
@@ -131,6 +132,7 @@ public class MemberCotroller {
 		return mv;
 	}
 	
+	// 닉네임 중복확인(비동기)
 	@ResponseBody
 	@RequestMapping("/edit/nickname")
 	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
@@ -158,7 +160,7 @@ public class MemberCotroller {
 	}
 	
 	
-	
+	// 회원 탈퇴 페이지 진입 
 	@GetMapping("/mypage/withdraw")
 	public ModelAndView	deleteuser(Authentication auth) {
 		
@@ -183,6 +185,7 @@ public class MemberCotroller {
 		return mv;
 	}
 	
+	// 회원 탈퇴 결과
 	@PostMapping("/mypage/withdraw")
 	public String deleteuserresult(HttpServletRequest req, Authentication auth) {
 		// 비 로그인
@@ -193,7 +196,7 @@ public class MemberCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 
-		if (memberDTO.getMbRole() == Role.GUARD) { // 보호자일 때만 처리
+		if (memberDTO.getMbRole() == Role.GUARD) { // 보호자일 때 연결된 아이도 모두 함꼐 탈퇴
 			try {
 				List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
 				System.out.println("childlist: "+childlist);
