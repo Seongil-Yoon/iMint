@@ -16,7 +16,10 @@ $("#nick_btn").on('click', function() {
 			if (response.result == "ok") {
 				ajax_check = "ok";
 				$("#nickappend").html('<p style = "color: green;">사용가능한 닉네임입니다.</p>');
-			} // if end 
+			}
+			else if(response.result == "blank"){
+				$("#nickappend").html('<p style = "color: red;">변경할 닉네임을 입력해 주세요.</p>');
+			}
 			else {
 				$("#nickappend").html('<p style = "color: red;">다른 사용자가 이미 사용중인 닉네임입니다.</p>');
 			}
