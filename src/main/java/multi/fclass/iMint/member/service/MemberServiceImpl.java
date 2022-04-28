@@ -86,7 +86,7 @@ public class MemberServiceImpl implements IMemberService {
 				memberDTO.setMbThumbnail(mbThumbnail);			
 				
 				// 파일 업로드
-				File serverfile = new File(mbThumbnail);
+				File serverfile = new File(root + mbThumbnail); // DB에는 root 경로 제외하고 저장
 				thumbnail.transferTo(serverfile);
 				
 			} // if end

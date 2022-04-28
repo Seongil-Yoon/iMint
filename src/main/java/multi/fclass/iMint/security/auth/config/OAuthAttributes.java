@@ -107,7 +107,7 @@ public class OAuthAttributes {
     	System.out.println("구글 로그인 호출");
         return OAuthAttributes.builder()
             	.mbId ("google_"+(String) attributes.get("sub"))
-            	.mbProvider ("goole") 
+            	.mbProvider ("google") 
             	.mbGuard (null)
             	.mbNick ((String) attributes.get("name"))
             	.mbEmail ((String) attributes.get("email")) 
