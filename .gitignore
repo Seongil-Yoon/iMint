@@ -9,6 +9,7 @@ META-INF/*
 .springBeans
 application.properties
 keystore.p12
+keystore.jks
 
 ### Eclipse ###
 .metadata
