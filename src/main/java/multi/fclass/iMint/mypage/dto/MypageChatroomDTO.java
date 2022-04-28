@@ -14,6 +14,7 @@ import lombok.Getter;
 @Getter
 public class MypageChatroomDTO {
 
+	private String category; // "buy" or "sell"
 	private int id; // 채팅방 ID
 	private int goodsId; // 판매글 ID
 	private String goodsTitle; // 판매글 제목

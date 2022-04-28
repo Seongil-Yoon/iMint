@@ -147,29 +147,47 @@
     width: 130px;
 }
 
+.chatbox-chatrooms-whois {
+    display: -webkit-box;
+    font-weight: bold;
+    font-size: 12px;
+    overflow: hidden;
+    word-break: break-all;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    height: 15px;
+}
+
+.chatbox-chatrooms-whois.buyer {
+    color: #DD0000;
+}
+
+.chatbox-chatrooms-whois.seller {
+    color: blue;
+}
+
 .chatbox-chatroom-nickname {
     display: -webkit-box;
     font-weight: bold;
     font-size: 14px;
     overflow: hidden;
-    word-break: break-word;
+    word-break: break-all;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     height: 20px;
-    margin: 2.5px 0;
 }
 
 .chatbox-chatroom-lastmessage {
     display: -webkit-box;
     font-size: 13px;
     overflow: hidden;
-    word-break: break-word;
+    word-break: break-all;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    height: 40px;
-    margin: 2.5px 0;
+    height: 35px;
     color: #9b9b9b;
 }
 
@@ -303,6 +321,9 @@
 }
 
 .chatbox-chatmessage-message {
+    display: -webkit-box;
+    word-break: break-all;
+    user-select: text;
     max-width: calc(var(--total-width) - var(--chatroom-height));
     min-height: 39.5px;
     border: 1px solid #9b9b9b;
