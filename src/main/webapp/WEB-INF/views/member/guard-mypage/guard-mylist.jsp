@@ -139,7 +139,7 @@
 				                                <!-- <p class="text">관심 2</p> -->
 				                            </div>
 				                            <div class="link">
-				                                <p class="text">바로가기</p>
+				                                <button type="button" id="linkItem" class="btn btn-primary btn-sm">바로가기</button>
 				                            </div>
 				                        </div>
 				                     </c:forEach>
