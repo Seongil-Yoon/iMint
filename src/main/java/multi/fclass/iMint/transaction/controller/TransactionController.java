@@ -23,7 +23,7 @@ public class TransactionController {
 
 	@Autowired
 	ParseMbId parseService;
-
+/*
 	@GetMapping("transaction/resrv")
 	public ModelAndView getReservationChatroomList(Authentication auth, int goodsId) {
 		String myId = parseService.parseMbId(auth);
@@ -52,7 +52,7 @@ public class TransactionController {
 
 		return mv;
 	}
-
+*/
 	@GetMapping("transaction/resrv/check")
 	public String checkReservation(Authentication auth, int goodsId) {
 		String myId = parseService.parseMbId(auth);
@@ -132,7 +132,7 @@ public class TransactionController {
 
 		return out.toJSONString();
 	}
-
+/*
 	@PostMapping("transaction/trx/addbuyer")
 	public String addBuyerTransaction(Authentication auth, String buyerId, int goodsId) {
 		String myId = parseService.parseMbId(auth);
@@ -152,5 +152,5 @@ public class TransactionController {
 
 		return out.toJSONString();
 	}
-
+*/
 }
