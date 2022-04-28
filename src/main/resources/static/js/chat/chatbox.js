@@ -5,8 +5,14 @@ $(function () {
     if (chatboxMyRole == "CHILD" || chatboxMyRole == "GUARD") {
         setTimeout(function () {
             $("#chatbox-openbtn").show();
-            connectWS(chatboxMyId);
         }, 100);
+    }
+
+    // 보호자 회원이면 아이 선택 선택상자 추가
+    if (chatboxMyRole == "GUARD") {
+        addChildSelect();
+    } else {
+        connectWS(chatboxMyId);
     }
 
     // 이벤트 등록: 채팅 버튼 누르면 채팅 버튼 숨기고 채팅박스 표시
@@ -55,6 +61,52 @@ function connectWS(chatboxMyId) {
             setTimeout(connectWS, 10000);
         }
     );
+}
+
+// 함수: 웹소켓 연결 해제
+function disconnectWS() {
+    if (stompClient !== null) {
+        stompClient.disconnect();
+    }
+}
+
+// 함수: 보호자 회원일 때 내 아이 선택 상자 추가
+function addChildSelect() {
+    $.ajax({
+        url: "/chat/getmychildren",
+        type: "GET",
+        dataType: "JSON",
+        success: function (result) {
+            $("#chatbox-list-title .chatbox-title-text").after(
+                `<select id="chatbox-title-select" class="form-select"></select>`
+            );
+            if (result.length > 0) {
+                $("#chatbox-title-select")
+                    .append(`<option selected>내 아이 선택</option>`)
+                    .on("change", function () {
+                        chatboxMyId = $(this).val();
+                        loadChatrooms();
+                        disconnectWS();
+                        connectWS(chatboxMyId);
+                    });
+
+                for (let i in result) {
+                    $("#chatbox-title-select").append(
+                        `<option value="` +
+                            result[i].childId +
+                            `">` +
+                            result[i].childNick +
+                            `</option>`
+                    );
+                }
+            } else {
+                $("#chatbox-title-select").attr("disabled", true);
+                $("#chatbox-title-select").append(
+                    `<option selected>등록된 아이 없음</option>`
+                );
+            }
+        },
+    });
 }
 
 // 함수: 채팅방 목록 표시
@@ -128,21 +180,29 @@ function loadChatrooms() {
 }
 
 // 함수: 거래 관련 버튼 영역 표시/숨기기
-function setTrxbtns(isvisible) {
+function setExtraUIs(trxbtns) {
     let defaultHeight =
         parseInt($(":root").css("--total-height")) -
         parseInt($(":root").css("--title-height")) -
         parseInt($(":root").css("--chatroom-height")) * 2;
 
-    $("#chatbox-view-trxbtns").html("");
-    if (isvisible) {
-        $("#chatbox-view-chatmessages").height(defaultHeight - 30);
-        $("#chatbox-view-trxbtns").show();
-    } else {
-        $("#chatbox-view-chatmessages").height(defaultHeight);
+    if (chatboxMyRole == "GUARD") {
+        $("#chatbox-view-send").hide();
         $("#chatbox-view-trxbtns").hide();
+        $("#chatbox-view-chatmessages").height(defaultHeight + 81);
+    } else {
+        $("#chatbox-view-trxbtns").html("");
+        if (trxbtns) {
+            $("#chatbox-view-chatmessages").height(defaultHeight - 30);
+            $("#chatbox-view-trxbtns").show();
+        } else {
+            $("#chatbox-view-chatmessages").height(defaultHeight);
+            $("#chatbox-view-trxbtns").hide();
+        }
     }
 }
+
+// 함수: 보호자 회원일 때 메세지 입력 상자 숨기기
 
 // 함수: 거래 상태 조회
 function getTrxStatus(opponentId, goodsId, chatroomId) {
@@ -164,7 +224,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                         .css("border-color", "blue")
                         .css("color", "blue");
 
-                    setTrxbtns(true);
+                    setExtraUIs(true);
                     $("#chatbox-view-trxbtns")
                         .append(
                             `<div id="chatbox-trxbtns-makeresrv" class="chatbox-trxbtn short">예약하기</div>`
@@ -179,7 +239,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                         .css("border-color", "green")
                         .css("color", "green");
 
-                    setTrxbtns(false);
+                    setExtraUIs(false);
                 }
             } else if (trx.check.includes("resrv")) {
                 if (
@@ -193,7 +253,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                         .css("color", "#FFBB00");
                     if (trx.check.includes("seller")) {
                         // 예약완료 - 판매자 시점
-                        setTrxbtns(true);
+                        setExtraUIs(true);
                         $("#chatbox-view-trxbtns")
                             .append(
                                 `<div id="chatbox-trxbtns-cancelresrv" class="chatbox-trxbtn short">예약취소</div>`
@@ -203,7 +263,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                             );
                     } else {
                         // 예약완료 - 예약자 시점
-                        setTrxbtns(false);
+                        setExtraUIs(false);
                     }
                 } else {
                     // 예약중
@@ -212,7 +272,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                         .css("border-color", "#9b9b9b")
                         .css("color", "#9b9b9b");
 
-                    setTrxbtns(true);
+                    setExtraUIs(true);
                     if (trx.check.includes("seller")) {
                         // 예약중 - 판매자 시점
                         $("#chatbox-view-trxbtns").text(
@@ -235,13 +295,13 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
 
                     if (trx.check.includes("match")) {
                         // 판매완료 - 판매자:구매자 시점
-                        setTrxbtns(true);
+                        setExtraUIs(true);
                         $("#chatbox-view-trxbtns").append(
                             `<div id="chatbox-trxbtns-ratetrx" class="chatbox-trxbtn long">거래 평가하기</div>`
                         );
                     } else {
                         // 판매완료 - 판매자:기타 시점
-                        setTrxbtns(true);
+                        setExtraUIs(true);
                         $("#chatbox-view-trxbtns").text(
                             "다른 회원에게 판매한 상품입니다."
                         );
@@ -253,7 +313,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                         .css("border-color", "#DD0000")
                         .css("color", "#DD0000");
 
-                    setTrxbtns(true);
+                    setExtraUIs(true);
                     $("#chatbox-view-trxbtns").append(
                         `<div id="chatbox-trxbtns-ratetrx" class="chatbox-trxbtn long">거래 평가하기</div>`
                     );
@@ -265,7 +325,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                     .css("border-color", "blue")
                     .css("color", "blue");
 
-                setTrxbtns(true);
+                setExtraUIs(true);
                 $("#chatbox-view-trxbtns").append(
                     `<div id="chatbox-trxbtns-addbuyer" class="chatbox-trxbtn long">구매자 선택</div>`
                 );
@@ -276,7 +336,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                     .css("border-color", "#9b9b9b")
                     .css("color", "#9b9b9b");
 
-                setTrxbtns(true);
+                setExtraUIs(true);
                 $("#chatbox-view-trxbtns").text("이미 판매된 상품입니다.");
             } else {
                 // 오류발생
@@ -285,7 +345,7 @@ function getTrxStatus(opponentId, goodsId, chatroomId) {
                     .css("border-color", "#9b9b9b")
                     .css("color", "#9b9b9b");
 
-                setTrxbtns(true);
+                setExtraUIs(true);
                 $("#chatbox-view-trxbtns").text(
                     "판매글이 삭제되었거나 잘못된 채팅방입니다."
                 );
@@ -365,7 +425,7 @@ function joinChatroom(chatroom) {
     let currentOpponentId = $(chatroom).attr("data-opponentId");
 
     // 거래 버튼 초기화
-    setTrxbtns(false);
+    setExtraUIs(false);
     // 채팅 메세지 초기화
     $("#chatbox-view-chatmessages").html("");
 
@@ -459,6 +519,7 @@ function getChatmessages(chatroomId, pageNumber, numberOfItems) {
         url: "/chat/getchatmessages",
         type: "GET",
         data: {
+            myId: chatboxMyId,
             chatroomId: chatroomId,
             pageNumber: pageNumber,
             numberOfItems: numberOfItems,

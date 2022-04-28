@@ -26,6 +26,20 @@ public class MypageServiceImpl implements IMypageService {
 		return mypageDAO.getMyChildrenList(myId);
 	}
 
+	@Override
+	public boolean isMyChild(String myId, String childId) {
+		boolean flag = false;
+		List<MypageChildDTO> childrenList = getMyChildrenList(myId);
+
+		for (MypageChildDTO child : childrenList) {
+			if (child.getChildId().equals(childId)) {
+				return true;
+			}
+		}
+
+		return flag;
+	}
+
 	// 관심 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getWishAndReserveList(String myId, int pageNumber, int numberOfItems) {

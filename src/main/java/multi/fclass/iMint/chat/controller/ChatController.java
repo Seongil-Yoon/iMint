@@ -17,6 +17,7 @@ import multi.fclass.iMint.chat.config.ChatPrincipal;
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
 import multi.fclass.iMint.chat.service.IChatService;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
+import multi.fclass.iMint.mypage.dto.MypageChildDTO;
 import multi.fclass.iMint.mypage.service.IMypageService;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import net.minidev.json.JSONObject;
@@ -40,18 +41,28 @@ public class ChatController {
 	// REST API: 채팅목록 불러오기
 	@GetMapping("/chat/getchatrooms")
 	@ResponseBody
-	public List<MypageChatroomDTO> chat(Authentication auth) {
-		String myId = parseService.parseMbId(auth);
+	public List<MypageChatroomDTO> getChatrooms(Authentication auth, String myId) {
+		String authId = parseService.parseMbId(auth);
+		if (myId != null && !authId.equals(myId)) {
+			if (!mypageService.isMyChild(authId, myId)) {
+				return null;
+			}
+		}
 
 		return mypageService.getChatroomList(myId, 1, 10);
 	}
-	
+
 	// REST API: 메세지목록 불러오기
 	@GetMapping("/chat/getchatmessages")
 	@ResponseBody
-	public List<ChatMessageDTO> getChatMessages(Authentication auth, int chatroomId, int pageNumber,
+	public List<ChatMessageDTO> getChatMessages(Authentication auth, String myId, int chatroomId, int pageNumber,
 			int numberOfItems) {
-		String myId = parseService.parseMbId(auth);
+		String authId = parseService.parseMbId(auth);
+		if (myId != null && !authId.equals(myId)) {
+			if (!mypageService.isMyChild(authId, myId)) {
+				return null;
+			}
+		}
 
 		if (!chatService.isChatroomJoinable(myId, chatroomId)) {
 			return null;
@@ -60,10 +71,19 @@ public class ChatController {
 		return chatService.getChatroomMessages(myId, chatroomId, pageNumber, numberOfItems);
 	}
 
+	// REST API: 내 아이 목록 불러오기
+	@GetMapping("/chat/getmychildren")
+	@ResponseBody
+	public List<MypageChildDTO> getChildren(Authentication auth) {
+		String myId = parseService.parseMbId(auth);
+
+		return mypageService.getMyChildrenList(myId);
+	}
+
 	// REST API: 채팅방 생성/접속 가능한지 확인하기
 	@GetMapping("/chat/checkmychatroom")
 	@ResponseBody
-	public String checkChat(Authentication auth, Integer goodsId) {
+	public String checkChatroom(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
 		JSONObject out = new JSONObject();
 
@@ -71,11 +91,11 @@ public class ChatController {
 
 		return out.toJSONString();
 	}
-	
+
 	// REST API: 채팅방 접속 위해 채팅방 번호 확인하기
 	@PostMapping("/chat/getmychatroom")
 	@ResponseBody
-	public String startChat(Authentication auth, Integer goodsId) {
+	public String startChatrom(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
 		JSONObject out = new JSONObject();
 

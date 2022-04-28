@@ -15,6 +15,9 @@ public interface IMypageService {
 	// 내 아이 목록 조회 서비스
 	public List<MypageChildDTO> getMyChildrenList(String myId);
 
+	// 내 아이 여부 조회 서비스
+	public boolean isMyChild(String myId, String childId);
+	
 	// 관심 목록 조회 서비스
 	public List<MypageDTO> getWishAndReserveList(String myId, int pageNumber, int numberOfItems);
 

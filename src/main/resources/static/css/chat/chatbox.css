@@ -54,20 +54,45 @@
     width: var(--total-width);
     height: var(--title-height);
     background-color: #cdf0ea;
+    text-align: center;
 }
 
 .chatbox-title span {
-    padding-left: 10px;
     line-height: var(--title-height);
     color: #3387a8;
 }
 
 .chatbox-title .chatbox-title-text {
+    padding-left: 10px;
     float: left;
 }
 
+#chatbox-list-title .chatbox-title-text {
+    width: 105px;
+}
+
+#chatbox-title-select {
+    display: inline-block;
+    max-width: 137px;
+    height: 32px;
+    margin: 4px 9px;
+    padding: 5px 25px 5px 5px;
+    line-height: 20px;
+    border: 1px solid #9b9b9b;
+    background-color: #cdf0ea;
+    color: #3387a8;
+    font-size: 13px;
+    text-align: center;
+    background-size: 15px 10px;
+    background-position: right 5px center;
+}
+
+#chatbox-title-select:focus {
+    box-shadow: none;
+}
+
 .chatbox-closebtn {
-    width: 50px;
+    width: 40px;
     text-align: center;
     padding-right: 10px;
     float: right;

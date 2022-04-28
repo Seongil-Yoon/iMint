@@ -48,6 +48,7 @@
 			WHERE
 				cr.isdelete = FALSE
 				AND g.goods_isdelete = FALSE
+				AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 				AND cr.buyer_id LIKE #{myId}
                 AND cr.resrv_date IS NOT NULL
                 AND trx.trx_complete_date IS NULL
@@ -82,6 +83,7 @@
 			WHERE
 				w.wishlist_isdelete = FALSE
 				AND g.goods_isdelete = FALSE
+				AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 				AND (trx_isdelete = FALSE OR trx.trx_isdelete IS NULL)
 				AND w.mb_id LIKE #{myId}
                 AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)))
@@ -113,6 +115,7 @@
 		WHERE
 			g.goods_isdelete = FALSE
 			AND (cr.isdelete = FALSE OR cr.isdelete IS NULL)
+			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 			AND g.seller_id LIKE #{myId}
 			AND (g.goods_status LIKE "wait" OR g.goods_status LIKE "resrv")
             AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
@@ -143,6 +146,7 @@
 			LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 		WHERE
 			trx.trx_isdelete = FALSE
+			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 			AND (trx.mb_id LIKE #{myId} OR g.seller_id LIKE #{myId})
 			AND gi.goods_images_thumbnail = TRUE
 		ORDER BY
@@ -194,6 +198,7 @@
 	    		send_date DESC) AS cm ON cr.id = cm.chatroom_id
 	WHERE
 		cr.isdelete = FALSE
+		AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 	    AND (g.seller_id LIKE #{myId} OR cr.buyer_id LIKE #{myId})
 	    AND gi.goods_images_thumbnail = TRUE
 	ORDER BY
