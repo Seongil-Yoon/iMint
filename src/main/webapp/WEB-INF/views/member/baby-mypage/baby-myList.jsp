@@ -30,7 +30,7 @@
 	 	<!-- 아티클 시작 -->
 	 	<div class="container-main">
 		 	<div class="title-text">
-			   <h2>${userNick}님의 아이민트 활동 내역입니다.</h2>
+			   <h2>${userNick}님의 거래 목록입니다.</h2>
 			</div>
 	 			<!-- 상단 탭 -->
 	        <section class="tabs">

@@ -11,6 +11,11 @@
 <body>
 	<!-- 어사이드바 컨테이너 -->
     <div class="aside-container">
+    	<a class="content" href="/mypage">
+            <div class="aside-tab-item">
+                <p class="tab-text">나의 아이민트</p>
+            </div>
+         </a><br>
     	<a class="content" href="/mypage/location">
             <div class="aside-tab-item">
                 <p class="tab-text">내 동네 설정</p>
