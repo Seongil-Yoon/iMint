@@ -152,6 +152,7 @@
 	<!-- 채팅방 목록 -->
 	<select id="getChatroomList" resultType="MypageChatroomDTO">
 	SELECT
+		IF(cr.buyer_id LIKE #{myId}, "buy", "sell") AS category,
 		cr.id,
 	    g.goods_id,
 	    g.goods_title,

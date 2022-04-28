@@ -5,7 +5,8 @@
 			<div id="chatbox-list-title" class="chatbox-title">
 				<span class="chatbox-title-text">아이민트 채팅</span><span id="chatbox-close" class="chatbox-closebtn">↓</span>
 			</div>
-			<div id="chatbox-list-chatrooms"></div>
+			<div id="chatbox-list-chatrooms">
+			</div>
 		</div>
 		<div id="chatbox-view">
 			<div id="chatbox-view-title" class="chatbox-title">
