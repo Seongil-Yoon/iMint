@@ -19,15 +19,15 @@ public interface IMypageService {
 	public boolean isMyChild(String myId, String childId);
 	
 	// 관심 목록 조회 서비스
-	public List<MypageDTO> getWishAndReserveList(String myId, int pageNumber, int numberOfItems);
+	public List<MypageDTO> getWishAndReserveList(String myId);
 
 	// 판매중 목록 조회 서비스
-	public List<MypageDTO> getSellingList(String myId, int pageNumber, int numberOfItems);
+	public List<MypageDTO> getSellingList(String myId);
 
 	// 거래완료 목록 조회 서비스
-	public List<MypageDTO> getCompleteList(String myId, int pageNumber, int numberOfItems);
+	public List<MypageDTO> getCompleteList(String myId);
 
 	// 채팅방 목록 조회 서비스
-	public List<MypageChatroomDTO> getChatroomList(String myId, int pageNumber, int numberOfItems);
+	public List<MypageChatroomDTO> getChatroomList(String myId);
 
 }

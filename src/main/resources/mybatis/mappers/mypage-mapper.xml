@@ -90,8 +90,6 @@
 			AS result
 		ORDER BY
 			last_update_date DESC, goods_id DESC
-		LIMIT
-			#{startIndex}, #{numberOfItems}
 	</select>
 	
 	<!-- 판매중(대기 + 예약) 목록 -->
@@ -121,8 +119,6 @@
             AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
 		ORDER BY
 			last_update_date DESC, g.goods_id DESC
-		LIMIT
-			#{startIndex}, #{numberOfItems}
 	</select>
 	
 	<!-- 거래(구매 + 판매)완료 목록 -->
@@ -151,8 +147,6 @@
 			AND gi.goods_images_thumbnail = TRUE
 		ORDER BY
 			last_update_date DESC, g.goods_id DESC
-		LIMIT
-			#{startIndex}, #{numberOfItems}
 	</select>
 	
 	<!-- 채팅방 목록 -->
@@ -203,7 +197,5 @@
 	    AND gi.goods_images_thumbnail = TRUE
 	ORDER BY
 		last_update_date DESC, cr.create_date DESC
-	LIMIT
-		#{startIndex}, #{numberOfItems}
 	</select>
 </mapper>

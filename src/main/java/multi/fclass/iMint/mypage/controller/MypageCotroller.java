@@ -105,13 +105,13 @@ public class MypageCotroller {
 		System.out.println("사진" + userPhoto);
 
 		// 거래 관련 정보
-		List<MypageDTO> userWish = mypageService.getWishAndReserveList(mbId, 1, 5);
+		List<MypageDTO> userWish = mypageService.getWishAndReserveList(mbId);
 		mv.addObject("userWish", userWish);
 
-		List<MypageDTO> userSell = mypageService.getSellingList(mbId, 1, 5);
+		List<MypageDTO> userSell = mypageService.getSellingList(mbId);
 		mv.addObject("userSell", userSell);
 
-		List<MypageDTO> userComplete = mypageService.getCompleteList(mbId, 1, 5);
+		List<MypageDTO> userComplete = mypageService.getCompleteList(mbId);
 		mv.addObject("userComplete", userComplete);
 
 		
@@ -201,19 +201,19 @@ public class MypageCotroller {
 
 			for (MypageChildDTO child : userChilds) {
 				// 아이별 관심/구매 목록 불러오기
-				List<MypageDTO> userWish = mypageService.getWishAndReserveList(child.getChildId(), 1, 5);
+				List<MypageDTO> userWish = mypageService.getWishAndReserveList(child.getChildId());
 				allWish.put(child.getChildNick(), userWish);
 
 				// 아이별 판매 목록
-				List<MypageDTO> userSell = mypageService.getSellingList(child.getChildId(), 1, 5);
+				List<MypageDTO> userSell = mypageService.getSellingList(child.getChildId());
 				allSell.put(child.getChildNick(), userSell);
 
 				// 아이별 거래완료 목록
-				List<MypageDTO> userComplete = mypageService.getCompleteList(child.getChildId(), 1, 5);
+				List<MypageDTO> userComplete = mypageService.getCompleteList(child.getChildId());
 				allComplete.put(child.getChildNick(), userComplete);
 				
 				// 아이별 거래완료 목록
-				List<MypageChatroomDTO> userChat = mypageService.getChatroomList(child.getChildId(), 1, 5);
+				List<MypageChatroomDTO> userChat = mypageService.getChatroomList(child.getChildId());
 				allChat.put(child.getChildNick(), userChat);
 
 			}
@@ -233,20 +233,20 @@ public class MypageCotroller {
 			mv.addObject("userNick", userNick);
 
 			// 관심/구매 목록
-			List<MypageDTO> userWish = mypageService.getWishAndReserveList(userID, 1, 100);
+			List<MypageDTO> userWish = mypageService.getWishAndReserveList(userID);
 			mv.addObject("userWish", userWish);
 
 			// 판매 목록
-			List<MypageDTO> userSell = mypageService.getSellingList(userID, 1, 100);
+			List<MypageDTO> userSell = mypageService.getSellingList(userID);
 			mv.addObject("userSell", userSell);
 			System.out.println(userSell);
 			
 			// 거래완료 목록
-			List<MypageDTO> userComplete = mypageService.getCompleteList(userID, 1, 100);
+			List<MypageDTO> userComplete = mypageService.getCompleteList(userID);
 			mv.addObject("userComplete", userComplete);
 			
 			//채팅 목록
-			List<MypageChatroomDTO> userChat = mypageService.getChatroomList(userID, 1, 100);
+			List<MypageChatroomDTO> userChat = mypageService.getChatroomList(userID);
 			mv.addObject("userChat", userChat);
 			
 			
