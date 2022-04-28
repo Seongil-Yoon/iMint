@@ -21,6 +21,11 @@
         <a class="content" href="/admin/stats/member">
                 <span class="tab-text">회원 통계</span>
         </a>
+        <div class="aside-tab-item">        
+        <a class="content" href="/logout">
+                <span class="tab-text">로그아웃</span>
+        </a>
+        </div>       
         </div>
     </div>
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
