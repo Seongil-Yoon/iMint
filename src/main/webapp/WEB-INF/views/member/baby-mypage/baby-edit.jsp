@@ -54,7 +54,7 @@
 		                <h5 class="lables-text">닉네임 변경</h5>
 		            </div>
 		            <div class="buttons buttons-nickname">
-		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-child">
+		                    <input name = "nickname" class="buttons-text" type="text" id="nickname-update-child" placeholder="${memberDTO.mbNick}">
 		                    <input type="button" class="btn btn-primary" value="닉네임 중복 확인" id="nickname-check-child"/>
 		            </div>
 		        </div>
