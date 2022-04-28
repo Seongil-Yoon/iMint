@@ -64,7 +64,7 @@
 	   	</c:choose>
 	   </p>
 	  </div>
-	  <div class="photo">
+	  <div class="photo-container">
 	    <img class="photo" src="${wish.goodsImagesPath}">
 	  </div>
 	  <div class="subject">

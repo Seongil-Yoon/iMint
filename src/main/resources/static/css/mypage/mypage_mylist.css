@@ -236,8 +236,15 @@
 }
 
 /* 상품 사진 크기 조절 */
-img.photo {
+/* .photo-container {
 	width: 120px;
+	height: 100px;
+} */
+
+img.photo{
+	width: 90px;
+	height: 90px;
+	object-fit: cover;
 }
 
 

@@ -34,8 +34,9 @@
                             </div>
                         </div>
                         <!-- 항목별 내용 -->
-	<div class="item-list">
+	
 	<c:forEach items="${userSell}" var="sell" varStatus="count">
+	<div class="item-list">
 	  <div class="checkbox">
 	    <!-- <input type="checkbox" class="select-targets" name="selected"/> -->
 	    <p>${count.count }</p>
@@ -70,5 +71,6 @@
 	  <div class="link">
 	    <button type="button" id="linkItem" class="btn btn-primary btn-sm" onclick="location.href = '/goods/detail?goodsId=' + '${sell.goodsId}'">바로가기</button>
 	  </div>
+	  </div>
 	  </c:forEach>
-	</div>
+	
