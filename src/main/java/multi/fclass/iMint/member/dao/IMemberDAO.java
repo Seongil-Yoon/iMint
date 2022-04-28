@@ -28,5 +28,4 @@ public interface IMemberDAO {
 	// 프로필 사진 삭제
 	public void updatedelthumbnail(String mbId);
 
-
 }

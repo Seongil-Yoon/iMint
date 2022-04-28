@@ -95,24 +95,4 @@ public class MemberDTO {
         return this.mbRole.getKey();
     }
 
-    // 전세 생성자 (oringMbId 제외)
-//	public User(Integer mbNo, String mbId, String mbProvider, String mbGuard, String mbNick, String mbEmail,
-//			LocalDateTime mbJoinDate, String mbInterest, String mbLocation, Integer mbRatingsTotal, String mbPin,
-//			String mbThumbnail, Boolean mbIsdelete, Role mbRole) {
-//		super();
-//		this.mbNo = mbNo;
-//		this.mbId = mbId;
-//		this.mbProvider = mbProvider;
-//		this.mbGuard = mbGuard;
-//		this.mbNick = mbNick;
-//		this.mbEmail = mbEmail;
-//		this.mbJoinDate = mbJoinDate;
-//		this.mbInterest = mbInterest;
-//		this.mbLocation = mbLocation;
-//		this.mbRatingsTotal = mbRatingsTotal;
-//		this.mbPin = mbPin;
-//		this.mbThumbnail = mbThumbnail;
-//		this.mbIsdelete = mbIsdelete;
-//		this.mbRole = mbRole;
-//	}
 }
