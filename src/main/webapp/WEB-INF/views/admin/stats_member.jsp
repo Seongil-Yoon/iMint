@@ -18,15 +18,12 @@
 </head>
 
 <body>
-	
-
  	<!-- 아티클 시작 -->
 	<div class="container-page">
 		<h3>회원 통계</h3>
 		<hr>
 		<div class="container-aside-main">
 		<jsp:include page="admin_asideBar.jsp" flush="false" />
-		
 		
 		<div class = "container-main">
 				
@@ -38,9 +35,18 @@
 
 		</tr>
 		<tbody id = "member_list">
+
 		<!-- 등록된 회원 리스트 삽입  -->
 		<c:forEach items="${memberstats }" var="adminDTO">
-		<tr><td>${adminDTO.mbLocation }</td><td>${adminDTO.mbCntAll}</td><td>${adminDTO.mbWithdrawAll}</td></tr>
+		<tr>
+			<td>
+			<!-- DB에 저장된 Location이 null인 회원은 '위치 미설정 회원'  -->
+			<c:if test = "${not empty adminDTO.mbLocation }" >${adminDTO.mbLocation }</c:if>
+			<c:if test = "${empty adminDTO.mbLocation }" >위치 미설정 회원</c:if>
+			</td>
+			<td>${adminDTO.mbCntAll}</td>
+			<td>${adminDTO.mbWithdrawAll}</td>
+		</tr>
 		</c:forEach>
 		
 		</tbody>
@@ -53,5 +59,6 @@
 	</div>		
 	<jsp:include page="../libs/libsScript.jsp" flush="false" />
 	<script src="/static/js/admin/admin_stats.js"></script>
+
 </body>
 </html>
