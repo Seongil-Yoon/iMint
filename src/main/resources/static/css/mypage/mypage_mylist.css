@@ -225,6 +225,10 @@
     text-align: left;
 }
 
+.item-person-chat {
+    word-break: break-all;
+}
+
 /* 채팅목록 내용 > 상품명, 가격 2열 정렬 */
 .item-detail {
     display: grid;

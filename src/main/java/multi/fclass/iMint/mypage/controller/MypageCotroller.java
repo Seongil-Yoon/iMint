@@ -104,7 +104,7 @@ public class MypageCotroller {
 		int totalBuy = 0;
 
 		for (MypageDTO complete : userComplete) {
-			if (complete.getSellerNick().equals(userNickName)) {
+			if (complete.getCategory().equals("sell")) {
 				totalSell += complete.getGoodsPrice();
 			} else {
 				totalBuy += complete.getGoodsPrice();
