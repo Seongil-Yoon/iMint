@@ -28,6 +28,8 @@ function removeSelected2(){
     tabItems.forEach(item => item.classList.remove('selected'))
 }
 
+
+
 tabItems.forEach(item => item.addEventListener('click', selectItem));
 
 /*
@@ -88,6 +90,7 @@ btnSelected.forEach(item => item.addEventListener('click', selectAll));
 
 //드롭다운에서 내 아이 선택 시 해당 아이의 이름이 타이틀에 나오도록 함
 const childSelected = document.querySelectorAll('.dropdown-item');
+var cnt = 1;
 
 function selectChild(event){
 	const selected = event.target.id;
@@ -120,10 +123,21 @@ function showChild(event){
 		targetList[i].classList.add('show-list');	
 		console.log(targetList[i]);
 	}
+	
+	childbtns = $(targetList).find("p.count");
+	
+	/*childbtns.each(function(){
+		$(this).text(cnt);
+		cnt += 1;
+	})*/
+	
+	cnt = 1;
 }
 
 function removeShowList(){
 	targetList = document.querySelectorAll('.item-list-guard');
+	
+	
 	
 	var i;
 	
@@ -133,3 +147,15 @@ function removeShowList(){
 }
 
 childSelected.forEach(item => item.addEventListener('click', showChild));
+
+//항목명이 길어질 경우 처리
+const subject = document.querySelectorAll('.subject-text');
+
+for(i = 0; i < subject.length; i++){
+	text = subject[i].innerHTML;
+	console.log(text);
+	if(text.length >= 5){
+		text_ = text.substr(0, 5);
+		subject[i].innerHTML = text_ + "..";
+	}
+}

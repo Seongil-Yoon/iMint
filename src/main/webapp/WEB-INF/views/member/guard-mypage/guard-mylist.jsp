@@ -95,16 +95,16 @@
 	                <div id="tab-4-content" class="tab-content-item">
 	                    <div class="tab-4-content-inner">
 	                    <!-- 버튼 -->
-							<div class="buttons">
+							<!-- <div class="buttons">
 	                            <h6 class="select-title">전체선택</h6>
 	                            <input type="checkbox" class="selectAllbtn" name="selected"/>
 	                            <button type="button" id="block" class="btn btn-secondary btn-sm">차단</button>
 	                            <button type="button" id="chatroom-delete" class="btn btn-secondary btn-sm">삭제</button>
-                        	</div>
+                        	</div> -->
 	                        <!-- 항목명 -->
 		                        <div class="item-lables-chat">
 		                            <div class="checkbox">
-		                                <h6 class="lables-checkbox">선택</h6>
+		                                <h6 class="lables-checkbox">No.</h6>
 		                            </div>
 		                            <div class="photo">
 		                                <h6 class="lables-person">채팅 상대</h6>
@@ -118,10 +118,11 @@
 		                        </div>
 		                        <!-- 항목별 내용 -->
 		                        <c:forEach items="${allChat}" var="chats" varStatus="status">
-									<c:forEach items="${chats.value}" var="chat">
+									<c:forEach items="${chats.value}" var="chat" varStatus="count">
 				                        <div class="item-list-chat item-list-guard ${chats.key }">
 				                            <div class="checkbox">
-				                                <input type="checkbox" class="select-targets" name="selected"/>
+				                                <!-- <input type="checkbox" class="select-targets" name="selected"/> -->
+				                                <p class="count">${count.count}</p>
 				                            </div>
 				                            <div class="person">
 				                                <img src="${chat.opponentThumbnail}" class="person-photo">
@@ -129,7 +130,7 @@
 				                                    <p class="item-person-nickname">${chat.opponentNick}</p>
 				                                    <p class="item-person-chat">${chat.message}</p>
 				                                    <div class="item-detail">
-				                                        <p class="item-subject">${chat.goodsTitle}</p>
+				                                        <p class="item-subject subject-text">${chat.goodsTitle}</p>
 				                                        <p class="item-price">${chat.goodsPrice}</p>
 		                                    		</div>
 		                                		</div>
