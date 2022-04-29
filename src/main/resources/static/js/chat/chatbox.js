@@ -477,14 +477,11 @@ function getTrxStatus() {
                     swal({
                         title: "판매 완료",
                         text:
-                            "판매를 완료하면 더 이상 취소할 수 없습니다.\n\n정말로 " +
+                            "판매를 완료하면 더 이상 취소할 수 없습니다.\n거래를 모두 마친 후에 결정해주세요.\n\n정말로 " +
                             currentOpponentNick +
                             "님과 거래하셨습니까?",
                         icon: "warning",
-                        buttons: [
-                            "아니오, 거래하지 않았습니다",
-                            "네, 거래했습니다",
-                        ],
+                        buttons: ["아직 안 했어요", "거래했어요"],
                         dangerMode: true,
                     }).then((confirm) => {
                         if (confirm) {
