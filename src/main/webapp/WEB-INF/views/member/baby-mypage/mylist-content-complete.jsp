@@ -50,11 +50,11 @@
 						</div>
 						<div class="status">
 							<c:choose>
-								<c:when test="${done.category eq 'buy'}">
-									<p class="text" style="color:#DD0000">구매</p>
+								<c:when test="${done.category eq 'sell'}">
+									<p class="text" style="color:blue">판매</p>
 								</c:when>
 								<c:otherwise>
-									<p class="text" style="color:blue">판매</p>
+									<p class="text" style="color:#DD0000">구매</p>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -68,9 +68,9 @@
 							<p class="text">관심 ${done.wishes}</p>
 						</div>
 						<c:choose>
-							<c:when test="${done.category eq 'buy'}">
+							<c:when test="${done.category eq 'sell'}">
 								<div class="price">
-									<p class="text text-price" style="color:#DD0000">${done.goodsPrice}</p>
+									<p class="text text-price" style="color:blue">${done.goodsPrice}</p>
 								</div>
 								<div class="link">
 									<p class="text text-link"></p>
@@ -81,7 +81,7 @@
 									<p class="text text-price"></p>
 								</div>
 								<div class="link">
-									<p class="text text-link" style="color:blue">${done.goodsPrice}</p>
+									<p class="text text-link" style="color:#DD0000">${done.goodsPrice}</p>
 								</div>
 							</c:otherwise>
 						</c:choose>
