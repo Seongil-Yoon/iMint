@@ -579,11 +579,17 @@ function joinChatroom(chatroom) {
     let subscription = stompClient.subscribe(
         "/chat/chatroom/" + currentChatroomId,
         function (chatmessage) {
-            putChatmessage(JSON.parse(chatmessage.body), false);
             if (
-                $("#chatbox-view-chatmessages").prop("scrollHeight") >
-                $("#chatbox-view-chatmessages").height()
+                Math.round(
+                    $("#chatbox-view-chatmessages").scrollTop() +
+                        $("#chatbox-view-chatmessages").innerHeight() * 2
+                ) >= $("#chatbox-view-chatmessages").prop("scrollHeight")
             ) {
+                putChatmessage(JSON.parse(chatmessage.body), false);
+                $("#chatbox-view-alertnew").trigger("click");
+                $("#chatbox-view-alertnew").hide();
+            } else {
+                putChatmessage(JSON.parse(chatmessage.body), false);
                 $("#chatbox-view-alertnew").show();
             }
         }
