@@ -5,8 +5,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
+import multi.fclass.iMint.mypage.service.IMypageService;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.transaction.service.ITransactionService;
 import net.minidev.json.JSONObject;
@@ -22,37 +22,33 @@ public class TransactionController {
 	ITransactionService trxService;
 
 	@Autowired
+	IMypageService mypageService;
+
+	@Autowired
 	ParseMbId parseService;
-/*
-	@GetMapping("transaction/resrv")
-	public ModelAndView getReservationChatroomList(Authentication auth, int goodsId) {
-		String myId = parseService.parseMbId(auth);
-		ModelAndView mv = new ModelAndView();
 
-		// 내가 판매자이고 예악 가능한 경우에만
-		if (trxService.checkTransaction(myId, goodsId).equals("wait_seller")) {
-			mv.addObject("chatroomList", trxService.getChatroomList(goodsId));
-		}
-		mv.setViewName("transaction/resrv");
-
-		return mv;
-	}
-
-	@GetMapping("transaction/trx")
-	public ModelAndView getTransactionChatroomList(Authentication auth, int goodsId) {
-		String myId = parseService.parseMbId(auth);
-		ModelAndView mv = new ModelAndView();
-
-		// 내가 판매자이고 거래가 완료되지 않은 경우에만
-		String flag = trxService.checkTransaction(myId, goodsId);
-		if (!flag.contains("comp!") && flag.contains("seller")) {
-			mv.addObject("chatroomList", trxService.getChatroomList(goodsId));
-		}
-		mv.setViewName("transaction/trx");
-
-		return mv;
-	}
-*/
+	/*
+	 * @GetMapping("transaction/resrv") public ModelAndView
+	 * getReservationChatroomList(Authentication auth, int goodsId) { String myId =
+	 * parseService.parseMbId(auth); ModelAndView mv = new ModelAndView();
+	 * 
+	 * // 내가 판매자이고 예악 가능한 경우에만 if (trxService.checkTransaction(myId,
+	 * goodsId).equals("wait_seller")) { mv.addObject("chatroomList",
+	 * trxService.getChatroomList(goodsId)); } mv.setViewName("transaction/resrv");
+	 * 
+	 * return mv; }
+	 * 
+	 * @GetMapping("transaction/trx") public ModelAndView
+	 * getTransactionChatroomList(Authentication auth, int goodsId) { String myId =
+	 * parseService.parseMbId(auth); ModelAndView mv = new ModelAndView();
+	 * 
+	 * // 내가 판매자이고 거래가 완료되지 않은 경우에만 String flag = trxService.checkTransaction(myId,
+	 * goodsId); if (!flag.contains("comp!") && flag.contains("seller")) {
+	 * mv.addObject("chatroomList", trxService.getChatroomList(goodsId)); }
+	 * mv.setViewName("transaction/trx");
+	 * 
+	 * return mv; }
+	 */
 	@GetMapping("transaction/resrv/check")
 	public String checkReservation(Authentication auth, int goodsId) {
 		String myId = parseService.parseMbId(auth);
@@ -101,8 +97,13 @@ public class TransactionController {
 	}
 
 	@GetMapping("transaction/trx/check")
-	public String checkTransaction(Authentication auth, String opponentId, int goodsId) {
-		String myId = parseService.parseMbId(auth);
+	public String checkTransaction(Authentication auth, String myId, String opponentId, int goodsId) {
+		String authId = parseService.parseMbId(auth);
+		if (myId != null && !authId.equals(myId)) {
+			if (!mypageService.isMyChild(authId, myId)) {
+				return null;
+			}
+		}
 		JSONObject out = new JSONObject();
 
 		out.put("check", trxService.checkTransaction(myId, opponentId, goodsId));
@@ -132,25 +133,18 @@ public class TransactionController {
 
 		return out.toJSONString();
 	}
-/*
-	@PostMapping("transaction/trx/addbuyer")
-	public String addBuyerTransaction(Authentication auth, String buyerId, int goodsId) {
-		String myId = parseService.parseMbId(auth);
-		JSONObject out = new JSONObject();
-
-		// 내가 판매자이고 구매자가 지정되지 않은 경우에만
-		String flag = trxService.checkTransaction(myId, buyerId, goodsId);
-		if (flag.equals("comp?_seller")) {
-			if (trxService.addBuyerTransaction(buyerId, goodsId)) {
-				out.put("result", "success");
-			} else {
-				out.put("result", "fail");
-			}
-		} else {
-			out.put("result", "error");
-		}
-
-		return out.toJSONString();
-	}
-*/
+	/*
+	 * @PostMapping("transaction/trx/addbuyer") public String
+	 * addBuyerTransaction(Authentication auth, String buyerId, int goodsId) {
+	 * String myId = parseService.parseMbId(auth); JSONObject out = new
+	 * JSONObject();
+	 * 
+	 * // 내가 판매자이고 구매자가 지정되지 않은 경우에만 String flag = trxService.checkTransaction(myId,
+	 * buyerId, goodsId); if (flag.equals("comp?_seller")) { if
+	 * (trxService.addBuyerTransaction(buyerId, goodsId)) { out.put("result",
+	 * "success"); } else { out.put("result", "fail"); } } else { out.put("result",
+	 * "error"); }
+	 * 
+	 * return out.toJSONString(); }
+	 */
 }

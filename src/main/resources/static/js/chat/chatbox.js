@@ -234,6 +234,7 @@ function getTrxStatus() {
         url: "/transaction/trx/check",
         type: "GET",
         data: {
+            myId: chatboxMyId,
             opponentId: currentOpponentId,
             goodsId: currentGoodsId,
         },
