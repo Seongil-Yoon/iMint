@@ -481,7 +481,7 @@ function getTrxStatus() {
                             currentOpponentNick +
                             "님과 거래하셨습니까?",
                         icon: "warning",
-                        buttons: ["아직은 아니에요", "거래했어요"],
+                        buttons: ["아직 안 했어요", "거래했어요"],
                         dangerMode: true,
                     }).then((confirm) => {
                         if (confirm) {
