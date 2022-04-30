@@ -152,13 +152,13 @@
 .chatbox-chatrooms-whois {
     display: -webkit-box;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 13px;
     overflow: hidden;
     word-break: break-all;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    height: 15px;
+    height: 16px;
 }
 
 .chatbox-chatrooms-whois.buyer {
@@ -172,13 +172,14 @@
 .chatbox-chatroom-nickname {
     display: -webkit-box;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     overflow: hidden;
     word-break: break-all;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    height: 20px;
+    height: 16px;
+    margin-bottom: 1px;
 }
 
 .chatbox-chatroom-lastmessage {
@@ -189,7 +190,8 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    height: 35px;
+    height: 36px;
+    margin-top: 1px;
     color: #9b9b9b;
 }
 
@@ -239,7 +241,7 @@
 
 #chatbox-detail-goodsprice {
     display: -webkit-box;
-    font-size: 13px;
+    font-size: 14px;
     overflow: hidden;
     word-break: break-word;
     -webkit-line-clamp: 1;
@@ -257,9 +259,10 @@
     border-radius: 0.5rem;
     text-align: center;
     line-height: 20px;
+    padding: 0 5px;
     margin: 5px 5px 2.5px 5px;
     float: left;
-    font-size: 15px;
+    font-size: 14px;
     color: #9b9b9b;
 }
 
@@ -271,9 +274,10 @@
     border-radius: 0.5rem;
     text-align: center;
     line-height: 17.5px;
+    padding: 0 5px;
     margin: 2.5px 5px 5px 5px;
     float: left;
-    font-size: 15px;
+    font-size: 14px;
     color: #9b9b9b;
 }
 
