@@ -121,18 +121,20 @@
 }
 
 .chatbox-chatrooms-chatroom img {
-    width: var(--chatroom-height);
-    height: var(--chatroom-height);
-    padding: 5px;
+    width: calc(var(--chatroom-height) - 10px);
+    height: calc(var(--chatroom-height) - 10px);
+    margin: 5px;
     float: left;
 }
 
 .chatbox-chatroom-profile {
     border-radius: 2.5rem;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
 }
 
 .chatbox-chatroom-goods {
     border-radius: 1rem;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
 }
 
 .chatbox-chatrooms-chatroom p {
@@ -202,10 +204,11 @@
 }
 
 #chatbox-view-detail img {
-    width: var(--chatroom-height);
-    height: var(--chatroom-height);
-    padding: 5px;
+    width: calc(var(--chatroom-height) - 10px);
+    height: calc(var(--chatroom-height) - 10px);
+    margin: 5px;
     float: left;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
     border-radius: 1rem;
 }
 
@@ -250,6 +253,7 @@
     width: calc(var(--chatroom-height) - 10px);
     height: 25px;
     border: 2.5px solid #9b9b9b;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
     border-radius: 0.5rem;
     text-align: center;
     line-height: 20px;
@@ -263,6 +267,7 @@
     width: calc(var(--chatroom-height) - 10px);
     height: 40px;
     border: 2.5px solid #9b9b9b;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
     border-radius: 0.5rem;
     text-align: center;
     line-height: 17.5px;
@@ -326,9 +331,9 @@
     user-select: text;
     max-width: calc(var(--total-width) - var(--chatroom-height));
     min-height: 39.5px;
-    border: 1px solid #9b9b9b;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
     border-radius: 0.5rem;
-    padding: 9px;
+    padding: 10px;
     font-size: 13px;
 }
 
@@ -370,7 +375,7 @@
     bottom: 85px;
     width: calc(var(--total-width) - 80px);
     height: 22px;
-    border: 1px solid #9b9b9b;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
     border-radius: 0.5rem;
     background-color: #cdf0ea;
     color: #3387a8;
