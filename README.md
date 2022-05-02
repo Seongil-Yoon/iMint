@@ -27,11 +27,11 @@
 
 ## 정보 구조도
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b73d708e-a541-4e93-82a7-d9e801c89dc5/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/93465128/166220866-fa827937-b32a-48d4-a677-2182bce80bbe.png)
 
 ## ER 다이어그램
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ca64309e-4d6f-4434-b0e8-b10e29d68c27/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/93465128/166220903-db7ca9d7-4714-4fe9-a86a-75687b896fd8.png)
 
 ## 시스템 아키텍쳐
 
