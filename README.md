@@ -2,6 +2,9 @@
 
 🔗 배포 URL
 
+## ****👊****기획의도
+
+![Untitled](https://user-images.githubusercontent.com/93465128/166223754-08cfcc7a-68b0-4b02-b7c0-bdea59a1fb28.png)
 
 ## ****🗂****개요
 
