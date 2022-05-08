@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<th:block th:replace="libs/libsStyles" />
+</head>
+
+<body>
+	<h1>접근 거부 페이지(403): 미인증 보호자, 아이를 회원가입 페이지로</h1>
+
+	<script>
+		location.href = "/register";
+	</script>
+
+	<th:block th:replace="libs/libsScript" />
+	<script src="/static/js/index.js"></script>
+</body>
+</html>
+<!-- https://offbyone.tistory.com/367 -->
