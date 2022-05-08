@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <!-- 외부 라이브러리 -->
 <!-- jQuery WebJars -->
 <script src="/webjars/jquery/jquery.min.js"></script>
@@ -17,9 +15,9 @@
 <script src="/static/js/header-search.js"></script>
 
 <!-- 채팅 스크립트 -->
-<script>
-	let chatboxMyId = "${sessionScope.memberDTO.mbId}";
-	let chatboxMyRole = "${sessionScope.memberDTO.mbRole}";
+<script th:inline="javascript">
+	let chatboxMyId = [[${session.memberDTO.mbId}]];
+	let chatboxMyRole = [[${session.memberDTO.mbRole}]];
 </script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>

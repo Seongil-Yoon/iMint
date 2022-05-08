@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8">
+<title>iMint :: 로그인</title>
+<th:block th:replace="libs/libsStyles" />
+<link rel="stylesheet" href="/static/css/member/member_login.css" />
+</head>
+
+<body>
+	<header th:fragment="header">
+		<!-- 헤더 css,js 불러오기는 libs.jsp파일 -->
+		<!--/* 여기는 맨 위에 있는 바 부분 */-->
+		<input style="display: none;" type="hidden" id="paramGoodsCategory" th:value="${goodsCategory}" /> <input th:if="${#strings.isEmpty(searchOption)}"
+			style="display: none;" type="hidden" id="searchOption" value="all" /> <input th:if="${not #strings.isEmpty(searchOption)}" style="display: none;"
+			type="hidden" id="searchOption" th:value="${searchOption}" /> <input style="display: none;" type="hidden" id="keyword" th:value="${keyword}" />
+		<div class="header-space"></div>
+		<nav class="carrot_header">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<div class="container-fluid">
+					<!-- 로고 -->
+					<a class="navbar-brand" href="/main"> <img class="imint-logo" src="/static/images/iMint_Black.png" alt=""></a>
+					<!-- 반응형 드롭다운 버튼 -->
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbar">
+						<!-- 위치 -->
+						<input style="display: none;" type="hidden" id="userLocation" th:value="${userLocation}" /> <span
+							class="navbar-text location-text collapse navbar-collapse"> [[${userLocation}]] </span>
+						<div class="collapse navbar-collapse " id="navbarScroll">
+							<!-- 검색창 -->
+							<form class="d-flex search" method="GET">
+								<div class="input-group">
+									<select class="form-select" id="js-searchOption" name="searchOption">
+										<option value="all" selected>전체</option>
+										<!-- <option value="titleContent">제목+내용</option> -->
+										<option value="goods_title">제목</option>
+										<option value="goods_content">내용</option>
+										<option value="seller_nick">글쓴이</option>
+									</select> <input th:if="${#strings.isEmpty(param.keyword)}" type="search" class="form-control" id="keyword" name="keyword"
+										aria-label="Text input with dropdown button" value="" placeholder="무엇을 찾아 볼까요?" /> <input th:if="${not #strings.isEmpty(param.keyword)}"
+										type="search" class="form-control" id="keyword" name="keyword" aria-label="Text input with dropdown button" th:value="${param.keyword}"
+										th:placeholder="${param.keyword}" />
+								</div>
+								<button type="submit" class="btn btn-primary search-btn" id="search-voice">
+									<img class="searchIcon" src="/static/images/mic.png" alt="">
+								</button>
+								<p class="arrow_box" id="arrow-voice">음성으로 찾아 보세요!</p>
+								<button type="submit" class="btn btn-primary search-btn" id="search-text">
+									<img class="searchIcon" src="/static/images/search.png" alt="" />
+								</button>
+								<p class="arrow_box" id="arrow-text">텍스트로 찾아 보세요!</p>
+							</form>
+							<!-- 상품 등록 -->
+							<form class="">
+								<a sec:authorize="isAuthenticated()" th:if="${mbRole == 'CHILD'}" class="btn btn-primary add-btn" href="/goods/write">✏️ 상품 등록하기</a>
+							</form>
+						</div>
+						<!-- <div class="justify-content-end"> -->
+						<ul class="navbar-nav ">
+							<li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/">돌아가기</a></li>
+							<li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+							<li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" href="/mypage">마이페이지</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- </div> -->
+			</nav>
+		</nav>
+
+		<article class="voice-popup" id="voicePopup">
+			<div class="btn-group suggestible" role="group" aria-label="Basic radio toggle button group">
+				<input type="radio" class="btn-check" name="voiceRadioBtn" id="record" autocomplete="off" value="false" /> <label class="btn btn-outline-primary"
+					for="record">음성질문시작</label> <input type="radio" class="btn-check" name="voiceRadioBtn" id="stop" autocomplete="off" value="true" /> <label
+					class="btn btn-outline-primary" for="stop">음성질문종료</label>
+			</div>
+			<br> <br>
+			<div id="sound"></div>
+			<br> <input type="search" class="form-control" id="voiceResult" name="voiceResult" aria-label="Text input with dropdown button" value=""
+				placeholder="무엇을 찾아 볼까요?"> <br>
+			<button type="button" class="btn btn-primary" id="voiceDoneAndSearch">검색</button>
+		</article>
+		<div class="voicepopup-overlay" tabindex="-1" style="opacity: 0; display: none;"></div>
+
+		<!-- 채팅 -->
+		<th:block th:replace="chat/chatbox"></th:block>
+	</header>
+
+	<!-- 푸터 css,js 불러오기는 libs.jsp파일 -->
+	<footer th:fragment="footer" class="imint_footer">
+		<nav class="navbar fixed-bottom navbar-light bg-light mint-footer">
+			<div class="container-fluid justify-content-center">
+				<span class="navbar-text mint-footer-text"> <a href='https://www.notion.so/iMint-8268bf915a6f409e8008c60e83b4c9f7' target='_blank'>Notion</a>
+					| <a href='https://github.com/Seongil-Yoon/iMint' target='_blank'>Github</a>
+					<p>
+						<span>돈조월급조다조</span> <span>Copyright 2022. All Rights Reserved.</span>
+					</p>
+				</span>
+			</div>
+		</nav>
+	</footer>
+
+</body>

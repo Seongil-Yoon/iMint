@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<th:block th:replace="libs/libsStyles" />
+</head>
+
+<body th:fragment="asideBar">
+	<!-- 어사이드바 컨테이너 -->
+	<div class="aside-container">
+		<div class="aside-tab-item">
+			<a class="content" href="/admin/member"> <span class="tab-text">회원 관리</span>
+			</a>
+		</div>
+		<div class="aside-tab-item">
+			<a class="content" href="/admin/stats/member"> <span class="tab-text">회원 통계</span>
+			</a>
+			<div class="aside-tab-item">
+				<a class="content" href="/logout"> <span class="tab-text">로그아웃</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<th:block th:replace="libs/libsScript" />
+</body>
+</html>
