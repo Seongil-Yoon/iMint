@@ -15,9 +15,9 @@
 <script src="/static/js/header-search.js"></script>
 
 <!-- 채팅 스크립트 -->
-<script th:inline="javascript">
-	let chatboxMyId = [[${session.memberDTO.mbId}]];
-	let chatboxMyRole = [[${session.memberDTO.mbRole}]];
+<script>
+	let chatboxMyId = "[[${session?.memberDTO?.mbId}]]";
+	let chatboxMyRole = "[[${session?.memberDTO?.mbRole}]]";
 </script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>

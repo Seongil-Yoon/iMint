@@ -158,7 +158,7 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    height: 16px;
+    height: 17px;
 }
 
 .chatbox-chatrooms-whois.buyer {
@@ -178,8 +178,7 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    height: 16px;
-    margin-bottom: 1px;
+    height: 17px;
 }
 
 .chatbox-chatroom-lastmessage {
@@ -191,7 +190,6 @@
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     height: 36px;
-    margin-top: 1px;
     color: #9b9b9b;
 }
 
