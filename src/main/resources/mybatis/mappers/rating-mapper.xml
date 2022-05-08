@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="multi.fclass.iMint.rating.dao.IRatingDAO">
+	<!-- 작성한 평가 가져오기 -->
+	<select id="selectRating" resultType="RatingDTO">
+		SELECT
+			*
+		FROM
+			`imint`.`rating`
+		WHERE
+			trx_id = #{trxId} AND mb_id LIKE #{myId}
+	</select>
+	
+	<!-- 평가 작성하기 -->
+	<insert id="insertRating">
+		INSERT INTO
+			`imint`.`rating`(trx_id, mb_id, rating_score)
+		VALUES
+			(#{trxId}, #{myId}, #{ratingScore})
+	</insert>
+	
+	<!-- 모든 평가 평균 가져오기 -->
+	<select id="selectAvgRating" resultType="double">
+		SELECT
+			avg(r.rating_score)
+		FROM
+			`imint`.`rating` AS r
+			JOIN `imint`.`transaction` AS trx ON r.trx_id = trx.trx_id
+			JOIN `imint`.`goods` AS g ON trx.goods_id = g.goods_id
+		WHERE
+			trx.trx_isdelete = FALSE
+			AND (trx.mb_id LIKE #{mbId} OR g.seller_id LIKE #{mbId})
+			AND r.mb_id NOT LIKE #{mbId}
+	</select>
+	
+	<!-- 회원정보에 평가점수 반영하기 -->
+	<update id="updateMemberRating">
+		UPDATE
+			`imint`.`member`
+		SET
+			mb_ratings_total = #{newRating}
+		WHERE
+			mb_id LIKE #{mbId}
+	</update>
+</mapper>
