@@ -1,0 +1,54 @@
+<!-- 마이페이지-회원탈퇴 
+백엔드:양정민 프론트:전해연 -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>iMint :: 회원 탈퇴</title>
+<link rel="stylesheet" href="/static/css/mypage/mypage_withdraw.css" type="text/css">
+<link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
+<th:block th:replace="libs :: style" />
+</head>
+
+<body>
+	<!-- 헤더 시작 -->
+	<header th:replace="frags :: header"></header>
+	<!-- 아티클 시작 -->
+	<div class="container-page">
+
+		<div class="container-aside-main">
+			<!-- 어사이드 시작 -->
+			<div class="container-aside">
+				<h2 class="title">마이페이지</h2>
+				<aside th:replace="mypage/asideBar :: aside"></aside>
+			</div>
+			<!-- 어사이드 끝 -->
+
+			<div class="container-main">
+				<div class="text">
+					<br> <br>
+					<h2>정말로 탈퇴하시겠어요? 😢</h2>
+					<br> <br> <br>
+					<h3>
+						<span th:text="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}? '탈퇴하시면 연동된 아이 계정이 모두 탈퇴되니':'탈퇴하시면 되돌리기 어려우니'"></span><br>신중하게 생각해
+						주세요.
+					</h3>
+					<br>
+				</div>
+				<div class="buttons">
+					<!-- <form action="#">
+						<input class="buttons-text"type="password" placeholder="비밀번호를 입력해 주세요.">
+						<input type="submit" class="btn btn-primary" value="확인"/>
+					</form> -->
+					<form id="withdraw-form" method="post">
+						<button type="button" class="btn btn-danger withdraw-complete" id="withdraw-complete">아이민트 탈퇴하기</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="frags :: footer"></footer>
+	<th:block th:replace="libs :: script" />
+	<script src="/static/js/mypage/mypage-withdraw.js"></script>
+</body>
+</html>
