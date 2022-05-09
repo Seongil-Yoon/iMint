@@ -7,9 +7,9 @@ import lombok.Getter;
  *
  */
 @Getter
-public class MypageChildDTO {
+public class MypageConnectionDTO {
 
-	String childId;
-	String childNick;
+	String mbId;
+	String mbNick;
 
 }

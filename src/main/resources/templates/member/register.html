@@ -29,7 +29,7 @@
 					<p id="emailappend"></p>
 				</div>
 				<br>
-				<div th:if="${memberDTO.mbRole == 'UN_CHILD'}" class="item" id="interest">
+				<div th:if="${#strings.equals(memberDTO.mbRole,'UN_CHILD')}" class="item" id="interest">
 					관심사 <select name="mbInterest" id="mbInterest" class="memberInfo" aria-label="Floating label select example">
 						<option value="문구" selected>문구</option>
 						<option value="완구">완구</option>

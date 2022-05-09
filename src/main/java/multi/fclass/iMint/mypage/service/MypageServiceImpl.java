@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.mypage.dao.IMypageDAO;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
-import multi.fclass.iMint.mypage.dto.MypageChildDTO;
+import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
 
 /**
@@ -20,19 +20,25 @@ public class MypageServiceImpl implements IMypageService {
 	@Autowired
 	IMypageDAO mypageDAO;
 
+	// 내 보호자 조회 서비스
+	@Override
+	public MypageConnectionDTO getMyGuard(String myId) {
+		return mypageDAO.getMyGuard(myId);
+	}
+
 	// 내 아이 목록 조회 서비스
 	@Override
-	public List<MypageChildDTO> getMyChildrenList(String myId) {
+	public List<MypageConnectionDTO> getMyChildrenList(String myId) {
 		return mypageDAO.getMyChildrenList(myId);
 	}
 
 	@Override
 	public boolean isMyChild(String myId, String childId) {
 		boolean flag = false;
-		List<MypageChildDTO> childrenList = getMyChildrenList(myId);
+		List<MypageConnectionDTO> childrenList = getMyChildrenList(myId);
 
-		for (MypageChildDTO child : childrenList) {
-			if (child.getChildId().equals(childId)) {
+		for (MypageConnectionDTO child : childrenList) {
+			if (child.getMbId().equals(childId)) {
 				return true;
 			}
 		}

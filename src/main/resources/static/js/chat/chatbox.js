@@ -106,9 +106,9 @@ function addChildSelect() {
                 for (let i in result) {
                     $("#chatbox-title-select").append(
                         `<option value="` +
-                            result[i].childId +
+                            result[i].mbId +
                             `">` +
-                            result[i].childNick +
+                            result[i].mbNick +
                             `</option>`
                     );
                 }

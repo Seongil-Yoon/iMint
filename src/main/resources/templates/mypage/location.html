@@ -1,0 +1,133 @@
+<!-- 마이페이지-내동네설정
+백엔드:양정민 프론트:전해연 -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>iMint :: 내동네설정</title>
+<link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
+<link rel="stylesheet" href="/static/css/mypage/mypage_location.css">
+<th:block th:replace="libs :: style" />
+</head>
+
+<body>
+	<header th:if="${#strings.equals(session?.memberDTO?.mbRole, 'GUARD')}" th:replace="frags :: header"></header>
+	<!-- 아티클 시작 -->
+	<div class="container-page">
+		<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole, 'GUARD')}">
+			<div class="container-aside-main">
+				<!-- 어사이드 시작 -->
+				<div class="container-aside">
+					<h2 class="title">마이페이지</h2>
+					<aside th:replace="mypage/asideBar :: aside"></aside>
+					<!-- 어사이드 끝 -->
+				</div>
+		</th:block>
+		<div class="container-main">
+			<h3 id="guappend"></h3>
+
+			<br> <br>
+
+			<div id="map" style="width: 750px; height: 350px;"></div>
+			<br> <br>
+			<div class="buttons">
+
+				<form id="confirm_form">
+					<input type=hidden id="guappend2" name="mbLocationOrGuard"> <input type=hidden id="mbRole" name="mbRole"
+						th:value=${session?.memberDTO?.mbRole}> <input type="submit" id="confirm_btn" class="btn btn-primary" value="확인했어요">
+				</form>
+			</div>
+		</div>
+		<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole, 'GUARD')}">
+			</div>
+		</th:block>
+	</div>
+
+	<footer th:replace="frags :: footer"></footer>
+	<th:block th:replace="libs :: script" />
+	<script type="text/javascript">
+		let currentPageButton = document.querySelector("#mylocation");
+		currentPageButton.style.cssText = "color: #3387a8; background-color: #cdf0ea; font-weight: bold";
+	</script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=LIBRARY"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e37aa69d13b6cf73efe7b84d8b071e13&libraries=services,clusterer,drawing"></script>
+	<script>
+		/* 현재 위치 받기  */
+		var latitude;
+		var longitude;
+
+		navigator.geolocation
+				.getCurrentPosition(function(pos) {
+					latitude = pos.coords.latitude;
+					latitude = latitude.toFixed(5);
+					longitude = pos.coords.longitude;
+					longitude = longitude.toFixed(5);
+
+					/* 카카오 지도 API */
+					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+					mapOption = {
+						center : new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표 // 현재좌표
+						level : 5, // 지도의 확대 레벨
+						mapTypeId : kakao.maps.MapTypeId.ROADMAP
+					// 지도종류
+					};
+
+					// 지도를 생성한다 
+					var map = new kakao.maps.Map(mapContainer, mapOption);
+
+					// 지도에 확대 축소 컨트롤을 생성한다
+					var zoomControl = new kakao.maps.ZoomControl();
+
+					// 지도의 우측에 확대 축소 컨트롤을 추가한다
+					map.addControl(zoomControl,
+							kakao.maps.ControlPosition.RIGHT);
+
+					$
+							.ajax({
+								url : 'https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&output_coord=WGS84&x='
+										+ longitude + '&y=' + latitude,
+								headers : {
+									'Authorization' : 'KakaoAK 81c7bda99c1d17edaf364c7a1fe1b80d'
+								},
+								type : 'GET',
+
+								success : function(response) {
+									var contentStr = "";
+
+									var firLocation = JSON
+											.stringify(response.documents[0].address.region_1depth_name); /* 파싱 한다음에 JSON.stringify */
+									var len = firLocation.length;
+									contentStr = firLocation.substring(1,
+											len - 1);
+
+									var secLocation = JSON
+											.stringify(response.documents[0].address.region_2depth_name);
+									var len = secLocation.length;
+									contentStr += " "
+											+ secLocation.substring(1, len - 1);
+
+									$("#guappend").html(
+											"현재 " + contentStr + "에 있어요");
+									$("#guappend2").val(contentStr);
+									if ($("#mbRole").val() == "GUARD") {
+										$("#confirm_form").attr("action",
+												"/mypage/location"); /* submit */
+										$("#confirm_form").attr("method",
+												"post");
+									} else {
+
+										$("#confirm_form").attr("action", "/");
+										$("#confirm_form").attr("method",
+												"post");
+									}
+								}, // success
+								error : function(e) {
+									console.log(e);
+								}
+							}); // ajax 	 
+
+				}); // navigator
+	</script>
+</body>
+</html>

@@ -3,7 +3,7 @@ package multi.fclass.iMint.mypage.service;
 import java.util.List;
 
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
-import multi.fclass.iMint.mypage.dto.MypageChildDTO;
+import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
 
 /**
@@ -12,8 +12,11 @@ import multi.fclass.iMint.mypage.dto.MypageDTO;
  */
 public interface IMypageService {
 
+	// 내 보호자 조회 서비스
+	public MypageConnectionDTO getMyGuard(String myId);
+	
 	// 내 아이 목록 조회 서비스
-	public List<MypageChildDTO> getMyChildrenList(String myId);
+	public List<MypageConnectionDTO> getMyChildrenList(String myId);
 
 	// 내 아이 여부 조회 서비스
 	public boolean isMyChild(String myId, String childId);

@@ -17,7 +17,7 @@ import multi.fclass.iMint.chat.config.ChatPrincipal;
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
 import multi.fclass.iMint.chat.service.IChatService;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
-import multi.fclass.iMint.mypage.dto.MypageChildDTO;
+import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.service.IMypageService;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import net.minidev.json.JSONObject;
@@ -74,7 +74,7 @@ public class ChatController {
 	// REST API: 내 아이 목록 불러오기
 	@GetMapping("/chat/getmychildren")
 	@ResponseBody
-	public List<MypageChildDTO> getChildren(Authentication auth) {
+	public List<MypageConnectionDTO> getChildren(Authentication auth) {
 		String myId = parseService.parseMbId(auth);
 
 		return mypageService.getMyChildrenList(myId);

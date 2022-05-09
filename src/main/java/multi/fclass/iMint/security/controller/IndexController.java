@@ -173,7 +173,7 @@ public class IndexController {
 		securityDAO.updateregister3(memberDTO);
 		
 		if(mbRole.equals("UN_GUARD")) {
-			mv.setViewName("member/guard-mypage/guard-location");
+			mv.setViewName("mypage/location");
 		}
 		else if(mbRole.equals("UN_CHILD")) {
 			mv.setViewName("member/register_connect");			
