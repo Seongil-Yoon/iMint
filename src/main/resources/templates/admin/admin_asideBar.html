@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title></title>
-<th:block th:replace="libs/libsStyles" />
-</head>
-
-<body th:fragment="asideBar">
+<aside th:fragment="asideBar">
 	<!-- 어사이드바 컨테이너 -->
 	<div class="aside-container">
 		<div class="aside-tab-item">
@@ -22,7 +16,5 @@
 			</div>
 		</div>
 	</div>
-
-	<th:block th:replace="libs/libsScript" />
-</body>
+</aside>
 </html>

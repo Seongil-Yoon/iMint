@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>iMint :: 로그인</title>
-<th:block th:replace="libs/libsStyles" />
+<th:block th:replace="libs :: style" />
 <link rel="stylesheet" href="/static/css/member/member_login.css" />
 </head>
 
@@ -11,7 +11,7 @@
 	<div id="wrap" class="highlight">
 		<div class="container">
 			<div class="item" id="registration">
-				<span th:if="${not #strings.isEmpty(register)}" class="registrations" style="text-align: center; width: 120px;"> 회원가입 완료 </span>
+				<span th:unless="${#strings.isEmpty(register)}" class="registrations" style="text-align: center; width: 120px;"> 회원가입 완료 </span>
 
 			</div>
 			<div class="item">
@@ -72,7 +72,7 @@
 	<br>
 
 	<footer th:replace="fragments :: footer"></footer>
-	<th:block th:replace="libs/libsScript" />
+	<th:block th:replace="libs :: script" />
 	<script src="/static/js/member/member_login.js"></script>
 
 </body>

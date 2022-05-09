@@ -3,14 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>iMint :: 관리자 회원통계</title>
-<th:block th:replace="libs/libsStyles" />
+<th:block th:replace="libs :: style" />
 <link rel="stylesheet" href="/static/css/member/member_basic.css">
 <link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
 <link rel="stylesheet" href="/static/css/member/admin_member.css">
 <!-- c3.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" />
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
 
 </head>
 
@@ -20,7 +18,7 @@
 		<h3>회원 통계</h3>
 		<hr>
 		<div class="container-aside-main">
-			<div th:replace="admin_asideBar :: asideBar"></div>
+			<aside th:replace="admin_asideBar :: asideBar"></aside>
 
 			<div class="container-main">
 
@@ -37,8 +35,8 @@
 						<tr th:each="adminDTO : ${memberstats}">
 							<td>
 								<!-- DB에 저장된 Location이 null인 회원은 '위치 미설정 회원'  -->
-								<span th:if="${not #strings.isEmpty(adminDTO.mbLocation)}">[[${adminDTO.mbLocation}]]</span>
 								<span th:if="${#strings.isEmpty(adminDTO.mbLocation)}">위치 미설정 회원</span>
+								<span th:unless="${#strings.isEmpty(adminDTO.mbLocation)}">[[${adminDTO.mbLocation}]]</span>
 							</td>
 							<td>[[${adminDTO.mbCntAll}]]</td>
 							<td>[[${adminDTO.mbWithdrawAll}]]</td>
@@ -52,7 +50,9 @@
 		</div>
 	</div>
 
-	<th:block th:replace="libs/libsScript" />
+	<th:block th:replace="libs :: script" />
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
 	<script src="/static/js/admin/admin_stats.js"></script>
 </body>
 </html>

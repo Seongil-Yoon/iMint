@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>iMint :: 관리자 회원조회</title>
-<th:block th:replace="libs/libsStyles" />
+<th:block th:replace="libs :: style" />
 <link rel="stylesheet" href="/static/css/member/member_basic.css">
 <link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
 <link rel="stylesheet" href="/static/css/member/admin_member.css">
@@ -15,7 +15,7 @@
 	<div class="container-page">
 		<h3>회원 리스트</h3>
 		<div class="container-aside-main">
-			<div th:replace="admin_asideBar :: asideBar"></div>
+			<aside th:replace="admin_asideBar :: asideBar"></aside>
 
 
 			<div class="container-main">
@@ -50,7 +50,7 @@
 	</div>
 
 	<footer th:replace="fragments :: footer"></footer>
-	<th:block th:replace="libs/libsScript" />
+	<th:block th:replace="libs :: script" />
 
 	<script src="/static/js/admin/admin_member.js"></script>
 

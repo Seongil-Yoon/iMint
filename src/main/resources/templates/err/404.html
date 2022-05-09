@@ -2,9 +2,9 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>404 | iMint</title>
+<title>iMint :: 404</title>
 <!-- CSS -->
-<th:block th:replace="libs/libsStyles" />
+<th:block th:replace="libs :: style" />
 <link rel="stylesheet" href="/static/css/error.css" />
 </head>
 
@@ -19,13 +19,13 @@
 			<br>
 			<button type="button">
 				<a th:if="${#strings.isEmpty(path)}" href="/">로그인으로 돌아가기</a>
-				<a th:if="${not #strings.isEmpty(path)}" th:href="${path}">홈으로 돌아가기</a>
+				<a th:unless="${#strings.isEmpty(path)}" th:href="${path}">홈으로 돌아가기</a>
 			</button>
 			<br> <img src="/static/images/404.jpg" alt="">
 		</div>
 	</div>
 
-	<th:block th:replace="libs/libsScript" />
+	<th:block th:replace="libs :: script" />
 </body>
 
 </html>

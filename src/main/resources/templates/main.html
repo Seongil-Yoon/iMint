@@ -4,12 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <title>iMint :: 메인페이지</title>
-<th:block th:replace="libs/libsStyles.html" />
+<th:block th:replace="libs :: style" />
 <link rel="stylesheet" href="/static/css/main.css" />
 </head>
 
 <body>
-	<header th:replace="fragments.html :: header"></header>
+	<header th:replace="fragments :: header"></header>
 
 	<section class="container">
 		<div th:class="${goodsCategory}" id="id-finder"></div>
@@ -30,7 +30,7 @@
 		</ul>
 	</section>
 
-	<th:block th:replace="libs/libsScript.html" />
+	<th:block th:replace="libs :: script" />
 	<script type="text/javascript" src="/static/js/main.js"></script>
 </body>
 
