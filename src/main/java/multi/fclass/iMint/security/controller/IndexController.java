@@ -83,7 +83,7 @@ public class IndexController {
 			}
 			mv.addObject("memberDTO", memberDTO);
 		} catch (Exception e) { // 비로그인 상태이면 로그인 페이지로 이동
-			mv.setViewName("member/login");			
+			mv.setViewName("index");			
 		}
 		return mv;
 	}
@@ -223,7 +223,7 @@ public class IndexController {
 			session.setAttribute(HttpSessionSecurityContextRepository.
 			                       SPRING_SECURITY_CONTEXT_KEY, context);
 			mv.addObject("register", memberDTO.getMbNick());
-			mv.setViewName("member/login");
+			mv.setViewName("index");
 
 		}	
 		else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이 
@@ -251,7 +251,7 @@ public class IndexController {
 					                       SPRING_SECURITY_CONTEXT_KEY, context);
 
 					mv.addObject("register", memberDTO.getMbNick());
-					mv.setViewName("member/login");
+					mv.setViewName("index");
 				}
 				else { // 보호자의 입력정보가 틀리면 보호자 연동 페이지로 다시 보내기
 					mv.setViewName("member/register_connect");
