@@ -36,19 +36,23 @@
 									type="search" class="form-control" id="keyword" name="keyword" aria-label="Text input with dropdown button" th:value="${param.keyword}"
 									th:placeholder="${param.keyword}" />
 							</div>
-							<button type="submit" class="btn btn-primary search-btn" id="search-voice">
+							<button type="button" class="btn btn-primary search-btn" id="search-voice">
 								<img class="searchIcon" src="/static/images/mic.png" alt="">
 							</button>
 							<p class="arrow_box" id="arrow-voice">음성으로 찾아 보세요!</p>
-							<button type="submit" class="btn btn-primary search-btn" id="search-text">
+							<button type="button" class="btn btn-primary search-btn" id="search-text">
 								<img class="searchIcon" src="/static/images/search.png" alt="" />
 							</button>
 							<p class="arrow_box" id="arrow-text">텍스트로 찾아 보세요!</p>
 						</form>
 						<!-- 상품 등록 -->
 						<form class="">
-							<a sec:authorize="isAuthenticated()" th:if="${#strings.equals(mbRole, 'CHILD')}" class="btn btn-primary add-btn" href="/goods/write">✏️ 상품
-								등록하기</a>
+							<a sec:authorize="isAuthenticated()" 
+								th:if="${#strings.equals(mbRole, 'CHILD')}" 
+								class="btn btn-primary add-btn" 
+								href="/goods/write">
+								✏️ 상품 등록하기
+							</a>
 						</form>
 					</div>
 					<!-- <div class="justify-content-end"> -->
