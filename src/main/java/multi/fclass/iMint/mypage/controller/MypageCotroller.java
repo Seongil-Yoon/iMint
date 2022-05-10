@@ -128,7 +128,7 @@ public class MypageCotroller {
 
 		// 보호자의 경우
 		if (memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/guard-mypage/guard-mylist");
+			mv.setViewName("mypage/mylist-guard");
 
 			List<MypageConnectionDTO> userChilds = mypageService.getMyChildrenList(mbId); // 닉네임 모음
 			mv.addObject("userChilds", userChilds);
@@ -169,7 +169,7 @@ public class MypageCotroller {
 
 		// 아이의 경우
 		else if (memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-myList");
+			mv.setViewName("mypage/mylist-baby");
 			String userID = memberDTO.getMbId();
 			String userNick = memberDTO.getMbNick();
 			mv.addObject("userNick", userNick);
