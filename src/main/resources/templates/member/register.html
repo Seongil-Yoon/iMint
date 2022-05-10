@@ -51,48 +51,6 @@
 	<br>
 	<br>
 
-	<!--/*
-	<div class="container-all">
-		<h3>회원가입</h3>
-		<hr>
-		<br>
-		<div class="container">
-			<form id="change_url">
-				<div class="item">
-					닉네임 <input type=text name="mbNick" id="mbNick" th:value="${memberDTO.mbNick}" th:placeholder="${memberDTO.mbNick}" class="memberInfo"> <input
-						type="button" id="nick_btn" class="btn btn-primary buttons" value="중복확인">
-					<p id="nickappend"></p>
-				</div>
-				<div class="item">
-					이메일 <input type=text name="mbEmail" id="mbEmail" th:value="${memberDTO.mbEmail}" class="memberInfo"><input type="button" id="email_btn"
-						class="btn btn-primary buttons" value="이메일 확인">
-					<p id="emailappend"></p>
-				</div>
-				<br>
-				<div th:if="${memberDTO.mbRole == 'UN_CHILD'}" class="item" id="interest">
-					관심사 <select name="mbInterest" id="mbInterest" class="memberInfo" aria-label="Floating label select example">
-						<option value="문구" selected>문구</option>
-						<option value="완구">완구</option>
-						<option value="도서">도서</option>
-						<option value="교구">교구</option>
-						<option value="의류">의류</option>
-						<option value="가방,신발,잡화">가방,신발,잡화</option>
-						<option value="기타">기타</option>
-					</select>
-				</div>
-				<br> <input type=hidden name="mbId" id="mbId" th:value="${memberDTO.mbId}"> <input type=hidden name="mbRole" id="mbRole"
-					th:value="${memberDTO.mbRole}">
-				<div class="register-container">
-					<input type="button" id="register_btn" value="회원가입" class="btn btn-primary item buttons">
-				</div>
-			</form>
-		</div>
-	</div>
-	<br>
-	<br>
-	*/-->
-
-	<footer th:replace="frags :: footer"></footer>
 	<th:block th:replace="libs :: script" />
 	<script src="/static/js/member/member_register.js"></script>
 
