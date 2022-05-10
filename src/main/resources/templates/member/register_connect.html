@@ -23,14 +23,13 @@
 				</div>
 				<div class="item">
 					<input type=text class="pin" name="guardPin" placeholder="보호자 계정 마이페이지 내 8자리 Pin번호를 입력해주세요.">
-					<!-- 보호자 닉네임 == Pin인지 확인하기  -->
 				</div>
-				<br>
+				<!-- 보호자 닉네임 == Pin인지 확인하기  -->
+				<div class="item">
+					<span style="color:#ffe6e6">[[${err}]]</span>
+				</div>
 				<div class="item">
 					<input type=submit class="btn btn-primary" value="회원가입 완료">
-				</div>
-				<div class="item">
-					<span style="color: red;">[[${err}]]</span>
 				</div>
 
 			</form>
