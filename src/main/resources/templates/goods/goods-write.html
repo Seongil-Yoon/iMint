@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title>iMint :: 상품작성</title>
 <th:block th:replace="libs :: style" />
-<th:block th:replace="goods-libs :: style" />
+<th:block th:replace="goods/goods-libs :: style" />
 <link rel="stylesheet" href="/static/css/goods/goods-write.css" />
 </head>
 
@@ -24,8 +24,8 @@
 			<div class="popup-overlay" tabindex="-1" style="opacity: 0; display: none;"></div>
 			<div class="row1">
 				<div class="form-floating location">
-					<input class="form-control" type="text" th:value="${member.mbLocation}" name="goodsLocation" aria-label="readonly input example" readonly
-						name="goodsLocation"> <label for="floatingInputValue">현재위치</label>
+					<input class="form-control" type="text" th:value="${member.mbLocation}" name="goodsLocation" aria-label="readonly input example" readonly>
+					<label for="floatingInputValue">현재위치</label>
 				</div>
 				<!-- <div class="roundBox" id="thumbnail">
 					<div>
@@ -91,7 +91,7 @@
 	</section>
 
 	<th:block th:replace="libs :: script" />
-	<th:block th:replace="goods-libs :: script" />
+	<th:block th:replace="goods/goods-libs :: script" />
 	<script src="/static/js/goods/goods-write.js"></script>
 </body>
 
