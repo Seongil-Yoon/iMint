@@ -1,0 +1,122 @@
+<!-- 버튼 -->
+<!--/*
+<div class="buttons">
+	<h6 class="select-title">전체선택</h6>
+	<input type="checkbox" class="selectAllbtn" name="selected" />
+	<button type="button" id="edit" class="btn btn-secondary btn-sm">수정</button>
+	<button type="button" id="delete" class="btn btn-secondary btn-sm">삭제</button>
+</div>
+*/-->
+
+<!-- 항목명 -->
+<div class="item-lables">
+	<div class="checkbox">
+		<h6 class="lables-checkbox">No.</h6>
+	</div>
+	<div class="status">
+		<h6 class="lables-status">구분</h6>
+	</div>
+	<div class="photo">
+		<h6 class="lables-photo">사진</h6>
+	</div>
+	<div class="subject">
+		<h6 class="lables-subject">거래명</h6>
+	</div>
+	<div class="interest">
+		<h6 class="lables-interest">관심 수</h6>
+	</div>
+	<div class="price">
+		<h6 class="lables-price">수입</h6>
+	</div>
+	<div class="link">
+		<h6 class="lables-link">지출</h6>
+	</div>
+</div>
+
+<!-- 항목별 내용 -->
+<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
+	<th:block th:each="comps : ${allComp}">
+		<th:block th:each="comp : ${comps.value}">
+			<div class="item-list item-list-guard" th:classappend="${comps.key}">
+				<div class="checkbox">
+					<!-- <input type="checkbox" class="select-targets" name="selected" /> -->
+					<p class="count">[[${compStat.count}]]</p>
+				</div>
+				<div class="status">
+					<p th:switch="${comp.category}" class="text">
+						<span th:case="sell" style="color: blue">판매</span> <span th:case="buy" style="color: #DD0000">구매</span>
+					</p>
+				</div>
+				<div class="photo">
+					<img class="photo" th:src="${comp.goodsImagesPath}">
+				</div>
+				<div class="subject">
+					<p class="text subject-text">[[${comp.goodsTitle}]]</p>
+				</div>
+				<div class="interest">
+					<p class="text">[[${comp.wishes}]]</p>
+				</div>
+				<th:block th:if="${#strings.equals(comp.category, 'sell')}">
+					<div class="price">
+						<p class="text text-price" style="color: blue">[[${comp.goodsPrice}]]</p>
+					</div>
+					<div class="link">
+						<p class="text text-link"></p>
+					</div>
+				</th:block>
+				<th:block th:unless="${#strings.equals(comp.category, 'sell')}">
+					<div class="price">
+						<p class="text text-price"></p>
+					</div>
+					<div class="link">
+						<p class="text text-link" style="color: #DD0000">[[${comp.goodsPrice}]]</p>
+					</div>
+				</th:block>
+			</div>
+		</th:block>
+	</th:block>
+</th:block>
+<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
+	<div th:if="${#lists.size(userComp) == 0}">
+		<br> <br>
+		<p>완료된 거래가 없어요. 지금 시작해 보세요!</p>
+	</div>
+	<th:block th:each="comp : ${userComp}">
+		<div class="item-list">
+			<div class="checkbox">
+				<!-- <input type="checkbox" class="select-targets" name="selected" /> -->
+				<p class="count">[[${compStat.count}]]</p>
+			</div>
+			<div class="status">
+				<p th:switch="${comp.category}" class="text">
+					<span th:case="sell" style="color: blue">판매</span> <span th:case="buy" style="color: #DD0000">구매</span>
+				</p>
+			</div>
+			<div class="photo">
+				<img class="photo" th:src="${comp.goodsImagesPath}">
+			</div>
+			<div class="subject">
+				<p class="text subject-text">[[${comp.goodsTitle}]]</p>
+			</div>
+			<div class="interest">
+				<p class="text">[[${comp.wishes}]]</p>
+			</div>
+			<th:block th:if="${#strings.equals(comp.category, 'sell')}">
+				<div class="price">
+					<p class="text text-price" style="color: blue">[[${comp.goodsPrice}]]</p>
+				</div>
+				<div class="link">
+					<p class="text text-link"></p>
+				</div>
+			</th:block>
+			<th:block th:unless="${#strings.equals(comp.category, 'sell')}">
+				<div class="price">
+					<p class="text text-price"></p>
+				</div>
+				<div class="link">
+					<p class="text text-link" style="color: #DD0000">[[${comp.goodsPrice}]]</p>
+				</div>
+			</th:block>
+		</div>
+	</th:block>
+</th:block>

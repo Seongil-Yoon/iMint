@@ -1,0 +1,87 @@
+<!-- 버튼 -->
+<!--/*
+<div class="buttons">
+	<h6 class="select-title">전체선택</h6>
+	<input type="checkbox" class="selectAllbtn" name="selected" />
+	<button type="button" id="block" class="btn btn-secondary btn-sm">차단</button>
+	<button type="button" id="chatroom-delete" class="btn btn-secondary btn-sm">삭제</button>
+</div>
+*/-->
+
+<!-- 항목명 -->
+<div class="item-lables-chat">
+	<div class="checkbox">
+		<h6 class="lables-checkbox">No.</h6>
+	</div>
+	<div class="photo">
+		<h6 class="lables-person">채팅 상대</h6>
+	</div>
+	<div class="interest">
+		<!-- <h6 class="lables-interest">관심 수</h6> -->
+	</div>
+	<div class="link">
+		<h6 id="link-price-out" class="lables-link">바로가기</h6>
+	</div>
+</div>
+
+<!-- 항목별 내용 -->
+<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
+	<th:block th:each="chats : ${allChat}">
+		<th:block th:each="chat : ${chats.value}">
+			<div class="item-list-chat item-list-guard" th:classappend="${chats.key}">
+				<div class="checkbox">
+					<!-- <input type="checkbox" class="select-targets" name="selected"/> -->
+					<p class="count">[[${chatStat.count}]]</p>
+				</div>
+				<div class="person">
+					<img th:src="${chat.opponentThumbnail}" class="person-photo">
+					<div class="person-detail">
+						<p class="item-person-nickname">[[${chat.opponentNick}]]</p>
+						<p class="item-person-chat">[[${chat.message}]]</p>
+						<div class="item-detail">
+							<p class="item-subject subject-text">[[${chat.goodsTitle}]]</p>
+							<p class="item-price">[[${chat.goodsPrice}]]</p>
+						</div>
+					</div>
+				</div>
+				<div class="interest">
+					<!-- <p class="text">관심 2</p> -->
+				</div>
+				<div class="link">
+					<button type="button" id="linkItem" class="btn btn-primary btn-sm" th:attr="onclick=|directJoinChatroom('${chat.id}', '${chats.key}')|">바로가기</button>
+				</div>
+			</div>
+		</th:block>
+	</th:block>
+</th:block>
+<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
+	<div th:if="${#lists.size(userChat) == 0}">
+		<br> <br>
+		<p>진행 중인 채팅이 없어요. 지금 시작해 보세요!</p>
+	</div>
+	<th:block th:each="chat : ${userChat}">
+		<div class="item-list-chat">
+			<div class="checkbox">
+				<!-- <input type="checkbox" class="select-targets" name="selected"/> -->
+				<p class="count">[[${chatStat.count}]]</p>
+			</div>
+			<div class="person">
+				<img th:src="${chat.opponentThumbnail}" class="person-photo">
+				<div class="person-detail">
+					<p class="item-person-nickname">[[${chat.opponentNick}]]</p>
+					<p class="item-person-chat">[[${chat.message}]]</p>
+					<div class="item-detail">
+						<p class="item-subject subject-text">[[${chat.goodsTitle}]]</p>
+						<p class="item-price">[[${chat.goodsPrice}]]</p>
+					</div>
+				</div>
+			</div>
+			<div class="interest">
+				<!-- <p class="text">관심 2</p> -->
+			</div>
+			<div class="link">
+				<button type="button" id="linkItem" class="btn btn-primary btn-sm" th:attr="onclick=|directJoinChatroom('${chat.id}')|">바로가기</button>
+			</div>
+		</div>
+	</th:block>
+</th:block>

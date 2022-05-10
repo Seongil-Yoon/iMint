@@ -48,7 +48,7 @@
 						</div>
 						<div class="transaction">
 							<h5 class="tag">거래완료</h5>
-							<br>[[${userComplete}]] 건<a class="btn btn-primary" href="/mypage/mylist">자세히</a>
+							<br>[[${userComp}]] 건<a class="btn btn-primary" href="/mypage/mylist">자세히</a>
 							<!-- 거래완료 요약 표  -->
 						</div>
 					</div>
@@ -105,9 +105,5 @@
 	<!-- 푸터 시작 -->
 	<footer th:replace="frags :: footer"></footer>
 	<th:block th:replace="libs :: script" />
-	<script type="text/javascript">
-		let currentPageButton = document.querySelector("#myimint");
-		currentPageButton.style.cssText = "color: #3387a8; background-color: #cdf0ea; font-weight: bold";
-	</script>
 </body>
 </html>
