@@ -3,11 +3,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.mypage.dao.IMypageDAO">
-	<!-- 내 아이 목록 -->
-	<select id="getMyChildrenList" resultType="MypageChildDTO">
+	<!-- 내 보호자 -->
+	<select id="getMyGuard" resultType="MypageConnectionDTO">
 		SELECT
-			mb_id AS child_id,
-			mb_nick AS child_nick
+			m2.mb_id,
+			m2.mb_nick
+		FROM
+			`imint`.`member` AS m1
+			JOIN `imint`.`member` AS m2 ON m1.mb_guard = m2.mb_id
+		WHERE
+			m1.mb_id LIKE #{myId}
+	</select>	
+	
+	<!-- 내 아이 목록 -->
+	<select id="getMyChildrenList" resultType="MypageConnectionDTO">
+		SELECT
+			mb_id,
+			mb_nick
 		FROM
 			`imint`.`member`
 		WHERE

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="style">
+	<!-- 외부 라이브러리 -->
+	<!-- Bootstrap WebJars -->
+	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+
+	<!-- sweetalert CDN libs -->
+	<link rel="stylesheet" href="/static/libs/sweetalert.min.css" />
+
+	<!-- 공통 스타일 -->
+	<link rel="stylesheet" href="/static/css/common_style.css" />
+
+	<!-- 헤더 스타일 -->
+	<link rel="stylesheet" href="/static/css/header.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- 채팅 스타일 -->
+	<link rel="stylesheet" href="/static/css/chat/chatbox.css" />
+</th:block>
+
+<th:block th:fragment="script">
+	<!-- 외부 라이브러리 -->
+	<!-- jQuery WebJars -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+
+	<!-- Bootstrap WebJars -->
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- sweetalert CDN libs -->
+	<script src="/static/libs/sweetalert.min.js"></script>
+
+	<!-- 공통 스크립트 -->
+
+	<!-- 헤더 스크립트 -->
+	<script src="/static/js/header.js"></script>
+	<script src="/static/js/header-search.js"></script>
+
+	<!-- 채팅 스크립트 -->
+	<script>
+		let chatboxMyId = "[[${session?.memberDTO?.mbId}]]";
+		let chatboxMyRole = "[[${session?.memberDTO?.mbRole}]]";
+	</script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<script src="/static/js/chat/chatbox.js"></script>
+</th:block>
+</html>

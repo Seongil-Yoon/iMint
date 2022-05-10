@@ -26,11 +26,11 @@ public class ChatInterceptor implements ChannelInterceptor {
 			String userName = sha.getFirstNativeHeader("user-name");
 			String userNick = chatService.getNick(userName);
 			if (userName.equals("") || userNick == null) {
-				System.out.println("STOMP CONNECT: UNAUTHORIZED USER");
+				// System.out.println("STOMP CONNECT: UNAUTHORIZED USER");
 				return null;
 			}
 			sha.setUser(new ChatPrincipal(userName, userNick));
-			System.out.println("STOMP CONN: " + sha.getUser().getName());
+			// System.out.println("STOMP CONN: " + sha.getUser().getName());
 		} else if (sha.getCommand().equals(StompCommand.SUBSCRIBE) || sha.getCommand().equals(StompCommand.SEND)) {
 			String userName = sha.getUser().getName();
 			String destination = sha.getDestination();
@@ -38,7 +38,7 @@ public class ChatInterceptor implements ChannelInterceptor {
 			if (!chatService.isChatroomJoinable(userName, chatroomId)) {
 				return null;
 			}
-			System.out.println("STOMP SUB/SEND: " + sha.getUser().getName() + " to chatroom " + chatroomId);
+			// System.out.println("STOMP SUB/SEND: " + sha.getUser().getName() + " to chatroom " + chatroomId);
 		}
 
 		return message;

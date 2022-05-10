@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>iMint :: Access Denied</title>
+<th:block th:replace="libs :: style" />
+</head>
+
+<body>
+	<h1>접근 거부(403): 미인증 회원</h1>
+
+	<script>
+		location.href = "/register";
+	</script>
+
+	<th:block th:replace="libs :: script" />
+	<script src="/static/js/index.js"></script>
+</body>
+</html>
+<!-- https://offbyone.tistory.com/367 -->

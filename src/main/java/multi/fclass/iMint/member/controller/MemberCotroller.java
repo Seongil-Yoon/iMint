@@ -52,217 +52,190 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 @Slf4j // 로그
 @Controller
 public class MemberCotroller {
-	
-	@Autowired
-	MemberDTO memberDTO;
-	
+
 	@Autowired
 	IMemberDAO memberDAO;
-	
+
 	@Autowired
 	ISecurityDAO securityDAO;
-	
+
 	@Autowired
 	ParseMbId parseMbId;
-	
+
 	@Autowired
 	IMemberService memberService;
-	
+
 	@Autowired
 	IFileService fileService;
-	
+
 	@Value("${root}")
 	private String root;
 
 	@Value("${directory}")
 	private String directory;
-	
+
 	@Value("${memberImagePath}")
 	String memberImagePath;
-	
+
 	// 회원 정보 수정 페이지 진입
 	@GetMapping("/mypage/edit")
 	public ModelAndView updateuser(Authentication auth) {
-		
+
 		ModelAndView mv = new ModelAndView();
 		// 비 로그인
 		if (auth == null) {
-					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
-		
-		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
-		mv.addObject("memberDTO", memberDTO);
-		
-		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/guard-mypage/guard-edit");
-		}
-		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-edit");
-		}
-		
+
+		mv.setViewName("mypage/edit");
 		return mv;
 	}
-	
-	// 회원 정보 수정 결과 
+
+	// 회원 정보 수정 결과
 	@PostMapping("/mypage/edit")
-	public ModelAndView updateuser(Authentication auth, MultipartFile thumbnail, String nickname, String interest) throws IOException {
-		
+	public ModelAndView updateuser(Authentication auth, MultipartFile thumbnail, String nickname, String interest)
+			throws IOException {
+
 		ModelAndView mv = new ModelAndView();
 		// 비 로그인
 		if (auth == null) {
-					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
-		
+
+		// 관심사 선택 안 했을 때 (보호자)
+		if (interest == null) {
+			interest = "";
+		}
+
 		String mbId = parseMbId.parseMbId(auth);
 
-		// 컷 부분 
-		MemberDTO memberDTO = memberService.updateuser(mbId, thumbnail, nickname, interest);
+		// 컷 부분
+		memberService.updateuser(mbId, thumbnail, nickname, interest);
 
-		mv.addObject("memberDTO", memberDTO);
-		
-		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("redirect:/mypage");
-		}
-		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("redirect:/mypage");
-		}
-		
+		mv.setViewName("redirect:/mypage");
 		return mv;
 	}
-	
+
 	// 닉네임 중복확인(비동기)
 	@ResponseBody
 	@RequestMapping("/edit/nickname")
-	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
-		
+	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { // Authentication auth ->
+																								// mbId로 연결하기 & 수정 & 권한
+																								// 업데이트
+
 		System.out.println(nickcheck);
 		Map<String, String> map = new HashMap<String, String>();
 		// 비 로그인
 		if (auth == null) {
-					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
-		
-		if (nickcheck.equals("") ){
-			map.put("result", "blank");		
+
+		if (nickcheck.equals("")) {
+			map.put("result", "blank");
 			System.out.println("blank");
-		}
-		else if (securityDAO.findByMbNick(nickcheck) == null || securityDAO.findByMbNick(nickcheck).getMbId().equals(mbId) ) { // 없거나, 본인이면
+		} else if (securityDAO.findByMbNick(nickcheck) == null
+				|| securityDAO.findByMbNick(nickcheck).getMbId().equals(mbId)) { // 없거나, 본인이면
 			System.out.println("ok");
 			map.put("result", "ok");
 			map.put("nickcheck", nickcheck);
-		}
-		else{
-			map.put("result", "duplicated");	
+		} else {
+			map.put("result", "duplicated");
 			System.out.println("duplicated");
 		}
-		return map;		
+		return map;
 	}
-	
-	
-	// 회원 탈퇴 페이지 진입 
+
+	// 회원 탈퇴 페이지 진입
 	@GetMapping("/mypage/withdraw")
-	public ModelAndView	deleteuser(Authentication auth) {
-		
+	public ModelAndView deleteuser(Authentication auth) {
+
 		ModelAndView mv = new ModelAndView();
 		// 비 로그인
 		if (auth == null) {
-					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		
-		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
-		mv.addObject("memberDTO", memberDTO);
-		
-		if(memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/guard-mypage/guard-withdraw"); 
-		}
-		else if(memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-withdraw");
-		}
-		
+		mv.setViewName("mypage/withdraw");
 		return mv;
 	}
-	
+
 	// 회원 탈퇴 결과
 	@PostMapping("/mypage/withdraw")
 	public String deleteuserresult(HttpServletRequest req, Authentication auth) {
 		// 비 로그인
 		if (auth == null) {
-					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
-		
+
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 
 		if (memberDTO.getMbRole() == Role.GUARD) { // 보호자일 때 연결된 아이도 모두 함꼐 탈퇴
 			try {
 				List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
-				System.out.println("childlist: "+childlist);
+				System.out.println("childlist: " + childlist);
 				for (MemberDTO childMemberDTO : childlist) { // childlist.size()
-					System.out.println("childMemberDTO: "+childMemberDTO);
+					System.out.println("childMemberDTO: " + childMemberDTO);
 					String childMbId = childMemberDTO.getMbId();
 					memberDAO.updatedelete(childMbId); // 한 명씩 모두 탈퇴
-				};			
+				}
+				;
 			} catch (Exception err) {
 				err.printStackTrace();
 			}
 		}
 
 		// 아이 모두 탈퇴시킨 뒤 보호자 탈퇴
-		memberDAO.updatedelete(mbId); 
-		
+		memberDAO.updatedelete(mbId);
+
 		// 세션에 변경사항 저장
 		SecurityContext context = SecurityContextHolder.getContext();
 		// UsernamePasswordAuthenticationToken
 		context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, null)); // Role 삭제
 		HttpSession session = req.getSession(true);
-		//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
-		session.setAttribute(HttpSessionSecurityContextRepository.
-		                       SPRING_SECURITY_CONTEXT_KEY, context);
-		
-		// 탈퇴하면 로그인 페이지로 보내기			
+		// 위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+		session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+
+		// 탈퇴하면 로그인 페이지로 보내기
 		return "member/login";
 	}
-	
-	// 프로필사진은 1개만 지정. 원래 파일명 저장 X. 삭제시 DB에서 삭제. 회원 탈퇴시 사진도 자동 삭제(사진이 컬럼이므로 따로 처리 필요 X)
+
+	// 프로필사진은 1개만 지정. 원래 파일명 저장 X. 삭제시 DB에서 삭제. 회원 탈퇴시 사진도 자동 삭제(사진이 컬럼이므로 따로 처리 필요
+	// X)
 	@ResponseBody
 	@RequestMapping("/mypage/edit/delete/thumbnail")
 	public Map<String, String> delete(Authentication auth) throws IOException {
 
 		Map<String, String> map = new HashMap<String, String>();
-		
+
 		// 비 로그인
 		if (auth == null) {
-					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
-		
+
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
+
 		// 파일 삭제
-		if(!memberDTO.getMbThumbnail().isEmpty()) {
+		if (!memberDTO.getMbThumbnail().isEmpty()) {
 
 			File file = new File(memberDTO.getMbThumbnail());
-			
+
 			if (file.exists()) {
 				file.delete(); // 삭제
 			}
 
 			// db에 업데이트 하기(저장경로 + 파일 이름)
 			memberDAO.updatedelthumbnail(mbId);
-			
+
 			map.put("result", "success");
-			
+
 			return map;
-		}
-		else {
+		} else {
 			map.put("result", "failure");
 			return map;
 		}
-		
+
 	}
-	
+
 }

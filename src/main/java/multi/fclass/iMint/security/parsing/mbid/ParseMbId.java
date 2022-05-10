@@ -54,8 +54,6 @@ public class ParseMbId {
 			}
 			
 		}
-		
-		System.out.println("mbId: " + mbId);
 
 		return mbId;
 	}
@@ -63,7 +61,6 @@ public class ParseMbId {
 	// mbId를 가진 Member 조회 
 	public MemberDTO getMemberMbId(String mbId) {
 		MemberDTO user = SecurityDAO.findByMbId(mbId);
-        System.out.println("mbId가 " + mbId + "인 유저 조회 결과: " + user);
 		return user;
 	}
 	
@@ -71,7 +68,6 @@ public class ParseMbId {
 	public Role getRoleMbId(String mbId) {
 		MemberDTO user = getMemberMbId(mbId);
 		Role mbRole = user.getMbRole();
-        System.out.println("mbId가 " + mbId + "인 유저의 권한은 " + mbRole);
 		return mbRole;
 	}
 	

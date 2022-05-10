@@ -13,14 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.Role;
-import multi.fclass.iMint.mypage.dao.IMypageDAO;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
-import multi.fclass.iMint.mypage.dto.MypageChildDTO;
+import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
 import multi.fclass.iMint.mypage.service.IMypageService;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
+import multi.fclass.iMint.security.parsing.role.ParseMbRole;
 
 /**
  * @author haeyeon
@@ -31,9 +31,6 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 public class MypageCotroller {
 
 	@Autowired
-	MemberDTO memberDTO;
-
-	@Autowired
 	IMemberDAO memberDAO;
 
 	@Autowired
@@ -42,11 +39,8 @@ public class MypageCotroller {
 	@Autowired
 	ParseMbId parseMbId;
 
-//	@Autowired
-//	MypageDTO mypageDTO;
-
 	@Autowired
-	IMypageDAO iMypageDAO;
+	ParseMbRole parseMbRole;
 
 	@Autowired
 	IMypageService mypageService;
@@ -58,79 +52,48 @@ public class MypageCotroller {
 		ModelAndView mv = new ModelAndView();
 
 		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		Role mbRole = parseMbId.getRoleMbId(mbId);
 
-		if (memberDTO.getMbRole() == Role.GUARD) {
-			mv.setViewName("member/guard-mypage/guard-main");
-		} else if (memberDTO.getMbRole() == Role.CHILD) {
-			mv.setViewName("member/baby-mypage/baby-main");
-		}
-		// 계정 관련 정보
-		String userID = memberDTO.getMbId();
-		String userNickName = memberDTO.getMbNick();
-		String userEmail = memberDTO.getMbEmail();
-		String userInterest = memberDTO.getMbInterest();
-		String userLocation = memberDTO.getMbLocation();
-		String userGuard = memberDTO.getMbGuard();
-		String userPin = memberDTO.getMbPin();
-		String userPhoto = memberDTO.getMbThumbnail();
-		System.out.println(userPhoto);
+		if (mbRole == Role.GUARD) {
+			List<MypageConnectionDTO> userChilds = mypageService.getMyChildrenList(mbId);
+			mv.addObject("userChilds", userChilds);
+		} else if (mbRole == Role.CHILD) {
+			MypageConnectionDTO guard = mypageService.getMyGuard(mbId);
+			mv.addObject("guard", guard);
 
-		MemberDTO userGuardNick = securityDAO.findByMbId(userGuard);
-		List<MypageChildDTO> userChilds = mypageService.getMyChildrenList(mbId);
+			// 거래 관련 정보
+			List<MypageDTO> userWish = mypageService.getWishAndReserveList(mbId);
+			mv.addObject("userWish", userWish.size());
 
-		mv.addObject("userID", userID);
-		mv.addObject("userNickName", userNickName);
-		mv.addObject("userEmail", userEmail);
-		mv.addObject("userInterest", userInterest);
-		mv.addObject("userLocation", userLocation);
-		mv.addObject("userGuard", userGuardNick);
-		mv.addObject("userPin", userPin);
-		mv.addObject("userChilds", userChilds);
-		mv.addObject("userPhoto", userPhoto);
+			List<MypageDTO> userSell = mypageService.getSellingList(mbId);
+			mv.addObject("userSell", userSell.size());
 
-		// 거래 관련 정보
-		List<MypageDTO> userWish = mypageService.getWishAndReserveList(mbId);
-		mv.addObject("userWish", userWish);
+			List<MypageDTO> userComplete = mypageService.getCompleteList(mbId);
+			mv.addObject("userComplete", userComplete.size());
 
-		List<MypageDTO> userSell = mypageService.getSellingList(mbId);
-		mv.addObject("userSell", userSell);
-
-		List<MypageDTO> userComplete = mypageService.getCompleteList(mbId);
-		mv.addObject("userComplete", userComplete);
-
-		// 구매, 판매 금액 표시
-		int totalSell = 0;
-		int totalBuy = 0;
-
-		for (MypageDTO complete : userComplete) {
-			if (complete.getCategory().equals("sell")) {
-				totalSell += complete.getGoodsPrice();
-			} else {
-				totalBuy += complete.getGoodsPrice();
+			// 구매, 판매 금액 표시
+			int totalSell = 0;
+			int totalBuy = 0;
+			for (MypageDTO complete : userComplete) {
+				if (complete.getCategory().equals("sell")) {
+					totalSell += complete.getGoodsPrice();
+				} else {
+					totalBuy += complete.getGoodsPrice();
+				}
 			}
+			mv.addObject("totalSell", totalSell);
+			mv.addObject("totalBuy", totalBuy);
 		}
 
-		mv.addObject("totalSell", totalSell);
-		mv.addObject("totalBuy", totalBuy);
-
+		mv.setViewName("mypage/main");
 		return mv;
 	}
 
 // 마이페이지 - 내 동네 설정	
 
 	@GetMapping("mypage/location")
-	public ModelAndView indexLocation(Authentication auth) {
-
-		ModelAndView mv = new ModelAndView();
-
-		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-
-		mv.addObject("memberDTO", memberDTO);
-		mv.setViewName("member/guard-mypage/guard-location");
-
-		return mv;
+	public String indexLocation(Authentication auth) {
+		return "mypage/location";
 	}
 
 	@PostMapping("mypage/location")
@@ -167,7 +130,7 @@ public class MypageCotroller {
 		if (memberDTO.getMbRole() == Role.GUARD) {
 			mv.setViewName("member/guard-mypage/guard-mylist");
 
-			List<MypageChildDTO> userChilds = mypageService.getMyChildrenList(mbId); // 닉네임 모음
+			List<MypageConnectionDTO> userChilds = mypageService.getMyChildrenList(mbId); // 닉네임 모음
 			mv.addObject("userChilds", userChilds);
 
 			// 맵으로 구현
@@ -176,24 +139,24 @@ public class MypageCotroller {
 			Map<String, List<MypageDTO>> allComplete = new HashMap<String, List<MypageDTO>>();
 			Map<String, List<MypageChatroomDTO>> allChat = new HashMap<String, List<MypageChatroomDTO>>();
 
-			for (MypageChildDTO child : userChilds) {
+			for (MypageConnectionDTO child : userChilds) {
 				// 아이별 관심/구매 목록 불러오기
 
-				List<MypageDTO> userWish = mypageService.getWishAndReserveList(child.getChildId());
-				allWish.put(child.getChildNick(), userWish);
+				List<MypageDTO> userWish = mypageService.getWishAndReserveList(child.getMbId());
+				allWish.put(child.getMbNick(), userWish);
 
 				// 아이별 판매 목록
-				List<MypageDTO> userSell = mypageService.getSellingList(child.getChildId());
-				allSell.put(child.getChildNick(), userSell);
+				List<MypageDTO> userSell = mypageService.getSellingList(child.getMbId());
+				allSell.put(child.getMbNick(), userSell);
 
 				// 아이별 거래완료 목록
-				List<MypageDTO> userComplete = mypageService.getCompleteList(child.getChildId());
-				allComplete.put(child.getChildNick(), userComplete);
+				List<MypageDTO> userComplete = mypageService.getCompleteList(child.getMbId());
+				allComplete.put(child.getMbNick(), userComplete);
 
 				// 아이별 거래완료 목록
-				List<MypageChatroomDTO> userChat = mypageService.getChatroomList(child.getChildId());
+				List<MypageChatroomDTO> userChat = mypageService.getChatroomList(child.getMbId());
 				userChat.removeIf((dto) -> (dto.getMessage() == null)); // 주고 받은 메세지(마지막 메세지)가 없으면 목록에서 제외
-				allChat.put(child.getChildNick(), userChat);
+				allChat.put(child.getMbNick(), userChat);
 
 			}
 

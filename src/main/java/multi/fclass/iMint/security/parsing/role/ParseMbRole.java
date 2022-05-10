@@ -31,13 +31,10 @@ public class ParseMbRole {
 	public String parseMbRole(Authentication auth) {
 		
 		DefaultOAuth2User authorization = (DefaultOAuth2User) auth.getPrincipal();
-        System.out.println(authorization);
 
 		Collection<? extends GrantedAuthority> role = authorization.getAuthorities();
 		String strRole = role.toString();
-	
 		
-        System.out.println("mbRole: " + strRole);
         return strRole;
 	}
 

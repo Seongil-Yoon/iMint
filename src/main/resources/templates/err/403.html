@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>iMint :: 403</title>
+<!-- CSS -->
+<th:block th:replace="libs :: style" />
+<link rel="stylesheet" href="/static/css/error.css" />
+</head>
+
+<body>
+	<div id="main">
+		<div class="fof">
+			<h1>[[${timestamp}]]</h1>
+			<br>
+			<h1>[[${status}]] - [[${error}]]</h1>
+			<br>
+			<h1>[[${message}]]</h1>
+			<br>
+			<button type="button">
+				<a th:if="${#strings.isEmpty(path)}" href="/">로그인으로 돌아가기</a>
+				<a th:unless="${#strings.isEmpty(path)}" th:href="${path}">홈으로 돌아가기</a>
+			</button>
+			<br> <img src="/static/images/403.png" alt="">
+		</div>
+	</div>
+
+	<th:block th:replace="libs :: script" />
+</body>
+
+</html>
