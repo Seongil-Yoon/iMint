@@ -5,30 +5,30 @@
 	<!-- 어사이드바 컨테이너 -->
 	<div class="aside-container">
 		<a class="content" href="/mypage">
-			<div id="myimint" class="aside-tab-item">
+			<div id="mypage-main" class="aside-tab-item">
 				<p class="tab-text">나의 아이민트</p>
+			</div>
+		</a><br> <a class="content" href="/mypage/mylist">
+			<div id="mypage-mylist" class="aside-tab-item">
+				<p class="tab-text">
+					내<span th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}"> 아이의</span> 거래목록
+				</p>
 			</div>
 		</a><br>
 		<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
 			<a class="content" href="/mypage/location">
-				<div id="mylocation" class="aside-tab-item">
+				<div id="mypage-location" class="aside-tab-item">
 					<p class="tab-text">내 동네 설정</p>
 				</div>
 			</a>
 			<br>
 		</th:block>
-		<a class="content" href="/mypage/mylist">
-			<div class="aside-tab-item">
-				<p class="tab-text">
-					내<span th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}"> 아이의</span> 거래목록
-				</p>
-			</div>
-		</a><br> <a class="content" href="/mypage/edit">
-			<div class="aside-tab-item">
+		<a class="content" href="/mypage/edit">
+			<div id="mypage-edit" class="aside-tab-item">
 				<p class="tab-text">회원정보 수정</p>
 			</div>
 		</a><br> <a class="content" href="/mypage/withdraw">
-			<div class="aside-tab-item">
+			<div id="mypgae-withdraw" class="aside-tab-item">
 				<p class="tab-text">회원 탈퇴</p>
 			</div>
 		</a>
