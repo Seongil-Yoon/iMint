@@ -94,9 +94,10 @@ var cnt = 1;
 
 function selectChild(event){
 	const selected = event.target.id;
+	const selectedNick = event.target.text;
 	const childTitle = document.getElementById('child-define');
 	
-	childTitle.innerHTML = "내 아이 " + selected + "님의 거래 목록입니다";
+	childTitle.innerHTML = "내 아이 " + selectedNick + "님의 거래 목록입니다";
 }
 
 childSelected.forEach(item => item.addEventListener('click', selectChild));
@@ -106,22 +107,16 @@ childSelected.forEach(item => item.addEventListener('click', selectChild));
 function showChild(event){
 	const selected = event.target.id;
 	
-	console.log(selected);
-	
 	removeShowList();
 	
 	targetList = document.getElementsByClassName(selected);
 	
-	console.log(targetList);
 	/*parentlist = $(listTarget).parents(".show");
 	childlist= $(parentlist).find("div.item-list");
 	*/
-
-	console.log(targetList[0]);
 	
 	for(i = 0; i < targetList.length; i++){
-		targetList[i].classList.add('show-list');	
-		console.log(targetList[i]);
+		targetList[i].classList.add('show-list');
 	}
 	
 	childbtns = $(targetList).find("p.count");
@@ -153,7 +148,6 @@ const subject = document.querySelectorAll('.subject-text');
 
 for(i = 0; i < subject.length; i++){
 	text = subject[i].innerHTML;
-	console.log(text);
 	if(text.length >= 5){
 		text_ = text.substr(0, 5);
 		subject[i].innerHTML = text_ + "..";

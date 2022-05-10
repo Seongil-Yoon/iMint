@@ -3,8 +3,6 @@ var ajax_check = "";
 /* ajax로 닉네임 중복확인 */
 $("#nickname-check").on('click', function() {
 	var mbNick = $("#nickname-update").val();
-	console.log("checking");
-	console.log(mbNick);
 	$.ajax({
 		url: "/edit/nickname",
 		type: 'get',
@@ -16,7 +14,6 @@ $("#nickname-check").on('click', function() {
 
 		success: function(response) { /* 중복확인 결과  */
 			if (response.result == "ok") {
-				console.log("ok")
 				ajax_check = "ok";
 				$("#nickappend").html('<p style = "color: green;">사용가능한 닉네임입니다.</p>');
 			} // if end 
