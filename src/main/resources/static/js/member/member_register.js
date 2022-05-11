@@ -34,7 +34,7 @@ $("#email_btn").on("click", function(){
 		var exptext = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 
 			if(exptext.test(email)===false){
-			//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우			
+			//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐 경우			
 				$("#emailappend").html('<p style = "color: #ffe6e6;">정확한 이메일을 입력해주세요.</p>');
 				$("#mbEmail").focus();
 			}
