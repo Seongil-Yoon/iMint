@@ -37,11 +37,12 @@
     display: block;
     text-align: center;
     padding: 3rem;
-    height: 550px;
     border: 1px;
      background-color: #F9F9F9;
     border-radius: 15px;
-    margin-bottom: 2rem;
+    margin-bottom: 7rem;
+	height: 630px;
+    
 }
 
 /* 안내 메시지 */
@@ -49,8 +50,3 @@
 	margin-bottom: 5rem;
 }
 
-/* 비밀번호 입력 칸 */
-input.buttons-text {
-    height: 35px;
-    width: 200px;
-}
