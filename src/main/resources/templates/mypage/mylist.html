@@ -30,7 +30,7 @@
 					<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
 						<h2 th:if="${#lists.size(userChilds) == 0}">연결된 아이가 없습니다.</h2>
 						<th:block th:unless="${#lists.size(userChilds) == 0}">
-							<h2 id="child-define">조회하실 아이를 선택해 주세요.</h2>
+							<h2 id="child-define">거래 목록을 조회하실 아이를 선택해 주세요.</h2>
 							<br>
 							<div class="dropdown">
 								<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">아이

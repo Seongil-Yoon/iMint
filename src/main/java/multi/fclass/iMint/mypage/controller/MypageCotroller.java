@@ -186,21 +186,24 @@ public class MypageCotroller {
 		return mv;
 	}
 
-//	@GetMapping("mypage/block")
-//	public ModelAndView indexBlocklist(Authentication auth) {
-//		ModelAndView mv = new ModelAndView();
-//		
-//		String mbId = parseMbId.parseMbId(auth);
-//		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-//		
-//		if(memberDTO.getMbRole() == Role.UN_GUARD) {
-//			mv.setViewName("member/guard-mypage/guard-blocklist"); 
-//		}
-//		else if(memberDTO.getMbRole() == Role.UN_CHILD) {
-//			mv.setViewName("member/baby-mypage/baby-blocklist");
-//		}
-//		
-//		return mv;
-//	}
+@GetMapping("mypage/block")
+public ModelAndView indexBlocklist(Authentication auth) {
+ModelAndView mv = new ModelAndView();
+
+		String mbId = parseMbId.parseMbId(auth);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+
+		
+		if(memberDTO.getMbRole() == Role.GUARD) {
+			List<MypageConnectionDTO> userChilds = mypageService.getMyChildrenList(mbId);
+			mv.addObject("userChilds", userChilds);
+			mv.setViewName("mypage/blocklist"); 
+		}
+		else if(memberDTO.getMbRole() == Role.CHILD) {
+			mv.setViewName("mypage/blocklist");
+		}
+		
+		return mv;
+	}
 	
 }
