@@ -172,6 +172,7 @@ public class MemberCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 
+		// 보호자 탈퇴인 경우: 아이 모두 탈퇴시킨 뒤 보호자 탈퇴
 		if (memberDTO.getMbRole() == Role.GUARD) { // 보호자일 때 연결된 아이도 모두 함께 탈퇴시킨다 
 			memberDTO.setMbRole(Role.UN_GUARD); // 미인증 회원으로 강등 
 			try {
@@ -186,10 +187,15 @@ public class MemberCotroller {
 			} catch (Exception err) {
 				err.printStackTrace();
 			}
+			
+			// 연결된 아이를모두 탈퇴시킨 후 보호자 본인도 탈퇴
+			memberDAO.updatedelete(mbId, Role.UN_GUARD);
 		}
 
-		// 아이 모두 탈퇴시킨 뒤 보호자 탈퇴
-		memberDAO.updatedelete(mbId, Role.UN_GUARD);
+		// 아이 탈퇴인 경우: 혼자 탈퇴 
+		if (memberDTO.getMbRole() == Role.CHILD) {
+			memberDAO.updatedelete(mbId, Role.UN_CHILD);
+		}
 
 		// 세션 수정
 	    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
