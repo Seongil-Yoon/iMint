@@ -44,7 +44,12 @@
 				</div>
 				<div class="status">
 					<p th:switch="${wish.category}" class="text">
-						<span th:case="wait">구매 가능</span> <span th:case="resrv">예약 중</span> <span th:case="comp">거래 완료</span>
+						<span th:case="wait">구매 가능</span>
+						<span th:case="resrv">예약 중</span>
+						<span th:case="comp">구매 완료</span>
+						<span th:case="'!resrv'">예약 불가</span>
+						<span th:case="'!comp'">구매 불가</span>
+						<span th:case="*">[[${wish.category}]]</span>
 					</p>
 				</div>
 				<div class="photo">
@@ -80,7 +85,12 @@
 			</div>
 			<div class="status">
 				<p th:switch="${wish.category}" class="text">
-					<span th:case="wait">구매 가능</span> <span th:case="resrv">예약 중</span> <span th:case="comp">거래 완료</span>
+					<span th:case="wait">구매 가능</span>
+					<span th:case="resrv">예약 중</span>
+					<span th:case="comp">구매 완료</span>
+					<span th:case="'!resrv'">예약 불가</span>
+					<span th:case="'!comp'">구매 불가</span>
+					<span th:case="*">[[${wish.category}]]</span>
 				</p>
 			</div>
 			<div class="photo">
