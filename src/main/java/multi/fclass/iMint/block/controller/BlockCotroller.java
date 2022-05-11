@@ -23,9 +23,6 @@ public class BlockCotroller {
 	ParseMbId parseMbId;
 	
 	@Autowired
-	MemberDTO memberDTO;
-	
-	@Autowired
 	IMemberDAO memberDAO;
 	
 	// 일단은 아이만 고려
