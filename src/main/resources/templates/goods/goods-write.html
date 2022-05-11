@@ -14,8 +14,8 @@
 
 	<section class="container">
 		<form>
-			<input style="display: none;" type="hidden" name="mbId" th:value="${member.mbId}" /> <input
-				style="display: none;" type="hidden" name="mbNick" th:value="${member.mbNick}" />
+			<input style="display: none;" type="hidden" name="mbId" th:value="${member?.mbId}" /> <input
+				style="display: none;" type="hidden" name="mbNick" th:value="${member?.mbNick}" />
 			<article class="upload-popup" id="uploadPopup">
 				<input type="file" multiple name="goodsImages" id="goodsImages"
 					accept=".jpg, .jpeg, .png, .svg, .gif" />
@@ -25,7 +25,7 @@
 			<div class="popup-overlay" tabindex="-1" style="opacity: 0; display: none;"></div>
 			<div class="row1">
 				<div class="form-floating location">
-					<input class="form-control" type="text" th:value="${member.mbLocation}" name="goodsLocation"
+					<input class="form-control" type="text" th:value="${member?.mbLocation}" name="goodsLocation"
 						aria-label="readonly input example" readonly> <label for="floatingInputValue">현재위치</label>
 				</div>
 				<!-- <div class="roundBox" id="thumbnail">

@@ -14,11 +14,11 @@
 
 	<section class="container">
 		<form>
-			<input style="display: none;" type="hidden" id="goodsId" th:value="${goods.goodsId}" /> <input
-				style="display: none;" type="hidden" name="sellerId" th:value="${goods.sellerId}" /> <input
-				style="display: none;" type="hidden" name="sellerNick" th:value="${goods.sellerNick}" />
-			<input style="display: none;" type="hidden" name="goodsCategory" th:value="${goods.goodsCategory}" /> <input
-				style="display: none;" type="hidden" name="goodsSuggestible" th:value="${goods.goodsSuggestible}" />
+			<input style="display: none;" type="hidden" id="goodsId" th:value="${goods?.goodsId}" /> <input
+				style="display: none;" type="hidden" name="sellerId" th:value="${goods?.sellerId}" /> <input
+				style="display: none;" type="hidden" name="sellerNick" th:value="${goods?.sellerNick}" />
+			<input style="display: none;" type="hidden" name="goodsCategory" th:value="${goods?.goodsCategory}" /> <input
+				style="display: none;" type="hidden" name="goodsSuggestible" th:value="${goods?.goodsSuggestible}" />
 			<article class="upload-popup" id="uploadPopup">
 				<input type="file" multiple name="goodsImages" id="goodsImages"
 					accept=".jpg, .jpeg, .png, .svg, .gif" />
@@ -28,7 +28,7 @@
 			<div class="popup-overlay" tabindex="-1" style="opacity: 0; display: none;"></div>
 			<div class="row1">
 				<div class="form-floating location">
-					<input class="form-control" type="text" th:value="${member.mbLocation}" name="goodsLocation"
+					<input class="form-control" type="text" th:value="${member?.mbLocation}" name="goodsLocation"
 						aria-label="readonly input example" readonly> <label for="floatingInputValue">현재위치</label>
 				</div>
 				<!-- <div class="roundBox" id="thumbnail">
@@ -53,7 +53,7 @@
 			<div class="row2">
 				<div class="form-floating title">
 					<input type="text" class="form-control" id="floatingInputValue" placeholder="" name="goodsTitle"
-						required th:value="${goods.goodsTitle}">
+						required th:value="${goods?.goodsTitle}">
 					<label for="floatingInputValue">제목 입력하기</label>
 				</div>
 				<div class="form-floating category">
@@ -79,14 +79,14 @@
 				</div>
 				<div class="form-floating price">
 					<input type="number" class="form-control" id="floatingInputValue" placeholder="원" name="goodsPrice"
-						required th:value="${goods.goodsPrice}">
+						required th:value="${goods?.goodsPrice}">
 					<label for="floatingInputValue">가격 입력하기</label>
 				</div>
 			</div>
 			<div class="row4">
 				<div class="form-floating content">
 					<textarea class="form-control" placeholder="100자 이내" id="floatingTextarea" name="goodsContent"
-						required>[[${goods.goodsContent}]]</textarea>
+						required>[[${goods?.goodsContent}]]</textarea>
 					<label for="floatingTextarea">글 내용 입력하기(100자 이내)</label>
 				</div>
 			</div>
