@@ -121,8 +121,6 @@ public class MemberCotroller {
 	@RequestMapping("/edit/nickname")
 	public Map<String, String> nickname(String nickcheck, String mbId, Authentication auth) { // Authentication auth ->
 																								// mbId로 연결하기 & 수정 & 권한
-																								// 업데이트
-
 		System.out.println(nickcheck);
 		Map<String, String> map = new HashMap<String, String>();
 		// 비 로그인
@@ -150,6 +148,7 @@ public class MemberCotroller {
 	public ModelAndView deleteuser(Authentication auth) {
 
 		ModelAndView mv = new ModelAndView();
+		
 		// 비 로그인
 		if (auth == null) {
 			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
@@ -162,6 +161,7 @@ public class MemberCotroller {
 	// 회원 탈퇴 결과
 	@PostMapping("/mypage/withdraw")
 	public String deleteuserresult(HttpServletRequest req, Authentication auth) {
+		
 		// 비 로그인
 		if (auth == null) {
 			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
@@ -170,28 +170,33 @@ public class MemberCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 
-		if (memberDTO.getMbRole() == Role.GUARD) { // 보호자일 때 연결된 아이도 모두 함꼐 탈퇴
+		if (memberDTO.getMbRole() == Role.GUARD) { // 보호자일 때 연결된 아이도 모두 함께 탈퇴시킨다 
+			memberDTO.setMbRole(Role.UN_GUARD); // 미인증 회원으로 강등 
 			try {
 				List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
 				System.out.println("childlist: " + childlist);
-				for (MemberDTO childMemberDTO : childlist) { // childlist.size()
+				for (MemberDTO childMemberDTO : childlist) { 
 					System.out.println("childMemberDTO: " + childMemberDTO);
 					String childMbId = childMemberDTO.getMbId();
-					memberDAO.updatedelete(childMbId); // 한 명씩 모두 탈퇴
-				}
-				;
+					// 미인증 회원으로 강등 
+					memberDAO.updatedelete(childMbId, Role.UN_CHILD); // 한 명씩 모두 탈퇴
+				};
 			} catch (Exception err) {
 				err.printStackTrace();
 			}
 		}
 
 		// 아이 모두 탈퇴시킨 뒤 보호자 탈퇴
-		memberDAO.updatedelete(mbId);
+		memberDAO.updatedelete(mbId, Role.UN_GUARD);
 
+		// 세션 수정
+	    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
+	    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
+		
 		// 세션에 변경사항 저장
 		SecurityContext context = SecurityContextHolder.getContext();
 		// UsernamePasswordAuthenticationToken
-		context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, null)); // Role 삭제
+		context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities)); // Role을 미인증 회원(UN_CHILD, UN_GUARD)으로 업데이트
 		HttpSession session = req.getSession(true);
 		// 위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 		session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);

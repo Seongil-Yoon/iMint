@@ -71,15 +71,18 @@ public class IndexController {
 		try { // 로그인 상태인 경우 
 			String mbId = parseMbId.parseMbId(auth);
 			MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-			if(memberDTO.getMbRole() == Role.UN_CHILD || memberDTO.getMbRole() == Role.UN_GUARD) { // 권한이 미인증 회원이면 회원가입 마치도록 이동 
+			// 회원가입 미완료(아이, 보호자 각각, 자진 탈퇴 회원)상태이면 회원가입 페이지로 이동 
+			if(memberDTO.getMbRole() == Role.UN_CHILD || memberDTO.getMbRole() == Role.UN_GUARD) {
 				mv.setViewName("member/register");							
 			}
+			// 관리자면 관리자 페이지로 이동 
 			else if(memberDTO.getMbRole() == Role.ADMIN) {
 				mv.addObject(memberDTO);
 				mv.setViewName("redirect:/admin/member");
 			}
+			// 권한이 가입완료된 회원(CHILD, GUARD)이면 메인으로 이동
 			else {
-				mv.setViewName("redirect:/main");	// 권한이 인증인 회원이면 메인으로 이동
+				mv.setViewName("redirect:/main");	
 			}
 			mv.addObject("memberDTO", memberDTO);
 		} catch (Exception e) { // 비로그인 상태이면 로그인 페이지로 이동
@@ -199,7 +202,7 @@ public class IndexController {
 	String mbId = parseMbId.parseMbId(auth);
 	MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 	mv.addObject("memberDTO", memberDTO);
-
+	
 	try {
 		// 미인증 보호자(UN_GUARD)인 경우 mbLocation 받아오기, 회원가입 마치면 GUARD로 권한 업그레이드 
 		if (memberDTO.getMbRole() == Role.UN_GUARD) { // 보호자 

@@ -49,10 +49,8 @@ public class ParseMbId {
 				naverMap = authorization.getAttributes();
 				naverMap = (Map<String, Object>) naverMap.get("response");
 				customerId = (String) naverMap.get("id");
-				
 				mbId = "naver_" + customerId;
 			}
-			
 		}
 
 		return mbId;
