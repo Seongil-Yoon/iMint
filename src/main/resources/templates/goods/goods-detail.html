@@ -11,34 +11,34 @@
 <body>
 	<header th:replace="frags :: header"></header>
 
-	<input style="display: none;" type="hidden" id="goodsId" th:value="${goods.goodsId}" />
-	<input style="display: none;" type="hidden" id="sellerId" th:value="${goods.sellerId}" />
-	<input style="display: none;" type="hidden" id="sellerNick" th:value="${goods.sellerNick}" />
-	<input style="display: none;" type="hidden" id="buyerId" th:value="${member.mbId}" />
-	<input style="display: none;" type="hidden" id="buyerNick" th:value="${member.mbNick}" />
-	<input style="display: none;" type="hidden" id="goodsTitle" th:value="${goods.goodsTitle}" />
+	<input style="display: none;" type="hidden" id="goodsId" th:value="${goods?.goodsId}" />
+	<input style="display: none;" type="hidden" id="sellerId" th:value="${goods?.sellerId}" />
+	<input style="display: none;" type="hidden" id="sellerNick" th:value="${goods?.sellerNick}" />
+	<input style="display: none;" type="hidden" id="buyerId" th:value="${member?.mbId}" />
+	<input style="display: none;" type="hidden" id="buyerNick" th:value="${member?.mbNick}" />
+	<input style="display: none;" type="hidden" id="goodsTitle" th:value="${goods?.goodsTitle}" />
 	<section class="container">
 		<article class="row1">
-			<h1>[[${goods.goodsTitle}]]</h1>
-			<th:block th:if="${#strings.equals(member.mbId, goods.sellerId)}">
-				<a id="modifyBtn" th:value="${goods.goodsId}"> <img src="/static/images/write-icon.png" alt=""></a>
-				<a id="deleteBtn" th:value="${goods.goodsId}"> <img src="/static/images/delete-icon.png" alt=""></a>
+			<h1>[[${goods?.goodsTitle}]]</h1>
+			<th:block th:if="${#strings.equals(member?.mbId, goods?.sellerId)}">
+				<a id="modifyBtn" th:value="${goods?.goodsId}"> <img src="/static/images/write-icon.png" alt=""></a>
+				<a id="deleteBtn" th:value="${goods?.goodsId}"> <img src="/static/images/delete-icon.png" alt=""></a>
 			</th:block>
-			<th:block th:unless="${#strings.equals(member.mbId, goods.sellerId)}">
+			<th:block th:unless="${#strings.equals(member?.mbId, goods?.sellerId)}">
 				<!-- 둘러보기 -->
 			</th:block>
 		</article>
 		<article class="row2">
-			<th:block th:switch="${goods.goodsStatus}">
+			<th:block th:switch="${goods?.goodsStatus}">
 				<span th:case="wait" class="badge rounded-pill bg-success goods-status">판매중</span>
 				<span th:case="resrv" class="badge rounded-pill bg-warning text-dark goods-status">예약중</span>
 				<span th:case="comp" class="badge rounded-pill bg-secondary goods-status">판매완료</span>
 				<div class="goods-info">
 					<div>
-						<span>[[${goods.sellerNick}]]</span> <img class="member-rating" src="/static/images/sun_4.png" alt=""> <span>[[${goods.goodsLocation}]]</span>
+						<span>[[${goods?.sellerNick}]]</span> <img class="member-rating" src="/static/images/sun_4.png" alt=""> <span>[[${goods?.goodsLocation}]]</span>
 						<span>🤍 관심 [[${countWishes}]]</span>
 					</div>
-					<span class="goods-date" id="timeForToday">[[${goods.goodsCreateDate}]]</span>
+					<span class="goods-date" id="timeForToday">[[${goods?.goodsCreateDate}]]</span>
 				</div>
 		</article>
 		<article class="carousel">
@@ -73,22 +73,22 @@
 			</div>
 		</article>
 		<article class="goods-content-wrap">
-			<textarea disabled id="goods-content" th:placeholder="${goods.goodsContent}"></textarea>
+			<textarea disabled id="goods-content" th:placeholder="${goods?.goodsContent}"></textarea>
 		</article>
 		<article class="roundBox goods-action" id="js-goods-action">
 			<!-- 일단 로그인됫다고 가정하고 페이지작성 -->
 			<div>
-				<span>카테고리 : [[${goods.goodsCategory}]]</span> <span id="goodsPrice">가격 : [[${goods.goodsPrice}]]원</span> <span th:if="${goods.goodsSuggestible}">가격
-					제안 가능</span> <span th:unless="${goods.goodsSuggestible}">가격 제안 불가능</span>
+				<span>카테고리 : [[${goods?.goodsCategory}]]</span> <span id="goodsPrice">가격 : [[${goods?.goodsPrice}]]원</span> <span th:if="${goods?.goodsSuggestible}">가격
+					제안 가능</span> <span th:unless="${goods?.goodsSuggestible}">가격 제안 불가능</span>
 			</div>
 			<div></div>
 			<div>
-				<th:block th:if="${member.mbId == null || #strings.equals(member.mbRole,'GUARD')}">
+				<th:block th:if="${member?.mbId == null || #strings.equals(member?.mbRole,'GUARD')}">
 					<!-- 둘러보기 -->
 				</th:block>
-				<th:block th:unless="${member.mbId == null || #strings.equals(member.mbRole,'GUARD')}">
-					<a th:if="${#strings.equals(member.mbId, goods.sellerId)}" class="btn btn-primary" onclick="directOpenChatroom()"> 내 채팅 목록 </a>
-					<th:block th:unless="${#strings.equals(member.mbId, goods.sellerId)}">
+				<th:block th:unless="${member?.mbId == null || #strings.equals(member?.mbRole,'GUARD')}">
+					<a th:if="${#strings.equals(member?.mbId, goods?.sellerId)}" class="btn btn-primary" onclick="directOpenChatroom()"> 내 채팅 목록 </a>
+					<th:block th:unless="${#strings.equals(member?.mbId, goods?.sellerId)}">
 						<button type="button" class="btn btn-primary" id="wishBtn">관심</button>
 						<a class="btn btn-primary" id="chatBtn">채팅하기</a>
 					</th:block>
@@ -101,7 +101,7 @@
 	<script type="text/javascript" src="/static/js/goods/goods-detail.js"></script>
 	<script type="text/javascript" src="/static/js/goods/carousel.js"></script>
 	<script>
-		carouselReady("[[${goods.goodsId}]]");
+		carouselReady("[[${goods?.goodsId}]]");
 	</script>
 </body>
 
