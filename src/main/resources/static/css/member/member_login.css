@@ -58,6 +58,7 @@ a{
  
 /* 움직이는 효과 with JS */ 
 .fadeinleft {
+	
     opacity:0;
     margin-left:-480px;    
     max-width:100%;
