@@ -16,10 +16,10 @@
         WHERE (mb_id = #{mbId});
     </update>
 
-<!-- 회원가입4: 최종 회원가입. 보호자는 내 동네 설정, 아이는 보호자 계정 연동 단계. 이 단계가 완료되면 Role을 각각 업그레이드 -->
+<!-- 회원가입4: 최종 회원가입. 보호자는 내 동네 설정, 아이는 보호자 계정 연동 단계. 이 단계가 완료되면 Role을 각각 업그레이드, 탈퇴여부 0(자진 탈퇴 후 재가입회원 대상) -->
     <update id="updateregister4" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
-        SET mb_role = #{mbRole}, mb_location = #{mbLocation}, mb_guard = #{mbGuard}, mb_pin = #{mbPin}
+        SET mb_role = #{mbRole}, mb_location = #{mbLocation}, mb_guard = #{mbGuard}, mb_pin = #{mbPin}, mb_isdelete = 0
         WHERE (mb_id = #{mbId});
     </update>
 
@@ -45,7 +45,7 @@
         SELECT * FROM imint.member WHERE mb_nick = #{mbNick}
     </select>  
     
-<!--     연동된 보호자의 mbId(식별값)으로 유저 조회. 아이만 해당. -->
+<!-- 연동된 보호자의 mbId(식별값)으로 유저 조회. 아이만 해당. -->
     <select id="findByMbGuard" resultType="multi.fclass.iMint.member.dto.MemberDTO">
         SELECT * FROM imint.member WHERE mb_guard = #{mbGuard}
     </select>  

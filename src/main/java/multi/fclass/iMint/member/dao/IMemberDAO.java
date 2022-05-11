@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import multi.fclass.iMint.member.dto.MemberDTO;
+import multi.fclass.iMint.member.dto.Role;
 
 /**
  * @author Junming, Yang
@@ -17,7 +18,7 @@ public interface IMemberDAO {
 	public void updatemember(MemberDTO memberDTO);
 	
 	// 탈퇴
-	public void updatedelete(String mbId);
+	public void updatedelete(String mbId, Role mbRole);
 
 	// 동네
 	public void updatelocation(MemberDTO memberDTO);
