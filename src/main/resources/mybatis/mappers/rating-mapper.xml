@@ -3,14 +3,31 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.rating.dao.IRatingDAO">
-	<!-- 작성한 평가 가져오기 -->
+	<!-- 평가 작성을 위한 정보 가져오기 -->
 	<select id="selectRating" resultType="RatingDTO">
 		SELECT
-			*
+			trx.trx_id,
+			r.rating_id,
+			r.mb_id AS rater_id,
+			r.rating_score,
+			r.rating_create_date,
+			g.goods_id,
+			g.goods_title,
+			gi.goods_images_path,
+			IF(g.seller_id LIKE #{myId}, trx.mb_id, g.seller_id) AS opponent_id,
+	    	IF(g.seller_id LIKE #{myId}, mb.mb_nick, g.seller_nick) AS opponent_nick
 		FROM
-			`imint`.`rating`
+			`imint`.`transaction` AS trx
+			JOIN `imint`.`goods` AS g ON trx.goods_id = g.goods_id
+			JOIN (SELECT mb_id, mb_nick FROM `imint`.`member`) AS mb on trx.mb_id = mb.mb_id
+	    	LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+	    	LEFT JOIN (SELECT * FROM `imint`.`rating` WHERE mb_id LIKE #{myId}) AS r ON r.trx_id = trx.trx_id
 		WHERE
-			trx_id = #{trxId} AND mb_id LIKE #{myId}
+			trx.trx_isdelete = FALSE
+			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
+		    AND (g.seller_id LIKE #{myId} OR trx.mb_id LIKE #{myId})
+		    AND trx.trx_id = #{trxId}
+		    AND gi.goods_images_thumbnail = TRUE
 	</select>
 	
 	<!-- 평가 작성하기 -->
@@ -21,26 +38,12 @@
 			(#{trxId}, #{myId}, #{ratingScore})
 	</insert>
 	
-	<!-- 모든 평가 평균 가져오기 -->
-	<select id="selectAvgRating" resultType="double">
-		SELECT
-			avg(r.rating_score)
-		FROM
-			`imint`.`rating` AS r
-			JOIN `imint`.`transaction` AS trx ON r.trx_id = trx.trx_id
-			JOIN `imint`.`goods` AS g ON trx.goods_id = g.goods_id
-		WHERE
-			trx.trx_isdelete = FALSE
-			AND (trx.mb_id LIKE #{mbId} OR g.seller_id LIKE #{mbId})
-			AND r.mb_id NOT LIKE #{mbId}
-	</select>
-	
 	<!-- 회원정보에 평가점수 반영하기 -->
 	<update id="updateMemberRating">
 		UPDATE
 			`imint`.`member`
 		SET
-			mb_ratings_total = #{newRating}
+			mb_ratings_total = mb_ratings_total + #{newRating}
 		WHERE
 			mb_id LIKE #{mbId}
 	</update>

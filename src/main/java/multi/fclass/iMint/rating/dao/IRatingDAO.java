@@ -15,8 +15,6 @@ public interface IRatingDAO {
 
 	public int insertRating(String myId, int trxId, double ratingScore);
 
-	public double selectAvgRating(String mbId);
-
 	public int updateMemberRating(String mbId, double newRating);
 
 }

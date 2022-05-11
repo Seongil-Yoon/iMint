@@ -17,26 +17,25 @@ public class RatingServiceImpl implements IRatingService {
 	IRatingDAO ratingDAO;
 
 	@Override
-	public boolean isRated(String myId, int trxId) {
-		RatingDTO ratingDTO = ratingDAO.selectRating(myId, trxId);
+	public RatingDTO getRatingInfo(String myId, int goodsId) {
 
-		if (ratingDTO == null) {
-			return false;
-		} else {
-			return true;
-		}
+		return ratingDAO.selectRating(myId, goodsId);
 	}
 
 	@Override
-	public boolean makeRating(String myId, int trxId, double ratingScore) {
-		if (isRated(myId, trxId)) {
-			return false;
-		} else {
-			if (ratingDAO.insertRating(myId, trxId, ratingScore) == 1) {
+	public boolean makeRating(String myId, int trxId, int ratingScore) {
+		if (ratingDAO.insertRating(myId, trxId, ratingScore) == 1) {
+			System.out.println("insert OK");
+			if (ratingDAO.updateMemberRating(myId, ratingScore - 3) == 1) {
+				System.out.println("update OK");
 				return true;
 			} else {
+				System.out.println("update FAIL");
 				return false;
 			}
+		} else {
+			System.out.println("insert FAIL");
+			return false;
 		}
 	}
 

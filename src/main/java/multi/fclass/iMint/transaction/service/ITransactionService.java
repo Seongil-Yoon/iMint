@@ -10,6 +10,8 @@ import multi.fclass.iMint.transaction.dto.TransactionChatroomDTO;
  */
 public interface ITransactionService {
 
+	public int getTransaction(String myId, int goodsId);
+
 	public String checkTransaction(String myId, int goodsId);
 
 	public String checkTransaction(String myId, String opponentId, int goodsId);
