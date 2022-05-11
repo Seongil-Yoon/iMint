@@ -197,7 +197,7 @@ public class MemberCotroller {
 		session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
 
 		// 탈퇴하면 로그인 페이지로 보내기
-		return "member/login";
+		return "index";
 	}
 
 	// 프로필사진은 1개만 지정. 원래 파일명 저장 X. 삭제시 DB에서 삭제. 회원 탈퇴시 사진도 자동 삭제(사진이 컬럼이므로 따로 처리 필요

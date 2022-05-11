@@ -19,7 +19,7 @@ function voiceQues() {
     let sound = document.getElementById("sound");
     let constraints = undefined;
     let mediaRecorder = undefined;
-    
+
     recordBtn.style.borderColor = "#CDF0EA";
     recordBtn.style.color = "#CDF0EA";
 

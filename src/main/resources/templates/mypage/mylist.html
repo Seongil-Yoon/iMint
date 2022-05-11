@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>iMint :: 마이페이지</title>
+<link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
+<link rel="stylesheet" href="/static/css/mypage/mypage_mylist.css">
+<link rel="stylesheet" href="/static/css/mypage/mypage_mylist_content.css">
+<th:block th:replace="libs :: style" />
+</head>
+
+<body>
+	<!-- 헤더 시작 -->
+	<header th:replace="frags :: header"></header>
+
+	<!-- 아티클 시작 -->
+	<div class="container-page">
+
+		<div class="container-aside-main">
+			<!-- 어사이드 시작 -->
+			<div class="container-aside">
+				<h2 class="title">마이페이지</h2>
+				<aside th:replace="mypage/asideBar :: aside"></aside>
+			</div>
+			<!-- 어사이드 끝 -->
+
+			<!-- 아티클 시작 -->
+			<div class="container-main">
+				<div class="title-text">
+					<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
+						<h2 th:if="${#lists.size(userChilds) == 0}">연결된 아이가 없습니다.</h2>
+						<th:block th:unless="${#lists.size(userChilds) == 0}">
+							<h2 id="child-define">조회하실 아이를 선택해 주세요.</h2>
+							<br>
+							<div class="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">아이
+									선택</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+									<li th:each="child : ${userChilds}"><a class="dropdown-item" th:id="${child.mbId}" href="#">[[${child.mbNick}]]</a></li>
+								</ul>
+							</div>
+						</th:block>
+					</th:block>
+					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">[[${session?.memberDTO?.mbNick}]]님의 거래 목록입니다.</h2>
+				</div>
+
+				<!-- 상단 탭 -->
+				<section class="tabs">
+					<div class="container">
+						<div id="tab-1" class="tab-item selected-tab selected">
+							<p class="hide-sm">관심/구매예약</p>
+						</div>
+						<div id="tab-2" class="tab-item">
+							<p class="hide-sm">판매목록</p>
+						</div>
+						<div id="tab-3" class="tab-item">
+							<p class="hide-sm">거래완료목록</p>
+						</div>
+						<div id="tab-4" class="tab-item">
+							<p class="hide-sm">채팅목록</p>
+						</div>
+					</div>
+				</section>
+
+				<!-- 탭별 내용 -->
+				<section class="tab-content">
+					<div class="container">
+						<!-- 관심/구매예약 내용 -->
+						<div id="tab-1-content" class="tab-content-item show">
+							<div th:insert="mypage/mylist/wish" class="tab-1-content-inner"></div>
+						</div>
+						<!-- 판매목록 내용 -->
+						<div id="tab-2-content" class="tab-content-item">
+							<div th:insert="mypage/mylist/sell" class="tab-2-content-inner"></div>
+						</div>
+						<!-- 거래완료목록 내용 -->
+						<div id="tab-3-content" class="tab-content-item">
+							<div th:insert="mypage/mylist/comp" class="tab-3-content-inner"></div>
+						</div>
+						<!-- 채팅목록 내용 -->
+						<div id="tab-4-content" class="tab-content-item">
+							<div th:insert="mypage/mylist/chat" class="tab-4-content-inner"></div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="frags :: footer"></footer>
+	<th:block th:replace="libs :: script" />
+	<script src="/static/js/mypage/mypage-mylist.js"></script>
+</body>
+</html>
