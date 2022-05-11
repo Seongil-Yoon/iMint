@@ -92,14 +92,4 @@
 		WHERE
 			goods_id = #{goodsId}
 	</update>
-	
-	<!-- 거래완료: 완료 후 구매자 선택 -->
-	<update id="addBuyerTransaction">
-		UPDATE
-			`imint`.`transaction`
-		SET
-			mb_id = #{buyerId}
-		WHERE
-			goods_id = #{goodsId}
-	</update>
 </mapper>
