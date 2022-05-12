@@ -2,6 +2,7 @@ package multi.fclass.iMint.admin.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +81,11 @@ public class AdminCotroller {
 		HashMap<String, String> map = new HashMap<>();
 		
 		System.out.println(ban_mbId);
+		
+		String[] ban_list = ban_mbId.split(",");
+		for(String ban_member: ban_list) {
+			adminDAO.banmember(ban_member);
+		}
 		
 		map.put("result", "success");
 		
