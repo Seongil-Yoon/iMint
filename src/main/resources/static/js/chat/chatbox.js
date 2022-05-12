@@ -240,15 +240,14 @@ function getTrxStatus() {
         },
         dataType: "JSON",
         success: function (trx) {
+            $(".chatbox-detail-goodsstatus").each(function () {
+                $(this).hide();
+            });
+            $("#chatbox-goodsstatus-" + trx.check).show();
             if (trx.check.includes("wait")) {
-                // 판매중
+                // 판매중(구매가능) 상태
                 if (trx.check.includes("seller")) {
-                    // 판매중 - 판매자 시점
-                    $("#chatbox-detail-goodsstatus")
-                        .text("판매중")
-                        .css("border-color", "blue")
-                        .css("color", "blue");
-
+                    // 판매중
                     setExtraUIs(true);
                     $("#chatbox-view-trxbtns")
                         .append(
@@ -258,12 +257,7 @@ function getTrxStatus() {
                             `<div id="chatbox-trxbtns-comptrx" class="chatbox-trxbtn short">판매완료</div>`
                         );
                 } else {
-                    // 판매중 - 기타 시점
-                    $("#chatbox-detail-goodsstatus")
-                        .text("구매가능")
-                        .css("border-color", "green")
-                        .css("color", "green");
-
+                    // 구매가능
                     setExtraUIs(false);
                 }
             } else if (trx.check.includes("resrv")) {
@@ -271,13 +265,9 @@ function getTrxStatus() {
                     trx.check.includes("match") ||
                     trx.check.includes("buyer")
                 ) {
-                    // 예약완료
-                    $("#chatbox-detail-goodsstatus")
-                        .text("예약완료")
-                        .css("border-color", "#FFBB00")
-                        .css("color", "#FFBB00");
+                    // 예약완료 상태
                     if (trx.check.includes("seller")) {
-                        // 예약완료 - 판매자 시점
+                        // 예약완료 - 판매자:구매자 시점
                         setExtraUIs(true);
                         $("#chatbox-view-trxbtns")
                             .append(
@@ -290,37 +280,27 @@ function getTrxStatus() {
                         // 예약완료 - 예약자 시점
                         setExtraUIs(true);
                         $("#chatbox-view-trxbtns").text(
-                            "구매 예약중인 상품입니다."
+                            "내가 구매하기로 예약한 상품입니다."
                         );
                     }
                 } else {
-                    // 예약중
-                    $("#chatbox-detail-goodsstatus")
-                        .text("예약중")
-                        .css("border-color", "#9b9b9b")
-                        .css("color", "#9b9b9b");
-
+                    // 예약중 상태
                     setExtraUIs(true);
                     if (trx.check.includes("seller")) {
-                        // 예약중 - 판매자 시점
+                        // 예약중 - 판매자:기타 시점
                         $("#chatbox-view-trxbtns").text(
-                            "다른 회원과 판매 예약중인 상품입니다."
+                            "다른 회원에게 판매하기로 예약한 상품입니다."
                         );
                     } else {
                         // 예약중 - 기타 시점
                         $("#chatbox-view-trxbtns").text(
-                            "다른 회원이 구매 예약중인 상품입니다."
+                            "다른 회원이 구매하기로 예약한 상품입니다."
                         );
                     }
                 }
-            } else if (trx.check.includes("comp!")) {
-                // 판매완료(구매자 지정)
+            } else if (trx.check.includes("comp")) {
+                // 판매완료(구매완료/구매불가)
                 if (trx.check.includes("seller")) {
-                    $("#chatbox-detail-goodsstatus")
-                        .text("판매완료")
-                        .css("border-color", "blue")
-                        .css("color", "blue");
-
                     if (trx.check.includes("match")) {
                         // 판매완료 - 판매자:구매자 시점
                         setExtraUIs(true);
@@ -334,40 +314,19 @@ function getTrxStatus() {
                             "다른 회원에게 판매한 상품입니다."
                         );
                     }
-                } else {
+                } else if (trx.check.includes("buyer")) {
                     // 구매완료 - 구매자:판매자 시점
-                    $("#chatbox-detail-goodsstatus")
-                        .text("구매완료")
-                        .css("border-color", "#DD0000")
-                        .css("color", "#DD0000");
                     setExtraUIs(true);
                     $("#chatbox-view-trxbtns").append(
                         `<div id="chatbox-trxbtns-ratetrx" class="chatbox-trxbtn long">거래 평가하기</div>`
                     );
+                } else {
+                    // 구매불가 - 기타 시점
+                    setExtraUIs(true);
+                    $("#chatbox-view-trxbtns").text("이미 판매된 상품입니다.");
                 }
-            } else if (trx.check.includes("comp?")) {
-                // 판매완료(구매자 미지정) - 판매자 시점
-                $("#chatbox-detail-goodsstatus")
-                    .text("판매완료")
-                    .css("border-color", "blue")
-                    .css("color", "blue");
-                setExtraUIs(false);
-            } else if (trx.check.includes("comp")) {
-                // 구매불가 - 기타 시점
-                $("#chatbox-detail-goodsstatus")
-                    .text("구매불가")
-                    .css("border-color", "#9b9b9b")
-                    .css("color", "#9b9b9b");
-
-                setExtraUIs(true);
-                $("#chatbox-view-trxbtns").text("이미 판매된 상품입니다.");
             } else {
                 // 오류발생
-                $("#chatbox-detail-goodsstatus")
-                    .text("오류발생")
-                    .css("border-color", "#9b9b9b")
-                    .css("color", "#9b9b9b");
-
                 setExtraUIs(true);
                 $("#chatbox-view-trxbtns").text(
                     "판매글이 삭제되었거나 잘못된 채팅방입니다."
@@ -501,7 +460,11 @@ function getTrxStatus() {
                     const ratingWindow = window.open(
                         "/transaction/rating?goodsId=" + currentGoodsId,
                         "ratingWindow",
-                        "top=100, left=100, width=550, height=550, popup"
+                        "top=" +
+                            (window.screen.height - 520) / 2 +
+                            ", left=" +
+                            (window.screen.width - 520) / 2 +
+                            ", width=520, height=520, popup"
                     );
                     $(ratingWindow.document).on("beforeunload", function () {
                         getTrxStatus();
@@ -539,17 +502,12 @@ function joinChatroom(chatroom) {
             .attr("data-goodsPrice")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
     );
-    if ($(chatroom).attr("data-goodsSuggestible") === "true") {
-        $("#chatbox-detail-suggestible")
-            .text("가격제안가능")
-            .css("border-color", "black")
-            .css("color", "black");
-    } else {
-        $("#chatbox-detail-suggestible")
-            .text("가격제안불가")
-            .css("border-color", "#9b9b9b")
-            .css("color", "#9b9b9b");
-    }
+    $(".chatbox-detail-suggestible").each(function () {
+        $(this).hide();
+    });
+    $(
+        "#chatbox-suggestible-" + $(chatroom).attr("data-goodsSuggestible")
+    ).show();
 
     // 거래 정보 갱신
     getTrxStatus();
