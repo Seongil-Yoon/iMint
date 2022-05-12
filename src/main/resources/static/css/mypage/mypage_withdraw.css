@@ -1,52 +1,47 @@
 @charset "UTF-8";
 
 /* 페이지 전체 컨테이너 */
-.container-page{
-	width: 1200px;
-	height: 600px;
-	margin:auto;
-	padding-left: 3rem;
-	padding-right: 3rem;
+.container-page {
+    width: 1200px;
+    margin: auto;
+    padding-left: 3rem;
+    padding-right: 3rem;
 }
 
 /* 어사이드, 메인 2열 구현 컨테이너 */
-.container-aside-main{
-	display: grid;
+.container-aside-main {
+    display: grid;
     grid-template-columns: 0.5fr 3.5fr;
     grid-gap: 3rem;
     /* width: 1300px; */
-   	justify-content: center;
-   	
+    justify-content: center;
 }
 
 /* 페이지 타이틀 */
-.title{
-	width: 210px;
+.title {
+    width: 210px;
     padding-bottom: 2rem;
+	text-align: center;
 }
 
 /* 어사이드 바*/
-.container-aside{
-	padding-top: 3rem;
-	text-align: center;
+.container-aside {
+    padding-top: 3rem;
+    text-align: center;
 }
 
 /* 메인 컨테이너 */
 .container-main {
-	/* width: 700px; */
     display: block;
     text-align: center;
     padding: 3rem;
     border: 1px;
-     background-color: #F9F9F9;
+    background-color: #f9f9f9;
     border-radius: 15px;
     margin-bottom: 7rem;
-	height: 630px;
-    
 }
 
 /* 안내 메시지 */
-.text{
-	margin-bottom: 5rem;
+.text {
+    margin-bottom: 5rem;
 }
-
