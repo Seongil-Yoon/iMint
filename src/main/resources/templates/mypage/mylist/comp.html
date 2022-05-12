@@ -44,7 +44,12 @@
 				</div>
 				<div class="status">
 					<p th:switch="${comp.category}" class="text">
-						<span th:case="sell" style="color: blue">판매</span> <span th:case="buy" style="color: #DD0000">구매</span>
+						<span th:case="sell" style="color: blue" data-bs-toggle="tooltip" data-bs-placement="top"
+							title="내가 판매한 상품입니다.">판매완료</span>
+						<span th:case="buy" style="color: #DD0000" data-bs-toggle="tooltip" data-bs-placement="top"
+							title="내가 구매한 상품입니다.">구매완료</span>
+						<span th:case="*" style="color: #9B9B9B" data-bs-toggle="tooltip" data-bs-placement="top"
+							title="오류가 발생했습니다.">[[${comp.category}]]</span>
 					</p>
 				</div>
 				<div class="photo">
@@ -89,7 +94,12 @@
 			</div>
 			<div class="status">
 				<p th:switch="${comp.category}" class="text">
-					<span th:case="sell" style="color: blue">판매</span> <span th:case="buy" style="color: #DD0000">구매</span>
+					<span th:case="sell" style="color: blue" data-bs-toggle="tooltip" data-bs-placement="top"
+						title="내가 판매한 상품입니다.">판매완료</span>
+					<span th:case="buy" style="color: #DD0000" data-bs-toggle="tooltip" data-bs-placement="top"
+						title="내가 구매한 상품입니다.">구매완료</span>
+					<span th:case="*" style="color: #9B9B9B" data-bs-toggle="tooltip" data-bs-placement="top"
+						title="오류가 발생했습니다.">[[${comp.category}]]</span>
 				</p>
 			</div>
 			<div class="photo">
