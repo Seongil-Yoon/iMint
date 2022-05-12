@@ -15,14 +15,17 @@
 	<div class="container-page">
 		<h3>회원 리스트</h3>
 		<div class="container-aside-main">
-			<aside th:replace="admin_asideBar :: asideBar"></aside>
-
+		
+			<aside th:replace="/admin/admin_asideBar :: asideBar"></aside>
 
 			<div class="container-main">
+			
+			<form>
+				<input type = "button" class="btn btn-primary buttons" id = "ban_btn" value = "회원 강퇴">
 				<table class="table table-hover" id="table">
 					<tr>
 						<!-- HTML 태그에 속성으로 이벤트 리스너를 등록 -->
-						<th><input type="checkbox" name="member_check" value="0" onclick='selectAll(this)'></th>
+						<th><input type="checkbox" name = "member_check" value = "0" onclick='selectAll(this)'></th>
 						<th>닉네임</th>
 						<th>이메일</th>
 						<th>권한</th>
@@ -33,7 +36,8 @@
 					<tbody id="member_list">
 						<!-- 등록된 회원 리스트 삽입  -->
 						<tr th:each="memberDTO : ${memberlist}">
-							<td class="table_cnt"><input type="checkbox" name="member_check"></td>
+<!-- 						타임리프에서 memberDTO(객체)의 MbId가져온 뒤 value에 넣는 곳에서 에러  -->
+							<td class="table_cnt"><input type="checkbox" th:value="${memberDTO.mbId}" name = "member_check"></td>
 							<td>[[${memberDTO.mbNick}]]</td>
 							<td>[[${memberDTO.mbEmail}]]</td>
 							<td>[[${memberDTO.mbRole}]]</td>
@@ -41,9 +45,9 @@
 							<td>[[${memberDTO.mbJoinDate}]]</td>
 						</tr>
 					</tbody>
-
 				</table>
-
+			</form>
+			
 			</div>
 
 		</div>

@@ -4,14 +4,23 @@
 
 <mapper namespace="multi.fclass.iMint.admin.dao.IAdminDAO">
 
+<!-- 전체 회원 조회  -->
 <select id="selectmemberall" resultType="memberDTO">
-	select mb_nick, mb_email, mb_role, mb_guard, mb_join_date from imint.member
+	select  mb_id, mb_nick, mb_email, mb_role, mb_guard, mb_join_date from imint.member
 </select>
 
+<!-- 회원 통계  -->
 <select id="selectmemberstats" resultType="adminDTO">
 	SELECT mb_location, SUM(mb_isdelete) mb_withdraw_all, count(mb_id) as mb_cnt_all
 	FROM imint.member
 	GROUP BY mb_location ORDER BY mb_location;
 </select>
+
+<!-- 회원 강퇴(GUEST로 강등)  -->	
+<update id = "banmember" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
+	UPDATE imint.member 
+    SET mb_role = 'GUEST', mb_isdelete = 1
+    WHERE (mb_id = #{ban_mbId});
+ </update>
 
 </mapper>

@@ -14,7 +14,7 @@
 <!-- 회원탈퇴	 -->
     <update id = "updatedelete" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
         UPDATE imint.member 
-        SET mb_isdelete = 1, mb_role = #{mbRole}, mb_pin = null, mb_location = null
+        SET mb_isdelete = 1, mb_role = #{mbRole}, mb_pin = null, mb_location = null, mb_guard = null
         WHERE (mb_id = #{mbId});
     </update>
 
