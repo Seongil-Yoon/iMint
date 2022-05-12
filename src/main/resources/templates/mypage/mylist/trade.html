@@ -1,0 +1,118 @@
+<!-- 버튼 -->
+<!--/*
+ <div class="buttons">
+	<h6 class="select-title">전체선택</h6>
+	<input type="checkbox" class="selectAllbtn" name="selected" />
+	<button type="button" id="edit" class="btn btn-secondary btn-sm">수정</button>
+	<button type="button" id="delete" class="btn btn-secondary btn-sm">삭제</button>
+</div>
+*/-->
+
+<!-- 항목명 -->
+<div class="item-lables">
+	<div class="checkbox">
+		<h6 class="lables-checkbox">No.</h6>
+	</div>
+	<div class="status">
+		<h6 class="lables-status">구분</h6>
+	</div>
+	<div class="photo">
+		<h6 class="lables-photo">사진</h6>
+	</div>
+	<div class="subject">
+		<h6 class="lables-subject">거래명</h6>
+	</div>
+	<div class="interest">
+		<h6 class="lables-interest">관심 수</h6>
+	</div>
+	<div class="price">
+		<h6 class="lables-price">가격</h6>
+	</div>
+	<div class="link">
+		<h6 class="lables-link">바로가기</h6>
+	</div>
+</div>
+
+<!-- 항목별 내용 -->
+<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
+	<th:block th:each="trades : ${allTrade}">
+		<th:block th:each="trade : ${trades.value}">
+			<div class="item-list item-list-guard" th:classappend="${trades.key}">
+				<div class="checkbox">
+					<!-- <input type="checkbox" class="select-targets" name="selected" /> -->
+					<p class="count">[[${tradeStat.count}]]</p>
+				</div>
+				<div class="status">
+					<p th:switch="${trade.category}" class="text">
+						<span th:case="wait" style="color: blue" data-bs-toggle="tooltip" data-bs-placement="top"
+							title="내가 판매중인 상품입니다.">판매중</span>
+						<span th:case="resrv_seller" style="color: blue" data-bs-toggle="tooltip"
+							data-bs-placement="top" title="내가 판매하기로<br>예약한 상품입니다." data-bs-html="true">판매예약</span>
+						<span th:case="resrv_buyer" style="color: #DD0000" data-bs-toggle="tooltip"
+							data-bs-placement="top" title="내가 구매하기로<br>예약한 상품입니다." data-bs-html="true">구매예약</span>
+						<span th:case="*" style="color: #9B9B9B" data-bs-toggle="tooltip" data-bs-placement="top"
+							title="오류가 발생했습니다.">[[${trade.category}]]</span>
+					</p>
+				</div>
+				<div class="photo">
+					<img class="photo" th:src="${trade.goodsImagesPath}">
+				</div>
+				<div class="subject">
+					<p class="text subject-text">[[${trade.goodsTitle}]]</p>
+				</div>
+				<div class="interest">
+					<p class="text">[[${trade.wishes}]]</p>
+				</div>
+				<div class="price">
+					<p class="text text-price">[[${trade.goodsPrice}]]</p>
+				</div>
+				<div class="link">
+					<button type="button" id="linkItem" class="btn btn-primary btn-sm"
+						th:attr="onclick=|location.href = '/goods/detail?goodsId=' + '${trade.goodsId}'|">바로가기</button>
+				</div>
+			</div>
+		</th:block>
+	</th:block>
+</th:block>
+<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
+	<div th:if="${#lists.size(userTrade) == 0}">
+		<br> <br>
+		<p>판매 중인 물건이 없어요. 지금 시작해 보세요!</p>
+	</div>
+	<th:block th:each="trade : ${userTrade}">
+		<div class="item-list">
+			<div class="checkbox">
+				<!-- <input type="checkbox" class="select-targets" name="selected" /> -->
+				<p class="count">[[${tradeStat.count}]]</p>
+			</div>
+			<div class="status">
+				<p th:switch="${trade.category}" class="text">
+					<span th:case="wait" style="color: blue" data-bs-toggle="tooltip" data-bs-placement="top"
+						title="내가 판매중인 상품입니다.">판매중</span>
+					<span th:case="resrv_seller" style="color: blue" data-bs-toggle="tooltip" data-bs-placement="top"
+						title="내가 판매하기로<br>예약한 상품입니다." data-bs-html="true">판매예약</span>
+					<span th:case="resrv_buyer" style="color: #DD0000" data-bs-toggle="tooltip" data-bs-placement="top"
+						title="내가 구매하기로<br>예약한 상품입니다." data-bs-html="true">구매예약</span>
+					<span th:case="*" style="color: #9B9B9B" data-bs-toggle="tooltip" data-bs-placement="top"
+						title="오류가 발생했습니다.">[[${trade.category}]]</span>
+				</p>
+			</div>
+			<div class="photo">
+				<img class="photo" th:src="${trade.goodsImagesPath}">
+			</div>
+			<div class="subject">
+				<p class="text subject-text">[[${trade.goodsTitle}]]</p>
+			</div>
+			<div class="interest">
+				<p class="text">[[${trade.wishes}]]</p>
+			</div>
+			<div class="price">
+				<p class="text text-price">[[${trade.goodsPrice}]]</p>
+			</div>
+			<div class="link">
+				<button type="button" id="linkItem" class="btn btn-primary btn-sm"
+					th:attr="onclick=|location.href = '/goods/detail?goodsId=' + '${trade.goodsId}'|">바로가기</button>
+			</div>
+		</div>
+	</th:block>
+</th:block>

@@ -62,11 +62,11 @@ public class MypageCotroller {
 			mv.addObject("guard", guard);
 
 			// 거래 관련 정보
-			List<MypageDTO> userWish = mypageService.getWishAndReserveList(mbId);
+			List<MypageDTO> userWish = mypageService.getWishList(mbId);
 			mv.addObject("userWish", userWish.size());
 
-			List<MypageDTO> userSell = mypageService.getSellingList(mbId);
-			mv.addObject("userSell", userSell.size());
+			List<MypageDTO> userTrade = mypageService.getTradeList(mbId);
+			mv.addObject("userTrade", userTrade.size());
 
 			List<MypageDTO> userComp = mypageService.getCompleteList(mbId);
 			mv.addObject("userComp", userComp.size());
@@ -132,18 +132,18 @@ public class MypageCotroller {
 
 			// 맵으로 구현
 			Map<String, List<MypageDTO>> allWish = new HashMap<String, List<MypageDTO>>();
-			Map<String, List<MypageDTO>> allSell = new HashMap<String, List<MypageDTO>>();
+			Map<String, List<MypageDTO>> allTrade = new HashMap<String, List<MypageDTO>>();
 			Map<String, List<MypageDTO>> allComp = new HashMap<String, List<MypageDTO>>();
 			Map<String, List<MypageChatroomDTO>> allChat = new HashMap<String, List<MypageChatroomDTO>>();
 
 			for (MypageConnectionDTO child : userChilds) {
 				// 아이별 관심/구매 목록
-				List<MypageDTO> userWish = mypageService.getWishAndReserveList(child.getMbId());
+				List<MypageDTO> userWish = mypageService.getWishList(child.getMbId());
 				allWish.put(child.getMbId(), userWish);
 
 				// 아이별 판매 목록
-				List<MypageDTO> userSell = mypageService.getSellingList(child.getMbId());
-				allSell.put(child.getMbId(), userSell);
+				List<MypageDTO> userTrade = mypageService.getTradeList(child.getMbId());
+				allTrade.put(child.getMbId(), userTrade);
 
 				// 아이별 거래완료 목록
 				List<MypageDTO> userComp = mypageService.getCompleteList(child.getMbId());
@@ -157,17 +157,17 @@ public class MypageCotroller {
 
 			mv.addObject("userChilds", userChilds);
 			mv.addObject("allWish", allWish);
-			mv.addObject("allSell", allSell);
+			mv.addObject("allTrade", allTrade);
 			mv.addObject("allComp", allComp);
 			mv.addObject("allChat", allChat);
 		}
 		// 아이의 경우
 		else if (mbRole == Role.CHILD) {
 			// 관심/구매 목록
-			List<MypageDTO> userWish = mypageService.getWishAndReserveList(mbId);
+			List<MypageDTO> userWish = mypageService.getWishList(mbId);
 
 			// 판매 목록
-			List<MypageDTO> userSell = mypageService.getSellingList(mbId);
+			List<MypageDTO> userTrade = mypageService.getTradeList(mbId);
 
 			// 거래완료 목록
 			List<MypageDTO> userComp = mypageService.getCompleteList(mbId);
@@ -177,7 +177,7 @@ public class MypageCotroller {
 			userChat.removeIf((dto) -> (dto.getMessage() == null)); // 주고 받은 메세지(마지막 메세지)가 없으면 목록에서 제외
 			
 			mv.addObject("userWish", userWish);
-			mv.addObject("userSell", userSell);
+			mv.addObject("userTrade", userTrade);
 			mv.addObject("userComp", userComp);
 			mv.addObject("userChat", userChat);
 		}
