@@ -72,6 +72,20 @@ public class AdminCotroller {
 		return mv;
 	}
 	
+	// 관리자가 선택한 회원 강퇴(비동기)
+	@ResponseBody
+	@PostMapping("/admin/member/ban")
+	public HashMap<String, String> ban(String ban_mbId){
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		System.out.println(ban_mbId);
+		
+		map.put("result", "success");
+		
+		return map;
+	}
+	
 	// 회원 통계 페이지 이동  
 	@GetMapping("/admin/stats/member")
 	public ModelAndView stats(Authentication auth) {

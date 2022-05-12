@@ -5,7 +5,7 @@
 <mapper namespace="multi.fclass.iMint.admin.dao.IAdminDAO">
 
 <select id="selectmemberall" resultType="memberDTO">
-	select mb_nick, mb_email, mb_role, mb_guard, mb_join_date from imint.member
+	select  mb_id, mb_nick, mb_email, mb_role, mb_guard, mb_join_date from imint.member
 </select>
 
 <select id="selectmemberstats" resultType="adminDTO">
