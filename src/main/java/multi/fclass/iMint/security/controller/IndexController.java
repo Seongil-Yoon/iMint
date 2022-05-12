@@ -80,6 +80,10 @@ public class IndexController {
 				mv.addObject(memberDTO);
 				mv.setViewName("redirect:/admin/member");
 			}
+			// 관리자가 강퇴시킨 회원이면 index페이지로 이동 
+			else if (memberDTO.getMbRole() == Role.GUEST) {
+				mv.setViewName("index");							
+			}
 			// 권한이 가입완료된 회원(CHILD, GUARD)이면 메인으로 이동
 			else {
 				mv.setViewName("redirect:/main");	
