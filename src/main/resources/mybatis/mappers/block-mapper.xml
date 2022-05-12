@@ -4,18 +4,21 @@
 
 <mapper namespace="multi.fclass.iMint.block.dao.IBlockDAO">
 
-<!-- 수정중  -->
-    <insert id="blockinsert" parameterType="String">
-        INSERT INTO imint.block(mb_id, mb_id2, now()) 
+<!-- 차단  -->
+    <insert id="block" parameterType="String">
+        INSERT INTO imint.block(mb_id, mb_id2, block_date)) 
         VALUES
-        (#{mbId}, #{blockmbId}, #{block_date});
+        (#{mbId}, #{blockmbId}, now());
     </insert>
 
-
-    <update id = "blockupdate" parameterType="String">
-        UPDATE imint.block 
-        SET mb_thumbnail = #{allname}
-        WHERE (mb_id = #{mbId});
+<!-- 차단해제  -->    
+    <update id="unblock" parameterType="String">
+        UPDATE imint.block
+        SET 
+        (block_isdelete = 1)
+        WHERE (mb_id = #{mbId} AND mb_id2 = #{unblockmbId}); <!-- 다중 조건 -->
     </update>
+    
+    
 
 </mapper>
