@@ -22,10 +22,10 @@ public interface IMypageService {
 	public boolean isMyChild(String myId, String childId);
 	
 	// 관심 목록 조회 서비스
-	public List<MypageDTO> getWishAndReserveList(String myId);
+	public List<MypageDTO> getWishList(String myId);
 
-	// 판매중 목록 조회 서비스
-	public List<MypageDTO> getSellingList(String myId);
+	// 구매예약/판매중 목록 조회 서비스
+	public List<MypageDTO> getTradeList(String myId);
 
 	// 거래완료 목록 조회 서비스
 	public List<MypageDTO> getCompleteList(String myId);

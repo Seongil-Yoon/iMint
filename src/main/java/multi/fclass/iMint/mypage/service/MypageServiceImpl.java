@@ -48,14 +48,14 @@ public class MypageServiceImpl implements IMypageService {
 
 	// 관심 목록 조회 서비스
 	@Override
-	public List<MypageDTO> getWishAndReserveList(String myId) {
-		return mypageDAO.getWishAndReserveList(myId);
+	public List<MypageDTO> getWishList(String myId) {
+		return mypageDAO.getWishList(myId);
 	}
 
-	// 판매중 목록 조회 서비스
+	// 구매예약/판매중 목록 조회 서비스
 	@Override
-	public List<MypageDTO> getSellingList(String myId) {
-		return mypageDAO.getSellingList(myId);
+	public List<MypageDTO> getTradeList(String myId) {
+		return mypageDAO.getTradeList(myId);
 	}
 
 	// 거래완료 목록 조회 서비스
