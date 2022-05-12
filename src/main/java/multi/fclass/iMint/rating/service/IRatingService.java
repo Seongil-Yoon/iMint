@@ -8,7 +8,7 @@ import multi.fclass.iMint.rating.dto.RatingDTO;
  */
 public interface IRatingService {
 
-	public RatingDTO getRatingInfo(String myId, int goodsId);
+	public RatingDTO getRatingInfo(String myId, int trxId);
 	
 	public boolean makeRating(String myId, int trxId, int ratingScore);
 

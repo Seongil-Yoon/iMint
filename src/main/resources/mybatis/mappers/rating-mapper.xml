@@ -45,6 +45,6 @@
 		SET
 			mb_ratings_total = mb_ratings_total + #{newRating}
 		WHERE
-			mb_id LIKE #{mbId}
+			mb_id LIKE #{opponentId}
 	</update>
 </mapper>
