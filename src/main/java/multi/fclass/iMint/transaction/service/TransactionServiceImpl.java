@@ -83,14 +83,14 @@ public class TransactionServiceImpl implements ITransactionService {
 			if (trxCheckDTO.getSellerId().equals(myId)) {
 				if (opponentId != null && trxCheckDTO.getBuyerId().equals(opponentId)) {
 					// 거래완료(판매자/구매자)
-					return "comp!_seller_match";
+					return "comp_seller_match";
 				} else {
 					// 거래완료(판매자)
-					return "comp!_seller";
+					return "comp_seller";
 				}
 			} else if (trxCheckDTO.getBuyerId().equals(myId)) {
 				// 거래완료(구매자)
-				return "comp!_buyer";
+				return "comp_buyer";
 			} else {
 				// 거래완료(판매자/구매자 아님)
 				return "comp_other";
