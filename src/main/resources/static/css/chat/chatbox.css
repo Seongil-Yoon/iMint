@@ -450,12 +450,12 @@
 }
 
 #chatbox-view-send textarea {
-    width: calc(var(--total-width) - var(--title-height) - 20px);
-    height: calc(var(--chatroom-height) - 21.5px);
+    width: calc(var(--total-width) - var(--title-height));
+    height: var(--chatroom-height);
     border: none;
     resize: none;
     overflow: hidden;
-    margin: 9.75px 10px;
+    padding: 9.75px 10px;
     font-family: "Noto Sans Kr", sans-serif;
     font-size: 13px;
     float: left;
