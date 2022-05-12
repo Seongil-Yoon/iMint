@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iMint :: 거래 평가하기</title>
+    <th:block th:replace="libs :: style" />
+    <link rel="stylesheet" href="/static/css/trx/rating.css" />
+</head>
+
+<body>
+    <div th:if="${#strings.contains(status, 'rated')}" id="rating-wrap" class="roundBox">
+        <div id="rating-title" th:if="${#strings.equals(status, '!rated')}">거래 평가하기</div>
+        <div id="rating-title" th:if="${#strings.equals(status, 'rated')}">평가 완료!</div>
+        <div id="rating-goods" class="roundBox">
+            <img id="rating-goodsimage" th:src="${rinfo?.goodsImagesPath}">
+            <div id="rating-goodsinfo">
+                <div id="rating-goodsinfotext">거래한 상품</div>
+                <div id="rating-goodstitle" th:text="${rinfo?.goodsTitle}"></div>
+            </div>
+        </div>
+        <div th:if="${#strings.equals(status, '!rated')}" id="rating-question">
+            <span th:text="${rinfo?.opponentNick}"></span>님과의 거래는 몇 점인가요?
+        </div>
+        <div th:if="${#strings.equals(status, 'rated')}" id="rating-question">
+            <span th:text="${rinfo?.opponentNick}"></span>님과의 거래는 <span th:text="${rinfo.ratingScore}"></span>점입니다.
+        </div>
+        <div id="rating-score" class="roundBox">
+            <div class="weather">🌩️</div>
+            <div id="rating-scorebutton" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input th:disabled="${#strings.equals(status, 'rated')}" th:checked="${rinfo?.ratingScore == 1}"
+                    type="radio" class="btn-check" name="ratingScore" id="btnradio1" value="1" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio1">1</label>
+
+                <input th:disabled="${#strings.equals(status, 'rated')}" th:checked="${rinfo?.ratingScore == 2}"
+                    type="radio" class="btn-check" name="ratingScore" id="btnradio2" value="2" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio2">2</label>
+
+                <input th:disabled="${#strings.equals(status, 'rated')}" th:checked="${rinfo?.ratingScore == 3}"
+                    type="radio" class="btn-check" name="ratingScore" id="btnradio3" value="3" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio3">3</label>
+
+                <input th:disabled="${#strings.equals(status, 'rated')}" th:checked="${rinfo?.ratingScore == 4}"
+                    type="radio" class="btn-check" name="ratingScore" id="btnradio4" value="4" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio4">4</label>
+
+                <input th:disabled="${#strings.equals(status, 'rated')}"
+                    th:checked="${rinfo?.ratingScore == null || rinfo?.ratingScore == 5}" type="radio" class="btn-check"
+                    name="ratingScore" id="btnradio5" value="5" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio5">5</label>
+            </div>
+            <div class="weather">☀️</div>
+        </div>
+        <div id="rating-buttons">
+            <button id="rating-close" class="btn btn-primary" type="button">닫기</button>
+            <button th:if="${#strings.equals(status, '!rated')}" id="rating-submit" class="btn btn-primary"
+                type="button">평가 완료</button>
+        </div>
+    </div>
+    <th:block th:replace="libs :: script" />
+    <script src="/static/js/trx/rating.js"></script>
+    <script>
+        const ratingStatus = "[[${status}]]";
+        const trxId = "[[${rinfo?.trxId}]]";
+    </script>
+</body>
+
+</html>

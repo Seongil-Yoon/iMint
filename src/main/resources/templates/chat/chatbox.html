@@ -5,21 +5,47 @@
 	<div id="chatbox-main">
 		<div id="chatbox-list">
 			<div id="chatbox-list-title" class="chatbox-title">
-				<span class="chatbox-title-text">아이민트 채팅</span><span id="chatbox-close" class="chatbox-closebtn">↓</span>
+				<span class="chatbox-title-text">아이민트 채팅</span><span id="chatbox-close" class="chatbox-menubtn">↓</span>
 			</div>
 			<div id="chatbox-list-chatrooms"></div>
 		</div>
 		<div id="chatbox-view">
 			<div id="chatbox-view-title" class="chatbox-title">
-				<span class="chatbox-title-text"></span><span id="chatview-close" class="chatbox-closebtn">←</span>
+				<span class="chatbox-title-text"></span><span id="chatview-close" class="chatbox-menubtn">←</span><span
+					id="chatview-option" class="chatbox-menubtn">…</span>
 			</div>
 			<div id="chatbox-view-detail">
 				<img id="chatbox-detail-goods" src="" />
 				<p>
 					<span id="chatbox-detail-goodstitle"></span><span id="chatbox-detail-goodsprice"></span>
 				</p>
-				<div id="chatbox-detail-goodsstatus"></div>
-				<div id="chatbox-detail-suggestible"></div>
+				<div id="chatbox-goodsstatus-wait_seller" class="chatbox-detail-goodsstatus" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="내가 판매중인 상품입니다.">판매중</div>
+				<div id="chatbox-goodsstatus-wait_other" class="chatbox-detail-goodsstatus" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="구매할 수 있는 상품입니다.<br>거래를 제안해보세요!" data-bs-html="true">구매가능</div>
+				<div id="chatbox-goodsstatus-resrv_seller_match" class="chatbox-detail-goodsstatus"
+					data-bs-toggle="tooltip" data-bs-placement="left" title="이 회원에게 판매하기로<br>예약한 상품입니다."
+					data-bs-html="true">판매예약</div>
+				<div id="chatbox-goodsstatus-resrv_seller" class="chatbox-detail-goodsstatus" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="다른 회원에게 판매하기로<br>예약한 상품입니다." data-bs-html="true">예약중</div>
+				<div id="chatbox-goodsstatus-resrv_buyer" class="chatbox-detail-goodsstatus" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="내가 구매하기로<br>예약한 상품입니다." data-bs-html="true">구매예약</div>
+				<div id="chatbox-goodsstatus-resrv_other" class="chatbox-detail-goodsstatus" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="다른 회원이 구매하기로<br>예약한 상품입니다." data-bs-html="true">예약중</div>
+				<div id="chatbox-goodsstatus-comp_seller_match" class="chatbox-detail-goodsstatus"
+					data-bs-toggle="tooltip" data-bs-placement="left" title="이 회원에게 판매한 상품입니다.">판매완료</div>
+				<div id="chatbox-goodsstatus-comp_seller" class="chatbox-detail-goodsstatus" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="다른 회원에게<br>판매한 상품입니다." data-bs-html="true">판매완료</div>
+				<div id="chatbox-goodsstatus-comp_buyer" class="chatbox-detail-goodsstatus" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="내가 구매한 상품입니다.">구매완료</div>
+				<div id="chatbox-goodsstatus-comp_other" class="chatbox-detail-goodsstatus" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="이미 판매된 상품입니다.">구매불가</div>
+				<div id="chatbox-goodsstatus-error" class="chatbox-detail-goodsstatus" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="판매글이 삭제되었거나<br>잘못된 채팅방입니다." data-bs-html="true">오류발생</div>
+				<div id="chatbox-suggestible-true" class="chatbox-detail-suggestible" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="판매자가 가격제안을<br>허용했습니다." data-bs-html="true">가격제안가능</div>
+				<div id="chatbox-suggestible-false" class="chatbox-detail-suggestible" data-bs-toggle="tooltip"
+					data-bs-placement="left" title="판매자가 가격제안을<br>원하지 않습니다." data-bs-html="true">가격제안불가</div>
 			</div>
 			<div id="chatbox-view-trxbtns"></div>
 			<div id="chatbox-view-chatmessages"></div>
@@ -31,4 +57,5 @@
 		</div>
 	</div>
 </th:block>
+
 </html>

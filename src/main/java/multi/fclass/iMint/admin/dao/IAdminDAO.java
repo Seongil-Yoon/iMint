@@ -20,5 +20,8 @@ public interface IAdminDAO {
 	
 	// 동네별 회원 조회
 	public List<AdminDTO> selectmemberstats();
+	
+	// 회원 강퇴
+	public void banmember(String ban_member);
 		
 }

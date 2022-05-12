@@ -1,0 +1,145 @@
+#rating-wrap {
+    float: left;
+    width: 502px;
+    height: 502px;
+    text-align: center;
+    padding: 0;
+    margin: 9px;
+    user-select: none;
+}
+
+#rating-title {
+    float: left;
+    width: 480px;
+    height: 80px;
+    line-height: 80px;
+    margin: 10px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#rating-goods {
+    float: left;
+    width: 480px;
+    height: 100px;
+    margin: 0 10px;
+    padding: 0;
+}
+
+#rating-goodsimage {
+    float: left;
+    width: 98px;
+    height: 98px;
+    border-radius: 1rem;
+}
+
+#rating-goodsinfo {
+    float: left;
+    width: 360px;
+    height: 78px;
+    margin: 10px;
+}
+
+#rating-goodsinfotext {
+    float: left;
+    width: 360px;
+    text-align: left;
+    height: 29px;
+    line-height: 30px;
+    font-size: 16px;
+}
+
+#rating-goodstitle {
+    float: left;
+    display: -webkit-box;
+    width: 360px;
+    text-align: left;
+    height: 49px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#rating-question {
+    float: left;
+    width: 480px;
+    height: 80px;
+    line-height: 80px;
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#rating-score {
+    float: left;
+    width: 480px;
+    height: 100px;
+    margin: 0 10px;
+    padding: 0;
+}
+
+#rating-score .weather {
+    float: left;
+    width: 100px;
+    height: 98px;
+    font-size: 70px;
+}
+
+#rating-score .weather:first-child {
+    line-height: 80px;
+}
+
+#rating-score .weather:last-child {
+    line-height: 90px;
+}
+
+#rating-scorebutton {
+    float: left;
+    width: 278px;
+    margin: 25px 0;
+    padding: 0;
+}
+
+#rating-scorebutton label {
+    height: 48px;
+    line-height: 38px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    box-shadow: none;
+}
+
+#rating-scorebutton label:active {
+    color: #cdf0ea;
+    background-color: #3387a8;
+}
+
+#rating-buttons {
+    float: left;
+    width: 480px;
+    height: 80px;
+    line-height: 80px;
+    margin: 10px;
+}
+
+#rating-buttons .btn {
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: none;
+    margin: 0 25px;
+}
+
+#rating-buttons .btn:active {
+    color: #cdf0ea;
+    background-color: #3387a8;
+}
+
+#rating-cancel {
+    display: none;
+}

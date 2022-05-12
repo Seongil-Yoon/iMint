@@ -26,111 +26,77 @@
 			mb_guard LIKE #{myId}
 	</select>
 
-	<!-- 관심 + 구매예약 목록 -->
-	<select id="getWishAndReserveList" resultType="MypageDTO">
+	<!-- 관심목록 -->
+	<select id="getWishList" resultType="MypageDTO">
 		SELECT
-			category,
-		    goods_id,
-		    goods_title,
-		    goods_price,
-		    goods_location,
-		    goods_create_date,
-		    goods_images_path,
-		    goods_images_originname,
-		    wishes,
-		    last_update_date
-		FROM
-		    ((SELECT
-				"resrv" AS category,
-				g.goods_id,
-				g.goods_title,
-				g.goods_price,
-				g.goods_location,
-				g.goods_create_date,
-				IF(gi.goods_images_path = FALSE, gi.goods_images_path, null) AS goods_images_path,
-				gi.goods_images_originname,
-				w.wishes,
-				cr.resrv_date AS last_update_date
-			FROM
-				`imint`.`chatroom` AS cr
-                JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
-				LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
-				LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
-				LEFT JOIN (SELECT goods_id, trx_complete_date FROM `imint`.`transaction` WHERE trx_isdelete = FALSE AND mb_id LIKE #{myId}) AS trx ON g.goods_id = trx.goods_id
-			WHERE
-				cr.isdelete = FALSE
-				AND g.goods_isdelete = FALSE
-				AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
-				AND cr.buyer_id LIKE #{myId}
-                AND cr.resrv_date IS NOT NULL
-                AND trx.trx_complete_date IS NULL
-                AND gi.goods_images_thumbnail = TRUE)
-			UNION ALL
-			(SELECT
-				CASE
-					WHEN g.goods_status LIKE "wait" THEN "wait"
-					WHEN g.goods_status LIKE "resrv" THEN "!resrv"
-					WHEN g.goods_status LIKE "comp" THEN IF(trx.mb_id LIKE #{myId}, "comp", "!comp")
-				END AS category,
-				g.goods_id,
-				g.goods_title,
-				g.goods_price,
-				g.goods_location,
-				g.goods_create_date,
-				IF(gi.goods_images_path = FALSE, gi.goods_images_path, null) AS goods_images_path,
-				gi.goods_images_originname,
-				wi.wishes,
-				CASE
-					WHEN g.goods_status LIKE "wait" THEN w.wishlist_create_date
-					WHEN g.goods_status LIKE "resrv" THEN cr.resrv_date
-					WHEN g.goods_status LIKE "comp" THEN IF(trx.mb_id LIKE #{myId}, trx.trx_complete_date, w.wishlist_create_date)
-				END AS last_update_date
-			FROM
-				`imint`.`wishlist` AS w
-                JOIN `imint`.`goods` AS g ON w.goods_id = g.goods_id
-				LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as wi on g.goods_id = wi.goods_id
-				LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
-				LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
-				LEFT JOIN (SELECT goods_id, buyer_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
-			WHERE
-				w.wishlist_isdelete = FALSE
-				AND g.goods_isdelete = FALSE
-				AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
-				AND (trx_isdelete = FALSE OR trx.trx_isdelete IS NULL)
-				AND w.mb_id LIKE #{myId}
-                AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
-                AND (cr.buyer_id IS NULL OR cr.buyer_id NOT LIKE #{myId})))
-			AS result
-		ORDER BY
-			last_update_date DESC, goods_id DESC
-	</select>
-	
-	<!-- 판매중(대기 + 예약) 목록 -->
-	<select id="getSellingList" resultType="MypageDTO">
-		SELECT
-			IF(g.goods_status LIKE "wait", "wait", "resrv") AS category,
+			CASE
+				WHEN g.goods_status LIKE "wait" THEN "wait"
+				WHEN g.goods_status LIKE "resrv" THEN IF(cr.buyer_id LIKE #{myId}, "resrv_buyer", "resrv_other")
+				WHEN g.goods_status LIKE "comp" THEN IF(trx.mb_id LIKE #{myId}, "comp_buyer", "comp_other")
+			END AS category,
 			g.goods_id,
 			g.goods_title,
 			g.goods_price,
 			g.goods_location,
 			g.goods_create_date,
-			IF(gi.goods_images_path = FALSE, gi.goods_images_path, null) AS goods_images_path,
+			gi.goods_images_path,
 			gi.goods_images_originname,
-			w.wishes,
-			IF(g.goods_status LIKE "resrv", cr.resrv_date, g.goods_create_date) AS last_update_date
+			wi.wishes,
+			CASE
+				WHEN g.goods_status LIKE "wait" THEN w.wishlist_create_date
+				WHEN g.goods_status LIKE "resrv" THEN IF(cr.buyer_id LIKE #{myId}, cr.resrv_date, w.wishlist_create_date)
+				WHEN g.goods_status LIKE "comp" THEN IF(trx.mb_id LIKE #{myId}, trx.trx_complete_date, w.wishlist_create_date)
+			END AS last_update_date
+		FROM
+			`imint`.`wishlist` AS w
+            JOIN `imint`.`goods` AS g ON w.goods_id = g.goods_id
+			LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+			LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as wi on g.goods_id = wi.goods_id
+			LEFT JOIN (SELECT goods_id, buyer_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
+			LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
+		WHERE
+			w.wishlist_isdelete = FALSE
+			AND w.mb_id LIKE #{myId}
+			AND g.goods_isdelete = FALSE
+			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
+            AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
+			AND (trx_isdelete = FALSE OR trx.trx_isdelete IS NULL)
+		ORDER BY
+			last_update_date DESC, goods_id DESC
+	</select>
+	
+	<!-- 구매예약 + 판매중(대기 + 예약) 목록 -->
+	<select id="getTradeList" resultType="MypageDTO">
+		SELECT
+			CASE
+				WHEN g.goods_status LIKE "wait" THEN "wait"
+				WHEN g.goods_status LIKE "resrv" THEN IF(g.seller_id LIKE #{myId}, "resrv_seller", "resrv_buyer")
+			END AS category,
+		    g.goods_id,
+		    g.goods_title,
+		    g.goods_price,
+		    g.goods_location,
+		    g.goods_create_date,
+		    gi.goods_images_path,
+		    gi.goods_images_originname,
+		    w.wishes,
+		    CASE
+				WHEN g.goods_status LIKE "wait" THEN g.goods_create_date
+				WHEN g.goods_status LIKE "resrv" THEN cr.resrv_date
+			END AS last_update_date
 		FROM
 			`imint`.`goods` AS g
-            LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
-            LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
-		    LEFT JOIN (SELECT goods_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
+			LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+			LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
+			LEFT JOIN (SELECT goods_id, buyer_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
 		WHERE
-			g.goods_isdelete = FALSE
-			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
-			AND g.seller_id LIKE #{myId}
+			g.goods_isdelete IS FALSE
 			AND (g.goods_status LIKE "wait" OR g.goods_status LIKE "resrv")
-            AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
+			AND (g.seller_id LIKE #{myId} OR cr.buyer_id LIKE #{myId})
+			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
+		    AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
 		ORDER BY
-			last_update_date DESC, g.goods_id DESC
+			last_update_date DESC, goods_id DESC
 	</select>
 	
 	<!-- 거래(구매 + 판매)완료 목록 -->

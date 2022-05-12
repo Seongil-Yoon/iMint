@@ -6,7 +6,7 @@
 }
 
 #chatbox-openbtn {
-    z-index: 2000;
+    z-index: 1;
     display: none;
     position: fixed;
     user-select: none;
@@ -27,7 +27,7 @@
 }
 
 #chatbox-main {
-    z-index: 2000;
+    z-index: 1;
     user-select: none;
     display: none;
     position: fixed;
@@ -91,14 +91,14 @@
     box-shadow: none;
 }
 
-.chatbox-closebtn {
+.chatbox-menubtn {
     width: 40px;
     text-align: center;
-    padding-right: 10px;
+    padding: 0 10px;
     float: right;
 }
 
-.chatbox-closebtn:hover {
+.chatbox-menubtn:hover {
     cursor: pointer;
 }
 
@@ -152,21 +152,21 @@
 .chatbox-chatrooms-whois {
     display: -webkit-box;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 12px;
     overflow: hidden;
     word-break: break-all;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    height: 17px;
+    height: 15px;
 }
 
 .chatbox-chatrooms-whois.buyer {
-    color: #DD0000;
+    color: blue;
 }
 
 .chatbox-chatrooms-whois.seller {
-    color: blue;
+    color: #dd0000;
 }
 
 .chatbox-chatroom-nickname {
@@ -178,7 +178,7 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    height: 17px;
+    height: 19px;
 }
 
 .chatbox-chatroom-lastmessage {
@@ -249,7 +249,7 @@
     margin: 2.5px 0;
 }
 
-#chatbox-detail-goodsstatus {
+.chatbox-detail-goodsstatus {
     width: calc(var(--chatroom-height) - 10px);
     height: 25px;
     border: 2.5px solid #9b9b9b;
@@ -263,7 +263,52 @@
     color: #9b9b9b;
 }
 
-#chatbox-detail-suggestible {
+#chatbox-goodsstatus-wait_seller {
+    border-color: blue;
+    color: blue;
+}
+#chatbox-goodsstatus-wait_other {
+    border-color: green;
+    color: green;
+}
+#chatbox-goodsstatus-resrv_seller_match {
+    border-color: blue;
+    color: blue;
+}
+#chatbox-goodsstatus-resrv_seller {
+    border-color: #9b9b9b;
+    color: #9b9b9b;
+}
+#chatbox-goodsstatus-resrv_buyer {
+    border-color: #dd0000;
+    color: #dd0000;
+}
+#chatbox-goodsstatus-resrv_other {
+    border-color: #ffbb00;
+    color: #ffbb00;
+}
+#chatbox-goodsstatus-comp_seller_match {
+    border-color: blue;
+    color: blue;
+}
+#chatbox-goodsstatus-comp_seller {
+    border-color: #9b9b9b;
+    color: #9b9b9b;
+}
+#chatbox-goodsstatus-comp_buyer {
+    border-color: #dd0000;
+    color: #dd0000;
+}
+#chatbox-goodsstatus-comp_other {
+    border-color: #9b9b9b;
+    color: #9b9b9b;
+}
+#chatbox-goodsstatus-error {
+    border-color: #9b9b9b;
+    color: #9b9b9b;
+}
+
+.chatbox-detail-suggestible {
     width: calc(var(--chatroom-height) - 10px);
     height: 40px;
     border: 2.5px solid #9b9b9b;
@@ -274,6 +319,15 @@
     margin: 2.5px 5px 5px 5px;
     float: left;
     font-size: 14px;
+    color: #9b9b9b;
+}
+
+#chatbox-suggestible-true {
+    border-color: black;
+    color: black;
+}
+#chatbox-suggestible-false {
+    border-color: #9b9b9b;
     color: #9b9b9b;
 }
 
@@ -396,12 +450,12 @@
 }
 
 #chatbox-view-send textarea {
-    width: calc(var(--total-width) - var(--title-height) - 20px);
-    height: calc(var(--chatroom-height) - 21.5px);
+    width: calc(var(--total-width) - var(--title-height));
+    height: var(--chatroom-height);
     border: none;
     resize: none;
     overflow: hidden;
-    margin: 9.75px 10px;
+    padding: 9.75px 10px;
     font-family: "Noto Sans Kr", sans-serif;
     font-size: 13px;
     float: left;

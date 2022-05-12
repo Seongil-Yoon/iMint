@@ -2,6 +2,7 @@ package multi.fclass.iMint.admin.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +71,25 @@ public class AdminCotroller {
 		}
 
 		return mv;
+	}
+	
+	// 관리자가 선택한 회원 강퇴(비동기)
+	@ResponseBody
+	@PostMapping("/admin/member/ban")
+	public HashMap<String, String> ban(String ban_mbId){
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		System.out.println(ban_mbId);
+		
+		String[] ban_list = ban_mbId.split(",");
+		for(String ban_member: ban_list) {
+			adminDAO.banmember(ban_member);
+		}
+		
+		map.put("result", "success");
+		
+		return map;
 	}
 	
 	// 회원 통계 페이지 이동  

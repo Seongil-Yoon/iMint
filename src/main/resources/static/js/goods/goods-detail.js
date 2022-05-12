@@ -112,25 +112,42 @@ function deleteHandler() {
 }
 
 function wishHandler() {
-    $("#wishBtn").on("click", function () {
+    $.ajax({
+        url: `/wishlist/check?goodsId=${goodsId}`,
+        type: "GET", //데이터 전달방식
+        dataType: "json", //json 으로 받기
+        success: function (response, textStatus, jqxHR) {
+            if (response.check == "true") {
+                $("#wishBtn").text("관심해제");
+                $("#wishBtn").on("click", function () {
+                    removeWish();
+                });
+            } else {
+                $("#wishBtn").text("관심등록");
+                $("#wishBtn").on("click", function () {
+                    addWish();
+                });
+            }
+        },
+        error: function (error) {
+            //서버오류 500  찾는 자료없음 404  권한없음  401
+            if (error.status == 404) {
+                swal("찾는 자료가 없습니다", "", "error");
+            } else if (error.status == 401) {
+                swal("삭제 권한이 없습니다", "", "error");
+            } else if (error.status == 500) {
+                swal("서버 오류 관리자에게 문의 하세요", "", "error");
+            }
+        },
+    }); //end of ajax
+
+    function addWish() {
         $.ajax({
-            url: `/wishlist/add?myId=${myId}&goodsId=${goodsId}`,
+            url: `/wishlist/add?goodsId=${goodsId}`,
             type: "POST", //데이터 전달방식
             dataType: "json", //json 으로 받기
             success: function (response, textStatus, jqxHR) {
-                if (response.result == "fail") {
-                    removeWish();
-                } else {
-                    swal({
-                        title: "관심 등록되었습니다",
-                        text: "",
-                        icon: "info",
-                        type: "success",
-                        timer: 1.1 * 1000,
-                    }).then(() => {
-                        location.href = "";
-                    });
-                }
+                location.href = "";
             },
             error: function (error) {
                 //서버오류 500  찾는 자료없음 404  권한없음  401
@@ -143,23 +160,15 @@ function wishHandler() {
                 }
             },
         }); //end of ajax
-    });
+    }
 
     function removeWish() {
         $.ajax({
-            url: `/wishlist/remove?myId=${myId}&goodsId=${goodsId}`,
+            url: `/wishlist/remove?goodsId=${goodsId}`,
             type: "POST", //데이터 전달방식
             dataType: "json", //json 으로 받기
             success: function (result, textStatus, jqxHR) {
-                swal({
-                    title: "관심 취소하였습니다",
-                    text: "",
-                    icon: "warning",
-                    type: "success",
-                    timer: 1.1 * 1000,
-                }).then(() => {
-                    location.href = "";
-                });
+                location.href = "";
             },
             error: function (error) {
                 //서버오류 500  찾는 자료없음 404  권한없음  401

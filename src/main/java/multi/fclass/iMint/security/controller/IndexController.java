@@ -194,14 +194,22 @@ public class IndexController {
 	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard, String guardPin) {
 	
 	ModelAndView mv = new ModelAndView();
+
 	// 비 로그인
 	if (auth == null) {
 				throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 	}
 	
+	// 현재 로그인한 회원의 정보 파싱
 	String mbId = parseMbId.parseMbId(auth);
 	MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 	mv.addObject("memberDTO", memberDTO);
+//	
+//	// 현재 로그인한 회원의 상태
+//	String status = null;
+//	if (memberDTO.getMbIsdelete() == true) {
+//		status = "탈퇴한 회원입니다.";
+//	}
 	
 	try {
 		// 미인증 보호자(UN_GUARD)인 경우 mbLocation 받아오기, 회원가입 마치면 GUARD로 권한 업그레이드 
@@ -225,7 +233,7 @@ public class IndexController {
 			//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 			session.setAttribute(HttpSessionSecurityContextRepository.
 			                       SPRING_SECURITY_CONTEXT_KEY, context);
-			mv.addObject("register", memberDTO.getMbNick());
+			mv.addObject("register", memberDTO.getMbRole());
 			mv.setViewName("index");
 
 		}	
@@ -252,8 +260,7 @@ public class IndexController {
 					//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 					session.setAttribute(HttpSessionSecurityContextRepository.
 					                       SPRING_SECURITY_CONTEXT_KEY, context);
-
-					mv.addObject("register", memberDTO.getMbNick());
+					mv.addObject("register", memberDTO.getMbRole());
 					mv.setViewName("index");
 				}
 				else { // 보호자의 입력정보가 틀리면 보호자 연동 페이지로 다시 보내기

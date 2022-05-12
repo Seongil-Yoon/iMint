@@ -19,9 +19,9 @@ public interface IMypageDAO {
 	
 	public List<MypageConnectionDTO> getMyChildrenList(String myId);
 
-	public List<MypageDTO> getWishAndReserveList(String myId);
+	public List<MypageDTO> getWishList(String myId);
 
-	public List<MypageDTO> getSellingList(String myId);
+	public List<MypageDTO> getTradeList(String myId);
 
 	public List<MypageDTO> getCompleteList(String myId);
 
