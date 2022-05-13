@@ -110,12 +110,18 @@
 /* 회원 상태창 열 구분 */
 .container-summary-text{
 	display: grid;
-    grid-template-columns:1fr 4fr;
+    grid-template-columns:1fr 4fr 0.8fr;
     grid-gap: 1.3rem;
 }
 
 .text-summary {
     margin-bottom: 2rem;
+}
+
+#edit-detail{
+    margin-top: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 /* 기타 세팅 관련 (연결 회원, 동네 설정) */
@@ -160,7 +166,7 @@
 }
 
 .user-photo{
-	width: 90px;
-	height: 90px;
+	width: 110px;
+	height: 110px;
 	object-fit: cover;
 }
