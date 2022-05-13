@@ -57,7 +57,7 @@
 				<!-- 회원 상태 -->
 				<div class="container-summary">
 					<h5 class="text-summary">
-						[[${session?.memberDTO?.mbNick}]]님은 <span th:text="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}? '보호자': '아이'"></span> 회원입니다.
+						[[${session?.memberDTO?.mbNick}]]님은 <span th:text="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}? '보호자': '아이'" ></span> 회원입니다.
 					</h5>
 					<div class="container-summary-text">
 						<img th:src="${session?.memberDTO?.mbThumbnail}" class="user-photo">

@@ -17,7 +17,7 @@
 		<h6 class="lables-person">채팅 상대</h6>
 	</div>
 	<div class="interest">
-		<!-- <h6 class="lables-interest">관심 수</h6> -->
+		<h6 class="lables-item">채팅 상품</h6>
 	</div>
 	<div class="link">
 		<h6 id="link-price-out" class="lables-link">바로가기</h6>
@@ -36,16 +36,18 @@
 				<div class="person">
 					<img th:src="${chat.opponentThumbnail}" class="person-photo">
 					<div class="person-detail">
-						<p class="item-person-nickname">[[${chat.opponentNick}]]</p>
-						<p class="item-person-chat">[[${chat.message}]]</p>
-						<div class="item-detail">
-							<p class="item-subject subject-text">[[${chat.goodsTitle}]]</p>
-							<p class="item-price">[[${chat.goodsPrice}]]</p>
+						<p class="item-person-nickname">[[${chat.opponentNick}]]님</p>
+						<div class="item-person-chat">
+							<p class="item-person-chat-content">[[${chat.message}]]</p>
 						</div>
+						
 					</div>
 				</div>
 				<div class="interest">
-					<!-- <p class="text">관심 2</p> -->
+					<div class="item-detail">
+							<p class="item-subject subject-text">[[${chat.goodsTitle}]]</p>
+							<p class="item-price">[[${chat.goodsPrice}]]원</p>
+						</div>
 				</div>
 				<div class="link">
 					<button type="button" id="linkItem" class="btn btn-primary btn-sm" th:attr="onclick=|directJoinChatroom('${chat.id}', '${chats.key}')|">바로가기</button>
@@ -68,11 +70,13 @@
 			<div class="person">
 				<img th:src="${chat.opponentThumbnail}" class="person-photo">
 				<div class="person-detail">
-					<p class="item-person-nickname">[[${chat.opponentNick}]]</p>
-					<p class="item-person-chat">[[${chat.message}]]</p>
+					<p class="item-person-nickname">[[${chat.opponentNick}]]님</p>
+					<div class="item-person-chat">
+						<p class="item-person-chat-content">[[${chat.message}]]</p>
+					</div>
 					<div class="item-detail">
 						<p class="item-subject subject-text">[[${chat.goodsTitle}]]</p>
-						<p class="item-price">[[${chat.goodsPrice}]]</p>
+						<p class="item-price">[[${chat.goodsPrice}]]원</p>
 					</div>
 				</div>
 			</div>
