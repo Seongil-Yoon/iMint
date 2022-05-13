@@ -21,7 +21,7 @@ public interface ISecurityDAO {
     public MemberDTO findByMbId(String mbId);
     public MemberDTO findByMbEmail(String mbEmail);
     public MemberDTO findByMbNick(String mbNick);
-    public List<MemberDTO> findByMbGuard(String mbGuard);
+    public List<MemberDTO> findByMbGuard(String mbGuard); // 보호자의 mbId로 해당 보호자에 연동된 아이 계정 모두 조회 
 
     // 회원가입 1차: sns 가입
     public void savesns(MemberDTO memberDTO); 
