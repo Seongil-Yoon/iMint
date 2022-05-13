@@ -82,6 +82,17 @@ function connectWS(chatboxMyId) {
     });
 }
 
+// 함수: 메세지 전송
+function sendMessage(message) {
+    stompClient.send(
+        "/chat/send/chatroom/" + currentChatroomId,
+        {},
+        JSON.stringify({
+            message: message,
+        })
+    );
+}
+
 // 함수: 보호자 회원일 때 내 아이 선택 상자 추가
 function addChildSelect() {
     $.ajax({
@@ -539,14 +550,11 @@ function joinChatroom(chatroom) {
     $("#chatbox-send-sendbtn")
         .off("click")
         .on("click", function () {
-            if ($("#chatbox-view-send textarea").val().trim().length != 0) {
-                stompClient.send(
-                    "/chat/send/chatroom/" + currentChatroomId,
-                    {},
-                    JSON.stringify({
-                        message: $("#chatbox-view-send textarea").val(),
-                    })
-                );
+            let message = $("#chatbox-view-send textarea").val();
+            if (message.trim().length != 0) {
+                if (messageFilter(message)) {
+                    sendMessage(message);
+                }
             }
             $("#chatbox-view-send textarea").val("");
         });
@@ -691,4 +699,50 @@ function putChatmessage(chatmessage, isloading) {
                 (chatmessage.read ? "읽음" : "") +
                 `</div>`
         );
+}
+
+function messageFilter(message) {
+    let testcase = [
+        { type: "주민등록번호", regex: /\d{6}[,\.\-\s][1-4]\d{6}/ },
+        {
+            type: "전화번호",
+            regex: /[(]?[0]([2]|\d{2})[)]?([,\.\-\s]?)\d{3,4}(\2)\d{4}/,
+        },
+        { type: "나이", regex: /\d{1,4}(년생|세|살)/ },
+        {
+            // 주소 정규표현식: 당근마켓 블로그(https://medium.com/daangn/%EC%A3%BC%EC%86%8C-%EC%9D%B8%EC%8B%9D%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%82%BD%EC%A7%88%EC%9D%98-%EA%B8%B0%EB%A1%9D-df2d8f82d25)
+            type: "주소",
+            regex: /([가-힣A-Za-z·\d~\-\.]{2,}(로|길).[\d]+)|([가-힣A-Za-z·\d~\-\.]+(읍|동)\s)[\d]+/,
+        },
+        { type: "인증번호", regex: /^[\d]{6}$/ },
+        {
+            type: "학교/학년",
+            regex: /[가-힣A-Za-z·\d~\-\.]{2,}(초|교).([·\d~\-\.]|학년)+/,
+        },
+    ];
+
+    let testresult = [];
+
+    for (let i in testcase) {
+        if (message.search(testcase[i].regex) != -1) {
+            testresult.push(testcase[i].type);
+        }
+    }
+
+    if (testresult.length > 0) {
+        $("#chatbox-view-chatmessages").append(
+            `<div class="chatbox-chatmessages-chatmessage filter"><div class="chatbox-chatmessage-message">` +
+                `경고!<br>` +
+                `보내려는 메세지에 민감한 정보가 포함되어있는 것 같습니다. 정말 보내도 되는 정보인지 보호자와 상의하세요.<br><br>` +
+                `포함된 정보: [` +
+                testresult +
+                `]</div></div>`
+        );
+        $("#chatbox-view-chatmessages").scrollTop(
+            $("#chatbox-view-chatmessages").prop("scrollHeight")
+        );
+        return false;
+    } else {
+        return true;
+    }
 }

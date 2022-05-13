@@ -403,6 +403,16 @@
     float: right;
 }
 
+.chatbox-chatmessages-chatmessage.filter .chatbox-chatmessage-message {
+    float: left;
+    width: 280px;
+    max-width: 280px;
+    border: 3px solid #f05555;
+    color: #f05555;
+    background-color: #fff5f5;
+    user-select: none;
+}
+
 .chatbox-chatmessage-chatinfo {
     width: 60px;
     font-size: 12px;
