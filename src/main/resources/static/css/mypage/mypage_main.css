@@ -124,6 +124,13 @@
     margin-right: 10px;
 }
 
+/* 레벨 버튼 */
+.leveling{
+	background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+	font-size: 0.8em;
+	color:black;
+}
+
 /* 기타 세팅 관련 (연결 회원, 동네 설정) */
 .container-other-settings{
     display: grid;
