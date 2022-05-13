@@ -47,6 +47,7 @@
 	margin-bottom: 1rem;
 }
 
+/* 채팅목록 메시지 말풍선 */
 .item-person-chat{
 	position: relative;
 	background: #eaeaea;
