@@ -37,18 +37,18 @@
 <th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
 	<th:block th:each="trades : ${allTrade}">
 		<th:block th:each="trade : ${trades.value}">
-			<div class="item-list item-list-guard" th:classappend="${trades.key}">
+			<div class="item-list item-list-guard" th:classappend="${trades.key}" >
 				<div class="checkbox">
 					<!-- <input type="checkbox" class="select-targets" name="selected" /> -->
 					<p class="count">[[${tradeStat.count}]]</p>
 				</div>
 				<div class="status">
 					<p th:switch="${trade.category}" class="text">
-						<span th:case="wait" style="color: blue" data-bs-toggle="tooltip" data-bs-placement="top"
+						<span th:case="wait" class="badge rounded-pill bg-success" data-bs-toggle="tooltip" data-bs-placement="top"
 							title="내가 판매중인 상품입니다.">판매중</span>
-						<span th:case="resrv_seller" style="color: blue" data-bs-toggle="tooltip"
+						<span th:case="resrv_seller" class="badge rounded-pill bg-primary" data-bs-toggle="tooltip"
 							data-bs-placement="top" title="내가 판매하기로<br>예약한 상품입니다." data-bs-html="true">판매예약</span>
-						<span th:case="resrv_buyer" style="color: #DD0000" data-bs-toggle="tooltip"
+						<span th:case="resrv_buyer" class="badge rounded-pill bg-danger" data-bs-toggle="tooltip"
 							data-bs-placement="top" title="내가 구매하기로<br>예약한 상품입니다." data-bs-html="true">구매예약</span>
 						<span th:case="*" style="color: #9B9B9B" data-bs-toggle="tooltip" data-bs-placement="top"
 							title="오류가 발생했습니다.">[[${trade.category}]]</span>
@@ -87,11 +87,11 @@
 			</div>
 			<div class="status">
 				<p th:switch="${trade.category}" class="text">
-					<span th:case="wait" style="color: blue" data-bs-toggle="tooltip" data-bs-placement="top"
+					<span th:case="wait" class="badge rounded-pill bg-success" data-bs-toggle="tooltip" data-bs-placement="top"
 						title="내가 판매중인 상품입니다.">판매중</span>
-					<span th:case="resrv_seller" style="color: blue" data-bs-toggle="tooltip" data-bs-placement="top"
+					<span th:case="resrv_seller" class="badge rounded-pill bg-primary" data-bs-toggle="tooltip" data-bs-placement="top"
 						title="내가 판매하기로<br>예약한 상품입니다." data-bs-html="true">판매예약</span>
-					<span th:case="resrv_buyer" style="color: #DD0000" data-bs-toggle="tooltip" data-bs-placement="top"
+					<span th:case="resrv_buyer" class="badge rounded-pill bg-danger" data-bs-toggle="tooltip" data-bs-placement="top"
 						title="내가 구매하기로<br>예약한 상품입니다." data-bs-html="true">구매예약</span>
 					<span th:case="*" style="color: #9B9B9B" data-bs-toggle="tooltip" data-bs-placement="top"
 						title="오류가 발생했습니다.">[[${trade.category}]]</span>

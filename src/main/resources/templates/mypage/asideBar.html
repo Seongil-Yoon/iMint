@@ -18,40 +18,32 @@
 			</a>
 			<br>
 		</th:block>
-		
-			<a class="content" href="/mypage/mylist">
-			<div id="mypage-mylist" class="aside-tab-item">
+		<a class="content" href="/mypage/mylist">
+		<div id="mypage-mylist" class="aside-tab-item">
 			<p class="tab-text">
-					<span th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">내 아이의 거래목록</span>
-					<span th:unless="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">나의 거래목록</span> 
+				<span th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">내 아이의 거래목록</span>
+				<span th:unless="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">나의 거래목록</span> 
 			</p>			
 					
-			</div>
+		</div>
 		</a>
-		<br> 
+		<br>
 		<a class="content" href="/mypage/block">
 			<div id="mypage-mylist" class="aside-tab-item">
 				<p class="tab-text">
 					<span th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">내 아이의 차단목록</span>
-				</p>
-			</div>
-		</a>
-		<a class="content" href="/mypage/block">
-			<div class="aside-tab-item">
-				<p class="tab-text">
 					<span th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">나의 차단목록</span>
 				</p>
 			</div>
 		</a>
 		<br>
-		
-		
 		<a class="content" href="/mypage/edit">
 			<div id="mypage-edit" class="aside-tab-item">
 				<p class="tab-text">회원정보 수정</p>
-				
 			</div>
-		</a><br> <a class="content" href="/mypage/withdraw">
+		</a>
+		<br> 
+		<a class="content" href="/mypage/withdraw">
 			<div id="mypgae-withdraw" class="aside-tab-item">
 				<p class="tab-text">회원 탈퇴</p>
 			</div>
