@@ -49,9 +49,6 @@ public class IndexController {
 	private ISecurityDAO securityDAO;
 	
 	@Autowired
-	private MemberDTO memberDTO;
-	
-	@Autowired
 	ParseMbRole parseMbRole;
 	
 	@Autowired
@@ -97,7 +94,7 @@ public class IndexController {
 		
 		ModelAndView mv = new ModelAndView();
 		String mbId = parseMbId.parseMbId(auth);
-		memberDTO = parseMbId.getMemberMbId(mbId);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
 		AccessDeniedException ade = (AccessDeniedException) req.getAttribute(WebAttributes.ACCESS_DENIED_403);
         log.info("---------- err/denied-page ---------");
@@ -118,12 +115,12 @@ public class IndexController {
 					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		
-        log.info("---------- register ---------");
-		log.info("memberDTO : {}", memberDTO);
-		
 		// 모듈화 결과(아래 2줄)
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		
+		log.info("---------- register ---------");
+		log.info("memberDTO : {}", memberDTO);
 		
 		ModelAndView mv = new ModelAndView();
 
