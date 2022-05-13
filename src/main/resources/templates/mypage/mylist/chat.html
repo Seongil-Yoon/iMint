@@ -74,14 +74,14 @@
 					<div class="item-person-chat">
 						<p class="item-person-chat-content">[[${chat.message}]]</p>
 					</div>
-					<div class="item-detail">
-						<p class="item-subject subject-text">[[${chat.goodsTitle}]]</p>
-						<p class="item-price">[[${chat.goodsPrice}]]원</p>
-					</div>
+					
 				</div>
 			</div>
 			<div class="interest">
-				<!-- <p class="text">관심 2</p> -->
+				<div class="item-detail">
+					<p class="item-subject subject-text">[[${chat.goodsTitle}]]</p>
+					<p class="item-price">[[${chat.goodsPrice}]]원</p>
+				</div>
 			</div>
 			<div class="link">
 				<button type="button" id="linkItem" class="btn btn-primary btn-sm" th:attr="onclick=|directJoinChatroom('${chat.id}')|">바로가기</button>

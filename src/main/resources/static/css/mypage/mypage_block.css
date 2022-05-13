@@ -98,7 +98,7 @@
 /* 채팅목록-항목명 정렬 */
 .item-lables-chat{
     display: grid;
-    grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
+    grid-template-columns: 0.5fr 4fr 1fr ;
     /* grid-gap: 0.5rem; */
     align-items: center;
     justify-content: center;
@@ -110,7 +110,7 @@
 /* 채팅목록-항목별 내용 정렬 */
 .item-list-chat{
     display: grid;
-    grid-template-columns: 4fr 1fr 1fr ;
+    grid-template-columns: 0.5fr 4fr 1fr  ;
     grid-gap: 0/5rem;
     align-items: center;
     justify-content: center;
@@ -123,11 +123,13 @@
 /* 채팅목록 내 상대 사진, 상대 내용 2열 정렬 */
 .person{
     display: grid;
-    grid-template-columns: 1fr 1fr ;
-    grid-gap: 0/5rem;
+    grid-template-columns: 0.8fr 3fr ;
+    grid-gap: 1rem;
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding-right: 2rem;
+    padding-left: 2rem;
 } 
 
 /* 채팅목록 내용 > 상대방 닉네임 굵기 처리 */
@@ -140,12 +142,41 @@
     text-align: left;
 }
 
-/* 채팅목록 내용 > 상품명, 가격 2열 정렬 */
-.item-detail {
-    display: grid;
-    grid-template-columns: 1fr 1fr ;
-    grid-gap: 0/5rem;
-    align-items: center;
-    justify-content: center;
-    text-align: left;
+/* 상대 프로필 */
+/* .photo-container{
+	align-items: right;
+    justify-content: right;
+} */
+
+.person-photo{
+	width: 90px;
+	height: 90px;
+	object-fit: contain;
+}
+
+/* 차단목록 메시지 말풍선 */
+.item-person-chat{
+	position: relative;
+	background: #eaeaea;
+	border-radius: .4em;
+}
+
+.item-person-chat:after {
+	content: '';
+	position: absolute;
+	bottom: 10%;
+	left: 10%;
+	width: 0;
+	height: 0;
+	border: 12px solid transparent;
+	border-top-color: #eaeaea;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -6px;
+	margin-bottom: -12px;
+}
+
+.item-person-chat-content{
+	margin-left: 0.5rem;
+	padding: 0.5rem;
 }
