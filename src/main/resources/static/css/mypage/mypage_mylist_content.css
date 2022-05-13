@@ -43,6 +43,32 @@
 	width: 90px;
 	height: 90px;
 	object-fit: contain;
-	margin-left: 3rem; 
+	
 	margin-bottom: 1rem;
+}
+
+.item-person-chat{
+	position: relative;
+	background: #eaeaea;
+	border-radius: .4em;
+}
+
+.item-person-chat:after {
+	content: '';
+	position: absolute;
+	bottom: 10%;
+	left: 10%;
+	width: 0;
+	height: 0;
+	border: 12px solid transparent;
+	border-top-color: #eaeaea;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -6px;
+	margin-bottom: -12px;
+}
+
+.item-person-chat-content{
+	margin-left: 0.5rem;
+	padding: 0.5rem;
 }

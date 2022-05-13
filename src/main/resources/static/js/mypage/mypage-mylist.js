@@ -153,3 +153,14 @@ for(i = 0; i < subject.length; i++){
 		subject[i].innerHTML = text_ + "..";
 	}
 }
+
+//마지막 채팅 메세지가 길어질 경우 처리
+const subjectChat = document.querySelectorAll('.item-person-chat-content');
+
+for(i = 0; i < subjectChat.length; i++){
+	text = subjectChat[i].innerHTML;
+	if(text.length >= 13){
+		text_ = text.substr(0, 13);
+		subjectChat[i].innerHTML = text_ + "..";
+	}
+}
