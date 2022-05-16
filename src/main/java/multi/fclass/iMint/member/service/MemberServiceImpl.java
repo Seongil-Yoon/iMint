@@ -89,7 +89,7 @@ public class MemberServiceImpl implements IMemberService {
 				memberDTO.setMbThumbnail(mbThumbnail);
 
 				// 파일 업로드
-				File serverfile = new File(root.concat(mbThumbnail));
+				File serverfile = new File(root.concat(savePath + "/"), newname);
 				serverfile.createNewFile();
 				serverfile.setReadable(true, false);
 				serverfile.setWritable(true, false);
