@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.chat.dao.IChatDAO;
-import multi.fclass.iMint.chat.dto.ChatCheckDTO;
+import multi.fclass.iMint.chat.dto.ChatroomOpenCheckDTO;
+import multi.fclass.iMint.mypage.service.IMypageService;
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
+import multi.fclass.iMint.chat.dto.ChatroomJoinCheckDTO;
 
 /**
  * @author GhostFairy
@@ -19,6 +21,9 @@ public class ChatServiceImpl implements IChatService {
 	@Autowired
 	IChatDAO chatDAO;
 
+	@Autowired
+	IMypageService mypageService;
+
 	@Override
 	public String getNick(String myId) {
 		return chatDAO.checkMember(myId);
@@ -26,8 +31,17 @@ public class ChatServiceImpl implements IChatService {
 
 	@Override
 	public boolean isChatroomJoinable(String myId, int chatroomId) {
-		if (chatDAO.checkChatroomJoinable(myId, chatroomId) == 1) {
-			return true;
+		ChatroomJoinCheckDTO cjcDTO = chatDAO.checkChatroomJoinable(chatroomId);
+
+		if (cjcDTO != null) {
+			if (cjcDTO.getSellerId().equals(myId) || cjcDTO.getBuyerId().equals(myId)) {
+				return true;
+			} else if (mypageService.isMyChild(myId, cjcDTO.getSellerId())
+					|| mypageService.isMyChild(myId, cjcDTO.getBuyerId())) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -35,7 +49,7 @@ public class ChatServiceImpl implements IChatService {
 
 	@Override
 	public String isChatroomOpenable(String myId, int goodsId) {
-		ChatCheckDTO ccDTO = chatDAO.checkChatroomOpenable(goodsId);
+		ChatroomOpenCheckDTO ccDTO = chatDAO.checkChatroomOpenable(goodsId);
 		if (myId.equals(ccDTO.getSellerId())) {
 			return "seller";
 		} else if (ccDTO.getCompDate() != null && !myId.equals(ccDTO.getCompBuyerId())) {

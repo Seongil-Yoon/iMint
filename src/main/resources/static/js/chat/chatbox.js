@@ -1,24 +1,66 @@
+let chatboxChildId = null;
 let stompClient = null;
 let currentChatroomId = null;
 let currentGoodsId = null;
 let currentOpponentId = null;
 let currentOpponentNick = null;
 let currentPageNumber = null;
-let numberOfItems = 30;
 
 $(function () {
-    // 인증된 회원이면 채팅 버튼 표시
+    chatboxInitializer();
+    chatboxEventHandler();
+});
+
+// 함수: 보호자 회원일 때 내 아이 선택 상자 추가
+function chatboxInitializer() {
+    // 인증된 회원이면 채팅 버튼 표시하고 웹소켓 접속
     if (chatboxMyRole == "CHILD" || chatboxMyRole == "GUARD") {
         $("#chatbox-openbtn").show();
+        connectWS(chatboxMyId);
+
         if (chatboxMyRole == "GUARD") {
-            // 보호자 회원이면 아이 선택상자 추가
-            addChildSelect();
-        } else if (chatboxMyRole == "CHILD") {
-            // 아이 회원이면 즉시 웹소켓 접속
-            connectWS(chatboxMyId);
+            $.ajax({
+                url: "/chat/getmychildren",
+                type: "GET",
+                dataType: "JSON",
+                success: function (result) {
+                    $("#chatbox-list-title .chatbox-title-text").after(
+                        `<select id="chatbox-title-select" class="form-select"></select>`
+                    );
+                    if (result.length > 0) {
+                        // 보호자 회원이면 아이 선택상자 추가
+                        $("#chatbox-title-select")
+                            .append(`<option selected>내 아이 선택</option>`)
+                            .on("change", function () {
+                                chatboxChildId = $(this).val();
+                                if (chatboxChildId != "내 아이 선택") {
+                                    loadChatrooms();
+                                }
+                            });
+
+                        for (let i in result) {
+                            $("#chatbox-title-select").append(
+                                `<option value="` +
+                                    result[i].mbId +
+                                    `">` +
+                                    result[i].mbNick +
+                                    `</option>`
+                            );
+                        }
+                    } else {
+                        $("#chatbox-title-select").attr("disabled", true);
+                        $("#chatbox-title-select").append(
+                            `<option selected>등록된 아이 없음</option>`
+                        );
+                    }
+                },
+            });
         }
     }
+}
 
+// 함수: 각종 버튼 이벤트 등록
+function chatboxEventHandler() {
     // 이벤트 등록: 채팅 버튼 누르면 채팅 버튼 숨기고 채팅박스 표시
     $("#chatbox-openbtn").on("click", function () {
         $(this).hide();
@@ -71,7 +113,7 @@ $(function () {
             }
         }
     });
-});
+}
 
 // 함수: 웹소켓에 연결
 function connectWS(chatboxMyId) {
@@ -93,46 +135,6 @@ function sendMessage(message) {
     );
 }
 
-// 함수: 보호자 회원일 때 내 아이 선택 상자 추가
-function addChildSelect() {
-    $.ajax({
-        url: "/chat/getmychildren",
-        type: "GET",
-        dataType: "JSON",
-        success: function (result) {
-            $("#chatbox-list-title .chatbox-title-text").after(
-                `<select id="chatbox-title-select" class="form-select"></select>`
-            );
-            if (result.length > 0) {
-                $("#chatbox-title-select")
-                    .append(`<option selected>내 아이 선택</option>`)
-                    .on("change", function () {
-                        chatboxMyId = $(this).val();
-                        loadChatrooms();
-                        if (chatboxMyId != "내 아이 선택") {
-                            connectWS(chatboxMyId);
-                        }
-                    });
-
-                for (let i in result) {
-                    $("#chatbox-title-select").append(
-                        `<option value="` +
-                            result[i].mbId +
-                            `">` +
-                            result[i].mbNick +
-                            `</option>`
-                    );
-                }
-            } else {
-                $("#chatbox-title-select").attr("disabled", true);
-                $("#chatbox-title-select").append(
-                    `<option selected>등록된 아이 없음</option>`
-                );
-            }
-        },
-    });
-}
-
 // 함수: 채팅방 목록 표시
 function loadChatrooms() {
     // 채팅방 목록 초기화
@@ -143,7 +145,7 @@ function loadChatrooms() {
         url: "/chat/getchatrooms",
         type: "GET",
         data: {
-            myId: chatboxMyId,
+            childId: chatboxChildId,
         },
         dataType: "JSON",
         success: function (result) {
@@ -245,7 +247,7 @@ function getTrxStatus() {
         url: "/transaction/trx/check",
         type: "GET",
         data: {
-            myId: chatboxMyId,
+            childId: chatboxChildId,
             opponentId: currentOpponentId,
             goodsId: currentGoodsId,
         },
@@ -603,10 +605,9 @@ function getChatmessages(isloading) {
         url: "/chat/getchatmessages",
         type: "GET",
         data: {
-            myId: chatboxMyId,
+            childId: chatboxChildId,
             chatroomId: currentChatroomId,
             pageNumber: currentPageNumber,
-            numberOfItems: numberOfItems,
         },
         dataType: "JSON",
         success: function (result) {
@@ -622,18 +623,21 @@ function getChatmessages(isloading) {
                     putChatmessage(result[i], true);
                 }
 
-                if (isloading) {
-                    // 스크롤 맨 아래로 이동
-                    $("#chatbox-view-chatmessages").scrollTop(
-                        $("#chatbox-view-chatmessages").prop("scrollHeight")
-                    );
-                } else {
-                    // 스크롤 위치 유지
-                    $("#chatbox-view-chatmessages").scrollTop(
-                        $("#chatbox-view-chatmessages").prop("scrollHeight") -
-                            currentScrollHeight
-                    );
-                }
+                setTimeout(function () {
+                    if (isloading) {
+                        // 스크롤 맨 아래로 이동
+                        $("#chatbox-view-chatmessages").scrollTop(
+                            $("#chatbox-view-chatmessages").prop("scrollHeight")
+                        );
+                    } else {
+                        // 스크롤 위치 유지
+                        $("#chatbox-view-chatmessages").scrollTop(
+                            $("#chatbox-view-chatmessages").prop(
+                                "scrollHeight"
+                            ) - currentScrollHeight
+                        );
+                    }
+                }, 100);
             }
         },
     });
@@ -643,7 +647,10 @@ function getChatmessages(isloading) {
 function putChatmessage(chatmessage, isloading) {
     if (isloading) {
         // DB의 메세지 목록을 불러올 때는 앞쪽으로 추가
-        if (chatmessage.senderId != chatboxMyId) {
+        if (
+            chatmessage.senderId != chatboxMyId &&
+            chatmessage.senderId != chatboxChildId
+        ) {
             $("#chatbox-view-chatmessages").prepend(
                 `<div data-messageId="` +
                     chatmessage.id +
@@ -658,7 +665,10 @@ function putChatmessage(chatmessage, isloading) {
         }
     } else {
         // 웹소켓을 통해 메세지를 받았을 때는 뒤쪽으로 추가
-        if (chatmessage.senderId != chatboxMyId) {
+        if (
+            chatmessage.senderId != chatboxMyId &&
+            chatmessage.senderId != chatboxChildId
+        ) {
             $("#chatbox-view-chatmessages").append(
                 `<div data-messageId="` +
                     chatmessage.id +
@@ -701,6 +711,7 @@ function putChatmessage(chatmessage, isloading) {
         );
 }
 
+// 함수: 메세지에 금지어가 포함되어있는지 확인
 function messageFilter(message) {
     let testcase = [
         { type: "주민등록번호", regex: /\d{6}[,\.\-\s][1-4]\d{6}/ },
