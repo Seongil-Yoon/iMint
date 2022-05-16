@@ -5,7 +5,7 @@ $("#block_btn").on('click', function() {
 		url: "/block",
 		type: "post",
 		data: {
-			"blockNick": blockNick
+			"blockMbId": blockMbId
 		},
 		dataType: "json",
 
@@ -23,7 +23,7 @@ $("#unblock_btn").on('click', function() {
 		url: "/unblock",
 		type: "post",
 		data: {
-			"unblockNick": unblockNick
+			"unblockMbId": unblockMbId
 		},
 		dataType: "json",
 
