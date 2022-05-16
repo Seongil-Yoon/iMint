@@ -34,9 +34,9 @@ public class sttServiceImpl implements INaverService {
 			String imgFile = root + "/iMintImage/stt/" + image;
 			File voiceFile = new File(imgFile);
 			if (voiceFile.exists()) {
-				voiceFile.canExecute();
-				voiceFile.canRead();
-				voiceFile.canWrite();
+				voiceFile.setReadable(true);
+				voiceFile.setWritable(true);
+				voiceFile.setExecutable(true);
 			}
 
 			String language = lang; // 언어 코드 ( Kor, Jpn, Eng, Chn )

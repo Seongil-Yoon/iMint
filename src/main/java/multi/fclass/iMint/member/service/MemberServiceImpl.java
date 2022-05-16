@@ -91,9 +91,9 @@ public class MemberServiceImpl implements IMemberService {
 				// 파일 업로드
 				File serverfile = new File(root.concat(mbThumbnail));
 				if (serverfile.exists()) {
-					serverfile.canExecute();
-					serverfile.canRead();
-					serverfile.canWrite();
+					serverfile.setReadable(true);
+					serverfile.setWritable(true);
+					serverfile.setExecutable(true);
 				}
 				thumbnail.transferTo(serverfile);
 

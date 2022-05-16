@@ -24,7 +24,7 @@ public class AiController {
 
 	@Value("${root}")
 	String root;
-	
+
 	@Autowired
 	sttServiceImpl sttService;
 
@@ -45,10 +45,10 @@ public class AiController {
 
 		fileName = originName + "_" + formatToday + "(" + uuid + ")" + ".mp3";
 		File target = new File(path, fileName);
-		if(target.exists()) {
-			target.canExecute();
-			target.canRead();
-			target.canWrite();
+		if (target.exists()) {
+			target.setReadable(true);
+			target.setWritable(true);
+			target.setExecutable(true);
 		}
 		file1.transferTo(target); // StreamUtils.copy(in, out);
 		System.out.println(fileName);
