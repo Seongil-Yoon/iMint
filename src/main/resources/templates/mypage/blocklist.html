@@ -59,32 +59,60 @@
 						</div>
 						<form action="/mypage/block" method="post" enctype="multipart/form-data" class="container-form">
 						<!-- 항목별 내용 -->
-						<!-- <th:block th:each="chats : ${allChat}">
-							<th:block th:each="chat : ${chats.value}">
-								<div class="item-list-chat item-list-guard" th:classappend="${chats.key}"> -->
-									<div class="item-list-chat">
-										<div class="checkbox">
-											<p class="count">1</p>
-										</div>
-										<div class="person">
-											<div class="photo-container">
-												<p class="person-photo">사진(예정)</p>
-											</div>
-											<div class="person-detail">
-												<p class="item-person-nickname">상대방 닉네임</p>
-												<div class="item-person-chat">
-													<p class="item-person-chat-content">마지막 채팅</p>
+						<!-- 보호자일 경우 -->
+							<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
+								<th:block th:each="blocks : ${allBlock}">
+									<th:block th:each="block : ${blocks.value}">
+										<div class="item-list-chat item-list-guard" th:classappend="${blocks.key}"> 
+											<div class="item-list-chat">
+												<div class="checkbox">
+													<p class="count">[[${blockStat.count}]]</p>
 												</div>
-												
+												<div class="person">
+													<div class="photo-container">
+														<img th:src="${block.opponentThumbnail}" class="person-photo">
+													</div>
+													<div class="person-detail">
+														<p class="item-person-nickname">[[${block.opponentNick}]]님</p>
+														<div class="item-person-chat">
+															<p class="item-person-chat-content">[[${block.message}]]</p>
+														</div>
+														
+													</div>
+												</div>
+												<div class="link">
+													<button type="button" id="unblock_btn" class="btn btn-primary btn-sm">차단 해제</button>
+												</div>
 											</div>
 										</div>
-										<div class="link">
-											<button type="button" id="unblock_btn" class="btn btn-primary btn-sm">차단 해제</button>
-										</div>
-									</div>
-								</div>
+									</th:block>
+								</th:block>
 							</th:block>
-						</th:block>
+							<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
+								<th:block th:each="block : ${userBlock}">
+											<div class="item-list-chat">
+												<div class="checkbox">
+													<p class="count">[[${blockStat.count}]]</p>
+												</div>
+												<div class="person">
+													<div class="photo-container">
+														<img th:src="${block.opponentThumbnail}" class="person-photo">
+													</div>
+													<div class="person-detail">
+														<p class="item-person-nickname">[[${block.opponentNick}]]님</p>
+														<div class="item-person-chat">
+															<p class="item-person-chat-content">[[${block.message}]]</p>
+														</div>
+														
+													</div>
+												</div>
+												<div class="link">
+													<button type="button" id="unblock_btn" class="btn btn-primary btn-sm">차단 해제</button>
+												</div>
+											</div>
+										</div>
+									</th:block>
+								</th:block>
 						</form>
 					</div>
 				</div>

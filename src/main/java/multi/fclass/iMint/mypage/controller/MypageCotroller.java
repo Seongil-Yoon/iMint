@@ -208,6 +208,7 @@ ModelAndView mv = new ModelAndView();
 			for (MypageConnectionDTO child : userChilds) {
 				// 아이별 관심/구매 목록
 				List<BlockListDTO> userBlock = blockService.getBlockList(child.getMbId());
+				userBlock.removeIf((dto) -> (dto.getMessage() == null));
 				allBlock.put(child.getMbId(), userBlock);
 			}
 			
@@ -216,6 +217,8 @@ ModelAndView mv = new ModelAndView();
 		//아이일 경우
 		else if(memberDTO.getMbRole() == Role.CHILD) {
 			List<BlockListDTO> userBlock = blockService.getBlockList(mbId);
+			userBlock.removeIf((dto) -> (dto.getMessage() == null));
+			
 			mv.addObject("userBlock", userBlock);
 			
 			mv.setViewName("mypage/blocklist");
