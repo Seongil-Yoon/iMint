@@ -446,7 +446,7 @@
 }
 
 .chatbox-chatmessage-chatinfo {
-    width: 60px;
+    width: var(--chatroom-height);
     font-size: 12px;
     height: 15px;
     line-height: 15px;

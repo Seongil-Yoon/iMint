@@ -113,6 +113,39 @@ function chatboxEventHandler() {
             }
         }
     });
+
+    $("#chatview-option-block").on("click", function () {
+        swal({
+            title: "회원 차단",
+            text: "정말로 " + currentOpponentNick + "님을 차단하시겠습니까?",
+            icon: "error",
+            buttons: ["다시 생각해볼래요", "차단할래요"],
+            dangerMode: true,
+        }).then((confirm) => {
+            if (confirm) {
+                $.ajax({
+                    url: "/block",
+                    type: "POST",
+                    data: {
+                        blockNick: currentOpponentId,
+                    },
+                    dataType: "JSON",
+                    success: function (r) {
+                        if (r.result == "block") {
+                            swal(currentOpponentNick + "님을 차단했습니다.", {
+                                icon: "success",
+                            });
+                        } else {
+                            swal("오류가 발생했습니다.", {
+                                icon: "error",
+                            });
+                        }
+                        getTrxStatus();
+                    },
+                });
+            }
+        });
+    });
 }
 
 // 함수: 웹소켓에 연결
@@ -710,10 +743,7 @@ function putChatmessage(chatmessage, isloading) {
         .find(".chatbox-chatmessage-chatinfo")
         .append(
             `<div class="chatbox-chatinfo-sendtime">` +
-                chatmessage.sendDate.substr(
-                    chatmessage.sendDate.indexOf("T") + 1,
-                    5
-                ) +
+                chatmessage.sendDate.substr(12, 5) +
                 `</div>`
         )
         .append(
