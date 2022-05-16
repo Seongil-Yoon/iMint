@@ -26,6 +26,7 @@ public class BlockDTO {
 
 	// 차단 취소 여부
 	private Boolean blockIsdelete;
+	
 
 	public BlockDTO() {
 	}

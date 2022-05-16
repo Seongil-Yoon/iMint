@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import multi.fclass.iMint.block.dto.BlockListDTO;
+import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
@@ -44,6 +46,9 @@ public class MypageCotroller {
 
 	@Autowired
 	IMypageService mypageService;
+	
+	@Autowired
+	IBlockService blockService;
 
 // 마이페이지 - 메인
 
@@ -193,13 +198,26 @@ ModelAndView mv = new ModelAndView();
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 
-		
+		//보호자일 경우
 		if(memberDTO.getMbRole() == Role.GUARD) {
 			List<MypageConnectionDTO> userChilds = mypageService.getMyChildrenList(mbId);
 			mv.addObject("userChilds", userChilds);
+			
+			Map<String, List<BlockListDTO>> allBlock = new HashMap<String, List<BlockListDTO>>();
+			
+			for (MypageConnectionDTO child : userChilds) {
+				// 아이별 관심/구매 목록
+				List<BlockListDTO> userBlock = blockService.getBlockList(child.getMbId());
+				allBlock.put(child.getMbId(), userBlock);
+			}
+			
 			mv.setViewName("mypage/blocklist"); 
 		}
+		//아이일 경우
 		else if(memberDTO.getMbRole() == Role.CHILD) {
+			List<BlockListDTO> userBlock = blockService.getBlockList(mbId);
+			mv.addObject("userBlock", userBlock);
+			
 			mv.setViewName("mypage/blocklist");
 		}
 		
