@@ -98,9 +98,7 @@ public class FileServiceImpl implements IFileService {
 					fileName = goodsId + "_" + formatToday + "(" + uuid + ")" + fileOriginNameExt;
 					byte[] fileData = file.getBytes();
 					File target = new File(realPath, fileName);
-					if(!target.exists()) {
-						target.createNewFile();
-					}
+					target.createNewFile();
 					target.setReadable(true, false);
 					target.setWritable(true, false);
 					target.setExecutable(true, false);

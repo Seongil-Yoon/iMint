@@ -45,9 +45,7 @@ public class AiController {
 
 		fileName = originName + "_" + formatToday + "(" + uuid + ")" + ".mp3";
 		File target = new File(path, fileName);
-		if(!target.exists()) {
-			target.createNewFile();
-		}
+		target.createNewFile();
 		target.setReadable(true, false);
 		target.setWritable(true, false);
 		target.setExecutable(true, false);
