@@ -674,12 +674,24 @@ function putChatmessage(chatmessage, isloading) {
                     chatmessage.id +
                     `" class="chatbox-chatmessages-chatmessage left"></div>`
             );
+
+            $(
+                ".chatbox-chatmessages-chatmessage.right .chatbox-chatinfo-isread"
+            ).each(function () {
+                $(this).text("읽음");
+            });
         } else {
             $("#chatbox-view-chatmessages").append(
                 `<div data-messageId="` +
                     chatmessage.id +
                     `" class="chatbox-chatmessages-chatmessage right"></div>`
             );
+
+            $(
+                ".chatbox-chatmessages-chatmessage.left .chatbox-chatinfo-isread"
+            ).each(function () {
+                $(this).text("읽음");
+            });
         }
     }
 
@@ -706,7 +718,11 @@ function putChatmessage(chatmessage, isloading) {
         )
         .append(
             `<div class="chatbox-chatinfo-isread">` +
-                (chatmessage.read ? "읽음" : "") +
+                ((chatmessage.senderId == chatboxMyId ||
+                    chatmessage.senderId == chatboxChildId) &&
+                chatmessage.read
+                    ? "읽음"
+                    : "") +
                 `</div>`
         );
 }

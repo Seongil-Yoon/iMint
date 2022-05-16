@@ -92,6 +92,7 @@ public class ChatServiceImpl implements IChatService {
 			numberOfItems = 0;
 		}
 
+		chatDAO.markAsRead(chatroomId, myId);
 		return chatDAO.getChatroomMessages(chatroomId, (pageNumber - 1) * numberOfItems, numberOfItems);
 	}
 

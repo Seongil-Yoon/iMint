@@ -36,6 +36,17 @@
 			#{startIndex}, #{numberOfItems}
 	</select>
 	
+	<!-- 기존 메세지 읽음 표시 -->
+	<update id="markAsRead">
+		UPDATE
+			`imint`.`chat_messages`
+		SET
+			is_read = TRUE
+		WHERE
+			chatroom_id = #{chatroomId}
+			AND sender_id NOT LIKE #{myId}
+	</update>
+	
 	<!-- 회원 여부 조회 -->
 	<select id="checkMember" resultType="String">
 		SELECT
