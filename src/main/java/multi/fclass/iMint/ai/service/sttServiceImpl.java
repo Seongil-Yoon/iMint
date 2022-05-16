@@ -33,11 +33,9 @@ public class sttServiceImpl implements INaverService {
 //			String imgFile = "C:\\kdt-venture/06. AI플랫폼/강의공유/ai_images/" + image;
 			String imgFile = root + "/iMintImage/stt/" + image;
 			File voiceFile = new File(imgFile);
-			if (voiceFile.exists()) {
-				voiceFile.setReadable(true, false);
-				voiceFile.setWritable(true, false);
-				voiceFile.setExecutable(true, false);
-			}
+			voiceFile.setReadable(true, false);
+			voiceFile.setWritable(true, false);
+			voiceFile.setExecutable(true, false);
 
 			String language = lang; // 언어 코드 ( Kor, Jpn, Eng, Chn )
 			String apiURL = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=" + language;
