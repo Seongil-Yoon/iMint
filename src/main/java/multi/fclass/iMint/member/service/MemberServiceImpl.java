@@ -34,84 +34,91 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Autowired
 	HttpSession httpSession;
-	
+
 	@Autowired
 	ParseMbId parseMbId;
-	
+
 	@Value("${root}")
 	private String root;
 
 	@Value("${directory}")
 	private String directory;
-	
+
 	@Value("${memberImagePath}")
 	String memberImagePath;
-	
+
 	@Override
-	public MemberDTO updateuser(String mbId, MultipartFile thumbnail, String nickname, String interest) throws IOException {
-		
+	public MemberDTO updateuser(String mbId, MultipartFile thumbnail, String nickname, String interest)
+			throws IOException {
+
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
+
 		String mbRole = memberDTO.getMbRole().toString();
 		String provider = memberDTO.getMbProvider();
-		
-		// 전체 저장경로 + 파일 이름 
+
+		// 전체 저장경로 + 파일 이름
 		// ex. ../GUARD/naver/naver_sdfklw242.jpg
 		String mbThumbnail = null;
 
-		
 		// 파일 업로드
-		try {		
-		String savePath = "/" + directory + "/" + memberImagePath + "/" + mbRole + "/" + provider; // 저장경로: 1. guard / child 별로 지정 2.provider 별로 지정
+		try {
+			String savePath = "/" + directory + "/" + memberImagePath + "/" + mbRole + "/" + provider; // 저장경로: 1. guard
+																										// / child 별로 지정
+																										// 2.provider 별로
+																										// 지정
 
-		List<String> path = new ArrayList<String>();
-		path.add(root);
-		path.add(directory);
-		path.add(memberImagePath);
-		path.add(mbRole);
-		path.add(provider);
-		
-		// 폴더 생성 
-		fileService.mkDir(path);
+			List<String> path = new ArrayList<String>();
+			path.add(root);
+			path.add(directory);
+			path.add(memberImagePath);
+			path.add(mbRole);
+			path.add(provider);
 
-			if(!thumbnail.isEmpty()) {
-				
-				// 원래 파일 명에서 확장자(.) 추출 
+			// 폴더 생성
+			fileService.mkDir(path);
+
+			if (!thumbnail.isEmpty()) {
+
+				// 원래 파일 명에서 확장자(.) 추출
 				String ext = thumbnail.getOriginalFilename().substring(thumbnail.getOriginalFilename().indexOf("."));
-	
+
 				// 파일내용 + 파일명 --> 서버의 특정폴더(c:upload)에 영구저장. 서버가 종료되더라도 폴더에 저장.
 				String newname = mbId + ext;
 				mbThumbnail = savePath + "/" + newname;
 
-				memberDTO.setMbThumbnail(mbThumbnail);			
-				
+				memberDTO.setMbThumbnail(mbThumbnail);
+
 				// 파일 업로드
 				File serverfile = new File(root.concat(mbThumbnail));
+				if (serverfile.exists()) {
+					serverfile.canExecute();
+					serverfile.canRead();
+					serverfile.canWrite();
+				}
 				thumbnail.transferTo(serverfile);
-				
+
 			} // if end
-			else { // 전달된 파일이 없으면 
-				if(memberDTO.getMbThumbnail() != null) { // 원래 파일있으면
+			else { // 전달된 파일이 없으면
+				if (memberDTO.getMbThumbnail() != null) { // 원래 파일있으면
 					mbThumbnail = memberDTO.getMbThumbnail(); // 원래 파일 유지
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		if (!nickname.equals("")) {
 			System.out.println("전달된 닉네임 있음");
-			memberDTO.setMbNick(nickname);		
+			memberDTO.setMbNick(nickname);
 		}
 
 		if (!interest.equals("")) {
 			System.out.println("전달된 관심사 있음");
-			memberDTO.setMbInterest(interest);		
+			memberDTO.setMbInterest(interest);
 		}
-				
+
 		memberDAO.updatemember(memberDTO);
-		
+
 		return memberDTO;
 	}
 

@@ -43,6 +43,10 @@ public class FileServiceImpl implements IFileService {
 			File dirPath = new File(completePath += path + route);
 			if (!dirPath.exists()) {
 				dirPath.mkdirs();
+			} else {
+				dirPath.canExecute();
+				dirPath.canRead();
+				dirPath.canWrite();
 			}
 		}
 		return completePath;
@@ -94,6 +98,11 @@ public class FileServiceImpl implements IFileService {
 					fileName = goodsId + "_" + formatToday + "(" + uuid + ")" + fileOriginNameExt;
 					byte[] fileData = file.getBytes();
 					File target = new File(realPath, fileName);
+					if (target.exists()) {
+						target.canExecute();
+						target.canRead();
+						target.canWrite();
+					}
 
 					FileCopyUtils.copy(fileData, target);
 					goodsImagesDTO = GoodsImagesDTO.builder().goodsId(goodsId)
