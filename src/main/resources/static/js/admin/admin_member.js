@@ -44,7 +44,7 @@ $("#ban_btn").on('click', function() {
 						"ban_mbId": ban_mbId.join(',')
 					},
 					success: function(result) {
-							alert(result);
+							alert("강제탈퇴 완료했습니다.");
 					}
 				}); // ajax end 
 		    }; // if end 
