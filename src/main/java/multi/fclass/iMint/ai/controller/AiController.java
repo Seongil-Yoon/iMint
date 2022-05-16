@@ -45,11 +45,9 @@ public class AiController {
 
 		fileName = originName + "_" + formatToday + "(" + uuid + ")" + ".mp3";
 		File target = new File(path, fileName);
-		if (target.exists()) {
-			target.setReadable(true, false);
-			target.setWritable(true, false);
-			target.setExecutable(true, false);
-		}
+		target.setReadable(true, false);
+		target.setWritable(true, false);
+		target.setExecutable(true, false);
 		file1.transferTo(target); // StreamUtils.copy(in, out);
 		System.out.println(fileName);
 		return fileName;
