@@ -44,9 +44,9 @@ public class FileServiceImpl implements IFileService {
 			if (!dirPath.exists()) {
 				dirPath.mkdirs();
 			} else {
-				dirPath.setReadable(true);
-				dirPath.setWritable(true);
-				dirPath.setExecutable(true);
+				dirPath.setReadable(true, false);
+				dirPath.setWritable(true, false);
+				dirPath.setExecutable(true, false);
 			}
 		}
 		return completePath;
@@ -99,9 +99,9 @@ public class FileServiceImpl implements IFileService {
 					byte[] fileData = file.getBytes();
 					File target = new File(realPath, fileName);
 					if (target.exists()) {
-						target.setReadable(true);
-						target.setWritable(true);
-						target.setExecutable(true);
+						target.setReadable(true, false);
+						target.setWritable(true, false);
+						target.setExecutable(true, false);
 					}
 
 					FileCopyUtils.copy(fileData, target);
