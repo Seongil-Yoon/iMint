@@ -94,12 +94,44 @@
 .chatbox-menubtn {
     width: 40px;
     text-align: center;
+    line-height: var(--title-height);
+    color: #3387a8;
     padding: 0 10px;
     float: right;
 }
 
 .chatbox-menubtn:hover {
     cursor: pointer;
+}
+
+.chatbox-menubtn .dropdown-menu {
+    padding: 0;
+    min-width: 100px;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 5px rgba(155 155 155 / 50%);
+}
+
+.chatbox-menubtn .dropdown-item {
+    height: 40px;
+    line-height: 32px;
+    padding: 5px 10px;
+}
+.chatbox-menubtn .dropdown-item:first-child {
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+.chatbox-menubtn .dropdown-item:last-child {
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+.chatbox-menubtn .dropdown-item:active {
+    color: #3387a8;
+    background-color: #cdf0ea;
+}
+.chatbox-menubtn .dropdown-item:hover {
+    color: black;
+    background-color: #eeeeee;
 }
 
 #chatbox-list-chatrooms {
