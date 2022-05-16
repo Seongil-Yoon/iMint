@@ -6,7 +6,7 @@
 
 <!-- 차단  -->
     <insert id="block" parameterType="String">
-        INSERT INTO imint.block(mb_id, mb_id2, block_date)) 
+        INSERT INTO imint.block(mb_id, mb_id2, block_date)
         VALUES
         (#{mbId}, #{blockMbId}, now());
     </insert>
