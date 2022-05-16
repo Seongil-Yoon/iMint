@@ -9,7 +9,7 @@ import lombok.Getter;
  *
  */
 @Getter
-public class ChatCheckDTO {
+public class ChatroomOpenCheckDTO {
 
 	String sellerId;
 	LocalDateTime resrvDate;
