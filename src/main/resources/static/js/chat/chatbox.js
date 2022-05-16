@@ -743,7 +743,7 @@ function putChatmessage(chatmessage, isloading) {
         .find(".chatbox-chatmessage-chatinfo")
         .append(
             `<div class="chatbox-chatinfo-sendtime">` +
-                chatmessage.sendDate.substr(12, 5) +
+                chatmessage.sendDate.substr(11, 5) +
                 `</div>`
         )
         .append(
