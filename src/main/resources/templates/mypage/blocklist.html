@@ -45,15 +45,6 @@
 				
 				<div class="container">
 					<div class="tab-content-item">
-						<!-- <div class="tab-4-content-inner"> -->
-						<!-- 버튼 -->
-						<!-- <div class="buttons">
-                        <h6 class="select-title">전체선택</h6>
-                        <input type="checkbox" class="selectAllbtn" name="selected"/>
-                        <button type="button" id="edit" class="btn btn-secondary btn-sm">수정</button>
-                        <button type="button" id="delete" class="btn btn-secondary btn-sm">삭제</button>
-                    </div> -->
-                    	
 						<!-- 항목명 -->
 						<div class="item-lables-chat">
 							<div class="checkbox">
@@ -66,27 +57,35 @@
 								<h6 class="lables-block">차단 해제</h6>
 							</div>
 						</div>
+						<form action="/mypage/block" method="post" enctype="multipart/form-data" class="container-form">
 						<!-- 항목별 내용 -->
-						<div class="item-list-chat">
-							<div class="checkbox">
-								<p class="count">1</p>
-							</div>
-							<div class="person">
-								<div class="photo-container">
-									<p class="person-photo">사진(예정)</p>
-								</div>
-								<div class="person-detail">
-									<p class="item-person-nickname">상대방 닉네임</p>
-									<div class="item-person-chat">
-										<p class="item-person-chat-content">마지막 채팅</p>
+						<!-- <th:block th:each="chats : ${allChat}">
+							<th:block th:each="chat : ${chats.value}">
+								<div class="item-list-chat item-list-guard" th:classappend="${chats.key}"> -->
+									<div class="item-list-chat">
+										<div class="checkbox">
+											<p class="count">1</p>
+										</div>
+										<div class="person">
+											<div class="photo-container">
+												<p class="person-photo">사진(예정)</p>
+											</div>
+											<div class="person-detail">
+												<p class="item-person-nickname">상대방 닉네임</p>
+												<div class="item-person-chat">
+													<p class="item-person-chat-content">마지막 채팅</p>
+												</div>
+												
+											</div>
+										</div>
+										<div class="link">
+											<button type="button" id="unblock_btn" class="btn btn-primary btn-sm">차단 해제</button>
+										</div>
 									</div>
-									
 								</div>
-							</div>
-							<div class="link">
-								<button type="submit" id="unblock" class="btn btn-primary btn-sm">차단 해제</button>
-							</div>
-						</div>
+							</th:block>
+						</th:block>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -94,6 +93,6 @@
 	</div>
 	<footer th:replace="frags :: footer"></footer>
 	<th:block th:replace="libs :: script" />
-	<script src="/static/js/baby-main.js"></script>
+	<script src="/static/js/block/block.js"></script>
 </body>
 </html>
