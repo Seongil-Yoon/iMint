@@ -76,11 +76,11 @@ public class AdminCotroller {
 	// 관리자가 선택한 회원 강퇴(비동기)
 	@ResponseBody
 	@PostMapping("/admin/member/ban")
-	public HashMap<String, String> ban(String ban_mbId){
+	public HashMap<String, String> ban(String ban_members){
 		
 		HashMap<String, String> map = new HashMap<>();
 		
-		service.ban(ban_mbId);
+		service.ban(ban_members);
 		
 		map.put("result", "success");
 		
@@ -133,7 +133,6 @@ public class AdminCotroller {
 		map.put("regist", regist);
 		map.put("withdraw", withdraw);
 		
-		System.out.println(map);
 		return map;
 	};
 
