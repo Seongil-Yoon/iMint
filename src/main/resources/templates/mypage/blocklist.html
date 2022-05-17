@@ -33,7 +33,7 @@
 					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
 						[[${session?.memberDTO?.mbNick}]]님의 차단목록</h2>
 					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
-						보호자 [[${userGuard?.mbNick}]]님의 차단목록</h2>
+						보호자 [[${userGuard?.mbNick}]]님의 차단목록입니다.</h2>
 				</div>
 
 				<div class="container">
@@ -94,7 +94,7 @@
 						</th:block>
 					</th:block>
 					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
-						[[${session?.memberDTO?.mbNick}]]님의 차단목록</h2>
+						[[${session?.memberDTO?.mbNick}]]님의 차단목록입니다.</h2>
 				</div>
 
 				<div class="container">
