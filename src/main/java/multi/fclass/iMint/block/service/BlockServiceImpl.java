@@ -1,5 +1,7 @@
 package multi.fclass.iMint.block.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +32,10 @@ public class BlockServiceImpl implements IBlockService {
 	public void unblock(String mbId, String unblockMbId) {
 		blockDAO.unblock(mbId, unblockMbId);
 
+	}
+
+	@Override
+	public List<String> blocklist(String mbId) {		
+		return blockDAO.blocklist(mbId);
 	}
 }
