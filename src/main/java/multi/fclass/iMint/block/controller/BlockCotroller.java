@@ -28,7 +28,7 @@ public class BlockCotroller {
 	@Autowired
 	ParseMbId parseMbId;
 
-	// 채팅 혹은 상품 상세페이지에서 차단 요청시 결과 반환(비동기)
+	// 차단 요청시 결과 반환(비동기)
 	@PostMapping("/block")
 	@ResponseBody
 	public HashMap<String, String> block(String blockMbId, Authentication auth) {
@@ -43,21 +43,7 @@ public class BlockCotroller {
 		return map;
 	}
 
-	// 채팅 혹은 상품 상세페이지에서 차단 요청시 결과 반환(비동기)
-	@GetMapping("/blockcheck")
-	@ResponseBody
-	public String blockcheck(String blockMbId, Authentication auth) {
-		// 본인
-		String mbId = parseMbId.parseMbId(auth);
-
-		JSONObject obj = new JSONObject();
-		obj.put("result", service.blockcheck(mbId, blockMbId));
-
-		// 비동기 응답 결과 전송
-		return obj.toJSONString();
-	}
-
-	// 마이페이제에서 차단해제 요청시 반환(비동기)
+	// 차단해제 요청시 결과 반환(비동기)
 	@PostMapping("/unblock")
 	@ResponseBody
 	public HashMap<String, String> unblock(String unblockMbId, Authentication auth) {
@@ -71,4 +57,19 @@ public class BlockCotroller {
 		map.put("result", "unblock");
 		return map;
 	}
+
+	// 차단여부 조회(비동기)
+	@GetMapping("/blockcheck")
+	@ResponseBody
+	public String blockcheck(String blockMbId, Authentication auth) {
+		// 본인
+		String mbId = parseMbId.parseMbId(auth);
+
+		JSONObject obj = new JSONObject();
+		obj.put("result", service.blockcheck(mbId, blockMbId));
+
+		// 비동기 응답 결과 전송
+		return obj.toJSONString();
+	}
+
 }
