@@ -12,7 +12,7 @@ import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 
