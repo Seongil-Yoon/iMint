@@ -29,19 +29,14 @@ public class BlockCotroller {
 	@PostMapping("/block")
 	@ResponseBody
 	public HashMap<String, String> block(String blockMbId, Authentication auth) {
-
 		HashMap<String, String> map = new HashMap<>();
 
 		// 본인
 		String mbId = parseMbId.parseMbId(auth);
-
 		service.block(mbId, blockMbId);
 
 		// 비동기 응답 결과 전송
-		map.put("mbId", mbId); // 차단한 본인
-		map.put("blockMbId", blockMbId); // 차단당한 상대방
 		map.put("result", "block");
-
 		return map;
 	}
 
@@ -49,7 +44,6 @@ public class BlockCotroller {
 	@PostMapping("/unblock")
 	@ResponseBody
 	public HashMap<String, String> unblock(String unblockMbId, Authentication auth) {
-
 		HashMap<String, String> map = new HashMap<>();
 
 		// 본인
@@ -57,10 +51,7 @@ public class BlockCotroller {
 		service.unblock(mbId, unblockMbId);
 
 		// 비동기 응답 결과 전송
-		map.put("mbId", mbId); // 차단해제한 본인
-		map.put("unblockMbId", unblockMbId); // 차단해제당한 상대방
 		map.put("result", "unblock");
-
 		return map;
 	}
 }
