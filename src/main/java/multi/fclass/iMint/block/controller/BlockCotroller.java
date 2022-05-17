@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import multi.fclass.iMint.block.dto.BlockDTO;
+import com.nimbusds.jose.shaded.json.JSONObject;
+
 import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
@@ -41,17 +42,19 @@ public class BlockCotroller {
 		map.put("result", "block");
 		return map;
 	}
-	
+
 	// 채팅 혹은 상품 상세페이지에서 차단 요청시 결과 반환(비동기)
-	@GetMapping("/block")
+	@GetMapping("/blockcheck")
 	@ResponseBody
-	public BlockDTO getOneblock(String blockMbId, Authentication auth) {
+	public String blockcheck(String blockMbId, Authentication auth) {
 		// 본인
 		String mbId = parseMbId.parseMbId(auth);
-		BlockDTO blockDTO = service.getOneblock(mbId, blockMbId);
+
+		JSONObject obj = new JSONObject();
+		obj.put("result", service.blockcheck(mbId, blockMbId));
 
 		// 비동기 응답 결과 전송
-		return blockDTO;
+		return obj.toJSONString();
 	}
 
 	// 마이페이제에서 차단해제 요청시 반환(비동기)
