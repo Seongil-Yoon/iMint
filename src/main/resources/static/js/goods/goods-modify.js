@@ -32,6 +32,8 @@ let goodsDTO = {
 }
 let formData = new FormData();
 
+const blockedGoods = ["담배", "소주", "맥주", "참이슬", "처음처럼", "시원한 청풍", "O2 린", "하이트", "잎새주", "참소주", "화이트", "좋은데이", "C1", "한라산", "처음처럼 순하리", "말보루", "말보루 골드", "marlboro", "raison", "esse", "mevius", "레존", "프렌치 요거", "던힐", "메비우스", "에쎄", "에일", "카스", "카스라이트", "cass", "hite", "필라이트", "필굿", "라라", "블랑", "블루문", "써머쓰비", "발리할리", "스텔라", "호가든", "버드와이저", "하이네켄", "기네스", "칭따오"];
+
 function goodsWrite() {
 
     goodsDTO = {
@@ -94,21 +96,26 @@ function goodsWrite() {
     }
 
     if (!(goodsDTO.goodsTitle == "" || goodsDTO.goodsContent == "" || goodsDTO.goodsPrice == "")) {
-        if (fileBuffer.length > 0) {
-            startAjax();
+        if (blockedGoods.includes(goodsDTO.goodsTitle) !== -1 || blockedGoods.includes(goodsDTO.goodsContent) !== -1) {
+            swal('유해한 상품은 올릴수없습니다', '', 'error');
         } else {
-            swal({
-                title: `사진을 한개도 올리시지 않았습니다`,
-                text: "이대로 올릴까요?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((e) => {
-				if(e){
-	                startAjax();
-				}
-            });
+            if (fileBuffer.length > 0) {
+                startAjax();
+            } else {
+                swal({
+                    title: `사진을 한개도 올리시지 않았습니다`,
+                    text: "이대로 올릴까요?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((e) => {
+                    if (e) {
+                        startAjax();
+                    }
+                });
+            }
         }
+
     } else {
         swal('입력되지 않은 항목이 있습니다', '', 'error');
     }

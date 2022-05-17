@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.mypage.dao.IMypageDAO;
+import multi.fclass.iMint.mypage.dto.MypageBlockDTO;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
 import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
@@ -19,6 +21,9 @@ public class MypageServiceImpl implements IMypageService {
 
 	@Autowired
 	IMypageDAO mypageDAO;
+
+	@Autowired
+	IBlockService blockService;
 
 	// 내 보호자 조회 서비스
 	@Override
@@ -49,25 +54,46 @@ public class MypageServiceImpl implements IMypageService {
 	// 관심 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getWishList(String myId) {
-		return mypageDAO.getWishList(myId);
+		List<String> blockList = blockService.blocklist(myId);
+		List<MypageDTO> wishList = mypageDAO.getWishList(myId);
+		wishList.removeIf((dto) -> (blockList.contains(dto.getSellerId()))); // 차단한 회원의 판매글을 목록에서 제외
+
+		return wishList;
 	}
 
 	// 구매예약/판매중 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getTradeList(String myId) {
-		return mypageDAO.getTradeList(myId);
+		List<String> blockList = blockService.blocklist(myId);
+		List<MypageDTO> tradeList = mypageDAO.getTradeList(myId);
+		tradeList.removeIf((dto) -> (blockList.contains(dto.getSellerId()))); // 차단한 회원과의 거래를 목록에서 제외
+
+		return tradeList;
 	}
 
 	// 거래완료 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getCompleteList(String myId) {
-		return mypageDAO.getCompleteList(myId);
+		List<MypageDTO> compList = mypageDAO.getCompleteList(myId);
+
+		return compList;
 	}
 
 	// 채팅방 목록 조회 서비스
 	@Override
 	public List<MypageChatroomDTO> getChatroomList(String myId) {
-		return mypageDAO.getChatroomList(myId);
+		List<String> blockList = blockService.blocklist(myId);
+		List<MypageChatroomDTO> chatroomList = mypageDAO.getChatroomList(myId);
+		chatroomList.removeIf((dto) -> (blockList.contains(dto.getOpponentId()))); // 차단한 회원과의 채팅을 목록에서 제외
+		chatroomList.removeIf((dto) -> (dto.getMessage() == null)); // 주고 받은 메세지(마지막 메세지)가 없으면 목록에서 제외
+
+		return chatroomList;
+	}
+
+	// 차단 목록 조회 서비스
+	@Override
+	public List<MypageBlockDTO> getBlockList(String myId) {
+		return mypageDAO.getBlockList(myId);
 	}
 
 }

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>아이민트 :: 마이페이지</title>
-<link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
-<link rel="stylesheet" href="/static/css/mypage/mypage_block.css">
-<th:block th:replace="libs :: style" />
+	<meta charset="UTF-8">
+	<title>아이민트 :: 마이페이지</title>
+	<link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
+	<link rel="stylesheet" href="/static/css/mypage/mypage_block.css">
+	<th:block th:replace="libs :: style" />
 </head>
 
 <body>
@@ -14,35 +15,27 @@
 
 	<!-- 아티클 시작 -->
 	<div class="container-page">
-		
+
 		<div class="container-aside-main">
 			<!-- 어사이드 시작 -->
 			<div class="container-aside">
-			<h2 class="title">마이페이지</h2>
+				<h2 class="title">마이페이지</h2>
 				<aside th:replace="mypage/asideBar :: aside"></aside>
 			</div>
 			<!-- 어사이드 끝 -->
 
+
+
 			<!-- 아티클 시작 -->
 			<div class="container-main">
+				<!-- 보호자의 차단 목록 시작 -->
 				<div class="title-text">
-					<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
-						<h2 th:if="${#lists.size(userChilds) == 0}">연결된 아이가 없습니다.</h2>
-						<th:block th:unless="${#lists.size(userChilds) == 0}">
-							<h2 id="child-define">차단 목록을 조회하실 아이를 선택해 주세요.</h2>
-							<br>
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">아이
-									선택</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-									<li th:each="child : ${userChilds}"><a class="dropdown-item" th:id="${child.mbId}" href="#">[[${child.mbNick}]]</a></li>
-								</ul>
-							</div>
-						</th:block>
-					</th:block>
-					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">[[${session?.memberDTO?.mbNick}]]님의 차단 목록입니다.</h2>
+					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
+						[[${session?.memberDTO?.mbNick}]]님의 차단목록</h2>
+					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
+						보호자 [[${userGuard?.mbNick}]]님의 차단목록입니다.</h2>
 				</div>
-				
+
 				<div class="container">
 					<div class="tab-content-item">
 						<!-- 항목명 -->
@@ -57,80 +50,126 @@
 								<h6 class="lables-block">차단 해제</h6>
 							</div>
 						</div>
-						
-						<form action="/mypage/block" method="post" enctype="multipart/form-data" class="container-form">
 						<!-- 항목별 내용 -->
-						<!-- 보호자일 경우 -->
-						
-							<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
-								
-								<th:block th:each="blocks : ${allBlock}">
-									
-									<th:block th:each="block : ${blocks.value}">
-										
-										<div class="item-list-chat item-list-guard" th:classappend="${blocks.key}"> 
-										
-												<div class="checkbox">
-													<p class="count">[[${blockStat.count}]]</p>
-												</div>
-												<div class="person">
-													<div class="photo-container">
-														<img th:src="${block.opponentThumbnail}" class="person-photo">
-													</div>
-													<div class="person-detail">
-														<p class="item-person-nickname">[[${block.opponentNick}]]님</p>
-														<div class="item-person-chat">
-															<p class="item-person-chat-content">[[${block.message}]]</p>
-														</div>
-														
-													</div>
-												</div>
-												<div class="link">
-													<button type="button" id="unblock_btn" class="btn btn-primary btn-sm">차단 해제</button>
-												</div>
-											
-										</div>
-									</th:block>
-								</th:block>
-							</th:block>
-							<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
-								<div th:if="${#lists.size(userBlock) == 0}">
-									<br> <br>
-									<p>차단 목록이 없어요.</p>
+						<!-- 보호자 차단목록 -->
+						<div th:if="${#lists.size(guardBlock) == 0}">
+							<br> <br>
+							<p>차단한 회원이 없어요.</p>
+						</div>
+						<th:block th:each="block : ${guardBlock}">
+							<div class="item-list-chat">
+								<div class="checkbox">
+									<p class="count">[[${blockStat.count}]]</p>
 								</div>
-								<th:block th:each="block : ${userBlock}">
-											<div class="item-list-chat">
-												<div class="checkbox">
-													<p class="count">[[${blockStat.count}]]</p>
-												</div>
-												<div class="person">
-													<div class="photo-container">
-														<img th:src="${block.opponentThumbnail}" class="person-photo">
-													</div>
-													<div class="person-detail">
-														<p class="item-person-nickname">[[${block.opponentNick}]]님</p>
-														<div class="item-person-chat">
-															<p class="item-person-chat-content">[[${block.message}]]</p>
-														</div>
-														
-													</div>
-												</div>
-												<div class="link">
-													<button type="button" id="unblock_btn" class="btn btn-primary btn-sm">차단 해제</button>
-												</div>
-											</div>
-										</div>
-									</th:block>
-								</th:block>
-						</form>
+								<div class="person">
+									<div class="photo-container">
+										<img th:src="${block.opponentThumbnail}" class="person-photo">
+									</div>
+									<div class="person-detail">
+										<p class="item-person-nickname">[[${block.opponentNick}]]</p>
+										<p class="item-block-date">[[${block.blockDate}]]</p>
+									</div>
+								</div>
+								<div class="link">
+									<button th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}" type="button"
+										id="unblock_btn" class="btn btn-primary btn-sm">차단 해제</button>
+								</div>
+							</div>
+						</th:block>
 					</div>
 				</div>
+				<!-- 보호자의 차단 목록 끝 -->
+
+				<!-- 아이의 차단 목록 시작 -->
+				<div class="title-text">
+					<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
+						<h2 th:if="${#lists.size(userChilds) == 0}">연결된 아이가 없습니다.</h2>
+						<th:block th:unless="${#lists.size(userChilds) == 0}">
+							<select id="select-child" class="form-select form-select-lg" aria-label="Default select example">
+								<option selected>내 아이 선택</option>
+								<option th:each="child : ${userChilds}" th:value="${child.mbId}">[[${child.mbNick}]]
+								</option>
+							</select>
+							<h2>의 차단목록</h2>
+						</th:block>
+					</th:block>
+					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
+						[[${session?.memberDTO?.mbNick}]]님의 차단목록입니다.</h2>
+				</div>
+
+				<div class="container">
+					<div class="tab-content-item">
+						<!-- 항목명 -->
+						<div class="item-lables-chat">
+							<div class="checkbox">
+								<h6 class="count">No.</h6>
+							</div>
+							<div>
+								<h6 class="lables-person">차단 상대</h6>
+							</div>
+							<div class="block">
+								<h6 class="lables-block">차단 해제</h6>
+							</div>
+						</div>
+						<!-- 항목별 내용 -->
+						<!-- 보호자인 경우: 선택한 아이 차단목록 -->
+						<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
+							<th:block th:each="blocks : ${allBlock}">
+								<th:block th:each="block : ${blocks.value}">
+									<div class="item-list-chat item-list-guard" th:classappend="${blocks.key}">
+										<div class="checkbox">
+											<p class="count">[[${blockStat.count}]]</p>
+										</div>
+										<div class="person">
+											<div class="photo-container">
+												<img th:src="${block.opponentThumbnail}" class="person-photo">
+											</div>
+											<div class="person-detail">
+												<p class="item-person-nickname">[[${block.opponentNick}]]</p>
+												<p class="item-block-date">[[${block.blockDate}]]</p>
+											</div>
+										</div>
+										<div class="link"></div>
+									</div>
+								</th:block>
+							</th:block>
+						</th:block>
+						<!-- 아이인 경우: 본인 차단목록-->
+						<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
+							<div th:if="${#lists.size(userBlock) == 0}">
+								<br> <br>
+								<p>차단 목록이 없어요.</p>
+							</div>
+							<th:block th:each="block : ${userBlock}">
+								<div class="item-list-chat">
+									<div class="checkbox">
+										<p class="count">[[${blockStat.count}]]</p>
+									</div>
+									<div class="person">
+										<div class="photo-container">
+											<img th:src="${block.opponentThumbnail}" class="person-photo">
+										</div>
+										<div class="person-detail">
+											<p class="item-person-nickname">[[${block.opponentNick}]]</p>
+											<p class="item-block-date">[[${block.blockDate}]]</p>
+										</div>
+									</div>
+									<div class="link">
+										<button type="button" id="unblock_btn" class="btn btn-primary btn-sm">차단
+											해제</button>
+									</div>
+								</div>
+							</th:block>
+						</th:block>
+					</div>
+				</div>
+				<!-- 아이의 차단 목록 끝 -->
 			</div>
 		</div>
-	</div>
-	<footer th:replace="frags :: footer"></footer>
-	<th:block th:replace="libs :: script" />
-	<script src="/static/js/mypage/mypage-block.js"></script>
-	<script src="/static/js/block/block.js"></script>
+		<footer th:replace="frags :: footer"></footer>
+		<th:block th:replace="libs :: script" />
+		<script src="/static/js/mypage/mypage-block.js"></script>
+		<script src="/static/js/block/block.js"></script>
 </body>
+
 </html>

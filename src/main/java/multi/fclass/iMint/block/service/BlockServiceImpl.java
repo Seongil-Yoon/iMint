@@ -9,9 +9,8 @@ import multi.fclass.iMint.block.dao.IBlockDAO;
 import multi.fclass.iMint.block.dto.BlockDTO;
 import multi.fclass.iMint.block.dto.BlockListDTO;
 
-
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 
@@ -19,8 +18,8 @@ import multi.fclass.iMint.block.dto.BlockListDTO;
 public class BlockServiceImpl implements IBlockService {
 	@Autowired
 	IBlockDAO blockDAO;
-	
-	// 차단 
+
+	// 차단
 	@Override
 	public void block(String mbId, String blockMbId) {
 		
@@ -34,10 +33,21 @@ public class BlockServiceImpl implements IBlockService {
 		}
 	}
 
-	//	채팅방 조회 서비스
+	// 차단 해제
 	@Override
-	public List<BlockListDTO> getBlockList(String myId){
-		return blockDAO.getBlockList(myId);
+	public void unblock(String mbId, String unblockMbId) {
+		blockDAO.unblock(mbId, unblockMbId);
+
 	}
 
+	@Override
+	public List<String> blocklist(String mbId) {		
+		return blockDAO.blocklist(mbId);
+	}
+
+  // 차단여부 조회(비동기)
+	@Override
+	public BlockDTO getOneblock(String mbId, String blockMbId) {
+		return blockDAO.blockornot(mbId, blockMbId);
+	}
 }

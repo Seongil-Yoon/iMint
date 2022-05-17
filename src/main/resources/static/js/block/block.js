@@ -17,20 +17,3 @@ $("#block_btn").on('click', function() {
 	}); // ajax end 
 })
 
-// 차단해제 
-$("#unblock_btn").on('click', function() {
-	$.ajax({
-		url: "/unblock",
-		type: "post",
-		data: {
-			"unblockMbId": unblockMbId
-		},
-		dataType: "json",
-
-		success: function(response) { /* 결과 */		
-			if(response.result === "unblock") {
-				alert("차단해제 완료하였습니다.");
-			}
-		} // success end 
-	}); // ajax end 
-})

@@ -35,6 +35,8 @@
 				WHEN g.goods_status LIKE "comp" THEN IF(trx.mb_id LIKE #{myId}, "comp_buyer", "comp_other")
 			END AS category,
 			g.goods_id,
+			g.seller_id,
+			g.seller_nick,
 			g.goods_title,
 			g.goods_price,
 			g.goods_location,
@@ -73,6 +75,8 @@
 				WHEN g.goods_status LIKE "resrv" THEN IF(g.seller_id LIKE #{myId}, "resrv_seller", "resrv_buyer")
 			END AS category,
 		    g.goods_id,
+			g.seller_id,
+			g.seller_nick,
 		    g.goods_title,
 		    g.goods_price,
 		    g.goods_location,
@@ -105,6 +109,8 @@
 			IF(trx.mb_id LIKE #{myId}, "buy", "sell") AS category,
 			g.seller_nick,
 			g.goods_id,
+			g.seller_id,
+			g.seller_nick,
 		    g.goods_title,
 		    g.goods_price,
 		    g.goods_location,
@@ -177,5 +183,23 @@
 	    AND (g.seller_id NOT LIKE #{myId} OR cm.message IS NOT NULL)
 	ORDER BY
 		last_update_date DESC, cr.create_date DESC
+	</select>
+	
+	<!-- 차단 조회 -->
+ 	<select id="getBlockList" resultType="MypageBlockDTO">
+		SELECT
+			block_id AS id,
+			b.mb_id2 AS opponent_id,
+			mb.mb_nick AS opponent_nick,
+			mb.mb_thumbnail AS opponent_thumbnail,
+			b.block_date
+		FROM
+			`imint`.`block` AS b
+			JOIN `imint`.`member` AS mb ON b.mb_id2 = mb.mb_id
+		WHERE
+			block_isdelete = FALSE
+			AND b.mb_id LIKE #{myId}
+		ORDER BY
+			b.block_date DESC
 	</select>
 </mapper>
