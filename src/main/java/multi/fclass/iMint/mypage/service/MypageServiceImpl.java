@@ -56,7 +56,7 @@ public class MypageServiceImpl implements IMypageService {
 	public List<MypageDTO> getWishList(String myId) {
 		List<String> blockList = blockService.blocklist(myId);
 		List<MypageDTO> wishList = mypageDAO.getWishList(myId);
-		wishList.removeIf((dto) -> (blockList.contains(dto.getSellerId())));
+		wishList.removeIf((dto) -> (blockList.contains(dto.getSellerId()))); // 차단한 회원의 판매글을 목록에서 제외
 
 		return wishList;
 	}
@@ -66,7 +66,7 @@ public class MypageServiceImpl implements IMypageService {
 	public List<MypageDTO> getTradeList(String myId) {
 		List<String> blockList = blockService.blocklist(myId);
 		List<MypageDTO> tradeList = mypageDAO.getTradeList(myId);
-		tradeList.removeIf((dto) -> (blockList.contains(dto.getSellerId())));
+		tradeList.removeIf((dto) -> (blockList.contains(dto.getSellerId()))); // 차단한 회원과의 거래를 목록에서 제외
 
 		return tradeList;
 	}
@@ -74,9 +74,7 @@ public class MypageServiceImpl implements IMypageService {
 	// 거래완료 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getCompleteList(String myId) {
-		List<String> blockList = blockService.blocklist(myId);
 		List<MypageDTO> compList = mypageDAO.getCompleteList(myId);
-		compList.removeIf((dto) -> (blockList.contains(dto.getSellerId())));
 
 		return compList;
 	}
@@ -86,7 +84,8 @@ public class MypageServiceImpl implements IMypageService {
 	public List<MypageChatroomDTO> getChatroomList(String myId) {
 		List<String> blockList = blockService.blocklist(myId);
 		List<MypageChatroomDTO> chatroomList = mypageDAO.getChatroomList(myId);
-		chatroomList.removeIf((dto) -> (blockList.contains(dto.getOpponentId())));
+		chatroomList.removeIf((dto) -> (blockList.contains(dto.getOpponentId()))); // 차단한 회원과의 채팅을 목록에서 제외
+		chatroomList.removeIf((dto) -> (dto.getMessage() == null)); // 주고 받은 메세지(마지막 메세지)가 없으면 목록에서 제외
 
 		return chatroomList;
 	}
