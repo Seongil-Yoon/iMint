@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.block.dao.IBlockDAO;
+import multi.fclass.iMint.block.dto.BlockDTO;
 
 /**
  * @author Jungmin, Yang
@@ -38,4 +39,11 @@ public class BlockServiceImpl implements IBlockService {
 	public List<String> blocklist(String mbId) {		
 		return blockDAO.blocklist(mbId);
 	}
+
+	@Override
+	public BlockDTO getOneblock(String mbId, String blockMbId) {
+		return blockDAO.blockornot(mbId, blockMbId);
+	}
+	
+	
 }
