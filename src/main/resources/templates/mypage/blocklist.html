@@ -57,14 +57,19 @@
 								<h6 class="lables-block">차단 해제</h6>
 							</div>
 						</div>
+						
 						<form action="/mypage/block" method="post" enctype="multipart/form-data" class="container-form">
 						<!-- 항목별 내용 -->
 						<!-- 보호자일 경우 -->
+						
 							<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
+								
 								<th:block th:each="blocks : ${allBlock}">
+									
 									<th:block th:each="block : ${blocks.value}">
+										
 										<div class="item-list-chat item-list-guard" th:classappend="${blocks.key}"> 
-											<div class="item-list-chat">
+										
 												<div class="checkbox">
 													<p class="count">[[${blockStat.count}]]</p>
 												</div>
@@ -83,12 +88,16 @@
 												<div class="link">
 													<button type="button" id="unblock_btn" class="btn btn-primary btn-sm">차단 해제</button>
 												</div>
-											</div>
+											
 										</div>
 									</th:block>
 								</th:block>
 							</th:block>
 							<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
+								<div th:if="${#lists.size(userBlock) == 0}">
+									<br> <br>
+									<p>차단 목록이 없어요.</p>
+								</div>
 								<th:block th:each="block : ${userBlock}">
 											<div class="item-list-chat">
 												<div class="checkbox">
@@ -121,6 +130,7 @@
 	</div>
 	<footer th:replace="frags :: footer"></footer>
 	<th:block th:replace="libs :: script" />
+	<script src="/static/js/mypage/mypage-block.js"></script>
 	<script src="/static/js/block/block.js"></script>
 </body>
 </html>

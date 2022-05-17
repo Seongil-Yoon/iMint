@@ -73,6 +73,7 @@
 }
 
 
+
 /* 버튼 */
 .buttons{
     display: grid;
@@ -180,3 +181,15 @@
 	margin-left: 0.5rem;
 	padding: 0.5rem;
 }
+
+/* 선택한 아이만 보이게 함 */
+
+ .item-list-guard{
+	display: none;
+}
+
+.show-list{
+	display: grid !important;
+    opacity: 1 !important;
+    transition: all 1000 ease-in;
+} 

@@ -206,12 +206,18 @@ ModelAndView mv = new ModelAndView();
 			Map<String, List<BlockListDTO>> allBlock = new HashMap<String, List<BlockListDTO>>();
 			
 			for (MypageConnectionDTO child : userChilds) {
+				
 				// 아이별 관심/구매 목록
 				List<BlockListDTO> userBlock = blockService.getBlockList(child.getMbId());
+				
+				
 				userBlock.removeIf((dto) -> (dto.getMessage() == null));
+				System.out.println(userBlock);
 				allBlock.put(child.getMbId(), userBlock);
+				
 			}
 			
+			mv.addObject("allBlock", allBlock);
 			mv.setViewName("mypage/blocklist"); 
 		}
 		//아이일 경우
