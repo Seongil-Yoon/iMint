@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.block.dao.IBlockDAO;
-import multi.fclass.iMint.block.dto.BlockListDTO;
-
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 
@@ -18,11 +16,26 @@ import multi.fclass.iMint.block.dto.BlockListDTO;
 public class BlockServiceImpl implements IBlockService {
 	@Autowired
 	IBlockDAO blockDAO;
-	
-//	채팅방 조회 서비스
+
+	// 차단
 	@Override
-	public List<BlockListDTO> getBlockList(String myId){
-		return blockDAO.getBlockList(myId);
+	public void block(String mbId, String blockMbId) {
+		if (blockDAO.blockornot(mbId, blockMbId) != null) { // 재차단이면
+			blockDAO.reblock(mbId, blockMbId);
+		} else { // 최초 차단이면
+			blockDAO.block(mbId, blockMbId);
+		}
 	}
 
+	// 차단 해제
+	@Override
+	public void unblock(String mbId, String unblockMbId) {
+		blockDAO.unblock(mbId, unblockMbId);
+
+	}
+
+	@Override
+	public List<String> blocklist(String mbId) {		
+		return blockDAO.blocklist(mbId);
+	}
 }

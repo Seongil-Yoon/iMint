@@ -3,70 +3,52 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.block.dao.IBlockDAO">
+	<!-- 차단(최초) -->
+	<insert id="block" parameterType="String">
+		INSERT INTO imint.block(mb_id, mb_id2, block_date)
+		VALUES
+		(#{mbId}, #{blockMbId}, now());
+	</insert>
 
-<!-- 차단  -->
-    <insert id="block" parameterType="String">
-        INSERT INTO imint.block(mb_id, mb_id2, block_date)
-        VALUES
-        (#{mbId}, #{blockMbId}, now());
-    </insert>
+	<!-- 차단해제 -->
+	<update id="unblock" parameterType="String">
+		UPDATE imint.block
+		SET
+		(block_isdelete = 1)
+		WHERE (mb_id = #{mbId} AND mb_id2 = #{unblockMbId}); <!-- 다중 조건 -->
+	</update>
 
-<!-- 차단해제  -->    
-    <update id="unblock" parameterType="String">
-        UPDATE imint.block
-        SET 
-        (block_isdelete = 1)
-        WHERE (mb_id = #{mbId} AND mb_id2 = #{unblockMbId}); <!-- 다중 조건 -->
-    </update>
-    
- <!-- 차단 조회 -->
- 	<select id="getBlockList" resultType="BlockListDTO">
-		SELECT
-		cr.id,
-	    IF(g.seller_id LIKE #{mbId}, cr.buyer_id, g.seller_id) AS opponent_id,
-	    IF(g.seller_id LIKE #{mbId}, mbbuy.mb_nick, g.seller_nick) AS opponent_nick,
-	    IF(g.seller_id LIKE #{mbId}, mbbuy.mb_thumbnail, mbsell.mb_thumbnail) AS opponent_thumbnail,
-	    cm.message,
-	    IF(cm.send_date IS NULL, cr.create_date, cm.send_date) AS last_update_date,
-	    bl.block_isdelete
-	FROM
-		`imint`.`chatroom` AS cr
-        
-	    JOIN (SELECT mb_id, mb_nick, mb_thumbnail FROM `imint`.`member`) AS mbbuy on cr.buyer_id = mbbuy.mb_id
-	    JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
-	    JOIN (SELECT mb_id, mb_thumbnail FROM `imint`.`member`) AS mbsell on g.seller_id = mbsell.mb_id
-        
-	    LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
-	    LEFT JOIN
-	    	(SELECT
-	    		chatroom_id,
-	    		message,
-	    		send_date
-	    	FROM
-	    		(SELECT
-	    			chatroom_id,
-	    			message,
-	    			send_date,
-	    			ROW_NUMBER() OVER(PARTITION BY chatroom_id ORDER BY send_date DESC) AS recent
-	    		FROM
-	    			`imint`.`chat_messages`
-	    		WHERE
-	    			is_deleted = FALSE) AS r
-	    	WHERE
-	    		r.recent = 1
-	    	ORDER BY
-	    		send_date DESC) AS cm ON cr.id = cm.chatroom_id
-		JOIN (SELECT mb_id2 FROM `imint`.`block`) AS mbblock on g.seller_id = mbblock.mb_id2
-        LEFT JOIN (SELECT block_isdelete FROM `imint`.`block`) AS bl on bl.block_isdelete = FALSE OR NULL
-	WHERE
-		cr.isdelete = FALSE
-		AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
-	    AND (g.seller_id LIKE #{mbId} OR cr.buyer_id LIKE #{mbId})
-	    AND gi.goods_images_thumbnail = TRUE
-	    AND (g.seller_id NOT LIKE #{mbId} OR cm.message IS NOT NULL)
-		
-	ORDER BY
-		last_update_date DESC, cr.create_date DESC;
+	<!-- 차단(차단 해제후 재차단) -->
+	<update id="reblock" parameterType="String">
+		UPDATE imint.block
+		SET
+		(block_isdelete = 0, block_date = now())
+		WHERE (mb_id = #{mbId} AND mb_id2 = #{unblockMbId}); <!-- 다중 조건 -->
+	</update>
+
+	<!-- 최초 차단여부 조회 -->
+	<select id="blockornot" resultType="BlockDTO">
+		select mb_id, mb_id2
+		from imint.block
+		WHERE (mb_id = #{mbId} AND mb_id2 = #{blockMbId}); <!-- 다중 조건 -->
 	</select>
 
+	<!-- 차단목록 조회 -->
+	<select id="blocklist" resultType="String">
+		SELECT
+			mb_id2
+		FROM
+			`imint`.`member` AS m
+			JOIN `imint`.`block` AS b ON m.mb_id = b.mb_id
+		WHERE
+			m.mb_id LIKE #{mbId}
+		UNION ALL
+		SELECT
+			mb_id2
+		FROM
+			`imint`.`member` AS m
+			JOIN `imint`.`block` AS b ON m.mb_guard = b.mb_id
+		WHERE
+			m.mb_id LIKE #{mbId}
+	</select>
 </mapper>

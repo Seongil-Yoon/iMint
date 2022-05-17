@@ -1,67 +1,30 @@
-//드롭다운에서 내 아이 선택 시 해당 아이의 이름이 타이틀에 나오도록 함
-const childSelected = document.querySelectorAll('.dropdown-item');
-var cnt = 1;
-
-function selectChild(event){
-	const selected = event.target.id;
-	const selectedNick = event.target.text;
-	const childTitle = document.getElementById('child-define');
-	
-	childTitle.innerHTML = "내 아이 " + selectedNick + "님의 차단 목록입니다";
+const childSelect = document.querySelector("#select-child");
+if (childSelect != null) {
+    childSelect.addEventListener("change", showChild);
 }
-
-childSelected.forEach(item => item.addEventListener('click', selectChild));
-
-
 //드롭다운에서 내 아이 선택 시 해당 아이에 해당하는 내용이 보여지도록 함
-function showChild(event){
-	const selected = event.target.id;
-	
-	removeShowList();
-	
-	targetList = document.getElementsByClassName(selected);
-	
-	/*parentlist = $(listTarget).parents(".show");
-	childlist= $(parentlist).find("div.item-list");
-	*/
-	
-	for(i = 0; i < targetList.length; i++){
-		targetList[i].classList.add('show-list');
-	}
-	
-	childbtns = $(targetList).find("p.count");
-	
-	/*childbtns.each(function(){
-		$(this).text(cnt);
-		cnt += 1;
-	})*/
-	
-	cnt = 1;
+function showChild(event) {
+    removeShowList();
+
+    targetList = document.getElementsByClassName(event.target.value);
+    for (i = 0; i < targetList.length; i++) {
+        targetList[i].classList.add("show-list");
+    }
 }
 
-function removeShowList(){
-	targetList = document.querySelectorAll('.item-list-guard');
-	
-	
-	
-	var i;
-	
-	for(i = 0; i < targetList.length; i++){
-		targetList[i].classList.remove('show-list');
-	}
-}
+function removeShowList() {
+    targetList = document.querySelectorAll(".item-list-guard");
 
-childSelected.forEach(item => item.addEventListener('click', showChild));
+    for (i = 0; i < targetList.length; i++) {
+        targetList[i].classList.remove("show-list");
+    }
+}
 
 //마지막 채팅 메세지가 길어질 경우 처리
-const subjectChat = document.querySelectorAll('.item-person-chat-content');
+const subjectChat = document.querySelectorAll(".item-block-date");
 
-for(i = 0; i < subjectChat.length; i++){
-	text = subjectChat[i].innerHTML;
-	if(text.length >= 13){
-		text_ = text.substr(0, 13);
-		subjectChat[i].innerHTML = text_ + "..";
-	}
+for (i = 0; i < subjectChat.length; i++) {
+    subjectChat[i].innerHTML = subjectChat[i].innerHTML.substring(0, 16).replace("T", " ");
 }
 
 // 차단해제 

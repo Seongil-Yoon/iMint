@@ -80,12 +80,7 @@ public class AdminCotroller {
 		
 		HashMap<String, String> map = new HashMap<>();
 		
-		System.out.println(ban_mbId);
-		
-		String[] ban_list = ban_mbId.split(",");
-		for(String ban_member: ban_list) {
-			adminDAO.banmember(ban_member);
-		}
+		service.ban(ban_mbId);
 		
 		map.put("result", "success");
 		
