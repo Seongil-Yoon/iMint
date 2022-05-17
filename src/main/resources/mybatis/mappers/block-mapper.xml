@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="multi.fclass.iMint.block.dao.IBlockDAO">
-	<!-- 차단 -->
+	<!-- 차단(최초) -->
 	<insert id="block" parameterType="String">
 		INSERT INTO imint.block(mb_id, mb_id2, block_date)
 		VALUES
@@ -17,4 +17,20 @@
 		(block_isdelete = 1)
 		WHERE (mb_id = #{mbId} AND mb_id2 = #{unblockMbId}); <!-- 다중 조건 -->
 	</update>
+
+	<!-- 차단(차단 해제후 재차단) -->
+	<update id="reblock" parameterType="String">
+		UPDATE imint.block
+		SET
+		(block_isdelete = 0, block_date = now())
+		WHERE (mb_id = #{mbId} AND mb_id2 = #{unblockMbId}); <!-- 다중 조건 -->
+	</update>
+
+	<!-- 최초 차단여부 조회 -->
+	<select id="blockornot" resultType="BlockDTO">
+		select mb_id, mb_id2
+		from imint.block
+		WHERE (mb_id = #{mbId} AND mb_id2 = #{blockMbId}); <!-- 다중 조건 -->
+	</select>
+
 </mapper>
