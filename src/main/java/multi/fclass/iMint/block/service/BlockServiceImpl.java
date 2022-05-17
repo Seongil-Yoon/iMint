@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.block.dao.IBlockDAO;
-import multi.fclass.iMint.block.dto.BlockDTO;
 
 /**
  * @author Jungmin, Yang
@@ -21,12 +20,11 @@ public class BlockServiceImpl implements IBlockService {
 	// 차단
 	@Override
 	public void block(String mbId, String blockMbId) {
-		
-		if (blockDAO.blockornot(mbId, blockMbId) != null){ //재차단이면 
+
+		if (blockDAO.blockornot(mbId, blockMbId) != null) { // 재차단이면
 			blockDAO.reblock(mbId, blockMbId);
 			System.out.println("재차단");
-		}
-		else { // 최초 차단이면 
+		} else { // 최초 차단이면
 			blockDAO.block(mbId, blockMbId);
 			System.out.println("차단");
 		}
@@ -39,14 +37,20 @@ public class BlockServiceImpl implements IBlockService {
 
 	}
 
+	// 차단여부 조회
 	@Override
-	public List<String> blocklist(String mbId) {		
+	public boolean blockcheck(String mbId, String blockMbId) {
+		if (blockDAO.blockcheck(mbId, blockMbId) == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	// 차단목록 조회
+	@Override
+	public List<String> blocklist(String mbId) {
 		return blockDAO.blocklist(mbId);
 	}
 
-  // 차단여부 조회(비동기)
-	@Override
-	public BlockDTO getOneblock(String mbId, String blockMbId) {
-		return blockDAO.blockornot(mbId, blockMbId);
-	}
 }
