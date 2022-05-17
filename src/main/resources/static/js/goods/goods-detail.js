@@ -248,7 +248,24 @@ function chatHandler() {
 }
 
 function blockHandler() {
-    
+    $("#blockBtn").on('click', function () {
+        $.ajax({
+            url: "/block",
+            type: "post",
+            data: {
+                "blockMbId": "google_102592663151810141035"
+            },
+            dataType: "json", //응답받을때 타입
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8", //요청할때 타입
+
+            success: function (response) {
+                /* 결과 */
+                if (response.result === "block") {
+                    alert("차단 완료하였습니다.");
+                }
+            } // success end 
+        }); // ajax end 
+    })
 }
 
 //숫자 가격화 함수
