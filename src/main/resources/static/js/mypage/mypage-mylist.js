@@ -88,60 +88,26 @@ function selectAll(event)  {
 
 btnSelected.forEach(item => item.addEventListener('click', selectAll));
 
-//드롭다운에서 내 아이 선택 시 해당 아이의 이름이 타이틀에 나오도록 함
-const childSelected = document.querySelectorAll('.dropdown-item');
-var cnt = 1;
-
-function selectChild(event){
-	const selected = event.target.id;
-	const selectedNick = event.target.text;
-	const childTitle = document.getElementById('child-define');
-	
-	childTitle.innerHTML = "내 아이 " + selectedNick + "님의 거래 목록입니다";
-}
-
-childSelected.forEach(item => item.addEventListener('click', selectChild));
-
+const childSelect = document.querySelector("#select-child");
+childSelect.addEventListener("change", showChild);
 
 //드롭다운에서 내 아이 선택 시 해당 아이에 해당하는 내용이 보여지도록 함
-function showChild(event){
-	const selected = event.target.id;
-	
-	removeShowList();
-	
-	targetList = document.getElementsByClassName(selected);
-	
-	/*parentlist = $(listTarget).parents(".show");
-	childlist= $(parentlist).find("div.item-list");
-	*/
-	
-	for(i = 0; i < targetList.length; i++){
-		targetList[i].classList.add('show-list');
-	}
-	
-	childbtns = $(targetList).find("p.count");
-	
-	/*childbtns.each(function(){
-		$(this).text(cnt);
-		cnt += 1;
-	})*/
-	
-	cnt = 1;
+function showChild(event) {
+    removeShowList();
+
+    targetList = document.getElementsByClassName(event.target.value);
+    for (i = 0; i < targetList.length; i++) {
+        targetList[i].classList.add("show-list");
+    }
 }
 
 function removeShowList(){
 	targetList = document.querySelectorAll('.item-list-guard');
 	
-	
-	
-	var i;
-	
 	for(i = 0; i < targetList.length; i++){
 		targetList[i].classList.remove('show-list');
 	}
 }
-
-childSelected.forEach(item => item.addEventListener('click', showChild));
 
 //항목명이 길어질 경우 처리
 const subject = document.querySelectorAll('.subject-text');

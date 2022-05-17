@@ -1,62 +1,67 @@
 @charset "UTF-8";
 
 /* 페이지 전체 컨테이너 */
-.container-page{
-	width: 1200px;
-	margin:auto;
-	padding-left: 3rem;
-	padding-right: 3rem;
+.container-page {
+    width: 1200px;
+    margin: auto;
+    padding-left: 3rem;
+    padding-right: 3rem;
 }
 
 /* 어사이드, 메인 2열 구현 컨테이너 */
-.container-aside-main{
-	display: grid;
+.container-aside-main {
+    display: grid;
     grid-template-columns: 0.5fr 3.5fr;
     grid-gap: 3rem;
     /* width: 1300px; */
-   	justify-content: center;
-   	
+    justify-content: center;
 }
 
 /* 페이지 타이틀 */
-.title{
-	width: 210px;
+.title {
+    width: 210px;
     padding-bottom: 2rem;
 }
 
 /* 어사이드 바*/
-.container-aside{
-	padding-top: 3rem;
-	height: 700px;
-	text-align: center;
+.container-aside {
+    padding-top: 3rem;
+    height: 700px;
+    text-align: center;
 }
 
 /* 메인 컨테이너 */
 .container-main {
-	/* width: 700px; */
+    /* width: 700px; */
     display: block;
     text-align: center;
     padding: 3rem;
     border: 1px;
-    background-color: #F9F9F9;
+    background-color: #f9f9f9;
     border-radius: 15px;
     margin-bottom: 2rem;
 }
 
 /* 타이틀 (회원 정보 수정하시겠어요?) */
-.title-text{
-	margin-bottom: 5rem;
+.title-text {
+    margin-bottom: 3rem;
+}
+.title-text h2 {
+    display: inline-block;
 }
 
-/* 내 아이 선택 드롭다운 */
-.dropdown-toggle{
-	justify-content: left;
-}
-
-.dropdown{
-	text-align:left;
-	margin-left: 1rem;
-	margin-bottom:2rem;
+/* 내 아이 선택 */
+#select-child {
+    display: inline-block;
+    width: 300px;
+    text-align: center;
+    height: 50px;
+    font-size: 32px;
+    border: rgb(204, 204, 204) solid 1px;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    box-shadow: none;
+    padding: 0;
 }
 
 /* 상단 탭 컨테이너*/
@@ -70,8 +75,8 @@
 }
 
 /* 상단 탭 개별 항목 컨테이너 */
-.tab-item{
-    background-color:white;
+.tab-item {
+    background-color: white;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -80,8 +85,8 @@
     border-radius: 10px;
 }
 
-.tab-item:hover{
-    background-color: #CDF0EA;
+.tab-item:hover {
+    background-color: #cdf0ea;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -90,12 +95,12 @@
     border-radius: 10px;
     color: #3387a8;
     font-weight: bold;
-   	cursor: pointer;
+    cursor: pointer;
 }
 
 /* 상단 탭 선택 시 JS로 계속 선택되어있게 하는 부분 */
-.selected-tab{
-    background-color: #CDF0EA;
+.selected-tab {
+    background-color: #cdf0ea;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -106,8 +111,8 @@
     font-weight: bold;
 }
 
-.selected{
-    background-color: #CDF0EA;
+.selected {
+    background-color: #cdf0ea;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -116,10 +121,6 @@
     border-radius: 10px;
     color: #3387a8;
     font-weight: bold;
-}
-
-.tab-content-item{
-	
 }
 
 /* 상단 탭 글자 */
@@ -134,7 +135,10 @@
 }
 
 /* 상단 탭 선택 시 탭 내용을 JS로 보이기/숨기기 조정하기 위한 부분 */
-#tab-1-content, #tab-2-content, #tab-3-content, #tab-4-content {
+#tab-1-content,
+#tab-2-content,
+#tab-3-content,
+#tab-4-content {
     display: none;
     opacity: 0;
 }
@@ -145,11 +149,11 @@
 }
 
 /* 탭 내용 컨테이너*/
-.tab-content > .container{
+.tab-content > .container {
     margin-top: 1rem;
 }
 
-.tab-content-item{
+.tab-content-item {
     padding: 2rem;
     border-radius: 1rem;
     border-style: solid;
@@ -159,7 +163,7 @@
 }
 
 /* 버튼 */
-.buttons{
+.buttons {
     display: grid;
     grid-template-columns: 50px 50px 60px 60px;
     grid-gap: 0.5rem;
@@ -172,7 +176,7 @@
     text-align: center;
 }
 
-.select-title{
+.select-title {
     font-size: small;
     font-weight: bold;
     margin-bottom: 2px;
@@ -181,9 +185,9 @@
 /* 채팅목록 내용 */
 
 /* 채팅목록-항목명 정렬 */
-.item-lables-chat{
+.item-lables-chat {
     display: grid;
-    grid-template-columns: 1fr 4fr 2fr 1fr ;
+    grid-template-columns: 1fr 4fr 2fr 1fr;
     /* grid-gap: 0.5rem; */
     align-items: center;
     justify-content: center;
@@ -193,9 +197,9 @@
 }
 
 /* 채팅목록-항목별 내용 정렬 */
-.item-list-chat{
+.item-list-chat {
     display: grid;
-    grid-template-columns: 1fr 4fr 2fr 1fr ;
+    grid-template-columns: 1fr 4fr 2fr 1fr;
     grid-gap: 0/5rem;
     align-items: center;
     justify-content: center;
@@ -206,14 +210,14 @@
 }
 
 /* 채팅목록 내 상대 사진, 상대 내용 2열 정렬 */
-.person{
+.person {
     display: grid;
-    grid-template-columns: 0.5fr 2fr ;
+    grid-template-columns: 0.5fr 2fr;
     grid-gap: 1rem;
     align-items: center;
     justify-content: center;
     text-align: center;
-} 
+}
 
 /* 채팅목록 내용 > 상대방 닉네임 굵기 처리 */
 .item-person-nickname {
@@ -221,7 +225,7 @@
 }
 
 /* 채팅목록 내용 > 상대 내용 왼쪽 정렬 */
-.person-detail{
+.person-detail {
     text-align: left;
 }
 
@@ -245,12 +249,8 @@
 	height: 100px;
 } */
 
-img.photo{
-	
-	width: 90px;
-	height: 90px;
-	object-fit: contain;
+img.photo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
 }
-
-
-
