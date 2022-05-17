@@ -24,7 +24,7 @@ function getChecked() {
 // 관리자가 선택한 회원 강퇴시키기(비동기)
 $("#ban_btn").on('click', function() {
 
-	var ban_mbId = [];
+	var ban_members = [];
 	
 	// input checkbox 에서 체크한 갯수 확인해서 0명이면 비동기 x.
 	if($('input:checkbox[name=member_check]:checked').length == 0){
@@ -34,14 +34,14 @@ $("#ban_btn").on('click', function() {
 	else{
 		$('input:checkbox[name=member_check]').each(function (index) {
 			if($(this).is(":checked") == true){
-				ban_mbId.push($(this).val()); // 체크박스에 선택된 mbId를 배열로 담기 
+				ban_members.push($(this).val()); // 체크박스에 선택된 mbId를 배열로 담기 
 				
 				$.ajax({ 
 					url: "/admin/member/ban",
 					type: "post",
 				 	// 자바스크립트 배열을 ,로 연결된 String으로 json으로 자바에 전달
 					data:{
-						"ban_mbId": ban_mbId.join(',')
+						"ban_members": ban_members.join(',')
 					},
 					success: function(result) {
 							alert("강제탈퇴 완료했습니다.");

@@ -21,6 +21,13 @@
 	UPDATE imint.member 
     SET mb_role = 'GUEST', mb_isdelete = 1
     WHERE (mb_id = #{ban_mbId});
- </update>
+</update>
+
+<!-- 강제탈퇴된 회원의 상품삭제  -->
+<update id = "banmembergoods" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
+	UPDATE imint.goods
+    SET goods_isdelete = 1
+    WHERE (seller_id = #{ban_mbId});
+</update>
 
 </mapper>
