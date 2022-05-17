@@ -7,6 +7,7 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 
+import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.chat.service.IChatService;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
@@ -19,6 +20,9 @@ public class ChatInterceptor implements ChannelInterceptor {
 
 	@Autowired
 	IChatService chatService;
+
+	@Autowired
+	IBlockService blockService;
 
 	@Autowired
 	ParseMbId parseService;
