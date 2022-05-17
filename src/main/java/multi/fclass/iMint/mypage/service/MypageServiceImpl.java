@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.mypage.dao.IMypageDAO;
+import multi.fclass.iMint.mypage.dto.MypageBlockDTO;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
 import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
@@ -68,6 +69,12 @@ public class MypageServiceImpl implements IMypageService {
 	@Override
 	public List<MypageChatroomDTO> getChatroomList(String myId) {
 		return mypageDAO.getChatroomList(myId);
+	}
+
+	// 차단 목록 조회 서비스
+	@Override
+	public List<MypageBlockDTO> getBlockList(String myId) {
+		return mypageDAO.getBlockList(myId);
 	}
 
 }
