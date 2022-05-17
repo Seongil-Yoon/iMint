@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -77,7 +78,7 @@ public class BlockCotroller {
 	// 마이페이제에서 차단해제 요청시 반환(비동기)  
 	@PostMapping("/unblock")
 	@ResponseBody
-	public HashMap<String, String>	unblock(String unblockMbId, Authentication auth) {
+	public HashMap<String, String>	unblock( String unblockMbId,  Authentication auth) {
 		
 		HashMap<String, String> map = new HashMap<>();
 		

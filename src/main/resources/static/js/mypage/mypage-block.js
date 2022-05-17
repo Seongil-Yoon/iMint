@@ -63,3 +63,32 @@ for(i = 0; i < subjectChat.length; i++){
 		subjectChat[i].innerHTML = text_ + "..";
 	}
 }
+
+// 차단해제 
+$(".unblock_btn").on('click', function(e) {
+	unblockMbId = e.target.id;
+	swal({
+            title: "회원 차단",
+            text: "차단을 해제할까요?",
+            icon: "error",
+            buttons: ["다시 생각해볼래요", "차단을 해제할래요"],
+            dangerMode: true,
+        }).then((confirm) => {
+            if (confirm) {
+				$.ajax({
+					url: "/unblock",
+					type: "post",
+					data: {
+						"unblockMbId": unblockMbId
+					},
+					dataType: "json",
+			
+					success: function(response) { /* 결과 */		
+						if(response.result === "unblock") {
+							alert("차단을 해제했어요.");
+						}
+					} // success end 
+				}); // ajax end 
+			}
+        });
+})
