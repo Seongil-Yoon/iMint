@@ -1,6 +1,7 @@
 const childSelect = document.querySelector("#select-child");
-childSelect.addEventListener("change", showChild);
-
+if (childSelect != null) {
+    childSelect.addEventListener("change", showChild);
+}
 //드롭다운에서 내 아이 선택 시 해당 아이에 해당하는 내용이 보여지도록 함
 function showChild(event) {
     removeShowList();
