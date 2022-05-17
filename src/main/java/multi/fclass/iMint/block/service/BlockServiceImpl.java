@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.block.dao.IBlockDAO;
 import multi.fclass.iMint.block.dto.BlockDTO;
-import multi.fclass.iMint.block.dto.BlockListDTO;
 
 /**
  * @author Jungmin, Yang
