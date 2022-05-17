@@ -40,10 +40,11 @@ public class BlockServiceImpl implements IBlockService {
 	// 차단여부 조회
 	@Override
 	public boolean blockcheck(String mbId, String blockMbId) {
-		if (blockDAO.blockcheck(mbId, blockMbId) == null) {
-			return false;
-		} else {
+		int result = blockDAO.blockcheck(mbId, blockMbId);
+		if (result == 1) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 
