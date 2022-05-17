@@ -49,18 +49,6 @@ public class BlockCotroller {
 		
 		// 본인
 		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
-		// DB에 차단 반영
-		// 본인이 보호자면, 연동된 아이계정들에도 선택한 사용자 차단 모두 적용 
-		if (memberDTO.getMbRole() == Role.GUARD) {
-			List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
-			
-			for (MemberDTO childDTO : childlist) {
-				blockDAO.block(childDTO.getMbId(), blockMbId);
-			}
-		}
-		
 		blockDAO.block(mbId, blockMbId);
 		
 		// 비동기 응답 결과 전송
@@ -79,19 +67,7 @@ public class BlockCotroller {
 		HashMap<String, String> map = new HashMap<>();
 		
 		// 본인
-		String mbId = parseMbId.parseMbId(auth);
-		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		
-		// DB에 차단해제 반영
-		// 본인이 보호자면, 연동된 아이계정들에도 선택한 사용자 차단해제 모두 적용 
-		if (memberDTO.getMbRole() == Role.GUARD) {
-			List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
-			
-			for (MemberDTO childDTO : childlist) {
-				blockDAO.block(childDTO.getMbId(), unblockMbId);
-			}
-		}
-		
+		String mbId = parseMbId.parseMbId(auth);		
 		blockDAO.block(mbId, unblockMbId);
 		
 		// 비동기 응답 결과 전송
