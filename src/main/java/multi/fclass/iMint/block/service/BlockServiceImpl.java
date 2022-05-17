@@ -19,10 +19,23 @@ public class BlockServiceImpl implements IBlockService {
 	@Autowired
 	IBlockDAO blockDAO;
 	
-//	채팅방 조회 서비스
+	// 차단 
+	@Override
+	public void block(String mbId, String blockMbId) {
+		if (blockDAO.blockornot(mbId, blockMbId) != null) { //재차단이면 
+			blockDAO.reblock(mbId, blockMbId);
+		}
+		else { // 최초 차단이면 
+			blockDAO.block(mbId, blockMbId);
+		}
+	}
+
+	//	채팅방 조회 서비스
 	@Override
 	public List<BlockListDTO> getBlockList(String myId){
 		return blockDAO.getBlockList(myId);
 	}
+
+		
 
 }

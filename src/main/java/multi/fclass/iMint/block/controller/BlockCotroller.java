@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import multi.fclass.iMint.block.dao.IBlockDAO;
+import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.member.dto.Role;
@@ -30,6 +31,9 @@ public class BlockCotroller {
 	
 	@Autowired
 	IBlockDAO blockDAO;
+	
+	@Autowired
+	IBlockService service;
 
 	@Autowired
 	ParseMbId parseMbId;
@@ -49,7 +53,8 @@ public class BlockCotroller {
 		
 		// 본인
 		String mbId = parseMbId.parseMbId(auth);
-		blockDAO.block(mbId, blockMbId);
+		
+		service.block(mbId, blockMbId);
 		
 		// 비동기 응답 결과 전송
 		map.put("mbId", mbId); // 차단한 본인		

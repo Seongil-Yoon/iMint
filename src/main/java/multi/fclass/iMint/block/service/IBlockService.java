@@ -11,6 +11,9 @@ import multi.fclass.iMint.block.dto.BlockListDTO;
 
 public interface IBlockService {
 
+	// 차단 
+	void block(String mbId, String blockMbId);
+
 	//차단 목록 조회 서비스
 	List<BlockListDTO> getBlockList(String myId);
 
