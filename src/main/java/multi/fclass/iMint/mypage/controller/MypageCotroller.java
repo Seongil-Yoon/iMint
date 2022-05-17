@@ -191,9 +191,9 @@ public class MypageCotroller {
 		return mv;
 	}
 
-@GetMapping("mypage/block")
-public ModelAndView indexBlocklist(Authentication auth) {
-ModelAndView mv = new ModelAndView();
+	@GetMapping("mypage/block")
+	public ModelAndView indexBlocklist(Authentication auth) {
+	ModelAndView mv = new ModelAndView();
 
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);

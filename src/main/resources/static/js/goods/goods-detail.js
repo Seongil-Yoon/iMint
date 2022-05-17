@@ -247,6 +247,10 @@ function chatHandler() {
     });
 }
 
+function blockHandler() {
+    
+}
+
 //숫자 가격화 함수
 function fomatPrice(strNum) {
     return strNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 세자리 콤마
@@ -258,6 +262,7 @@ function main() {
     deleteHandler();
     wishHandler();
     chatHandler();
+    blockHandler();
     let regDate = $("#timeForToday").text();
     $("#timeForToday").text(timeForToday(regDate));
 }
