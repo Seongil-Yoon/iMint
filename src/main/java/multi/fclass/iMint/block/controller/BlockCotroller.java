@@ -53,7 +53,6 @@ public class BlockCotroller {
 		
 		// 본인
 		String mbId = parseMbId.parseMbId(auth);
-		
 		service.block(mbId, blockMbId);
 		
 		// 비동기 응답 결과 전송
