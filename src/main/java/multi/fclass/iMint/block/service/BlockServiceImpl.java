@@ -36,6 +36,4 @@ public class BlockServiceImpl implements IBlockService {
 		return blockDAO.getBlockList(myId);
 	}
 
-		
-
 }
