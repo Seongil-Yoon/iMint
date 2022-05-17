@@ -140,4 +140,5 @@ public class GoodsController {
 
 		return "/main";
 	}
+	
 }
