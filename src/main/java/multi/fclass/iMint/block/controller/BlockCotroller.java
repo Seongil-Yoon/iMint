@@ -63,9 +63,6 @@ public class BlockCotroller {
 		
 		blockDAO.block(mbId, blockMbId);
 		
-		// 차단된 사용자
-		MemberDTO blockMember = parseMbId.getMemberMbId(blockMbId);
-
 		// 비동기 응답 결과 전송
 		map.put("mbId", mbId); // 차단한 본인		
 		map.put("blockMbId", blockMbId); // 차단당한 상대방 
@@ -85,9 +82,6 @@ public class BlockCotroller {
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
-		// 차단해제된 사용자
-		MemberDTO unblockMember = parseMbId.getMemberMbId(unblockMbId);
-
 		// DB에 차단해제 반영
 		// 본인이 보호자면, 연동된 아이계정들에도 선택한 사용자 차단해제 모두 적용 
 		if (memberDTO.getMbRole() == Role.GUARD) {
