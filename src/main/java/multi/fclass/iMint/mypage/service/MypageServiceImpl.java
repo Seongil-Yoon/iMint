@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.mypage.dao.IMypageDAO;
 import multi.fclass.iMint.mypage.dto.MypageBlockDTO;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
@@ -20,6 +21,9 @@ public class MypageServiceImpl implements IMypageService {
 
 	@Autowired
 	IMypageDAO mypageDAO;
+
+	@Autowired
+	IBlockService blockService;
 
 	// 내 보호자 조회 서비스
 	@Override
@@ -50,25 +54,41 @@ public class MypageServiceImpl implements IMypageService {
 	// 관심 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getWishList(String myId) {
-		return mypageDAO.getWishList(myId);
+		List<String> blockList = blockService.blocklist(myId);
+		List<MypageDTO> wishList = mypageDAO.getWishList(myId);
+		wishList.removeIf((dto) -> (blockList.contains(dto.getSellerId())));
+
+		return wishList;
 	}
 
 	// 구매예약/판매중 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getTradeList(String myId) {
-		return mypageDAO.getTradeList(myId);
+		List<String> blockList = blockService.blocklist(myId);
+		List<MypageDTO> tradeList = mypageDAO.getTradeList(myId);
+		tradeList.removeIf((dto) -> (blockList.contains(dto.getSellerId())));
+
+		return tradeList;
 	}
 
 	// 거래완료 목록 조회 서비스
 	@Override
 	public List<MypageDTO> getCompleteList(String myId) {
-		return mypageDAO.getCompleteList(myId);
+		List<String> blockList = blockService.blocklist(myId);
+		List<MypageDTO> compList = mypageDAO.getCompleteList(myId);
+		compList.removeIf((dto) -> (blockList.contains(dto.getSellerId())));
+
+		return compList;
 	}
 
 	// 채팅방 목록 조회 서비스
 	@Override
 	public List<MypageChatroomDTO> getChatroomList(String myId) {
-		return mypageDAO.getChatroomList(myId);
+		List<String> blockList = blockService.blocklist(myId);
+		List<MypageChatroomDTO> chatroomList = mypageDAO.getChatroomList(myId);
+		chatroomList.removeIf((dto) -> (blockList.contains(dto.getOpponentId())));
+
+		return chatroomList;
 	}
 
 	// 차단 목록 조회 서비스
