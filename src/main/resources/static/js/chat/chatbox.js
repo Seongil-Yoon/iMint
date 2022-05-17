@@ -152,7 +152,7 @@ function chatboxEventHandler() {
                     url: "/block",
                     type: "POST",
                     data: {
-                        blockNick: currentOpponentId,
+                        blockMbId: currentOpponentId,
                     },
                     dataType: "JSON",
                     success: function (r) {
