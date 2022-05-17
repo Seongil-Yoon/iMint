@@ -18,7 +18,7 @@ public interface IChatService {
 
 	public int getChatroom(String myId, int goodsId);
 
-	public int sendChatMessage(ChatMessageDTO chatMessage);
+	public int sendChatroomMessage(ChatMessageDTO chatMessage);
 
 	public List<ChatMessageDTO> getChatroomMessages(String myId, int chatroomId, int pageNumber, int numberOfItems);
 
