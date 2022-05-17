@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import multi.fclass.iMint.block.dto.BlockListDTO;
-import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.member.dao.IMemberDAO;
 import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.mypage.dto.MypageBlockDTO;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
 import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.dto.MypageDTO;
@@ -22,7 +21,6 @@ import multi.fclass.iMint.mypage.service.IMypageService;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
-import multi.fclass.iMint.security.parsing.role.ParseMbRole;
 
 /**
  * @author haeyeon
@@ -42,13 +40,7 @@ public class MypageCotroller {
 	ParseMbId parseMbId;
 
 	@Autowired
-	ParseMbRole parseMbRole;
-
-	@Autowired
 	IMypageService mypageService;
-	
-	@Autowired
-	IBlockService blockService;
 
 // 마이페이지 - 메인
 
@@ -180,7 +172,7 @@ public class MypageCotroller {
 			// 채팅 목록
 			List<MypageChatroomDTO> userChat = mypageService.getChatroomList(mbId);
 			userChat.removeIf((dto) -> (dto.getMessage() == null)); // 주고 받은 메세지(마지막 메세지)가 없으면 목록에서 제외
-			
+
 			mv.addObject("userWish", userWish);
 			mv.addObject("userTrade", userTrade);
 			mv.addObject("userComp", userComp);
@@ -193,35 +185,44 @@ public class MypageCotroller {
 
 	@GetMapping("mypage/block")
 	public ModelAndView indexBlocklist(Authentication auth) {
-	ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView();
 
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 
-		//보호자일 경우
-		if(memberDTO.getMbRole() == Role.GUARD) {
+		// 보호자일 경우
+		if (memberDTO.getMbRole() == Role.GUARD) {
+			// 보호자의 차단목록
+			List<MypageBlockDTO> guardBlock = mypageService.getBlockList(mbId);
+
+			// 아이별 차단목록
 			List<MypageConnectionDTO> userChilds = mypageService.getMyChildrenList(mbId);
-			mv.addObject("userChilds", userChilds);
-			
-			Map<String, List<BlockListDTO>> allBlock = new HashMap<String, List<BlockListDTO>>();
-			
+			Map<String, List<MypageBlockDTO>> allBlock = new HashMap<String, List<MypageBlockDTO>>();
 			for (MypageConnectionDTO child : userChilds) {
-				// 아이별 관심/구매 목록
-				List<BlockListDTO> userBlock = blockService.getBlockList(child.getMbId());
+				List<MypageBlockDTO> userBlock = mypageService.getBlockList(child.getMbId());
 				allBlock.put(child.getMbId(), userBlock);
 			}
-			
-			mv.setViewName("mypage/blocklist"); 
+
+			mv.addObject("guardBlock", guardBlock);
+			mv.addObject("userChilds", userChilds);
+			mv.addObject("allBlock", allBlock);
 		}
-		//아이일 경우
-		else if(memberDTO.getMbRole() == Role.CHILD) {
-			List<BlockListDTO> userBlock = blockService.getBlockList(mbId);
+		// 아이일 경우
+		else if (memberDTO.getMbRole() == Role.CHILD) {
+			// 보호자의 차단목록
+			MypageConnectionDTO userGuard = mypageService.getMyGuard(mbId);
+			List<MypageBlockDTO> guardBlock = mypageService.getBlockList(userGuard.getMbId());
+
+			// 아이의 차단목록
+			List<MypageBlockDTO> userBlock = mypageService.getBlockList(mbId);
+
 			mv.addObject("userBlock", userBlock);
-			
-			mv.setViewName("mypage/blocklist");
+			mv.addObject("userGuard", userGuard);
+			mv.addObject("guardBlock", guardBlock);
 		}
-		
+
+		mv.setViewName("mypage/blocklist");
 		return mv;
 	}
-	
+
 }

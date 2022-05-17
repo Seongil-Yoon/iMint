@@ -6,4 +6,8 @@ package multi.fclass.iMint.admin.service;
  */
 
 public interface IAdminService {
+	
+	// 강제 탈퇴 
+	public void ban(String ban_mbId);
+
 }

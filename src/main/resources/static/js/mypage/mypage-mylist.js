@@ -1,8 +1,7 @@
 // 상단탭 선택시 baby-mylist.jsp 내에서 다른 컨테이너가 나오도록 함
 
-
-const tabItems = document.querySelectorAll('.tab-item');
-const tabContentItems = document.querySelectorAll('.tab-content-item');
+const tabItems = document.querySelectorAll(".tab-item");
+const tabContentItems = document.querySelectorAll(".tab-content-item");
 //Select tab content item
 function selectItem(e) {
     removeShow();
@@ -12,25 +11,23 @@ function selectItem(e) {
     const tabContentItem = document.querySelector(`#${this.id}-content`);
     const tabItem = document.querySelector(`#${this.id}`);
     // Add show class
-    tabContentItem.classList.add('show');
-    tabItem.classList.add('selected-tab');
+    tabContentItem.classList.add("show");
+    tabItem.classList.add("selected-tab");
 }
 
-function removeShow(){
-    tabContentItems.forEach(item => item.classList.remove('show'))
+function removeShow() {
+    tabContentItems.forEach((item) => item.classList.remove("show"));
 }
 
-function removeSelected(){
-    tabItems.forEach(item => item.classList.remove('selected-tab'))
+function removeSelected() {
+    tabItems.forEach((item) => item.classList.remove("selected-tab"));
 }
 
-function removeSelected2(){
-    tabItems.forEach(item => item.classList.remove('selected'))
+function removeSelected2() {
+    tabItems.forEach((item) => item.classList.remove("selected"));
 }
 
-
-
-tabItems.forEach(item => item.addEventListener('click', selectItem));
+tabItems.forEach((item) => item.addEventListener("click", selectItem));
 
 /*
 //상단탭 거래완료 목록 선택시 include된 mylist-content.jsp에서 다른 내용이 보여지도록 함
@@ -67,100 +64,68 @@ tab3.addEventListener('click', changeTab3);
 */
 
 //전체선택 선택 시 모든 선택 버튼이 선택되도록 함
-const btnSelected = document.querySelectorAll('.selectAllbtn');
+const btnSelected = document.querySelectorAll(".selectAllbtn");
 
-function selectAll(event)  {
-	const btnTarget = event.target;
-	
-	parentbtn = $(btnTarget).parents(".show");
-	childbtns = $(parentbtn).find("input.select-targets");
+function selectAll(event) {
+    const btnTarget = event.target;
 
-  	if($(btnTarget).is(":checked") == true){
-		childbtns.each(function(index){ 
-	    	$(this).prop("checked", true);
-	    });
-	} else {
-		childbtns.each(function(index){ 
-	    	$(this).prop("checked", false);
-	    });
-	}
+    parentbtn = $(btnTarget).parents(".show");
+    childbtns = $(parentbtn).find("input.select-targets");
+
+    if ($(btnTarget).is(":checked") == true) {
+        childbtns.each(function (index) {
+            $(this).prop("checked", true);
+        });
+    } else {
+        childbtns.each(function (index) {
+            $(this).prop("checked", false);
+        });
+    }
 }
 
-btnSelected.forEach(item => item.addEventListener('click', selectAll));
+btnSelected.forEach((item) => item.addEventListener("click", selectAll));
 
-//드롭다운에서 내 아이 선택 시 해당 아이의 이름이 타이틀에 나오도록 함
-const childSelected = document.querySelectorAll('.dropdown-item');
-var cnt = 1;
-
-function selectChild(event){
-	const selected = event.target.id;
-	const selectedNick = event.target.text;
-	const childTitle = document.getElementById('child-define');
-	
-	childTitle.innerHTML = "내 아이 " + selectedNick + "님의 거래 목록입니다";
+const childSelect = document.querySelector("#select-child");
+if (childSelect != null) {
+    childSelect.addEventListener("change", showChild);
 }
-
-childSelected.forEach(item => item.addEventListener('click', selectChild));
-
 
 //드롭다운에서 내 아이 선택 시 해당 아이에 해당하는 내용이 보여지도록 함
-function showChild(event){
-	const selected = event.target.id;
-	
-	removeShowList();
-	
-	targetList = document.getElementsByClassName(selected);
-	
-	/*parentlist = $(listTarget).parents(".show");
-	childlist= $(parentlist).find("div.item-list");
-	*/
-	
-	for(i = 0; i < targetList.length; i++){
-		targetList[i].classList.add('show-list');
-	}
-	
-	childbtns = $(targetList).find("p.count");
-	
-	/*childbtns.each(function(){
-		$(this).text(cnt);
-		cnt += 1;
-	})*/
-	
-	cnt = 1;
+function showChild(event) {
+    removeShowList();
+
+    targetList = document.getElementsByClassName(event.target.value);
+    for (i = 0; i < targetList.length; i++) {
+        targetList[i].classList.add("show-list");
+    }
 }
 
-function removeShowList(){
-	targetList = document.querySelectorAll('.item-list-guard');
-	
-	
-	
-	var i;
-	
-	for(i = 0; i < targetList.length; i++){
-		targetList[i].classList.remove('show-list');
-	}
-}
+function removeShowList() {
+    targetList = document.querySelectorAll(".item-list-guard");
 
-childSelected.forEach(item => item.addEventListener('click', showChild));
+    for (i = 0; i < targetList.length; i++) {
+        targetList[i].classList.remove("show-list");
+    }
+}
 
 //항목명이 길어질 경우 처리
-const subject = document.querySelectorAll('.subject-text');
+const subject = document.querySelectorAll(".subject-text");
 
-for(i = 0; i < subject.length; i++){
-	text = subject[i].innerHTML;
-	if(text.length >= 5){
-		text_ = text.substr(0, 5);
-		subject[i].innerHTML = text_ + "..";
-	}
+for (i = 0; i < subject.length; i++) {
+    text = subject[i].innerHTML;
+    if (text.length >= 5) {
+        text_ = text.substr(0, 5);
+        subject[i].innerHTML = text_ + "..";
+    }
 }
 
 //마지막 채팅 메세지가 길어질 경우 처리
-const subjectChat = document.querySelectorAll('.item-person-chat-content');
+const subjectChat = document.querySelectorAll(".item-person-chat-content");
 
-for(i = 0; i < subjectChat.length; i++){
-	text = subjectChat[i].innerHTML;
-	if(text.length >= 13){
-		text_ = text.substr(0, 13);
-		subjectChat[i].innerHTML = text_ + "..";
-	}
+for (i = 0; i < subjectChat.length; i++) {
+    text = subjectChat[i].innerHTML;
+    if (text.length >= 13) {
+        text_ = text.substr(0, 13);
+        subjectChat[i].innerHTML = text_ + "..";
+    }
 }

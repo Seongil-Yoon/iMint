@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>iMint :: 마이페이지</title>
-<link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
-<link rel="stylesheet" href="/static/css/mypage/mypage_mylist.css">
-<link rel="stylesheet" href="/static/css/mypage/mypage_mylist_content.css">
-<th:block th:replace="libs :: style" />
+	<meta charset="UTF-8">
+	<title>iMint :: 마이페이지</title>
+	<link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
+	<link rel="stylesheet" href="/static/css/mypage/mypage_mylist.css">
+	<link rel="stylesheet" href="/static/css/mypage/mypage_mylist_content.css">
+	<th:block th:replace="libs :: style" />
 </head>
 
 <body>
@@ -30,18 +31,17 @@
 					<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
 						<h2 th:if="${#lists.size(userChilds) == 0}">연결된 아이가 없습니다.</h2>
 						<th:block th:unless="${#lists.size(userChilds) == 0}">
-							<h2 id="child-define">거래 목록을 조회하실 아이를 선택해 주세요.</h2>
-							<br>
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">아이
-									선택</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-									<li th:each="child : ${userChilds}"><a class="dropdown-item" th:id="${child.mbId}" href="#">[[${child.mbNick}]]</a></li>
-								</ul>
-							</div>
+							<select id="select-child" class="form-select form-select-lg"
+								aria-label="Default select example">
+								<option selected>내 아이 선택</option>
+								<option th:each="child : ${userChilds}" th:value="${child.mbId}">[[${child.mbNick}]]
+								</option>
+							</select>
+							<h2>의 거래목록</h2>
 						</th:block>
 					</th:block>
-					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">[[${session?.memberDTO?.mbNick}]]님의 거래 목록입니다.</h2>
+					<h2 th:if="${#strings.equals(session?.memberDTO?.mbRole,'CHILD')}">
+						[[${session?.memberDTO?.mbNick}]]님의 거래목록입니다.</h2>
 				</div>
 
 				<!-- 상단 탭 -->
@@ -90,4 +90,5 @@
 	<th:block th:replace="libs :: script" />
 	<script src="/static/js/mypage/mypage-mylist.js"></script>
 </body>
+
 </html>
