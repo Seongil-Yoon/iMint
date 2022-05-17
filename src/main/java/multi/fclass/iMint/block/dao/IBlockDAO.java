@@ -16,10 +16,10 @@ public interface IBlockDAO {
 	
 
 	// 차단
-	public void block(String mbId, String blockmbId);
+	public void block(String mbId, String blockMbId);
 	
 	// 차단 해제
-	public void unblock(String mbId, String unblockmbId);
+	public void unblock(String mbId, String unblockMbId);
 	
 	// 차단 목록 조회
 	public List<BlockListDTO> getBlockList(String myId);

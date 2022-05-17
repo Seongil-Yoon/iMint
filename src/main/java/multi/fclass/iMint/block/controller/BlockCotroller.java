@@ -43,7 +43,7 @@ public class BlockCotroller {
 	// 채팅 혹은 상품 상세페이지에서 차단 요청시 결과 반환(비동기)
 	@PostMapping("/block")
 	@ResponseBody
-	public HashMap<String, String>	block(String blockNick, Authentication auth) {
+	public HashMap<String, String>	block(String blockMbId, Authentication auth) {
 		
 		HashMap<String, String> map = new HashMap<>();
 		
@@ -57,18 +57,18 @@ public class BlockCotroller {
 			List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
 			
 			for (MemberDTO childDTO : childlist) {
-				blockDAO.block(childDTO.getMbId(), blockNick);
+				blockDAO.block(childDTO.getMbId(), blockMbId);
 			}
 		}
 		
-		blockDAO.block(mbId, blockNick);
+		blockDAO.block(mbId, blockMbId);
 		
 		// 차단된 사용자
-		MemberDTO blockMember = parseMbId.getMemberMbId(blockNick);
+		MemberDTO blockMember = parseMbId.getMemberMbId(blockMbId);
 
 		// 비동기 응답 결과 전송
 		map.put("mbId", mbId); // 차단한 본인		
-		map.put("blockNick", blockNick); // 차단당한 상대방 
+		map.put("blockMbId", blockMbId); // 차단당한 상대방 
 		map.put("result", "block");
 		
 		return map;
@@ -77,7 +77,7 @@ public class BlockCotroller {
 	// 마이페이제에서 차단해제 요청시 반환(비동기)  
 	@PostMapping("/unblock")
 	@ResponseBody
-	public HashMap<String, String>	unblock(String unblockNick, Authentication auth) {
+	public HashMap<String, String>	unblock(String unblockMbId, Authentication auth) {
 		
 		HashMap<String, String> map = new HashMap<>();
 		
@@ -86,7 +86,7 @@ public class BlockCotroller {
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
 		// 차단해제된 사용자
-		MemberDTO unblockMember = parseMbId.getMemberMbId(unblockNick);
+		MemberDTO unblockMember = parseMbId.getMemberMbId(unblockMbId);
 
 		// DB에 차단해제 반영
 		// 본인이 보호자면, 연동된 아이계정들에도 선택한 사용자 차단해제 모두 적용 
@@ -94,15 +94,15 @@ public class BlockCotroller {
 			List<MemberDTO> childlist = securityDAO.findByMbGuard(mbId);
 			
 			for (MemberDTO childDTO : childlist) {
-				blockDAO.block(childDTO.getMbId(), unblockNick);
+				blockDAO.block(childDTO.getMbId(), unblockMbId);
 			}
 		}
 		
-		blockDAO.block(mbId, unblockNick);
+		blockDAO.block(mbId, unblockMbId);
 		
 		// 비동기 응답 결과 전송
 		map.put("mbId", mbId); // 차단해제한 본인		
-		map.put("unblockNick", unblockNick); // 차단해제당한 상대방 
+		map.put("unblockMbId", unblockMbId); // 차단해제당한 상대방 
 		map.put("result", "unblock");
 		
 		return map;

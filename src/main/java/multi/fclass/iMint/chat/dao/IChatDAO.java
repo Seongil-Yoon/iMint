@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import multi.fclass.iMint.chat.dto.ChatCheckDTO;
+import multi.fclass.iMint.chat.dto.ChatroomOpenCheckDTO;
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
+import multi.fclass.iMint.chat.dto.ChatroomJoinCheckDTO;
 
 /**
  * @author GhostFairy
@@ -16,9 +17,9 @@ public interface IChatDAO {
 
 	public String checkMember(String myId);
 
-	public Integer checkChatroomJoinable(String myId, int chatroomId);
+	public ChatroomJoinCheckDTO checkChatroomJoinable(int chatroomId);
 
-	public ChatCheckDTO checkChatroomOpenable(int goodsId);
+	public ChatroomOpenCheckDTO checkChatroomOpenable(int goodsId);
 
 	public Integer getBuyerChatroom(String myId, int goodsId);
 
@@ -27,5 +28,7 @@ public interface IChatDAO {
 	public Integer sendChatroomMessage(ChatMessageDTO chatMessage);
 
 	public List<ChatMessageDTO> getChatroomMessages(int chatroomId, int startIndex, int numberOfItems);
+
+	public int markAsRead(int chatroomId, String myId);
 
 }

@@ -89,12 +89,11 @@ public class MemberServiceImpl implements IMemberService {
 				memberDTO.setMbThumbnail(mbThumbnail);
 
 				// 파일 업로드
-				File serverfile = new File(root.concat(mbThumbnail));
-				if (serverfile.exists()) {
-					serverfile.setReadable(true);
-					serverfile.setWritable(true);
-					serverfile.setExecutable(true);
-				}
+				File serverfile = new File(root.concat(savePath + "/"), newname);
+				serverfile.createNewFile();
+				serverfile.setReadable(true, false);
+				serverfile.setWritable(true, false);
+				serverfile.setExecutable(true, false);
 				thumbnail.transferTo(serverfile);
 
 			} // if end
@@ -103,7 +102,9 @@ public class MemberServiceImpl implements IMemberService {
 					mbThumbnail = memberDTO.getMbThumbnail(); // 원래 파일 유지
 				}
 			}
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		}
 

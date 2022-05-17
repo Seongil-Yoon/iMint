@@ -8,6 +8,8 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 
 import multi.fclass.iMint.chat.service.IChatService;
+import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
 /**
  * @author GhostFairy
@@ -17,6 +19,9 @@ public class ChatInterceptor implements ChannelInterceptor {
 
 	@Autowired
 	IChatService chatService;
+
+	@Autowired
+	ParseMbId parseService;
 
 	@Override
 	public Message<?> preSend(Message<?> message, MessageChannel channel) {
@@ -31,7 +36,7 @@ public class ChatInterceptor implements ChannelInterceptor {
 			}
 			sha.setUser(new ChatPrincipal(userName, userNick));
 			// System.out.println("STOMP CONN: " + sha.getUser().getName());
-		} else if (sha.getCommand().equals(StompCommand.SUBSCRIBE) || sha.getCommand().equals(StompCommand.SEND)) {
+		} else if (sha.getCommand().equals(StompCommand.SUBSCRIBE)) {
 			String userName = sha.getUser().getName();
 			String destination = sha.getDestination();
 			int chatroomId = Integer.parseInt(destination.substring(destination.lastIndexOf("/") + 1));
@@ -39,6 +44,14 @@ public class ChatInterceptor implements ChannelInterceptor {
 				return null;
 			}
 			// System.out.println("STOMP SUB/SEND: " + sha.getUser().getName() + " to chatroom " + chatroomId);
+		} else if (sha.getCommand().equals(StompCommand.SEND)) {
+			String userName = sha.getUser().getName();
+			String destination = sha.getDestination();
+			int chatroomId = Integer.parseInt(destination.substring(destination.lastIndexOf("/") + 1));
+			if (parseService.getRoleMbId(userName) != Role.CHILD
+					|| !chatService.isChatroomJoinable(userName, chatroomId)) {
+				return null;
+			}
 		}
 
 		return message;

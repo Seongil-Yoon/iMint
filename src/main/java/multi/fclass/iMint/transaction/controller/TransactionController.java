@@ -1,6 +1,7 @@
 package multi.fclass.iMint.transaction.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,16 +76,19 @@ public class TransactionController {
 	}
 
 	@GetMapping("transaction/trx/check")
-	public String checkTransaction(Authentication auth, String myId, String opponentId, int goodsId) {
-		String authId = parseService.parseMbId(auth);
-		if (myId != null && !authId.equals(myId)) {
-			if (!mypageService.isMyChild(authId, myId)) {
-				return null;
-			}
-		}
+	public String checkTransaction(Authentication auth, @Nullable String childId, String opponentId, int goodsId) {
+		String myId = parseService.parseMbId(auth);
 		JSONObject out = new JSONObject();
 
-		out.put("check", trxService.checkTransaction(myId, opponentId, goodsId));
+		if (childId != null && !childId.equals("")) {
+			if (mypageService.isMyChild(myId, childId)) {
+				out.put("check", trxService.checkTransaction(childId, opponentId, goodsId));
+			} else {
+				return null;
+			}
+		} else {
+			out.put("check", trxService.checkTransaction(myId, opponentId, goodsId));
+		}
 
 		return out.toJSONString();
 	}

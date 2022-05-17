@@ -36,6 +36,17 @@
 			#{startIndex}, #{numberOfItems}
 	</select>
 	
+	<!-- 기존 메세지 읽음 표시 -->
+	<update id="markAsRead">
+		UPDATE
+			`imint`.`chat_messages`
+		SET
+			is_read = TRUE
+		WHERE
+			chatroom_id = #{chatroomId}
+			AND sender_id NOT LIKE #{myId}
+	</update>
+	
 	<!-- 회원 여부 조회 -->
 	<select id="checkMember" resultType="String">
 		SELECT
@@ -46,21 +57,8 @@
 			mb_id LIKE #{myId}
 	</select>
 	
-	<!-- 채팅방 입장가능여부 조회 -->
-	<select id="checkChatroomJoinable" resultType="Integer">
-		SELECT
-			count(*)
-		FROM
-			`imint`.`chatroom` AS cr
-			JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
-		WHERE
-			cr.isdelete = FALSE
-			AND cr.id = #{chatroomId}
-			AND (cr.buyer_id LIKE #{myId} OR g.seller_id LIKE #{myId})
-	</select>
-	
-	<!-- 채팅방 입장 조건 확인을 위한 정보 조회 -->
-	<select id="checkChatroomOpenable" resultType="ChatCheckDTO">
+	<!-- 채팅방 생성가능여부 조회 -->
+	<select id="checkChatroomOpenable" resultType="ChatroomOpenCheckDTO">
 		SELECT
 			g.seller_id,
 			cr.resrv_date,
@@ -73,6 +71,21 @@
 			LEFT JOIN (SELECT goods_id, trx_complete_date, mb_id FROM `imint`.`transaction` WHERE trx_complete_date IS NOT NULL) AS trx ON g.goods_id = trx.goods_id
 		WHERE
 			g.goods_id = #{goodsId}
+	</select>
+	
+	<!-- 채팅방 입장가능여부 조회 -->
+	<select id="checkChatroomJoinable" resultType="ChatroomJoinCheckDTO">
+		SELECT
+			cr.id,
+			cr.goods_id,
+			cr.buyer_id,
+			g.seller_id
+		FROM
+			`imint`.`chatroom` AS cr
+			JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
+		WHERE
+			cr.isdelete = FALSE
+			AND cr.id = #{chatroomId}
 	</select>
 	
 	<!-- 생성된 채팅방 조회 -->
