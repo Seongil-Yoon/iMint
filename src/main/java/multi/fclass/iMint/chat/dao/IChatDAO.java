@@ -29,6 +29,6 @@ public interface IChatDAO {
 
 	public List<ChatMessageDTO> getChatroomMessages(int chatroomId, int startIndex, int numberOfItems);
 
-	public int markAsRead(int chatroomId, String myId);
+	public int markAsReadAll(int chatroomId, String myId);
 
 }
