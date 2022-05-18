@@ -26,6 +26,9 @@ public interface IBlockDAO {
 	// 최초 차단여부 조회
 	public BlockDTO blockornot(String mbId, String blockMbId);
 	
+	// 차단여부 조회
+	public int blockcheck(String mbId, String blockMbId);
+	
 	// 차단목록 조회
 	public List<String> blocklist(String mbId);
 

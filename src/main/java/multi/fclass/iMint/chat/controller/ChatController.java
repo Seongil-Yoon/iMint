@@ -119,7 +119,7 @@ public class ChatController {
 		chatMessage.setSenderId(principal.getName());
 		chatMessage.setSenderNick(principal.getNick());
 		chatMessage.setSendDate(LocalDateTime.now());
-		chatService.sendChatMessage(chatMessage);
+		chatService.sendChatroomMessage(chatMessage);
 		return chatMessage;
 	}
 }
