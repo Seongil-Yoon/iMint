@@ -304,19 +304,24 @@ function chatboxEventHandler() {
     });
 }
 
-// 함수: 웹소켓에 연결
+// 함수: 웹소켓에 연결 + 알림 채널 구독
 function connectWS(chatboxMyId) {
     let socket = new SockJS("/ws");
     stompClient = Stomp.over(socket);
     stompClient.connect({ "user-name": chatboxMyId }, function (frame) {
         console.log("Connected: " + frame);
     });
+
+    setTimeout(function () {
+        stompClient.subscribe("/ws/notify", function (notify) {
+        });
+    }, 1000);
 }
 
 // 함수: 메세지 전송
 function sendMessage(message) {
     stompClient.send(
-        "/chat/send/chatroom/" + currentChatroomId,
+        "/ws/send/chat/" + currentChatroomId,
         {},
         JSON.stringify({
             message: message,
@@ -561,7 +566,7 @@ function joinChatroom(chatroom) {
 
     // STOMP 채팅방 SUBSCRIBE
     currentSubscription = stompClient.subscribe(
-        "/chat/chatroom/" + currentChatroomId,
+        "/ws/chat/" + currentChatroomId,
         function (chatmessage) {
             if (
                 Math.round(
@@ -597,7 +602,7 @@ function directOpenChatroom(childId) {
 // 함수: 채팅방으로 즉시 입장
 function directJoinChatroom(chatroomId, childId) {
     let timeout = 100;
-    directOpenChatroom(childId);
+    directOpenChatroom(chatroomId);
     if (childId != null) {
         timeout = 500;
     }

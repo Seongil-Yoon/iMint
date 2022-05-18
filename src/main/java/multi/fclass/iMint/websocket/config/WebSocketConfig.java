@@ -1,4 +1,4 @@
-package multi.fclass.iMint.chat.config;
+package multi.fclass.iMint.websocket.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +7,8 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+
+import multi.fclass.iMint.websocket.interceptor.WebSocketInterceptor;
 
 /**
  * @author GhostFairy
@@ -19,14 +21,15 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Bean
-	public ChatInterceptor chatInterceptor() {
-		return new ChatInterceptor();
+	public WebSocketInterceptor webSocketInterceptor() {
+		return new WebSocketInterceptor();
 	}
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/chat/chatroom"); // 이 접두사가 붙은 메세지는 브로커(로 전달되어 클라이언트)에 전달
-		config.setApplicationDestinationPrefixes("/chat/send"); // 이 접두사가 붙은 메세지는 컨트롤러에 전달
+		config.enableSimpleBroker("/ws/chat", "/notify"); // 경로에 이 접두사가 붙은 메세지는 브로커(로 전달되어 클라이언트)에 전달
+		config.setApplicationDestinationPrefixes("/ws/send"); // 경로에 이 접두사가 붙은 메세지는 컨트롤러에 전달
+		config.setUserDestinationPrefix("/ws"); // 경로에 이 접두사가 붙은 메세지는 브로커(로 전달되어 특정 유저)에 전달
 	}
 
 	@Override
@@ -36,7 +39,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureClientInboundChannel(ChannelRegistration registration) {
-		registration.interceptors(chatInterceptor());
+		registration.interceptors(webSocketInterceptor());
 	}
 
 }
