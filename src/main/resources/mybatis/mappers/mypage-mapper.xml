@@ -148,7 +148,9 @@
 	    g.goods_location,
 	    IF(gi.goods_images_path = FALSE, gi.goods_images_path, null) AS goods_images_path,
 	    gi.goods_images_originname,
+	    cm.sender_id,
 	    cm.message,
+	    cm.is_read,
 	    IF(cm.send_date IS NULL, cr.create_date, cm.send_date) AS last_update_date
 	FROM
 		`imint`.`chatroom` AS cr
@@ -159,20 +161,24 @@
 	    LEFT JOIN
 	    	(SELECT
 	    		chatroom_id,
+	    		sender_id,
 	    		message,
-	    		send_date
+	    		send_date,
+	    		is_read
 	    	FROM
 	    		(SELECT
 	    			chatroom_id,
+	    			sender_id,
 	    			message,
 	    			send_date,
+	    			is_read,
 	    			ROW_NUMBER() OVER(PARTITION BY chatroom_id ORDER BY send_date DESC) AS recent
 	    		FROM
 	    			`imint`.`chat_messages`
 	    		WHERE
-	    			is_deleted = FALSE) AS r
+	    			is_deleted = FALSE) AS rcm
 	    	WHERE
-	    		r.recent = 1
+	    		rcm.recent = 1
 	    	ORDER BY
 	    		send_date DESC) AS cm ON cr.id = cm.chatroom_id
 	WHERE

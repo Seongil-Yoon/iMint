@@ -1,4 +1,4 @@
-package multi.fclass.iMint.chat.config;
+package multi.fclass.iMint.websocket.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
@@ -11,12 +11,13 @@ import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.chat.service.IChatService;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
+import multi.fclass.iMint.websocket.config.WebSocketPrincipal;
 
 /**
  * @author GhostFairy
  *
  */
-public class ChatInterceptor implements ChannelInterceptor {
+public class WebSocketInterceptor implements ChannelInterceptor {
 
 	@Autowired
 	IChatService chatService;
@@ -33,21 +34,21 @@ public class ChatInterceptor implements ChannelInterceptor {
 
 		if (sha.getCommand().equals(StompCommand.CONNECT)) {
 			String userName = sha.getFirstNativeHeader("user-name");
-			String userNick = chatService.getNick(userName);
-			if (userName.equals("") || userNick == null) {
-				// System.out.println("STOMP CONNECT: UNAUTHORIZED USER");
+			if (userName == null || userName.equals("")) {
 				return null;
 			}
-			sha.setUser(new ChatPrincipal(userName, userNick));
-			// System.out.println("STOMP CONN: " + sha.getUser().getName());
+			sha.setUser(new WebSocketPrincipal(userName));
 		} else if (sha.getCommand().equals(StompCommand.SUBSCRIBE)) {
-			String userName = sha.getUser().getName();
 			String destination = sha.getDestination();
-			int chatroomId = Integer.parseInt(destination.substring(destination.lastIndexOf("/") + 1));
-			if (!chatService.isChatroomJoinable(userName, chatroomId)) {
-				return null;
+			destination = destination.substring(destination.lastIndexOf("/") + 1);
+
+			if (!destination.equals("notify")) {
+				String userName = sha.getUser().getName();
+				int chatroomId = Integer.parseInt(destination.substring(destination.lastIndexOf("/") + 1));
+				if (!chatService.isChatroomJoinable(userName, chatroomId)) {
+					return null;
+				}
 			}
-			// System.out.println("STOMP SUB/SEND: " + sha.getUser().getName() + " to chatroom " + chatroomId);
 		} else if (sha.getCommand().equals(StompCommand.SEND)) {
 			String userName = sha.getUser().getName();
 			String destination = sha.getDestination();
