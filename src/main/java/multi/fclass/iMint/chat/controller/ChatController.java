@@ -120,7 +120,6 @@ public class ChatController {
 		chatMessage.setSenderNick(chatService.getNick(principal.getName()));
 		chatMessage.setSendDate(LocalDateTime.now());
 		chatService.sendChatroomMessage(chatMessage);
-		notifyService.notifyNewMessage(chatMessage);
 		return chatMessage;
 	}
 }
