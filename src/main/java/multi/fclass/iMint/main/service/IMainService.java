@@ -9,6 +9,6 @@ import multi.fclass.iMint.goods.dto.GoodsDTO;
 
 public interface IMainService {
 	public List<HashMap<String, Object>> goodsListMap(String goodsCategory, int lastBoard, String mbLocation,
-			String searchOption, String keyword);
+			String searchOption, String keyword, List<String> blocklist);
 
 }

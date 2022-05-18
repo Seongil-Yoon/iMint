@@ -18,7 +18,7 @@ public interface IGoodsDAO {
 	// 비동기 무한스크롤
 	public List<GoodsDTO> goodsList(@Param("goods_category") String goodsCategory, @Param("lastBoard") int lastBoard,
 			@Param("mb_location") String mbLocation, @Param("option") String searchOption,
-			@Param("keyword") String keyword);
+			@Param("keyword") String keyword, @Param("blocklist") List<String> blocklist);
 
 	public GoodsImagesDTO goodsThumbnail(@Param("goods_id") int goodsId);
 

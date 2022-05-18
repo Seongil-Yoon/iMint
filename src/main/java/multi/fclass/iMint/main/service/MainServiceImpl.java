@@ -27,13 +27,17 @@ public class MainServiceImpl implements IMainService {
 
 	@Override
 	public List<HashMap<String, Object>> goodsListMap(String goodsCategory, int lastBoard, String mbLocation,
-			String searchOption, String keyword) {
+			String searchOption, String keyword, List<String> blocklist) {
 		System.out.println(goodsCategory + ", " + searchOption + ", " + keyword);
 		List<HashMap<String, Object>> listMap = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
-
-		List<GoodsDTO> goodsList = goodsDAO.goodsList(goodsCategory, lastBoard, mbLocation, searchOption, keyword);
+		
+		if(blocklist.isEmpty() || blocklist == null) {
+			blocklist.add("");
+		}
+		List<GoodsDTO> goodsList = goodsDAO.goodsList(goodsCategory, lastBoard, mbLocation, searchOption, keyword, blocklist);
 		GoodsImagesDTO goodsThumbnail = null;
+		
 		for (int i = 0; i < goodsList.size(); i++) {
 			map = new HashMap<String, Object>();
 			map.put("goods", goodsList.get(i));

@@ -1,5 +1,6 @@
 package multi.fclass.iMint.main.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import multi.fclass.iMint.ai.service.sttServiceImpl;
+import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.main.service.MainServiceImpl;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
@@ -25,6 +27,9 @@ public class MainController {
 
 	@Autowired
 	MainServiceImpl mainService;
+	
+	@Autowired
+	IBlockService blockService;
 
 	@Autowired
 	ParseMbId parseService;
@@ -56,14 +61,20 @@ public class MainController {
 			@RequestParam(value = "searchOption", required = false) String searchOption,
 			@RequestParam(value = "keyword", required = false) String keyword) {
 		MemberDTO memberDTO = null;
-//		System.out.println(searchOption + "," + keyword);
+		List<String> blocklist = null;
 		if (auth == null) {
 			System.out.println("auth객체가 null");
-			return mainService.goodsListMap(goodsCategory, lastBoard, userLocation, searchOption, keyword);
+			blocklist = new ArrayList<String>();
+			blocklist.add("");
+			return mainService.goodsListMap(goodsCategory, lastBoard, userLocation, searchOption, keyword, blocklist);
 		}
 		String mbId = parseService.parseMbId(auth);
 		memberDTO = parseService.getMemberMbId(mbId);
-		return mainService.goodsListMap(goodsCategory, lastBoard, memberDTO.getMbLocation(), searchOption, keyword);
+		
+		blocklist = blockService.blocklist(mbId);
+		
+		
+		return mainService.goodsListMap(goodsCategory, lastBoard, memberDTO.getMbLocation(), searchOption, keyword, blocklist);
 	}
 
 	

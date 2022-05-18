@@ -22,8 +22,8 @@
 	<update id="reblock" parameterType="String">
 		UPDATE imint.block
 		SET
-		(block_isdelete = 0, block_date = now())
-		WHERE (mb_id = #{mbId} AND mb_id2 = #{unblockMbId}); <!-- 다중 조건 -->
+		block_isdelete = 0, block_date = now()
+		WHERE (mb_id = #{mbId} AND mb_id2 = #{blockMbId}); <!-- 다중 조건 -->
 	</update>
 
 	<!-- 최초 차단여부 조회 -->
