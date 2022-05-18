@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import multi.fclass.iMint.block.service.IBlockService;
 import multi.fclass.iMint.common.code.ErrorCode;
 import multi.fclass.iMint.common.exception.HandlableException;
 import multi.fclass.iMint.common.exception.hadler.ForbiddenException;
@@ -34,9 +35,10 @@ import multi.fclass.iMint.wishlist.service.WishlistServiceImpl;
 public class GoodsController {
 	@Autowired
 	GoodsServiceImpl goodsSevice;
+	
 	@Autowired
 	WishlistServiceImpl wishService;
-
+	
 	@Autowired
 	ParseMbId parseService;
 

@@ -12,6 +12,12 @@
 					<when test="option == 'all'">
 						SELECT * FROM `imint`.`goods`
 						WHERE goods_id &lt; #{lastBoard} 
+						AND `seller_id`
+						NOT IN(
+							<foreach collection="blocklist" item="item" separator="," index="index">
+								#{item}
+							</foreach>
+						)
 						AND (
 							`goods_title` LIKE CONCAT('%',#{keyword},'%')
 							OR `goods_content` LIKE CONCAT('%',#{keyword},'%')
@@ -38,6 +44,12 @@
 					<when test="option =='all'">
 						SELECT * FROM `imint`.`goods`
 						WHERE goods_id &lt; #{lastBoard} 
+						AND `seller_id`
+						NOT IN(
+							<foreach collection="blocklist" item="item" separator="," index="index">
+								#{item}
+							</foreach>
+						)
 						AND (
 							`goods_title` LIKE CONCAT('%',#{keyword},'%')
 							OR `goods_content` LIKE CONCAT('%',#{keyword},'%')

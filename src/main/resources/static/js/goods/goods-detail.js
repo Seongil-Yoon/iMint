@@ -92,17 +92,15 @@ function deleteHandler() {
                     error: function (error) {
                         //서버오류 500  찾는 자료없음 404  권한없음  401
                         if (error.status == 404) {
-                            swal("찾는 자료가 없습니다", "", "error");
+                            swal('찾는 자료가 없습니다', '', 'error');
                         } else if (error.status == 401) {
-                            swal("삭제 권한이 없습니다", "", "error");
+                            swal('유효하지 않은 인증입니다', '', 'error');
+                        } else if (error.status == 403) {
+                            swal('접근 권한이 없습니다', '', 'error');
                         } else if (error.status == 500) {
-                            swal(
-                                "서버 오류 관리자에게 문의 하세요",
-                                "",
-                                "error"
-                            );
+                            swal('서버 오류 관리자에게 문의 하세요', '', 'error');
                         }
-                    },
+                    }
                 }); //end of ajax
             } else {
                 // swal("취소하였습니다.");
@@ -132,13 +130,15 @@ function wishHandler() {
         error: function (error) {
             //서버오류 500  찾는 자료없음 404  권한없음  401
             if (error.status == 404) {
-                swal("찾는 자료가 없습니다", "", "error");
+                swal('찾는 자료가 없습니다', '', 'error');
             } else if (error.status == 401) {
-                swal("삭제 권한이 없습니다", "", "error");
+                swal('유효하지 않은 인증입니다', '', 'error');
+            } else if (error.status == 403) {
+                swal('접근 권한이 없습니다', '', 'error');
             } else if (error.status == 500) {
-                swal("서버 오류 관리자에게 문의 하세요", "", "error");
+                swal('서버 오류 관리자에게 문의 하세요', '', 'error');
             }
-        },
+        }
     }); //end of ajax
 
     function addWish() {
@@ -152,13 +152,15 @@ function wishHandler() {
             error: function (error) {
                 //서버오류 500  찾는 자료없음 404  권한없음  401
                 if (error.status == 404) {
-                    swal("찾는 자료가 없습니다", "", "error");
+                    swal('찾는 자료가 없습니다', '', 'error');
                 } else if (error.status == 401) {
-                    swal("삭제 권한이 없습니다", "", "error");
+                    swal('유효하지 않은 인증입니다', '', 'error');
+                } else if (error.status == 403) {
+                    swal('접근 권한이 없습니다', '', 'error');
                 } else if (error.status == 500) {
-                    swal("서버 오류 관리자에게 문의 하세요", "", "error");
+                    swal('서버 오류 관리자에게 문의 하세요', '', 'error');
                 }
-            },
+            }
         }); //end of ajax
     }
 
@@ -173,13 +175,15 @@ function wishHandler() {
             error: function (error) {
                 //서버오류 500  찾는 자료없음 404  권한없음  401
                 if (error.status == 404) {
-                    swal("찾는 자료가 없습니다", "", "error");
+                    swal('찾는 자료가 없습니다', '', 'error');
                 } else if (error.status == 401) {
-                    swal("삭제 권한이 없습니다", "", "error");
+                    swal('유효하지 않은 인증입니다', '', 'error');
+                } else if (error.status == 403) {
+                    swal('접근 권한이 없습니다', '', 'error');
                 } else if (error.status == 500) {
-                    swal("서버 오류 관리자에게 문의 하세요", "", "error");
+                    swal('서버 오류 관리자에게 문의 하세요', '', 'error');
                 }
-            },
+            }
         }); //end of ajax
     }
 }
@@ -231,6 +235,18 @@ function chatHandler() {
                             $("#chatBtn").text("오류발생");
                         }
                     },
+                    error: function (error) {
+                        //서버오류 500  찾는 자료없음 404  권한없음  401
+                        if (error.status == 404) {
+                            swal('찾는 자료가 없습니다', '', 'error');
+                        } else if (error.status == 401) {
+                            swal('유효하지 않은 인증입니다', '', 'error');
+                        } else if (error.status == 403) {
+                            swal('접근 권한이 없습니다', '', 'error');
+                        } else if (error.status == 500) {
+                            swal('서버 오류 관리자에게 문의 하세요', '', 'error');
+                        }
+                    }
                 });
             } else {
                 $("#chatBtn").css("background-color", "#9b9b9b");
@@ -244,28 +260,70 @@ function chatHandler() {
                 }
             }
         },
+        error: function (error) {
+            //서버오류 500  찾는 자료없음 404  권한없음  401
+            if (error.status == 404) {
+                swal('찾는 자료가 없습니다', '', 'error');
+            } else if (error.status == 401) {
+                swal('유효하지 않은 인증입니다', '', 'error');
+            } else if (error.status == 403) {
+                swal('접근 권한이 없습니다', '', 'error');
+            } else if (error.status == 500) {
+                swal('서버 오류 관리자에게 문의 하세요', '', 'error');
+            }
+        }
     });
 }
 
 function blockHandler() {
     $("#blockBtn").on('click', function () {
-        $.ajax({
-            url: "/block",
-            type: "post",
-            data: {
-                "blockMbId": "google_102592663151810141035"
-            },
-            dataType: "json", //응답받을때 타입
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8", //요청할때 타입
+        swal({
+            title: "회원 차단",
+            text: `${$(sellerNick).val()}님을 차단하시겠습니까?`,
+            icon: "error",
+            buttons: ["다시 생각해볼래요", "차단할래요"],
+            dangerMode: true,
+        }).then((e) => {
+            if (e) {
+                $.ajax({
+                    url: "/block",
+                    type: "post",
+                    data: {
+                        "blockMbId": $("#sellerId").val()
+                    },
+                    dataType: "json", //응답받을때 타입
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8", //요청할때 타입
 
-            success: function (response) {
-                /* 결과 */
-                if (response.result === "block") {
-                    alert("차단 완료하였습니다.");
-                }
-            } // success end 
-        }); // ajax end 
-    })
+                    success: function (r) {
+                        if (r.result == "block") {
+                            swal(`${$(sellerNick).val()}님을 차단했습니다.`, {
+                                icon: "success",
+                                timer: 1.1 * 1000,
+                            }).then(() => {
+                                location.href = "/main"
+                            })
+                        } else {
+                            swal("죄송합니다 오류가 발생했습니다.", {
+                                icon: "error",
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        //서버오류 500  찾는 자료없음 404  권한없음  401
+                        if (error.status == 404) {
+                            swal('찾는 자료가 없습니다', '', 'error');
+                        } else if (error.status == 401) {
+                            swal('유효하지 않은 인증입니다', '', 'error');
+                        } else if (error.status == 403) {
+                            swal('접근 권한이 없습니다', '', 'error');
+                        } else if (error.status == 500) {
+                            swal('서버 오류 관리자에게 문의 하세요', '', 'error');
+                        }
+                    }
+                }); // ajax end 
+            }
+        })
+    }) //end of onclick
 }
 
 //숫자 가격화 함수
