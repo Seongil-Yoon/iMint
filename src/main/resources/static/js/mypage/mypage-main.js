@@ -8,7 +8,7 @@ if(level_default <= 0){
 	} else if(level_default <= 100){
 		level = level_default / 10;
 	} else {
-		level = 10;
+		level = "MAX";
 	}
 
 levelbtn.innerText = "레벨 " + level;
