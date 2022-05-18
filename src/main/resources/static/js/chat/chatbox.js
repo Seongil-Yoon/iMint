@@ -374,24 +374,36 @@ function loadChatrooms() {
                             `" />`
                     )
                     .find("p")
-                    .append(
-                        `<span class="chatbox-chatrooms-whois ` +
-                            (result[i].category == "buy"
-                                ? `seller">내가 구매하는 상품</span>`
-                                : `buyer">내가 판매하는 상품</span>`)
-                    )
-                    .append(
-                        `<span class="chatbox-chatroom-nickname">` +
-                            result[i].opponentNick +
-                            `</span>`
-                    )
+                    .append("<div></div>")
                     .append(
                         `<span class="chatbox-chatroom-lastmessage">` +
                             (result[i].message === null
                                 ? ""
                                 : result[i].message) +
                             `</span>`
+                    )
+                    .find("div")
+                    .append(
+                        `<span class="chatbox-chatroom-nickname">` +
+                            result[i].opponentNick +
+                            `</span>`
+                    )
+                    .append(
+                        `<span class="chatbox-chatrooms-whois ` +
+                            (result[i].category == "buy"
+                                ? `seller">(판매자)</span>`
+                                : `buyer">(구매자)</span>`)
                     );
+
+                if (
+                    result[i].senderId != chatboxMyId &&
+                    result[i].senderId != chatboxChildId &&
+                    result[i].read == false
+                ) {
+                    $("div[data-chatroomId='" + result[i].id + "']").addClass(
+                        "unread"
+                    );
+                }
             }
 
             // 이벤트 등록: 채팅방 목록 누르면 채팅 화면 표시

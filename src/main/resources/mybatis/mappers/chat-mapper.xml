@@ -45,6 +45,7 @@
 		WHERE
 			chatroom_id = #{chatroomId}
 			AND sender_id NOT LIKE #{myId}
+			AND is_read = FALSE
 	</update>
 	
 	<!-- 회원 여부 조회 -->
