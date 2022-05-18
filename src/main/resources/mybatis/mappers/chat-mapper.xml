@@ -37,7 +37,7 @@
 	</select>
 	
 	<!-- 기존 메세지 읽음 표시 -->
-	<update id="markAsRead">
+	<update id="markAsReadAll">
 		UPDATE
 			`imint`.`chat_messages`
 		SET
