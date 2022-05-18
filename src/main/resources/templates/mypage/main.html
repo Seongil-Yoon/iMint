@@ -62,8 +62,8 @@
 					<div class="container-summary-text">
 						<img th:src="${session?.memberDTO?.mbThumbnail}" class="user-photo">
 						<div class="container-summary-details">
-							<p th:if="${#strings.equals(session?.memberDTO?.mbRole, 'CHILD')}" class="badge rounded-pill bg-primary leveling" data-bs-toggle="tooltip"
-							data-bs-placement="top" title="거래 매너를 지키면 <br> 레벨이 올라가요." data-bs-html="true">레벨</p>
+							<p th:if="${#strings.equals(session?.memberDTO?.mbRole, 'CHILD')}" class="badge rounded-pill bg-primary" id="leveling" data-bs-toggle="tooltip"
+							data-bs-placement="top" title="거래 매너를 지키면 <br> 레벨이 올라가요." data-bs-html="true">[[${session?.memberDTO?.mbRatingsTotal}]]</p>
 							<p>이메일: [[${session?.memberDTO?.mbEmail}]]</p>
 							<p th:if="${#strings.equals(session?.memberDTO?.mbRole, 'CHILD')}">관심사: [[${session?.memberDTO?.mbInterest}]]</p>
 						</div>
@@ -107,5 +107,6 @@
 	<!-- 푸터 시작 -->
 	<footer th:replace="frags :: footer"></footer>
 	<th:block th:replace="libs :: script" />
+	<script src="/static/js/mypage/mypage-main.js" type="text/javascript"></script>
 </body>
 </html>
