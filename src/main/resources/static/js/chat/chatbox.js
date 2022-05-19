@@ -58,7 +58,9 @@ function chatboxInitializer() {
             });
         }
     }
-    Notification.requestPermission();
+    if ("Notification" in window) {
+        Notification.requestPermission();
+    }
 }
 
 // 함수: 각종 버튼 이벤트 등록
@@ -318,7 +320,9 @@ async function connectWS(chatboxMyId) {
         var options = {
             body: JSON.parse(notify.body).message,
         };
-        var n = new Notification("내 아이의 활동 알림", options);
+        if ("Notification" in window) {
+            var n = new Notification("내 아이의 활동 알림", options);
+        }
     });
 }
 
