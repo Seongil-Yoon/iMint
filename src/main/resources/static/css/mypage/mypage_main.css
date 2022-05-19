@@ -124,12 +124,24 @@
     margin-right: 10px;
 }
 
+/* 레벨 컨테이너 */
+.container-level{
+	display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-gap: 0.5rem;
+}
+
 /* 레벨 버튼 */
 #leveling{
 	font-size: 0.8em;
 	color: white;
 }
 
+.progress{
+	margin-top: 0.2rem;
+	width: 300px;
+	
+}
 
 /* 기타 세팅 관련 (연결 회원, 동네 설정) */
 .container-other-settings{
