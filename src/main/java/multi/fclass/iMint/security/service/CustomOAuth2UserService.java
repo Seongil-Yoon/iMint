@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import multi.fclass.iMint.member.dto.SessionMember;
+import multi.fclass.iMint.mail.dto.MailDTO;
+import multi.fclass.iMint.mail.service.IMailService;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.auth.config.OAuthAttributes;
 import multi.fclass.iMint.security.auth.provider.OAuth2UserInfo;
@@ -30,7 +33,7 @@ import multi.fclass.iMint.security.dao.ISecurityDAO;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final ISecurityDAO securityDAO;
     private final HttpSession httpSession;
-
+    
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         
@@ -92,6 +95,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         	memberDTO = attributes.toEntity();
         	memberDTO.setMbNick(memberDTO.getMbNick() +  + (int)(Math.random() * 10000 + 1)); // 닉네임에 랜덤값 추가
             securityDAO.savesns(memberDTO);
+            
             System.out.println("최초 로그인으로 자동 가입됩니다.");
             memberDTO = securityDAO.findByMbId(attributes.getMbId());
         }
