@@ -24,34 +24,52 @@ function removeShowList() {
 const subjectChat = document.querySelectorAll(".item-block-date");
 
 for (i = 0; i < subjectChat.length; i++) {
-    subjectChat[i].innerHTML = subjectChat[i].innerHTML.substring(0, 16).replace("T", " ");
+    subjectChat[i].innerHTML = subjectChat[i].innerHTML
+        .substring(0, 16)
+        .replace("T", " ");
 }
 
-// 차단해제 
-$(".unblock_btn").on('click', function(e) {
-	unblockMbId = e.target.id;
-	swal({
-            title: "회원 차단",
-            text: "차단을 해제할까요?",
+// 차단해제
+$(".unblock_btn").each(function () {
+    $(this).on("click", function (e) {
+        console.log("ON");
+        unblockMbId = e.target.id;
+        unblockMbNick = e.target.value;
+        swal({
+            title: "차단 해제",
+            text:
+                unblockMbNick +
+                "님의 차단을 해제하면\n\n1. " +
+                unblockMbNick +
+                "님이 등록한 글을 다시 보이게 합니다.\n2. " +
+                unblockMbNick +
+                "님과 다시 대화를 나눌 수 있게 됩니다.\n\n정말로 " +
+                unblockMbNick +
+                "님의 차단을 해제하시겠습니까?",
             icon: "error",
-            buttons: ["다시 생각해볼래요", "차단을 해제할래요"],
+            buttons: ["다시 생각해볼래요", "해제할래요"],
             dangerMode: true,
         }).then((confirm) => {
             if (confirm) {
-				$.ajax({
-					url: "/unblock",
-					type: "post",
-					data: {
-						"unblockMbId": unblockMbId
-					},
-					dataType: "json",
-			
-					success: function(response) { /* 결과 */		
-						if(response.result === "unblock") {
-							alert("차단을 해제했어요.");
-						}
-					} // success end 
-				}); // ajax end 
-			}
+                $.ajax({
+                    url: "/unblock",
+                    type: "post",
+                    data: {
+                        unblockMbId: unblockMbId,
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        /* 결과 */
+                        if (response.result === "unblock") {
+                            swal(unblockMbNick + "님의 차단을 해제했습니다.", {
+                                icon: "success",
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    }, // success end
+                }); // ajax end
+            }
         });
-})
+    });
+});

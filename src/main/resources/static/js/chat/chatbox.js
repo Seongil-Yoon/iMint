@@ -143,7 +143,17 @@ function chatboxEventHandler() {
     $("#chatview-option-block").on("click", function () {
         swal({
             title: "회원 차단",
-            text: "정말로 " + currentOpponentNick + "님을 차단하시겠습니까?",
+            text:
+                currentOpponentNick +
+                "님을 차단하면\n\n1. " +
+                currentOpponentNick +
+                "님과 예약중인 모든 거래가 취소됩니다.\n2. " +
+                currentOpponentNick +
+                "님이 등록한 글을 보이지 않게 숨깁니다.\n3. " +
+                currentOpponentNick +
+                "님과 더 이상 대화를 나눌 수 없습니다.\n\n정말로 " +
+                currentOpponentNick +
+                "님을 차단하시겠습니까?",
             icon: "error",
             buttons: ["다시 생각해볼래요", "차단할래요"],
             dangerMode: true,
@@ -158,9 +168,13 @@ function chatboxEventHandler() {
                     dataType: "JSON",
                     success: function (r) {
                         if (r.result == "block") {
-                            swal(currentOpponentNick + "님을 차단했습니다.", {
-                                icon: "success",
-                            });
+                            swal(
+                                currentOpponentNick +
+                                    "님을 차단했습니다.\n\n마이페이지 > 나의 차단 목록에서 차단을 해제할 수 있습니다.",
+                                {
+                                    icon: "success",
+                                }
+                            );
                             $("#chatview-close").trigger("click");
                         } else {
                             swal("오류가 발생했습니다.", {
