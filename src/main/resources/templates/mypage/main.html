@@ -62,8 +62,13 @@
 					<div class="container-summary-text">
 						<img th:src="${session?.memberDTO?.mbThumbnail}" class="user-photo">
 						<div class="container-summary-details">
-							<p th:if="${#strings.equals(session?.memberDTO?.mbRole, 'CHILD')}" class="badge rounded-pill" id="leveling" data-bs-toggle="tooltip"
-							data-bs-placement="top" title="거래 매너를 지키면 <br> 레벨이 올라가요." data-bs-html="true">[[${session?.memberDTO?.mbRatingsTotal}]]</p>
+							<div class="container-level">
+								<h5 th:if="${#strings.equals(session?.memberDTO?.mbRole, 'CHILD')}" class="badge rounded-pill" id="leveling" data-bs-toggle="tooltip"
+								data-bs-placement="top" title="거래 매너를 지키면 <br> 레벨이 올라가요." data-bs-html="true">[[${session?.memberDTO?.mbRatingsTotal}]]</h5>
+								<div class="progress" id="progress-bar">
+								  <div id="level-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+								</div>
+							</div>
 							<p>이메일: [[${session?.memberDTO?.mbEmail}]]</p>
 							<p th:if="${#strings.equals(session?.memberDTO?.mbRole, 'CHILD')}">관심사: [[${session?.memberDTO?.mbInterest}]]</p>
 						</div>
