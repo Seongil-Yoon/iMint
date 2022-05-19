@@ -4,9 +4,9 @@
 
 <!-- 회원가입1: 유저가 최초 SNS 로그인시 자동 가입 진행 -->
     <insert id="savesns" parameterType="multi.fclass.iMint.member.dto.MemberDTO">
-        INSERT INTO imint.member(mb_id, mb_provider, mb_guard ,mb_nick,  mb_email, mb_join_date, mb_ratings_total,mb_isdelete, mb_role) 
+        INSERT INTO imint.member(mb_id, mb_provider, mb_guard ,mb_nick,  mb_email, mb_join_date, mb_isdelete, mb_role) 
         VALUES
-        (#{mbId}, #{mbProvider}, #{mbGuard}, #{mbNick}, #{mbEmail} ,now(),25, 0 , #{mbRole});
+        (#{mbId}, #{mbProvider}, #{mbGuard}, #{mbNick}, #{mbEmail} ,now() , 0 , #{mbRole});
     </insert>
 
 <!-- 회원가입3: 닉네임, 이메일, 관심사 설정  -->        
