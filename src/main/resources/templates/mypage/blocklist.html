@@ -72,7 +72,8 @@
 								</div>
 								<div class="link">
 									<button th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}" type="button"
-										id="unblock_btn" class="btn btn-primary btn-sm">차단 해제</button>
+										class="unblock_btn btn btn-primary btn-sm" th:id="${block.opponentId}"
+										th:value="${block.opponentNick}">차단 해제</button>
 								</div>
 							</div>
 						</th:block>
@@ -85,7 +86,8 @@
 					<th:block th:if="${#strings.equals(session?.memberDTO?.mbRole,'GUARD')}">
 						<h2 th:if="${#lists.size(userChilds) == 0}">연결된 아이가 없습니다.</h2>
 						<th:block th:unless="${#lists.size(userChilds) == 0}">
-							<select id="select-child" class="form-select form-select-lg" aria-label="Default select example">
+							<select id="select-child" class="form-select form-select-lg"
+								aria-label="Default select example">
 								<option selected>내 아이 선택</option>
 								<option th:each="child : ${userChilds}" th:value="${child.mbId}">[[${child.mbNick}]]
 								</option>
@@ -140,26 +142,24 @@
 								<br> <br>
 								<p>차단 목록이 없어요.</p>
 							</div>
-							<th:block th:each="block : ${userBlock}">
-								<div class="item-list-chat">
-									<div class="checkbox">
-										<p class="count">[[${blockStat.count}]]</p>
+							<div th:each="block : ${userBlock}" class="item-list-chat">
+								<div class="checkbox">
+									<p class="count">[[${blockStat.count}]]</p>
+								</div>
+								<div class="person">
+									<div class="photo-container">
+										<img th:src="${block.opponentThumbnail}" class="person-photo">
 									</div>
-									<div class="person">
-										<div class="photo-container">
-											<img th:src="${block.opponentThumbnail}" class="person-photo">
-										</div>
-										<div class="person-detail">
-											<p class="item-person-nickname">[[${block.opponentNick}]]</p>
-											<p class="item-block-date">[[${block.blockDate}]]</p>
-										</div>
-									</div>
-									<div class="link">
-										<button type="button" id="unblock_btn" class="btn btn-primary btn-sm">차단
-											해제</button>
+									<div class="person-detail">
+										<p class="item-person-nickname">[[${block.opponentNick}]]</p>
+										<p class="item-block-date">[[${block.blockDate}]]</p>
 									</div>
 								</div>
-							</th:block>
+								<div class="link">
+									<button type="button" class="unblock_btn btn btn-primary btn-sm"
+										th:id="${block.opponentId}" th:value="${block.opponentNick}">차단 해제</button>
+								</div>
+							</div>
 						</th:block>
 					</div>
 				</div>
@@ -169,7 +169,6 @@
 		<footer th:replace="frags :: footer"></footer>
 		<th:block th:replace="libs :: script" />
 		<script src="/static/js/mypage/mypage-block.js"></script>
-		<script src="/static/js/block/block.js"></script>
 </body>
 
 </html>
