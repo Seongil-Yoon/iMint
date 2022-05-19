@@ -50,13 +50,15 @@ form.search img.searchIcon {
     height: 40px;
 }
 
-.nav-link {
-    text-align: center;
-    width: 100px;
+.nav-link.fourletter{
+    width: 75px;
+}
+
+.nav-link.fiveletter{
+    width: 90px;
 }
 
 #goodsWriteBtn {
-    text-align: center;
     width: 120px;
     margin: 0;
 }

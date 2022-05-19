@@ -294,6 +294,7 @@
 }
 
 .chatbox-detail-goodsstatus {
+    display: none;
     width: calc(var(--chatroom-height) - 10px);
     height: 25px;
     border: 2.5px solid #9b9b9b;
@@ -353,6 +354,7 @@
 }
 
 .chatbox-detail-suggestible {
+    display: none;
     width: calc(var(--chatroom-height) - 10px);
     height: 40px;
     border: 2.5px solid #9b9b9b;
@@ -376,6 +378,7 @@
 }
 
 #chatbox-view-trxbtns {
+    display: none;
     width: var(--total-width);
     height: 30px;
     border-bottom: 1px solid #9b9b9b;
@@ -390,6 +393,7 @@
 }
 
 .chatbox-trxbtn {
+    display: none;
     height: 100%;
     float: left;
 }
