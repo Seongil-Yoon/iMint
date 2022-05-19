@@ -192,7 +192,6 @@
 .chatbox-chatroom-nickname {
     display: inline-block;
     max-width: 85px;
-    margin-right: 5px;
     height: 19px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -201,7 +200,7 @@
 
 .chatbox-chatrooms-whois {
     display: inline-block;
-    width: 40px;
+    width: 45px;
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
