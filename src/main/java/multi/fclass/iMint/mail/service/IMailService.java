@@ -8,4 +8,6 @@ import multi.fclass.iMint.mail.dto.MailDTO;
  */
 public interface IMailService {
 	public void mailSend(MailDTO mailDto);
+	
+	public void fileMailSend(MailDTO mailDto, String htmlContent);
 }

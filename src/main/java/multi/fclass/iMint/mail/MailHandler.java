@@ -14,6 +14,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * @author Seongil, Yoon
+ *
+ */
 public class MailHandler {
 	private JavaMailSender sender;
 	private MimeMessage message;

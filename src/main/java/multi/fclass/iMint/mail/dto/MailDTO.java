@@ -22,15 +22,14 @@ public class MailDTO {
 	@NonNull
 	private String address;
 	private String title;
-	private HashMap<String, String> message;
+	private String message;
 	@Nullable
 	private MultipartFile file;
 
-//	@Builder
-//	public MailDTO(String address, String title, HashMap<String, String> message) {
-//		this.address = address;
-//		this.title = title;
-//		this.message = message;
-//	}
+	@Builder
+	public MailDTO(String address, String title) {
+		this.address = address;
+		this.title = title;
+	}
 
 }

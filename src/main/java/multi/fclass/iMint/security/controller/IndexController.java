@@ -259,39 +259,19 @@ public class IndexController {
 				session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
 				mv.addObject("register", memberDTO.getMbRole());
 				mv.setViewName("index");
-
-				// 웰컴메일 발신
-				File file = new File(root + "/" + directory + "/" + "iMint_Black.png");
-				FileItem fileItem = new DiskFileItem("welcome", Files.probeContentType(file.toPath()), false,
-						file.getName(), (int) file.length(), file.getParentFile());
-				InputStream input = null;
-				OutputStream os = null;
-				try {
-					input = new FileInputStream(file);
-					os = fileItem.getOutputStream();
-					IOUtils.copy(input, os);
-					// Or faster..
-					// IOUtils.copy(new FileInputStream(file), fileItem.getOutputStream());
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					input.close();
-					os.close();
-				}
-				MultipartFile welcomeFile = new CommonsMultipartFile(fileItem);
-
+				
+				// 메일발송
 				HashMap<String, String> mailString = new HashMap<String, String>();
 				mailString.put("msg", memberDTO.getMbNick() + "님의 아이와 연동하시려면 아래의 PIN 번호를 아이가 회원 가입할 때 알려주세요");
 				mailString.put("pin", memberDTO.getMbPin());
+				String htmlContent = "<p>" + mailString.get("msg") + "</p> <br> <h1>"
+						+ mailString.get("pin") + "</h1> <br><br> <img src='cid:sample-img'>";
 				MailDTO mailDto = MailDTO.builder()
 						.address(memberDTO.getMbEmail())
 						.title("[iMint]" + memberDTO.getMbNick() + "님 가입해주셔서 감사합니다.")
-						.message(mailString)
-						.file(welcomeFile)
 						.build();
-				// end of 웰컴메일
-				// @Async 비동기처리
-				mailService.mailSend(mailDto);
+				mailService.fileMailSend(mailDto, htmlContent);
+				// end of 메일발송
 				return mv;
 
 			} else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이
