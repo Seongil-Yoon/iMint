@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.block.dao.IBlockDAO;
+import multi.fclass.iMint.transaction.dao.ITransactionDAO;
 
 /**
  * @author Jungmin, Yang
@@ -14,8 +15,12 @@ import multi.fclass.iMint.block.dao.IBlockDAO;
 
 @Service
 public class BlockServiceImpl implements IBlockService {
+
 	@Autowired
 	IBlockDAO blockDAO;
+
+	@Autowired
+	ITransactionDAO trxDAO;
 
 	// 차단
 	@Override
@@ -28,6 +33,9 @@ public class BlockServiceImpl implements IBlockService {
 			blockDAO.block(mbId, blockMbId);
 			System.out.println("차단");
 		}
+
+		// 차단한 회원과의 모든 거래예약 취소
+		trxDAO.cancelAllReservation(mbId, blockMbId);
 	}
 
 	// 차단 해제

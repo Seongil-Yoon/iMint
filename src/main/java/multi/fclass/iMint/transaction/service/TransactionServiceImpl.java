@@ -1,14 +1,11 @@
 package multi.fclass.iMint.transaction.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.notification.service.INotificationService;
 import multi.fclass.iMint.transaction.dao.ITransactionDAO;
-import multi.fclass.iMint.transaction.dto.TransactionChatroomDTO;
-import multi.fclass.iMint.transaction.dto.TransactionCheckDTO;
+import multi.fclass.iMint.transaction.dto.TransactionDTO;
 
 /**
  * @author GhostFairy
@@ -25,13 +22,13 @@ public class TransactionServiceImpl implements ITransactionService {
 
 	@Override
 	public int getTransaction(String myId, int goodsId) {
-		TransactionCheckDTO trxCheckDTO = trxDAO.checkTransaction(goodsId);
+		TransactionDTO trxDTO = trxDAO.checkTransaction(goodsId);
 
-		if (trxCheckDTO == null || trxCheckDTO.getId() == null) {
+		if (trxDTO == null || trxDTO.getId() == null) {
 			return -1;
 		} else {
-			if (trxCheckDTO.getSellerId().equals(myId) || trxCheckDTO.getBuyerId().equals(myId)) {
-				return trxCheckDTO.getId();
+			if (trxDTO.getSellerId().equals(myId) || trxDTO.getBuyerId().equals(myId)) {
+				return trxDTO.getId();
 			} else {
 				return -1;
 			}
@@ -45,21 +42,21 @@ public class TransactionServiceImpl implements ITransactionService {
 
 	@Override
 	public String checkTransaction(String myId, String opponentId, int goodsId) {
-		TransactionCheckDTO trxCheckDTO = trxDAO.checkTransaction(goodsId);
+		TransactionDTO trxDTO = trxDAO.checkTransaction(goodsId);
 
-		if (trxCheckDTO == null) {
+		if (trxDTO == null) {
 			return "error";
 		}
 
-		if (trxCheckDTO.getId() == null) {
-			trxCheckDTO = trxDAO.checkReservation(goodsId);
+		if (trxDTO.getId() == null) {
+			trxDTO = trxDAO.checkReservation(goodsId);
 
-			if (trxCheckDTO == null) {
+			if (trxDTO == null) {
 				return "error";
 			}
 
-			if (trxCheckDTO.getId() == null) {
-				if (trxCheckDTO.getSellerId().equals(myId)) {
+			if (trxDTO.getId() == null) {
+				if (trxDTO.getSellerId().equals(myId)) {
 					// 판매중(판매자)
 					return "wait_seller";
 				} else {
@@ -67,15 +64,15 @@ public class TransactionServiceImpl implements ITransactionService {
 					return "wait_other";
 				}
 			} else {
-				if (trxCheckDTO.getSellerId().equals(myId)) {
-					if (opponentId != null && trxCheckDTO.getBuyerId().equals(opponentId)) {
+				if (trxDTO.getSellerId().equals(myId)) {
+					if (opponentId != null && trxDTO.getBuyerId().equals(opponentId)) {
 						// 예약 중, 상대방이 예약자(판매자)
 						return "resrv_seller_match";
 					} else {
 						// 예약 중(판매자)
 						return "resrv_seller";
 					}
-				} else if (trxCheckDTO.getBuyerId().equals(myId)) {
+				} else if (trxDTO.getBuyerId().equals(myId)) {
 					// 예약 중(구매자)
 					return "resrv_buyer";
 				} else {
@@ -84,15 +81,15 @@ public class TransactionServiceImpl implements ITransactionService {
 				}
 			}
 		} else {
-			if (trxCheckDTO.getSellerId().equals(myId)) {
-				if (opponentId != null && trxCheckDTO.getBuyerId().equals(opponentId)) {
+			if (trxDTO.getSellerId().equals(myId)) {
+				if (opponentId != null && trxDTO.getBuyerId().equals(opponentId)) {
 					// 거래완료(판매자/구매자)
 					return "comp_seller_match";
 				} else {
 					// 거래완료(판매자)
 					return "comp_seller";
 				}
-			} else if (trxCheckDTO.getBuyerId().equals(myId)) {
+			} else if (trxDTO.getBuyerId().equals(myId)) {
 				// 거래완료(구매자)
 				return "comp_buyer";
 			} else {
@@ -104,16 +101,11 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
-	public List<TransactionChatroomDTO> getChatroomList(int goodsId) {
-		return trxDAO.getChatroomList(goodsId);
-	}
-
-	@Override
 	public boolean makeReservation(int goodsId, int chatroomId) {
 		if (trxDAO.makeReservation(chatroomId) == 2) {
-			TransactionCheckDTO trxCheckDTO = trxDAO.checkReservation(goodsId);
-			notifyService.notifyReservation(trxCheckDTO.getBuyerId(), trxCheckDTO.getGoodsTitle());
-			notifyService.notifyReservation(trxCheckDTO.getSellerId(), trxCheckDTO.getGoodsTitle());
+			TransactionDTO trxDTO = trxDAO.checkReservation(goodsId);
+			notifyService.notifyReservation(trxDTO.getBuyerId(), trxDTO.getGoodsTitle());
+			notifyService.notifyReservation(trxDTO.getSellerId(), trxDTO.getGoodsTitle());
 			return true;
 		} else {
 			return false;
@@ -122,10 +114,10 @@ public class TransactionServiceImpl implements ITransactionService {
 
 	@Override
 	public boolean cancelReservation(int goodsId, int chatroomId) {
-		TransactionCheckDTO trxCheckDTO = trxDAO.checkReservation(goodsId);
+		TransactionDTO trxDTO = trxDAO.checkReservation(goodsId);
 		if (trxDAO.cancelReservation(chatroomId) == 2) {
-			notifyService.notifyCancelReservation(trxCheckDTO.getBuyerId(), trxCheckDTO.getGoodsTitle());
-			notifyService.notifyCancelReservation(trxCheckDTO.getSellerId(), trxCheckDTO.getGoodsTitle());
+			notifyService.notifyCancelReservation(trxDTO.getBuyerId(), trxDTO.getGoodsTitle());
+			notifyService.notifyCancelReservation(trxDTO.getSellerId(), trxDTO.getGoodsTitle());
 			return true;
 		} else {
 			return false;
@@ -133,12 +125,17 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
+	public int cancelAllReservation(String myId, String blockId) {
+		return trxDAO.cancelAllReservation(myId, blockId);
+	}
+
+	@Override
 	public boolean completeTransaction(String buyerId, int goodsId) {
 		if (trxDAO.updateGoodsStatus(goodsId) == 1) {
 			if (trxDAO.completeTransaction(buyerId, goodsId) == 1) {
-				TransactionCheckDTO trxCheckDTO = trxDAO.checkTransaction(goodsId);
-				notifyService.notifyTransaction(trxCheckDTO.getBuyerId(), trxCheckDTO.getGoodsTitle());
-				notifyService.notifyTransaction(trxCheckDTO.getSellerId(), trxCheckDTO.getGoodsTitle());
+				TransactionDTO trxDTO = trxDAO.checkTransaction(goodsId);
+				notifyService.notifyTransaction(trxDTO.getBuyerId(), trxDTO.getGoodsTitle());
+				notifyService.notifyTransaction(trxDTO.getSellerId(), trxDTO.getGoodsTitle());
 				return true;
 			} else {
 				return false;

@@ -4,7 +4,7 @@
 
 <mapper namespace="multi.fclass.iMint.transaction.dao.ITransactionDAO">
 	<!-- 예약여부 확인(채팅용) -->
-	<select id="checkReservation" resultType="TransactionCheckDTO">
+	<select id="checkReservation" resultType="TransactionDTO">
 		SELECT
 			cr.id,
 			g.goods_id,
@@ -21,7 +21,7 @@
 	</select>
 	
 	<!-- 거래완료여부 확인(채팅용) -->
-	<select id="checkTransaction" resultType="TransactionCheckDTO">
+	<select id="checkTransaction" resultType="TransactionDTO">
 		SELECT
 			trx.trx_id AS id,
 			g.goods_id,
@@ -35,24 +35,6 @@
 			g.goods_isdelete = FALSE
 			AND (trx.trx_isdelete IS NULL OR trx.trx_isdelete = FALSE)
 			AND g.goods_id = #{goodsId}
-	</select>
-	
-	
-	<!-- 해당 상품 관련 채팅방 목록 조회(예약자 선택) -->
-	<select id="getChatroomList" resultType="TransactionChatroomDTO">
-		SELECT
-			IF(cr.resrv_date IS NOT NULL, TRUE, FALSE) AS reserved,
-			cr.id AS chatroom_id,
-			cr.buyer_id,
-			mb.mb_nick AS buyer_nick,
-			mb.mb_thumbnail
-		FROM
-			`imint`.`chatroom` AS cr
-			JOIN `imint`.`member` AS mb ON cr.buyer_id = mb.mb_id
-		WHERE
-			cr.isdelete = FALSE
-			AND mb.mb_isdelete = FALSE
-			AND cr.goods_id = #{goodsId}
 	</select>
 	
 	<!-- 예약등록 -->
@@ -77,6 +59,20 @@
 			g.goods_status = "wait"
 		WHERE
 			cr.id = #{chatroomId}
+	</update>
+	
+	<!-- 차단한 회원과의 모든 예약 취소 -->
+	<update id="cancelAllReservation">
+		UPDATE
+			`imint`.`chatroom` AS cr
+			JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
+		SET
+			cr.resrv_date = NULL,
+			g.goods_status = "wait"
+		WHERE
+			g.goods_status LIKE "resrv"
+			AND ((cr.buyer_id LIKE #{blockId} AND g.seller_id LIKE #{myId})
+			OR (cr.buyer_id LIKE #{myId} AND g.seller_id LIKE #{blockId}))
 	</update>
 	
 	<!-- 거래완료 -->

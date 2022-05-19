@@ -7,7 +7,7 @@ import lombok.Getter;
  *
  */
 @Getter
-public class TransactionCheckDTO {
+public class TransactionDTO {
 
 	private Integer id;
 	private Integer goodsId;

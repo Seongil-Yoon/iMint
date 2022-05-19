@@ -22,8 +22,7 @@
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageConnectionDTO" alias="MypageConnectionDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageBlockDTO" alias="MypageBlockDTO" />
 		<typeAlias type="multi.fclass.iMint.wishlist.dto.WishlistDTO" alias="WishlistDTO" />
-		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionChatroomDTO" alias="TransactionChatroomDTO" />
-		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionCheckDTO" alias="TransactionCheckDTO" />
+		<typeAlias type="multi.fclass.iMint.transaction.dto.TransactionDTO" alias="TransactionDTO" />
 		<typeAlias type="multi.fclass.iMint.rating.dto.RatingDTO" alias="RatingDTO" />
 	</typeAliases>
 </configuration>
