@@ -1,6 +1,7 @@
 package multi.fclass.iMint.mail.service;
 
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class MailServiceImpl implements IMailService {
 	private static final String FROM_PERSON = "iMint(아이민트)";
 
 	@Override
+	@Async("mailExecutor")
 	public void mailSend(MailDTO mailDto) {
 		try {
 			MailHandler mailHandler = new MailHandler(mailSender);
@@ -30,12 +32,14 @@ public class MailServiceImpl implements IMailService {
 			// 제목
 			mailHandler.setSubject(mailDto.getTitle());
 			// HTML layOut
-			String htmlContent = "<p>" + mailDto.getMessage() + "<p> <img src='cid:sample-img'>";
+			String htmlContent = "<p>" + mailDto.getMessage().get("msg") + "</p> <br> <h1>"+ mailDto.getMessage().get("pin") + "</h1> <br><br> <img src='cid:sample-img'>";
 			mailHandler.setText(htmlContent, true);
 			// 첨부파일
-			mailHandler.setAttach(mailDto.getFile().getOriginalFilename(), mailDto.getFile());
 			// 이미지 삽입
-			mailHandler.setInline("sample-img", mailDto.getFile());
+			if(!mailDto.getFile().isEmpty() && mailDto.getFile() != null) {
+//				mailHandler.setAttach(mailDto.getFile().getOriginalFilename(), mailDto.getFile());
+				mailHandler.setInline("sample-img", mailDto.getFile());
+			}
 			mailHandler.send();
 		} catch (Exception e) {
 			e.printStackTrace();

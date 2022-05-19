@@ -1,7 +1,9 @@
 package multi.fclass.iMint.mail.dto;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,9 +19,18 @@ import lombok.NonNull;
 @AllArgsConstructor
 @Component
 public class MailDTO {
+	@NonNull
 	private String address;
 	private String title;
-	private String message;
+	private HashMap<String, String> message;
+	@Nullable
 	private MultipartFile file;
+
+//	@Builder
+//	public MailDTO(String address, String title, HashMap<String, String> message) {
+//		this.address = address;
+//		this.title = title;
+//		this.message = message;
+//	}
 
 }

@@ -1,5 +1,11 @@
 package multi.fclass.iMint.security.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +14,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,12 +34,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.common.code.ErrorCode;
 import multi.fclass.iMint.common.exception.hadler.UnauthorizedException;
+import multi.fclass.iMint.mail.dto.MailDTO;
+import multi.fclass.iMint.mail.service.IMailService;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.GenerateCertCharacter;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
@@ -57,7 +71,15 @@ public class IndexController {
     @Autowired
     private AuthenticationManager authenticationManager; // 세션값 변경목적
     
-    private HttpSession httpSession;    
+    private HttpSession httpSession; 
+    
+    @Autowired
+	IMailService mailService;
+    
+    @Value("${root}")
+	String root;
+	@Value("${directory}")
+	String directory;
 	
     // 로그인 
 	@GetMapping({"", "/"})
@@ -191,101 +213,131 @@ public class IndexController {
 	// 회원가입 4(최종 회원가입 단계. 보호자, 아이 모두)
 	// 부모-> 위치 설정 , 아이 -> 보호자 연동이 각각 끝나면 Role를 인증으로 변경
 	// 회원가입 완료되면 다시 로그인 요청
-	@PostMapping({"", "/"}) 
-	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard, String guardPin) {
-	
-	ModelAndView mv = new ModelAndView();
+	@PostMapping({ "", "/" })
+	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard,
+			String guardPin) throws IOException {
 
-	// 비 로그인
-	if (auth == null) {
-				throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
-	}
-	
-	// 현재 로그인한 회원의 정보 파싱
-	String mbId = parseMbId.parseMbId(auth);
-	MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-	mv.addObject("memberDTO", memberDTO);
-//	
-//	// 현재 로그인한 회원의 상태
-//	String status = null;
-//	if (memberDTO.getMbIsdelete() == true) {
-//		status = "탈퇴한 회원입니다.";
-//	}
-	
-	try {
-		// 미인증 보호자(UN_GUARD)인 경우 mbLocation 받아오기, 회원가입 마치면 GUARD로 권한 업그레이드 
-		if (memberDTO.getMbRole() == Role.UN_GUARD) { // 보호자 
-			memberDTO.setMbGuard(null);
-			memberDTO.setMbLocation(mbLocationOrGuard);
-			memberDTO.setMbRole(Role.GUARD);
-			memberDTO.setMbPin(new GenerateCertCharacter().excuteGenerate());
-			
-			// DB저장
-			securityDAO.updateregister4(memberDTO);
+		ModelAndView mv = new ModelAndView();
+
+		// 비 로그인
+		if (auth == null) {
+			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
+		}
+
+		// 현재 로그인한 회원의 정보 파싱
+		String mbId = parseMbId.parseMbId(auth);
+		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+		mv.addObject("memberDTO", memberDTO);
+		//
+		// // 현재 로그인한 회원의 상태
+		// String status = null;
+		// if (memberDTO.getMbIsdelete() == true) {
+		// status = "탈퇴한 회원입니다.";
+		// }
 		
-			// 세션 수정
-		    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
-		    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
-			// 세션에 변경사항 저장
-			SecurityContext context = SecurityContextHolder.getContext();
-			// UsernamePasswordAuthenticationToken
-			context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
-			HttpSession session = req.getSession(true);
-			//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
-			session.setAttribute(HttpSessionSecurityContextRepository.
-			                       SPRING_SECURITY_CONTEXT_KEY, context);
-			mv.addObject("register", memberDTO.getMbRole());
-			mv.setViewName("index");
+		try {
+			// 미인증 보호자(UN_GUARD)인 경우 mbLocation 받아오기, 회원가입 마치면 GUARD로 권한 업그레이드
+			if (memberDTO.getMbRole() == Role.UN_GUARD) { // 보호자
+				memberDTO.setMbGuard(null);
+				memberDTO.setMbLocation(mbLocationOrGuard);
+				memberDTO.setMbRole(Role.GUARD);
+				memberDTO.setMbPin(new GenerateCertCharacter().excuteGenerate());
 
-		}	
-		else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이 
-			MemberDTO guardMember = securityDAO.findByMbNick(mbLocationOrGuard);
-			try {
-				if (guardMember != null & guardMember.getMbPin().equals(guardPin)) {
-					memberDTO.setMbGuard(guardMember.getMbId());
-					memberDTO.setMbLocation(guardMember.getMbLocation());
-					memberDTO.setMbRole(Role.CHILD);
-					memberDTO.setMbPin(null);
-					
-					// DB저장
-					securityDAO.updateregister4(memberDTO);
-				
-					// 세션 수정
-				    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();   
-				    authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
-					// 세션에 변경사항 저장
-					SecurityContext context = SecurityContextHolder.getContext();
-					// UsernamePasswordAuthenticationToken
-					context.setAuthentication(new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
-					HttpSession session = req.getSession(true);
-					//위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
-					session.setAttribute(HttpSessionSecurityContextRepository.
-					                       SPRING_SECURITY_CONTEXT_KEY, context);
-					mv.addObject("register", memberDTO.getMbRole());
-					mv.setViewName("index");
+				// DB저장
+				securityDAO.updateregister4(memberDTO);
+
+				// 세션 수정
+				List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+				authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
+				// 세션에 변경사항 저장
+				SecurityContext context = SecurityContextHolder.getContext();
+				// UsernamePasswordAuthenticationToken
+				context.setAuthentication(
+						new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
+				HttpSession session = req.getSession(true);
+				// 위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+				session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+				mv.addObject("register", memberDTO.getMbRole());
+				mv.setViewName("index");
+
+				// 웰컴메일 발신
+				File file = new File(root + "/" + directory + "/" + "iMint_Black.png");
+				FileItem fileItem = new DiskFileItem("welcome", Files.probeContentType(file.toPath()), false,
+						file.getName(), (int) file.length(), file.getParentFile());
+				InputStream input = null;
+				OutputStream os = null;
+				try {
+					input = new FileInputStream(file);
+					os = fileItem.getOutputStream();
+					IOUtils.copy(input, os);
+					// Or faster..
+					// IOUtils.copy(new FileInputStream(file), fileItem.getOutputStream());
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					input.close();
+					os.close();
 				}
-				else { // 보호자의 입력정보가 틀리면 보호자 연동 페이지로 다시 보내기
-					mv.setViewName("member/register_connect");
-				}
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-				mv.setViewName("member/register_connect");	// 보호자의 입력정보가 틀리면 다시 보내기
-				mv.addObject("err", "정확한 보호자의 닉네임, Pin을 입력해주세요.");
-			}			
+				MultipartFile welcomeFile = new CommonsMultipartFile(fileItem);
+
+				HashMap<String, String> mailString = new HashMap<String, String>();
+				mailString.put("msg", memberDTO.getMbNick() + "님의 아이와 연동하시려면 아래의 PIN 번호를 아이가 회원 가입할 때 알려주세요");
+				mailString.put("pin", memberDTO.getMbPin());
+				MailDTO mailDto = MailDTO.builder()
+						.address(memberDTO.getMbEmail())
+						.title("[iMint]" + memberDTO.getMbNick() + "님 가입해주셔서 감사합니다.")
+						.message(mailString)
+						.file(welcomeFile)
+						.build();
+				// end of 웰컴메일
+				// @Async 비동기처리
+				mailService.mailSend(mailDto);
 				return mv;
-		}	
-		else if(memberDTO.getMbRole() == Role.GUARD){ // 가입 완료된 보호자
+
+			} else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이
+				MemberDTO guardMember = securityDAO.findByMbNick(mbLocationOrGuard);
+				try {
+					if (guardMember != null & guardMember.getMbPin().equals(guardPin)) {
+						memberDTO.setMbGuard(guardMember.getMbId());
+						memberDTO.setMbLocation(guardMember.getMbLocation());
+						memberDTO.setMbRole(Role.CHILD);
+						memberDTO.setMbPin(null);
+
+						// DB저장
+						securityDAO.updateregister4(memberDTO);
+
+						// 세션 수정
+						List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+						authorities.add(new SimpleGrantedAuthority(memberDTO.getRoleKey()));
+						// 세션에 변경사항 저장
+						SecurityContext context = SecurityContextHolder.getContext();
+						// UsernamePasswordAuthenticationToken
+						context.setAuthentication(
+								new UsernamePasswordAuthenticationToken(memberDTO.getMbId(), null, authorities));
+						HttpSession session = req.getSession(true);
+						// 위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+						session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+						mv.addObject("register", memberDTO.getMbRole());
+						mv.setViewName("index");
+					} else { // 보호자의 입력정보가 틀리면 보호자 연동 페이지로 다시 보내기
+						mv.setViewName("member/register_connect");
+					}
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+					mv.setViewName("member/register_connect"); // 보호자의 입력정보가 틀리면 다시 보내기
+					mv.addObject("err", "정확한 보호자의 닉네임, Pin을 입력해주세요.");
+				}
+				return mv;
+			} else if (memberDTO.getMbRole() == Role.GUARD) { // 가입 완료된 보호자
+				mv.setViewName("redirect:/mypage/location");
+				return mv;
+			}
+			return mv;
+
+		} catch (ClassCastException e) {
 			mv.setViewName("redirect:/mypage/location");
 			return mv;
-		}	
-			return mv;
-
-	} // try end 
+		} // catch end
 		
-	catch (ClassCastException e) {
-		mv.setViewName("redirect:/mypage/location");
-		return mv;
-	} // catch end
-		
-	}
+	}//end of @PostMapping({ "", "/" })
 }
