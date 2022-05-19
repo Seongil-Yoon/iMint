@@ -45,7 +45,7 @@ public class TransactionController {
 
 		// 내가 판매자이고 예악 가능한 경우에만
 		if (trxService.checkTransaction(myId, goodsId).equals("wait_seller")) {
-			if (trxService.makeReservation(chatroomId)) {
+			if (trxService.makeReservation(goodsId, chatroomId)) {
 				out.put("result", "success");
 			} else {
 				out.put("result", "fail");
@@ -63,7 +63,7 @@ public class TransactionController {
 		JSONObject out = new JSONObject();
 
 		if (trxService.checkTransaction(myId, goodsId).equals("resrv_seller")) {
-			if (trxService.cancelReservation(chatroomId)) {
+			if (trxService.cancelReservation(goodsId, chatroomId)) {
 				out.put("result", "success");
 			} else {
 				out.put("result", "fail");

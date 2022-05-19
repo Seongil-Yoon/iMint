@@ -7,6 +7,8 @@
 	<select id="checkReservation" resultType="TransactionCheckDTO">
 		SELECT
 			cr.id,
+			g.goods_id,
+			g.goods_title,
 			g.seller_id,
 			cr.buyer_id
 		FROM
@@ -22,6 +24,8 @@
 	<select id="checkTransaction" resultType="TransactionCheckDTO">
 		SELECT
 			trx.trx_id AS id,
+			g.goods_id,
+			g.goods_title,
 			g.seller_id,
 			trx.mb_id AS buyer_id
 		FROM

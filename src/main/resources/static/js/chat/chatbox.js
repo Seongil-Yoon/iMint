@@ -27,9 +27,7 @@ function chatboxInitializer() {
                 type: "GET",
                 dataType: "JSON",
                 success: function (result) {
-                    $("#chatbox-list-title .chatbox-title-text").after(
-                        `<select id="chatbox-title-select" class="form-select"></select>`
-                    );
+                    $("#chatbox-title-select").show();
                     if (result.length > 0) {
                         // 보호자 회원이면 아이 선택상자 추가
                         $("#chatbox-title-select")
@@ -60,6 +58,7 @@ function chatboxInitializer() {
             });
         }
     }
+    Notification.requestPermission();
 }
 
 // 함수: 각종 버튼 이벤트 등록
@@ -305,17 +304,22 @@ function chatboxEventHandler() {
 }
 
 // 함수: 웹소켓에 연결 + 알림 채널 구독
-function connectWS(chatboxMyId) {
-    let socket = new SockJS("/ws");
-    stompClient = Stomp.over(socket);
-    stompClient.connect({ "user-name": chatboxMyId }, function (frame) {
-        console.log("Connected: " + frame);
+async function connectWS(chatboxMyId) {
+    await new Promise(function (resolve, reject) {
+        let socket = new SockJS("/ws");
+        stompClient = Stomp.over(socket);
+        stompClient.connect({ "user-name": chatboxMyId }, function (frame) {
+            console.log("Connected: " + frame);
+            resolve("success");
+        });
     });
 
-    setTimeout(function () {
-        stompClient.subscribe("/ws/notify", function (notify) {
-        });
-    }, 1000);
+    stompClient.subscribe("/ws/notify", function (notify) {
+        var options = {
+            body: JSON.parse(notify.body).message,
+        };
+        var n = new Notification("내 아이의 활동 알림", options);
+    });
 }
 
 // 함수: 메세지 전송

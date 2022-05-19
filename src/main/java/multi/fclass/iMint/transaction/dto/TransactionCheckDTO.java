@@ -10,6 +10,8 @@ import lombok.Getter;
 public class TransactionCheckDTO {
 
 	private Integer id;
+	private Integer goodsId;
+	private String goodsTitle;
 	private String sellerId;
 	private String buyerId;
 
