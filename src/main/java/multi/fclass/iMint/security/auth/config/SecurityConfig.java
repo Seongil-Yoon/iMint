@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/transaction/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')")
 			
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 접근 가능 
+			.antMatchers("/mail**").permitAll()
 			.anyRequest().authenticated();
 		
 		// 기본 로그인 해제 
