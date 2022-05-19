@@ -6,9 +6,9 @@
 	<!-- 전송된 메세지 저장 -->
 	<insert id="sendChatroomMessage" parameterType="ChatMessageDTO">
 		INSERT INTO
-			`imint`.`chat_messages`
+			`imint`.`chat_messages`(chatroom_id, sender_id, message)
 		VALUES
-			(NULL, #{chatroomId}, #{senderId}, #{message}, #{read} , #{sendDate}, #{isDeleted})
+			(#{chatroomId}, #{senderId}, #{message})
 		<selectKey keyProperty="id" order="AFTER" resultType="Integer">
 			SELECT MAX(id) FROM `imint`.`chat_messages`
 		</selectKey>
