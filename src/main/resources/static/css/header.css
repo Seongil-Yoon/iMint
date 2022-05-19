@@ -19,8 +19,6 @@ nav.carrot_header {
     z-index: 5;
 }
 
-
-
 form.search select.form-select {
     flex: 1;
 }
@@ -50,4 +48,15 @@ form.search img.searchIcon {
 .imint-logo {
     /* width: ; */
     height: 40px;
+}
+
+.nav-link {
+    text-align: center;
+    width: 100px;
+}
+
+#goodsWriteBtn {
+    text-align: center;
+    width: 120px;
+    margin: 0;
 }

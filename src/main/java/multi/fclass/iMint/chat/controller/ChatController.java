@@ -122,4 +122,5 @@ public class ChatController {
 		chatService.sendChatroomMessage(chatMessage);
 		return chatMessage;
 	}
+	
 }

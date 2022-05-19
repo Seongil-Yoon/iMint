@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="chatbox">
-	<div id="chatbox-openbtn" data-bs-toggle="tooltip" data-bs-placement="top" title="채팅 펼치기">채팅</div>
+		<div id="chatbox-openbtn" class="chatbox-openbtn" data-bs-toggle="tooltip" data-bs-placement="left"
+			title="채팅 펼치기">💬</div>
 	<div id="chatbox-main">
 		<div id="chatbox-list">
 			<div id="chatbox-list-title" class="chatbox-title">
 				<span class="chatbox-title-text">아이민트 채팅</span>
+				<select id="chatbox-title-select" class="form-select"></select>
 				<div id="chatbox-close" class="chatbox-menubtn" data-bs-toggle="tooltip" data-bs-placement="top"
 					title="숨기기">↓</div>
 			</div>

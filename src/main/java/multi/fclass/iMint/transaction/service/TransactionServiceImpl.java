@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import multi.fclass.iMint.notification.service.INotificationService;
 import multi.fclass.iMint.transaction.dao.ITransactionDAO;
 import multi.fclass.iMint.transaction.dto.TransactionChatroomDTO;
 import multi.fclass.iMint.transaction.dto.TransactionCheckDTO;
@@ -18,6 +19,9 @@ public class TransactionServiceImpl implements ITransactionService {
 
 	@Autowired
 	ITransactionDAO trxDAO;
+
+	@Autowired
+	INotificationService notifyService;
 
 	@Override
 	public int getTransaction(String myId, int goodsId) {
@@ -105,8 +109,11 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
-	public boolean makeReservation(int chatroomId) {
+	public boolean makeReservation(int goodsId, int chatroomId) {
 		if (trxDAO.makeReservation(chatroomId) == 2) {
+			TransactionCheckDTO trxCheckDTO = trxDAO.checkReservation(goodsId);
+			notifyService.notifyReservation(trxCheckDTO.getBuyerId(), trxCheckDTO.getGoodsTitle());
+			notifyService.notifyReservation(trxCheckDTO.getSellerId(), trxCheckDTO.getGoodsTitle());
 			return true;
 		} else {
 			return false;
@@ -114,8 +121,11 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
-	public boolean cancelReservation(int chatroomId) {
+	public boolean cancelReservation(int goodsId, int chatroomId) {
+		TransactionCheckDTO trxCheckDTO = trxDAO.checkReservation(goodsId);
 		if (trxDAO.cancelReservation(chatroomId) == 2) {
+			notifyService.notifyCancelReservation(trxCheckDTO.getBuyerId(), trxCheckDTO.getGoodsTitle());
+			notifyService.notifyCancelReservation(trxCheckDTO.getSellerId(), trxCheckDTO.getGoodsTitle());
 			return true;
 		} else {
 			return false;
@@ -126,19 +136,13 @@ public class TransactionServiceImpl implements ITransactionService {
 	public boolean completeTransaction(String buyerId, int goodsId) {
 		if (trxDAO.updateGoodsStatus(goodsId) == 1) {
 			if (trxDAO.completeTransaction(buyerId, goodsId) == 1) {
+				TransactionCheckDTO trxCheckDTO = trxDAO.checkTransaction(goodsId);
+				notifyService.notifyTransaction(trxCheckDTO.getBuyerId(), trxCheckDTO.getGoodsTitle());
+				notifyService.notifyTransaction(trxCheckDTO.getSellerId(), trxCheckDTO.getGoodsTitle());
 				return true;
 			} else {
 				return false;
 			}
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean addBuyerTransaction(String buyerId, int goodsId) {
-		if (trxDAO.addBuyerTransaction(buyerId, goodsId) == 1) {
-			return true;
 		} else {
 			return false;
 		}

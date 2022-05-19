@@ -45,11 +45,11 @@
 						</form>
 						<!-- 상품 등록 -->
 						<form class="">
-							<a sec:authorize="isAuthenticated()" 
+							<a id="goodsWriteBtn" sec:authorize="isAuthenticated()" 
 								th:if="${#strings.equals(mbRole, 'CHILD')}" 
 								class="btn btn-primary add-btn" 
 								href="/goods/write">
-								✏️ 상품 등록하기
+								✏️ 상품 등록
 							</a>
 						</form>
 					</div>
