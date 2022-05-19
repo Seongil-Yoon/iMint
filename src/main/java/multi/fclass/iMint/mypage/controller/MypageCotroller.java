@@ -148,6 +148,7 @@ public class MypageCotroller {
 
 				// 아이별 채팅 목록
 				List<MypageChatroomDTO> userChat = mypageService.getChatroomList(child.getMbId());
+				userChat.removeIf((dto) -> (dto.getMessage() == null)); // 주고 받은 메세지(마지막 메세지)가 없으면 목록에서 제외
 				allChat.put(child.getMbId(), userChat);
 			}
 
@@ -170,6 +171,7 @@ public class MypageCotroller {
 
 			// 채팅 목록
 			List<MypageChatroomDTO> userChat = mypageService.getChatroomList(mbId);
+			userChat.removeIf((dto) -> (dto.getMessage() == null)); // 주고 받은 메세지(마지막 메세지)가 없으면 목록에서 제외
 
 			mv.addObject("userWish", userWish);
 			mv.addObject("userTrade", userTrade);

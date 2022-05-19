@@ -304,19 +304,24 @@ function chatboxEventHandler() {
     });
 }
 
-// 함수: 웹소켓에 연결
+// 함수: 웹소켓에 연결 + 알림 채널 구독
 function connectWS(chatboxMyId) {
     let socket = new SockJS("/ws");
     stompClient = Stomp.over(socket);
     stompClient.connect({ "user-name": chatboxMyId }, function (frame) {
         console.log("Connected: " + frame);
     });
+
+    setTimeout(function () {
+        stompClient.subscribe("/ws/notify", function (notify) {
+        });
+    }, 1000);
 }
 
 // 함수: 메세지 전송
 function sendMessage(message) {
     stompClient.send(
-        "/chat/send/chatroom/" + currentChatroomId,
+        "/ws/send/chat/" + currentChatroomId,
         {},
         JSON.stringify({
             message: message,
@@ -374,24 +379,36 @@ function loadChatrooms() {
                             `" />`
                     )
                     .find("p")
-                    .append(
-                        `<span class="chatbox-chatrooms-whois ` +
-                            (result[i].category == "buy"
-                                ? `seller">내가 구매하는 상품</span>`
-                                : `buyer">내가 판매하는 상품</span>`)
-                    )
-                    .append(
-                        `<span class="chatbox-chatroom-nickname">` +
-                            result[i].opponentNick +
-                            `</span>`
-                    )
+                    .append("<div></div>")
                     .append(
                         `<span class="chatbox-chatroom-lastmessage">` +
                             (result[i].message === null
                                 ? ""
                                 : result[i].message) +
                             `</span>`
+                    )
+                    .find("div")
+                    .append(
+                        `<span class="chatbox-chatroom-nickname">` +
+                            result[i].opponentNick +
+                            `</span>`
+                    )
+                    .append(
+                        `<span class="chatbox-chatrooms-whois ` +
+                            (result[i].category == "buy"
+                                ? `seller">(판매자)</span>`
+                                : `buyer">(구매자)</span>`)
                     );
+
+                if (
+                    result[i].senderId != chatboxMyId &&
+                    result[i].senderId != chatboxChildId &&
+                    result[i].read == false
+                ) {
+                    $("div[data-chatroomId='" + result[i].id + "']").addClass(
+                        "unread"
+                    );
+                }
             }
 
             // 이벤트 등록: 채팅방 목록 누르면 채팅 화면 표시
@@ -549,7 +566,7 @@ function joinChatroom(chatroom) {
 
     // STOMP 채팅방 SUBSCRIBE
     currentSubscription = stompClient.subscribe(
-        "/chat/chatroom/" + currentChatroomId,
+        "/ws/chat/" + currentChatroomId,
         function (chatmessage) {
             if (
                 Math.round(
@@ -585,7 +602,7 @@ function directOpenChatroom(childId) {
 // 함수: 채팅방으로 즉시 입장
 function directJoinChatroom(chatroomId, childId) {
     let timeout = 100;
-    directOpenChatroom(childId);
+    directOpenChatroom(chatroomId);
     if (childId != null) {
         timeout = 500;
     }

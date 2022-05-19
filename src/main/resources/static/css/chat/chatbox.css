@@ -6,7 +6,7 @@
 }
 
 #chatbox-openbtn {
-    z-index: 1;
+    z-index: 10;
     display: none;
     position: fixed;
     user-select: none;
@@ -27,7 +27,7 @@
 }
 
 #chatbox-main {
-    z-index: 1;
+    z-index: 10;
     user-select: none;
     display: none;
     position: fixed;
@@ -146,7 +146,9 @@
     height: var(--chatroom-height);
     float: left;
 }
-
+.chatbox-chatrooms-chatroom.unread {
+    background-color: #f0ffff;
+}
 .chatbox-chatrooms-chatroom:hover {
     background-color: #eeeeee;
     cursor: pointer;
@@ -177,52 +179,61 @@
     margin-bottom: 0px;
 }
 
-.chatbox-chatrooms-chatroom span {
+.chatbox-chatrooms-chatroom p div {
     width: 130px;
-}
-
-.chatbox-chatrooms-whois {
-    display: -webkit-box;
+    height: 19px;
+    line-height: 19px;
     font-weight: bold;
-    font-size: 12px;
-    overflow: hidden;
-    word-break: break-all;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    height: 15px;
-}
-
-.chatbox-chatrooms-whois.buyer {
-    color: #0000dd;
-}
-
-.chatbox-chatrooms-whois.seller {
-    color: #dd0000;
+    margin-top: 5px;
 }
 
 .chatbox-chatroom-nickname {
-    display: -webkit-box;
-    font-weight: bold;
-    font-size: 13px;
+    display: inline-block;
+    max-width: 85px;
+    margin-right: 5px;
+    height: 19px;
     overflow: hidden;
-    word-break: break-all;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    font-size: 13px;
+}
+
+.chatbox-chatrooms-whois {
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+    overflow: hidden;
     text-overflow: ellipsis;
     height: 19px;
+    font-size: 11px;
+}
+.chatbox-chatrooms-whois.buyer {
+    color: #dd0000;
+}
+.chatbox-chatrooms-whois.seller {
+    color: #0000dd;
 }
 
 .chatbox-chatroom-lastmessage {
     display: -webkit-box;
-    font-size: 13px;
+    width: 130px;
+    height: 36px;
     overflow: hidden;
     word-break: break-all;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    height: 36px;
     color: #9b9b9b;
+    font-size: 13px;
+    margin: 5px 0;
+}
+
+.chatbox-chatrooms-new {
+    display: block;
+    width: 130px;
+    text-align: center;
+    height: 15px;
+    font-size: 10px;
+    color: #dd0000;
 }
 
 #chatbox-view {
@@ -446,7 +457,7 @@
 }
 
 .chatbox-chatmessage-chatinfo {
-    width: var(--chatroom-height);
+    width: 60px;
     font-size: 12px;
     height: 15px;
     line-height: 15px;

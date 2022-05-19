@@ -85,7 +85,6 @@ public class MypageServiceImpl implements IMypageService {
 		List<String> blockList = blockService.blocklist(myId);
 		List<MypageChatroomDTO> chatroomList = mypageDAO.getChatroomList(myId);
 		chatroomList.removeIf((dto) -> (blockList.contains(dto.getOpponentId()))); // 차단한 회원과의 채팅을 목록에서 제외
-		chatroomList.removeIf((dto) -> (dto.getMessage() == null)); // 주고 받은 메세지(마지막 메세지)가 없으면 목록에서 제외
 
 		return chatroomList;
 	}

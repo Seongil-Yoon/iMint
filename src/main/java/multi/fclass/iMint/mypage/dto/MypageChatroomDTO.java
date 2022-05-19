@@ -28,7 +28,9 @@ public class MypageChatroomDTO {
 	@Getter(AccessLevel.NONE)
 	private String goodsImagesPath; // 대표 이미지 저장 경로
 	private String goodsImagesOriginname; // 대표 이미지 원래 이름
+	private String senderId; // 메세지 발신자 ID
 	private String message; // 마지막 메세지 내용
+	private boolean isRead; // 메세지 읽음 여부
 	private LocalDateTime lastUpdateDate; // 마지막 업데이트 일시(채팅방 생성일시 or 마지막 메세지 전송일시)
 
 	public String getOpponentThumbnail() {

@@ -1,4 +1,4 @@
-package multi.fclass.iMint.chat.config;
+package multi.fclass.iMint.websocket.config;
 
 import java.security.Principal;
 
@@ -11,9 +11,8 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public class ChatPrincipal implements Principal {
+public class WebSocketPrincipal implements Principal {
 
 	private final String name;
-	private final String nick;
 
 }

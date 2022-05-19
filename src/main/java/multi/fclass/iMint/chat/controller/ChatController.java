@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import multi.fclass.iMint.chat.config.ChatPrincipal;
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
 import multi.fclass.iMint.chat.service.IChatService;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
 import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.service.IMypageService;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
+import multi.fclass.iMint.websocket.config.WebSocketPrincipal;
 import net.minidev.json.JSONObject;
 
 /**
@@ -110,14 +110,14 @@ public class ChatController {
 
 	// @MessageMapping: 해당 주소로 전달된 메세지를 처리하는 메소드임을 알림
 	// @SendTo: 메세지에 응답받을 경로가 별도로 정해져있지않은 경우 기본 응답 주소 지정
-	@MessageMapping("/chatroom/{chatroomId}")
-	@SendTo("/chat/chatroom/{chatroomId}")
-	public ChatMessageDTO sendMessageChatroom(ChatPrincipal principal, ChatMessageDTO chatMessage,
+	@MessageMapping("/chat/{chatroomId}")
+	@SendTo("/ws/chat/{chatroomId}")
+	public ChatMessageDTO sendMessageChatroom(WebSocketPrincipal principal, ChatMessageDTO chatMessage,
 			@DestinationVariable("chatroomId") Integer chatroomId) throws Exception {
 		chatMessage.setMessage(chatMessage.getMessage().replace("\n", "<br>"));
 		chatMessage.setChatroomId(chatroomId);
 		chatMessage.setSenderId(principal.getName());
-		chatMessage.setSenderNick(principal.getNick());
+		chatMessage.setSenderNick(chatService.getNick(principal.getName()));
 		chatMessage.setSendDate(LocalDateTime.now());
 		chatService.sendChatroomMessage(chatMessage);
 		return chatMessage;
