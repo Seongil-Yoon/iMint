@@ -3,6 +3,7 @@ package multi.fclass.iMint.mail;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
@@ -19,6 +20,8 @@ import java.io.UnsupportedEncodingException;
  *
  */
 public class MailHandler {
+	
+	@Autowired
 	private JavaMailSender sender;
 	private MimeMessage message;
 	private MimeMessageHelper messageHelper;
