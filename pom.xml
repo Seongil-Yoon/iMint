@@ -59,11 +59,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
@@ -132,7 +127,6 @@
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-mail</artifactId>
-		    <version>2.6.6</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 		<dependency>
@@ -141,9 +135,10 @@
 		    <version>1.4</version>
 		</dependency>
 		<!-- JUnit5 -->	
-		<dependency> 
+		<dependency>
 			<groupId>org.springframework.boot</groupId> 
 			<artifactId>spring-boot-starter-test</artifactId> 
+		    <version>2.6.6</version>
 			<scope>test</scope> 
 			<exclusions> 
 				<exclusion> 
@@ -152,13 +147,13 @@
 				</exclusion> 
 			</exclusions> 
 		</dependency>
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-test</artifactId>
-		    <version>2.5.13</version>
-		    <scope>test</scope>
-		</dependency>
-		
+<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
+      <dependency>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest</artifactId>
+          <version>2.2</version>
+          <scope>test</scope>
+      </dependency>		
 	</dependencies>
 
 	<build>

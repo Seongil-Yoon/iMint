@@ -11,6 +11,7 @@ import java.util.HashMap;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -31,6 +32,7 @@ import multi.fclass.iMint.mail.dto.MailDTO;
 @Async("mailExecutor")
 public class MailServiceImpl implements IMailService {
 
+	@Autowired
 	private JavaMailSender mailSender;
 	private static final String FROM_ADDRESS = "imintbaby001@gmail.com";
 	private static final String FROM_PERSON = "iMint(아이민트)";

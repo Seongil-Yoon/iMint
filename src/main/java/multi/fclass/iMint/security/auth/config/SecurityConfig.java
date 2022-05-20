@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/transaction/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 거래
 
 				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 접근 가능
-        .antMatchers("/mail**").permitAll()
+				.antMatchers("/mail**").permitAll()
 				.anyRequest().authenticated();
 
 		// 기본 로그인 해제
@@ -74,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// 정적 파일 열기
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/favicon.ico", "/static/**", "/error").mvcMatchers("/static/**")
+		web.ignoring().antMatchers("/favicon.ico", "/static/**", "/error", "/lib/**").mvcMatchers("/static/**")
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
 
