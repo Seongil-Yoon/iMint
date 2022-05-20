@@ -325,7 +325,6 @@ async function connectWS(chatboxMyId) {
         let socket = new SockJS("/ws");
         stompClient = Stomp.over(socket);
         stompClient.connect({ "user-name": chatboxMyId }, function (frame) {
-            console.log("Connected: " + frame);
             resolve("success");
         });
     });
