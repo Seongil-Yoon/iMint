@@ -74,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// 정적 파일 열기
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/favicon.ico", "/static/**", "/error").mvcMatchers("/static/**")
+		web.ignoring().antMatchers("/favicon.ico", "/static/**", "/error", "/lib/**").mvcMatchers("/static/**")
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
 

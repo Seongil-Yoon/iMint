@@ -58,7 +58,11 @@ import multi.fclass.iMint.security.parsing.role.ParseMbRole;
 @Slf4j
 @Controller 
 public class IndexController {
-
+	
+	@SuppressWarnings("unused")
+    @Autowired
+    private AuthenticationManager authenticationManager; // 세션값 변경목적
+	
 	@Autowired
 	private ISecurityDAO securityDAO;
 	
@@ -80,6 +84,7 @@ public class IndexController {
     
     @Value("${root}")
 	String root;
+    
 	@Value("${directory}")
 	String directory;
 	
