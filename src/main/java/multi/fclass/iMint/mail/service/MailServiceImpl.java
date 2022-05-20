@@ -32,7 +32,6 @@ import multi.fclass.iMint.mail.dto.MailDTO;
 @Async("mailExecutor")
 public class MailServiceImpl implements IMailService {
 
-	@Autowired
 	private JavaMailSender mailSender;
 	private static final String FROM_ADDRESS = "imintbaby001@gmail.com";
 	private static final String FROM_PERSON = "iMint(아이민트)";
