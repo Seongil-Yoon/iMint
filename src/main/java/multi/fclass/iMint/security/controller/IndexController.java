@@ -67,11 +67,6 @@ public class IndexController {
 	
 	@Autowired
 	ParseMbId parseMbId;
-	
-    @Autowired
-    private AuthenticationManager authenticationManager; // 세션값 변경목적
-    
-    private HttpSession httpSession; 
     
     @Autowired
 	IMailService mailService;
