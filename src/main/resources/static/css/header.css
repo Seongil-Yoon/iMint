@@ -59,6 +59,6 @@ form.search img.searchIcon {
 }
 
 #goodsWriteBtn {
-    width: 120px;
+    width: max-content;
     margin: 0;
 }

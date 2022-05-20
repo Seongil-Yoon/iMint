@@ -3,8 +3,10 @@ package multi.fclass.iMint.admin.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import multi.fclass.iMint.admin.dto.AdminDTO;
+import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.member.dto.MemberDTO;
 
 /**
@@ -26,5 +28,5 @@ public interface IAdminDAO {
 
 	// 강제탈퇴된 회원의 상품삭제 
 	public void banmembergoods(String ban_mbId);
-		
+	
 }

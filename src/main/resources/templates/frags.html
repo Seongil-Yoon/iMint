@@ -51,6 +51,12 @@
 								href="/goods/write">
 								✏️ 상품 등록
 							</a>
+							<a id="goodsWriteBtn" sec:authorize="isAuthenticated()" 
+								th:if="${#strings.equals(mbRole, 'ADMIN')}" 
+								class="btn btn-primary add-btn" 
+								href="/admin/goods">
+								✏️ 관리자 페이지
+							</a>
 						</form>
 					</div>
 					<!-- <div class="justify-content-end"> -->
