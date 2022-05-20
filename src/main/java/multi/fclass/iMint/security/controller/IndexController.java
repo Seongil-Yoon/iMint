@@ -59,10 +59,6 @@ import multi.fclass.iMint.security.parsing.role.ParseMbRole;
 @Controller 
 public class IndexController {
 	
-	@SuppressWarnings("unused")
-    @Autowired
-    private AuthenticationManager authenticationManager; // 세션값 변경목적
-	
 	@Autowired
 	private ISecurityDAO securityDAO;
 	

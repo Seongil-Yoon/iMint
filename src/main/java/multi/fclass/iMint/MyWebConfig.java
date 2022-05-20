@@ -25,10 +25,5 @@ public class MyWebConfig implements WebMvcConfigurer {
 			.addResourceLocations("file:///" + root + route + directory + route);
 
 	}
-	
-	@Bean
-    public JavaMailSender javaMailSender() { 
-        return new JavaMailSenderImpl();
-    }
 
 }
