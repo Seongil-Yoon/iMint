@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
 import multi.fclass.iMint.chat.service.IChatService;
+import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
+import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 import multi.fclass.iMint.mail.dto.MailDTO;
 import multi.fclass.iMint.mail.service.IMailService;
 import multi.fclass.iMint.member.dto.MemberDTO;
@@ -40,6 +42,9 @@ public class NotificationServiceImpl implements INotificationService {
 	@Autowired
 	ISecurityDAO securityDAO;
 
+	@Autowired
+	IGoodsDAO goodsDAO;
+
 	private boolean notify(String category, Object payload) {
 		if (category.equals("chat")) {
 			smt.convertAndSendToUser(((ChatMessageDTO) payload).getSenderId(), "/notify", payload);
@@ -64,26 +69,21 @@ public class NotificationServiceImpl implements INotificationService {
 		dto.setMbNick(chatService.getNick(mbId));
 		dto.setMessage("내 아이 " + dto.getMbNick() + "님이 거래를 예약했습니다: " + trxDTO.getGoodsTitle());
 
+		// 메일발송
 		String targetNick = chatService.getNick(targetId);
 		String guardId = mypageService.getMyGuard(mbId).getMbId();
 		MemberDTO guardDto = securityDAO.findByMbId(guardId);
-		// 메일발송
-		HashMap<String, String> mailString = new HashMap<String, String>();
-		mailString.put("targetNick", "거래상대 : " + targetNick);
-		mailString.put("goodsTitle", "상품명 : " + trxDTO.getGoodsTitle());
-		String htmlContent = 
-				"<h3>" + mailString.get("targetNick") + "</h3>"
-				+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
-				+ "<br><br> <img src='cid:sample-img'>";
-		MailDTO mailDto = MailDTO.builder().address(guardDto.getMbEmail()).title("[iMint]" + dto.getMessage()).build();
-		mailService.fileMailSend(mailDto, htmlContent);
+		GoodsDTO goodsDto = goodsDAO.goods(trxDTO.getGoodsId());
+		String goodsThumbnail = goodsDAO.goodsThumbnail(trxDTO.getGoodsId()).getGoodsImagesPath();
+		mailService.notiMailSend(guardDto.getMbEmail(), "[iMint]" + dto.getMessage(), targetNick, goodsDto,
+				goodsThumbnail);
 		// end of 메일발송
 
 		return notify("resrv", dto);
 	}
 
 	@Override
-	public boolean notifyCancelReservation(String mbId, String targetId,TransactionDTO trxDTO) {
+	public boolean notifyCancelReservation(String mbId, String targetId, TransactionDTO trxDTO) {
 		NotificationDTO dto = new NotificationDTO();
 
 		dto.setCategory("resrv_cancel");
@@ -91,26 +91,21 @@ public class NotificationServiceImpl implements INotificationService {
 		dto.setMbNick(chatService.getNick(mbId));
 		dto.setMessage("내 아이 " + dto.getMbNick() + "님이 예약을 취소했습니다: " + trxDTO.getGoodsTitle());
 
+		// 메일발송
 		String targetNick = chatService.getNick(targetId);
 		String guardId = mypageService.getMyGuard(mbId).getMbId();
 		MemberDTO guardDto = securityDAO.findByMbId(guardId);
-		// 메일발송
-		HashMap<String, String> mailString = new HashMap<String, String>();
-		mailString.put("targetNick", "거래상대 : " + targetNick);
-		mailString.put("goodsTitle", "상품명 : " + trxDTO.getGoodsTitle());
-		String htmlContent = 
-				"<h3>" + mailString.get("targetNick") + "</h3>"
-				+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
-				+ "<br><br> <img src='cid:sample-img'>";
-		MailDTO mailDto = MailDTO.builder().address(guardDto.getMbEmail()).title("[iMint]" + dto.getMessage()).build();
-		mailService.fileMailSend(mailDto, htmlContent);
+		GoodsDTO goodsDto = goodsDAO.goods(trxDTO.getGoodsId());
+		String goodsThumbnail = goodsDAO.goodsThumbnail(trxDTO.getGoodsId()).getGoodsImagesPath();
+		mailService.notiMailSend(guardDto.getMbEmail(), "[iMint]" + dto.getMessage(), targetNick, goodsDto,
+				goodsThumbnail);
 		// end of 메일발송
 
 		return notify("resrv", dto);
 	}
 
 	@Override
-	public boolean notifyTransaction(String mbId, String targetId,TransactionDTO trxDTO) {
+	public boolean notifyTransaction(String mbId, String targetId, TransactionDTO trxDTO) {
 		NotificationDTO dto = new NotificationDTO();
 
 		dto.setCategory("trx");
@@ -118,19 +113,14 @@ public class NotificationServiceImpl implements INotificationService {
 		dto.setMbNick(chatService.getNick(mbId));
 		dto.setMessage("내 아이 " + dto.getMbNick() + "님이 거래를 완료했습니다: " + trxDTO.getGoodsTitle());
 
+		// 메일발송
 		String targetNick = chatService.getNick(targetId);
 		String guardId = mypageService.getMyGuard(mbId).getMbId();
 		MemberDTO guardDto = securityDAO.findByMbId(guardId);
-		// 메일발송
-		HashMap<String, String> mailString = new HashMap<String, String>();
-		mailString.put("targetNick", "거래상대 : " + targetNick);
-		mailString.put("goodsTitle", "상품명 : " + trxDTO.getGoodsTitle());
-		String htmlContent = 
-				"<h3>" + mailString.get("targetNick") + "</h3>"
-				+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
-				+ "<br><br> <img src='cid:sample-img'>";
-		MailDTO mailDto = MailDTO.builder().address(guardDto.getMbEmail()).title("[iMint]" + dto.getMessage()).build();
-		mailService.fileMailSend(mailDto, htmlContent);
+		GoodsDTO goodsDto = goodsDAO.goods(trxDTO.getGoodsId());
+		String goodsThumbnail = goodsDAO.goodsThumbnail(trxDTO.getGoodsId()).getGoodsImagesPath();
+		mailService.notiMailSend(guardDto.getMbEmail(), "[iMint]" + dto.getMessage(), targetNick, goodsDto,
+				goodsThumbnail);
 		// end of 메일발송
 
 		return notify("trx", dto);
