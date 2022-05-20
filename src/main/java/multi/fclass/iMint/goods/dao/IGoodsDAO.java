@@ -43,4 +43,10 @@ public interface IGoodsDAO {
 	public int goodsIsdelete(@Param("goods_id") int goodsId, @Param("seller_id") String sellerId);
 
 	public int goodsImagesIsdelete(@Param("goods_id") int goodsId);
+	
+	// 전체 상품 조회
+	public List<GoodsDTO> adminGoodsList(@Param("keyword") String keyword, @Param("goods_category") String goodsCategory, @Param("page") int page);
+	
+	// 상품 총 개수
+	public int goodsCount(@Param("keyword") String keyword, @Param("goods_category") String goodsCategory);
 }

@@ -40,19 +40,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/register/complete").permitAll().antMatchers("/register/**")
 				.access("hasRole('ROLE_uncerti_GUARD') or hasRole('ROLE_uncerti_CHILD') or hasRole('ROLE_ADMIN')")
 
-				.antMatchers("/mypage/location").access("hasRole('ROLE_GUARD') or hasRole('ROLE_uncerti_GUARD')")
-				.antMatchers("/mypage/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')")
+				.antMatchers("/mypage/location").access("hasRole('ROLE_GUARD') or hasRole('ROLE_uncerti_GUARD') or hasRole('ROLE_ADMIN')")
+				.antMatchers("/mypage/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')")
 
 				.antMatchers("/goods/detail**").permitAll().antMatchers("/goods-list/**").permitAll()
 				.antMatchers("/iMintImage/**").permitAll().antMatchers("/goods/**")
-				.access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')")
+				.access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')")
 
-				.antMatchers("/ws/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 웹소켓
-				.antMatchers("/wishlist/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 관심
-				.antMatchers("/transaction/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD')") // 거래
+				.antMatchers("/ws/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')") // 웹소켓
+				.antMatchers("/wishlist/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')") // 관심
+				.antMatchers("/transaction/**").access("hasRole('ROLE_GUARD') or hasRole('ROLE_CHILD') or hasRole('ROLE_ADMIN')") // 거래
 
 				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // 로그인한 admin만 접근 가능
-        .antMatchers("/mail**").permitAll()
+				.antMatchers("/mail**").permitAll()
 				.anyRequest().authenticated();
 
 		// 기본 로그인 해제

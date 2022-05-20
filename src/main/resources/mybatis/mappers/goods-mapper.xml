@@ -146,5 +146,28 @@
 		UPDATE `imint`.`goods_images` SET `goods_images_isdelete`='1' WHERE `goods_id`= #{goods_id};
 	</update>
 	
+	<!-- 전체 상품 조회 -->
+	<select id="adminGoodsList" resultType="goodsDTO">
+		SELECT * FROM `imint`.`goods`
+		WHERE `goods_category` like CONCAT('%',#{goods_category},'%')
+		AND(
+			`goods_title` LIKE CONCAT('%',#{keyword},'%')
+			OR `goods_content` LIKE CONCAT('%',#{keyword},'%')
+			OR `seller_nick` LIKE CONCAT('%',#{keyword},'%')
+		)
+		ORDER BY `goods_create_date` DESC
+		limit #{page}, 15;
+	</select>
+	
+	<select id="goodsCount" resultType="int">
+		SELECT COUNT(*) FROM `imint`.`goods` 
+		WHERE `goods_category` like CONCAT('%',#{goods_category},'%')
+		AND(
+			`goods_title` LIKE CONCAT('%',#{keyword},'%')
+			OR `goods_content` LIKE CONCAT('%',#{keyword},'%')
+			OR `seller_nick` LIKE CONCAT('%',#{keyword},'%')
+		)
+		LIMIT 1;
+	</select>
 	
 </mapper>

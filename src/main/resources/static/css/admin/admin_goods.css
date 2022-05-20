@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.container-main>form {
+    min-height: 730px;
+}
+
+.goodsPageNums {
+    width: max-content;
+    margin: 0 auto;
+}

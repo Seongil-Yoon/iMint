@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>iMint :: 관리자 상품조회</title>
+	<link rel="stylesheet" href="/static/css/member/member_basic.css">
+	<link rel="stylesheet" href="/static/css/mypage/mypage_asidebar.css">
+	<link rel="stylesheet" href="/static/css/member/admin_member.css">
+	<link rel="stylesheet" href="/static/css/admin/admin_goods.css">
+	<th:block th:replace="libs :: style" />
+</head>
+
+<body>
+	<input style="display: none;" type="hidden" id="pageNums" th:value="${pageNums}" />
+	<hr>
+	<!-- 아티클 시작 -->
+	<div class="container-page">
+		<h3>상품 리스트</h3>
+		<div class="container-aside-main">
+
+			<aside th:replace="/admin/admin_asideBar :: asideBar"></aside>
+
+			<div class="container-main">
+
+				<form>
+					<input type="button" class="btn btn-primary buttons" id="ban_btn" value="상품 삭제">
+					<table class="table table-hover" id="table">
+						<tr>
+							<!-- HTML 태그에 속성으로 이벤트 리스너를 등록 -->
+							<th><input type="checkbox" name="member_check" value="0" onclick='selectAll(this)'></th>
+							<th>상품번호</th>
+							<th>판매자</th>
+							<th>제목</th>
+							<th>위치</th>
+							<th>등록날짜</th>
+							<th>영구삭제</th>
+							<th>삭제취소</th>
+						</tr>
+						<tbody id="member_list">
+							<!-- 등록된 회원 리스트 삽입  -->
+							<tr th:each="goodsDTO : ${goodsList}" style="cursor:pointer;">
+								<th:block th:if="${goodsDTO?.goodsIsdelete == true}">
+									<td class="table_cnt">
+										<input type="checkbox" th:value="${goodsDTO?.goodsId}" name="member_check">
+									</td>
+									<td>[[${goodsDTO?.goodsId}]]</td>
+									<td>[[${goodsDTO?.sellerNick}]]</td>
+									<td>[[${goodsDTO?.goodsTitle}]]</td>
+									<td>[[${goodsDTO?.goodsLocation}]]</td>
+									<td>[[${goodsDTO?.goodsCreateDate}]]</td>
+								</th:block>
+								<th:block th:if="${goodsDTO?.goodsIsdelete == false}">
+									<td class="table_cnt">
+										<input type="checkbox" th:value="${goodsDTO?.goodsId}" name="member_check">
+									</td>
+									<td th:onclick="|location.href='/goods/detail?goodsId=' + ${goodsDTO?.goodsId};|">
+										[[${goodsDTO?.goodsId}]]
+									</td>
+									<td th:onclick="|location.href='/goods/detail?goodsId=' + ${goodsDTO?.goodsId};|">
+										[[${goodsDTO?.sellerNick}]]
+									</td>
+									<td th:onclick="|location.href='/goods/detail?goodsId=' + ${goodsDTO?.goodsId};|">
+										[[${goodsDTO?.goodsTitle}]]
+									</td>
+									<td th:onclick="|location.href='/goods/detail?goodsId=' + ${goodsDTO?.goodsId};|">
+										[[${goodsDTO?.goodsLocation}]]
+									</td>
+									<td th:onclick="|location.href='/goods/detail?goodsId=' + ${goodsDTO?.goodsId};|">
+										[[${goodsDTO?.goodsCreateDate}]]
+									</td>
+								</th:block>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+				<nav class="goodsPageNums">
+					<!-- JS 영역 : function pagelistReady(pageNums) -->
+				</nav>
+			</div>
+
+		</div>
+	</div>
+
+	<footer th:replace="frags :: footer"></footer>
+	<th:block th:replace="libs :: script" />
+
+	<script type="text/javascript" src="/static/js/admin/admin_goods.js"></script>
+
+</body>
+
+</html>

@@ -19,6 +19,7 @@ import multi.fclass.iMint.transaction.dto.TransactionDTO;
 
 /**
  * @author GhostFairy
+ * @author Seongil, Yoon
  *
  */
 @Service("NofityService")

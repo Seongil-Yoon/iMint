@@ -23,6 +23,8 @@ import multi.fclass.iMint.common.service.IUtilService;
 import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
+import multi.fclass.iMint.member.dto.MemberDTO;
+import multi.fclass.iMint.member.dto.Role;
 
 /**
  * @author Seongil, Yoon
@@ -60,10 +62,10 @@ public class GoodsServiceImpl implements IGoodsService {
 	}
 
 	@Override
-	public int goodsWrite(String mbId, GoodsDTO goodsDto, List<MultipartFile> files) {
+	public int goodsWrite(MemberDTO dto, GoodsDTO goodsDto, List<MultipartFile> files) {
 //		String sellerId = (String) httpSession.getAttribute("mbId");
 //		String sellerNick = (String) httpSession.getAttribute("mbNick");
-		if (!mbId.equals(goodsDto.getSellerId())) {
+		if (!dto.getMbId().equals(goodsDto.getSellerId())) {
 			throw new ForbiddenException(ErrorCode.FORBIDDEN);
 		}
 		goodsDAO.goodsInsert(goodsDto);
@@ -85,8 +87,8 @@ public class GoodsServiceImpl implements IGoodsService {
 	}
 
 	@Override
-	public int goodsModify(String mbId, GoodsDTO goodsDto, List<MultipartFile> files) {
-		if (!mbId.equals(goodsDto.getSellerId())) {
+	public int goodsModify(MemberDTO dto, GoodsDTO goodsDto, List<MultipartFile> files) {
+		if (!dto.getMbRole().equals(Role.ADMIN) && !dto.getMbId().equals(goodsDto.getSellerId())) {
 			// Auth객체의 id와 상품등록자의 id가 불일치 - 권한X
 			throw new ForbiddenException(ErrorCode.FORBIDDEN);
 		}
@@ -126,7 +128,7 @@ public class GoodsServiceImpl implements IGoodsService {
 	}
 
 	@Override
-	public int goodsDelete(int goodsId, String mbId) {
+	public int goodsDelete(int goodsId, MemberDTO dto) {
 //		mbId = Authentication auth
 		GoodsDTO goodsDTO = goodsDAO.goods(goodsId);
 		int result = 0;
@@ -134,14 +136,15 @@ public class GoodsServiceImpl implements IGoodsService {
 		if (goodsDTO == null) {
 			throw new NotFoundException(ErrorCode.NOT_FOUND);
 		}
-		if (mbId.isEmpty() || !goodsDTO.getSellerId().equals(mbId)) {
+		if (dto.getMbId().isEmpty()
+				|| !(dto.getMbRole().equals(Role.ADMIN) && !goodsDTO.getSellerId().equals(dto.getMbId()))) {
 			// 로그인한 아이디와 작성자 아이디가 달라서 권한없음 오류보냄
 			throw new ForbiddenException(ErrorCode.FORBIDDEN);
 		} else {
 			// 로그인 아이디 와 작성자 아이디 가 같아서 글삭제
 
 			// 실제파일은 삭제하지 않고, DB의 isdelete값만 1로 변경
-			goodsDAO.goodsIsdelete(goodsId, mbId);
+			goodsDAO.goodsIsdelete(goodsId, dto.getMbId());
 			goodsDAO.goodsImagesIsdelete(goodsId);
 			result = 1;
 

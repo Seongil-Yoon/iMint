@@ -20,11 +20,11 @@
 	<section class="container">
 		<article class="row1">
 			<h1>[[${goods?.goodsTitle}]]</h1>
-			<th:block th:if="${#strings.equals(member?.mbId, goods?.sellerId)}">
+			<th:block th:if="${#strings.equals(member?.mbId, goods?.sellerId) || #strings.equals(member?.mbRole,'ADMIN')}">
 				<a id="modifyBtn" th:value="${goods?.goodsId}"> <img src="/static/images/write-icon.png" alt=""></a>
 				<a id="deleteBtn" th:value="${goods?.goodsId}"> <img src="/static/images/delete-icon.png" alt=""></a>
 			</th:block>
-			<th:block th:unless="${#strings.equals(member?.mbId, goods?.sellerId)}">
+			<th:block th:unless="${#strings.equals(member?.mbId, goods?.sellerId) || #strings.equals(member?.mbRole,'ADMIN')}">
 				<!-- 둘러보기 -->
 			</th:block>
 		</article>
@@ -83,10 +83,10 @@
 			</div>
 			<div></div>
 			<div>
-				<th:block th:if="${member?.mbId == null || #strings.equals(member?.mbRole,'GUARD')}">
+				<th:block th:if="${member?.mbId == null || #strings.equals(member?.mbRole,'GUARD') || #strings.equals(member?.mbRole,'ADMIN')}">
 					<!-- 둘러보기 -->
 				</th:block>
-				<th:block th:unless="${member?.mbId == null || #strings.equals(member?.mbRole,'GUARD')}">
+				<th:block th:unless="${member?.mbId == null || #strings.equals(member?.mbRole,'GUARD') || #strings.equals(member?.mbRole,'ADMIN')}">
 					<a th:if="${#strings.equals(member?.mbId, goods?.sellerId)}" class="btn btn-primary" onclick="directOpenChatroom()"> 내 채팅 목록 </a>
 					<th:block th:unless="${#strings.equals(member?.mbId, goods?.sellerId)}">
 						<button type="button" class="btn btn-primary" id="wishBtn">관심</button>

@@ -106,7 +106,8 @@ public class GoodsController {
 			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
-		int goodsId = goodsSevice.goodsWrite(mbId, goodsDTO, files);
+		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
+		int goodsId = goodsSevice.goodsWrite(memberDTO, goodsDTO, files);
 		if (goodsId != -1) {
 			goodsDTO.setGoodsId(goodsId);
 		}
@@ -123,10 +124,11 @@ public class GoodsController {
 			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
+		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
 		if (!mbId.equals(goodsDTO.getSellerId())) {
 			throw new ForbiddenException(ErrorCode.FORBIDDEN);
 		}
-		goodsSevice.goodsModify(mbId, goodsDTO, files);
+		goodsSevice.goodsModify(memberDTO, goodsDTO, files);
 
 		// 브라우저단에서 location.href로 상품상세
 		return goodsDTO;
@@ -138,7 +140,8 @@ public class GoodsController {
 			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 		String mbId = parseService.parseMbId(auth);
-		goodsSevice.goodsDelete(goodsId, mbId);
+		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
+		goodsSevice.goodsDelete(goodsId, memberDTO);
 
 		return "/main";
 	}
