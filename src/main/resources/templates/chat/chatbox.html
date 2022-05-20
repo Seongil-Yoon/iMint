@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="chatbox">
-		<div id="chatbox-openbtn" class="chatbox-openbtn" data-bs-toggle="tooltip" data-bs-placement="left"
-			title="채팅 펼치기">💬</div>
+	<div id="chatbox-openbtn" class="chatbox-openbtn" data-bs-toggle="tooltip" data-bs-placement="left" title="채팅 펼치기">
+		💬</div>
 	<div id="chatbox-main">
 		<div id="chatbox-list">
 			<div id="chatbox-list-title" class="chatbox-title">
@@ -79,6 +79,10 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		let chatboxMyId = "[[${session?.memberDTO?.mbId}]]";
+		let chatboxMyRole = "[[${session?.memberDTO?.mbRole}]]";
+	</script>
 </th:block>
 
 </html>
