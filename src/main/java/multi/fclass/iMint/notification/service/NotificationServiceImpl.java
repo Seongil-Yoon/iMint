@@ -71,8 +71,8 @@ public class NotificationServiceImpl implements INotificationService {
 		HashMap<String, String> mailString = new HashMap<String, String>();
 		mailString.put("targetNick", "거래상대 : " + targetNick);
 		mailString.put("goodsTitle", "상품명 : " + trxDTO.getGoodsTitle());
-		String htmlContent = "<h3>" + dto.getMessage() + "</h3> "
-				+ "<h3>" + mailString.get("targetNick") + "</h3>"
+		String htmlContent = 
+				"<h3>" + mailString.get("targetNick") + "</h3>"
 				+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
 				+ "<br><br> <img src='cid:sample-img'>";
 		MailDTO mailDto = MailDTO.builder().address(guardDto.getMbEmail()).title("[iMint]" + dto.getMessage()).build();
@@ -98,8 +98,8 @@ public class NotificationServiceImpl implements INotificationService {
 		HashMap<String, String> mailString = new HashMap<String, String>();
 		mailString.put("targetNick", "거래상대 : " + targetNick);
 		mailString.put("goodsTitle", "상품명 : " + trxDTO.getGoodsTitle());
-		String htmlContent = "<h3>" + dto.getMessage() + "</h3> "
-				+ "<h3>" + mailString.get("targetNick") + "</h3>"
+		String htmlContent = 
+				"<h3>" + mailString.get("targetNick") + "</h3>"
 				+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
 				+ "<br><br> <img src='cid:sample-img'>";
 		MailDTO mailDto = MailDTO.builder().address(guardDto.getMbEmail()).title("[iMint]" + dto.getMessage()).build();
@@ -125,8 +125,8 @@ public class NotificationServiceImpl implements INotificationService {
 		HashMap<String, String> mailString = new HashMap<String, String>();
 		mailString.put("targetNick", "거래상대 : " + targetNick);
 		mailString.put("goodsTitle", "상품명 : " + trxDTO.getGoodsTitle());
-		String htmlContent = "<h3>" + dto.getMessage() + "</h3> "
-				+ "<h3>" + mailString.get("targetNick") + "</h3>"
+		String htmlContent = 
+				"<h3>" + mailString.get("targetNick") + "</h3>"
 				+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
 				+ "<br><br> <img src='cid:sample-img'>";
 		MailDTO mailDto = MailDTO.builder().address(guardDto.getMbEmail()).title("[iMint]" + dto.getMessage()).build();

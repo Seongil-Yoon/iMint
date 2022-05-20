@@ -24,6 +24,7 @@ import multi.fclass.iMint.goods.dto.GoodsDTO;
 import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 import multi.fclass.iMint.goods.service.GoodsServiceImpl;
 import multi.fclass.iMint.member.dto.MemberDTO;
+import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.wishlist.service.WishlistServiceImpl;
 
@@ -82,7 +83,7 @@ public class GoodsController {
 		String mbId = parseService.parseMbId(auth);
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
 		GoodsDTO goodsDTO = goodsDAO.goods(goodsId);
-		if (mbId.isEmpty() || !mbId.equals(goodsDTO.getSellerId())) {
+		if (mbId.isEmpty() || (!memberDTO.getMbRole().equals(Role.ADMIN) && !mbId.equals(goodsDTO.getSellerId()))) {
 			throw new ForbiddenException(ErrorCode.FORBIDDEN);
 		}
 		model.addAttribute("mbRole", memberDTO.getMbRole());
@@ -125,9 +126,6 @@ public class GoodsController {
 		}
 		String mbId = parseService.parseMbId(auth);
 		MemberDTO memberDTO = parseService.getMemberMbId(mbId);
-		if (!mbId.equals(goodsDTO.getSellerId())) {
-			throw new ForbiddenException(ErrorCode.FORBIDDEN);
-		}
 		goodsSevice.goodsModify(memberDTO, goodsDTO, files);
 
 		// 브라우저단에서 location.href로 상품상세
