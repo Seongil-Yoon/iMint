@@ -104,8 +104,8 @@ public class TransactionServiceImpl implements ITransactionService {
 	public boolean makeReservation(int goodsId, int chatroomId) {
 		if (trxDAO.makeReservation(chatroomId) == 2) {
 			TransactionDTO trxDTO = trxDAO.checkReservation(goodsId);
-			notifyService.notifyReservation(trxDTO.getBuyerId(), trxDTO.getGoodsTitle());
-			notifyService.notifyReservation(trxDTO.getSellerId(), trxDTO.getGoodsTitle());
+			notifyService.notifyReservation(trxDTO.getBuyerId(), trxDTO.getSellerId(), trxDTO);
+			notifyService.notifyReservation(trxDTO.getSellerId(), trxDTO.getBuyerId(), trxDTO);
 			return true;
 		} else {
 			return false;
@@ -116,8 +116,8 @@ public class TransactionServiceImpl implements ITransactionService {
 	public boolean cancelReservation(int goodsId, int chatroomId) {
 		TransactionDTO trxDTO = trxDAO.checkReservation(goodsId);
 		if (trxDAO.cancelReservation(chatroomId) == 2) {
-			notifyService.notifyCancelReservation(trxDTO.getBuyerId(), trxDTO.getGoodsTitle());
-			notifyService.notifyCancelReservation(trxDTO.getSellerId(), trxDTO.getGoodsTitle());
+			notifyService.notifyCancelReservation(trxDTO.getBuyerId(), trxDTO.getSellerId(), trxDTO);
+			notifyService.notifyCancelReservation(trxDTO.getSellerId(), trxDTO.getBuyerId(), trxDTO);
 			return true;
 		} else {
 			return false;
@@ -134,8 +134,8 @@ public class TransactionServiceImpl implements ITransactionService {
 		if (trxDAO.updateGoodsStatus(goodsId) == 1) {
 			if (trxDAO.completeTransaction(buyerId, goodsId) == 1) {
 				TransactionDTO trxDTO = trxDAO.checkTransaction(goodsId);
-				notifyService.notifyTransaction(trxDTO.getBuyerId(), trxDTO.getGoodsTitle());
-				notifyService.notifyTransaction(trxDTO.getSellerId(), trxDTO.getGoodsTitle());
+				notifyService.notifyTransaction(trxDTO.getBuyerId(), trxDTO.getSellerId(), trxDTO);
+				notifyService.notifyTransaction(trxDTO.getSellerId(), trxDTO.getBuyerId(), trxDTO);
 				return true;
 			} else {
 				return false;

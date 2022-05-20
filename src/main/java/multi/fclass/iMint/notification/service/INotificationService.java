@@ -2,6 +2,7 @@ package multi.fclass.iMint.notification.service;
 
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
+import multi.fclass.iMint.transaction.dto.TransactionDTO;
 
 /**
  * @author GhostFairy
@@ -9,11 +10,11 @@ import multi.fclass.iMint.goods.dto.GoodsDTO;
  */
 public interface INotificationService {
 
-	public boolean notifyReservation(String mbId, String goodsTitle);
+	public boolean notifyReservation(String mbId, String targetId, TransactionDTO trxDto);
 
-	public boolean notifyCancelReservation(String mbId, String goodsTitle);
+	public boolean notifyCancelReservation(String mbId, String targetId,TransactionDTO trxDto);
 
-	public boolean notifyTransaction(String mbId, String goodsTitle);
+	public boolean notifyTransaction(String mbId, String targetId,TransactionDTO trxDto);
 
 	public boolean notifyNewMessage(ChatMessageDTO message);
 
