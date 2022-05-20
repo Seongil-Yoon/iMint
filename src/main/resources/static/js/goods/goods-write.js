@@ -9,7 +9,9 @@ let startAjax = undefined;
 let suggestible = undefined;
 let files = 0;
 let thumbnailFile = undefined;
+let pond = 0;
 let fileBuffer = []; //formdData에 날릴 배열
+const noimagePath = "/static/images/noimage.png";
 
 let goodsDTO = {
     mbId: undefined,
@@ -40,18 +42,19 @@ function goodsWrite() {
     }
     console.log(goodsDTO);
 
-    formData.append("GoodsDTO", new Blob([JSON.stringify(goodsDTO)], {
-        type: "application/json"
-    }));
-
-    (function () {
-        // formData.append("files", thumbnailFile);
-        for (i = 0; i < fileBuffer.length; i++) {
-            formData.append("files", fileBuffer[i]);
-        }
-    })();
+    formData = new FormData();
 
     startAjax = function () {
+        formData.append("GoodsDTO", new Blob([JSON.stringify(goodsDTO)], {
+            type: "application/json"
+        }));
+
+        (function () {
+            // formData.append("files", thumbnailFile);
+            for (i = 0; i < fileBuffer.length; i++) {
+                formData.append("files", fileBuffer[i]);
+            }
+        })();
         $.ajax({
             url: "/goods/write",
             type: "post",
@@ -105,7 +108,12 @@ function goodsWrite() {
                     dangerMode: true,
                 }).then((e) => {
                     if (e) {
-                        startAjax();
+                        pond.addFile(decodeURIComponent(noimagePath));
+                        filePondListner().then((e) => {
+                            if (e) {
+                                startAjax();
+                            }
+                        })
                     }
                 });
             }
@@ -133,8 +141,7 @@ function fileUpload() {
 }
 
 // Register the plugin with FilePond
-function filePond() {
-
+function createFilePond() {
     FilePond.registerPlugin(
         // FilePondPluginFileMetadata,
         // FilePondPluginImageCrop,
@@ -142,28 +149,36 @@ function filePond() {
         FilePondPluginFileEncode
     );
     // Create the FilePond instance
-    const pond = FilePond.create(inputElement, {
+    pond = FilePond.create(inputElement, {
         allowMultiple: true,
         allowReorder: true
     });
-
+}
+// Register the plugin with FilePond
+function filePondListner() {
     const filepondRoot = document.querySelector('.filepond--root');
+    return new Promise(function (resolve, reject) {
+        filepondRoot.addEventListener('FilePond:updatefiles', e => {
+            fileBuffer.splice(0, fileBuffer.length);
 
-    filepondRoot.addEventListener('FilePond:updatefiles', e => {
-        fileBuffer.splice(0, fileBuffer.length);
+            for (let i = 0; i < e.detail.items.length; i++) {
+                fileBuffer[i] = dataURLtoFile(e.detail.items[i].getFileEncodeDataURL(), e.detail.items[i].filename);
+            }
+            resolve(true);
+            console.log(fileBuffer);
+        });
+        filepondRoot.addEventListener('FilePond:reorderfiles', e => {
+            fileBuffer.splice(0, fileBuffer.length);
 
-        for (let i = 0; i < e.detail.items.length; i++) {
-            fileBuffer[i] = dataURLtoFile(e.detail.items[i].getFileEncodeDataURL(), e.detail.items[i].filename);
-        }
-    });
-    filepondRoot.addEventListener('FilePond:reorderfiles', e => {
-        fileBuffer.splice(0, fileBuffer.length);
-
-        for (let i = 0; i < e.detail.items.length; i++) {
-            fileBuffer[i] = dataURLtoFile(e.detail.items[i].getFileEncodeDataURL(), e.detail.items[i].filename);
-        }
+            for (let i = 0; i < e.detail.items.length; i++) {
+                fileBuffer[i] = dataURLtoFile(e.detail.items[i].getFileEncodeDataURL(), e.detail.items[i].filename);
+            }
+            resolve(true);
+        });
     });
 }
+
+
 //base64 to File객체
 const dataURLtoFile = (dataurl, fileName) => {
 
@@ -189,8 +204,8 @@ function main() {
     //     console.log(thumbnailFile);
     //     $("#thumbnailFileName").val(`파일명 : ${thumbnailFile.name}`);
     // })
-
-    filePond();
+    createFilePond();
+    filePondListner();
     uploadPopupBtn.addEventListener('click', fileUpload);
     submitBtn.addEventListener('click', goodsWrite); //비동기 폼전송 부분
 

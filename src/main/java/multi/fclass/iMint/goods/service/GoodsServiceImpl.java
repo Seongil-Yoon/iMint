@@ -82,43 +82,15 @@ public class GoodsServiceImpl implements IGoodsService {
 		int goodsId = goodsDto.getGoodsId();
 
 		// 상품글의 파일들을 올릴 경로("C:/iMint/goods/yyyy/MM/dd")를 배열로 반환
-		List<String> paths = utilService.createGoodsPaths(goodsDAO.goodsDate(goodsId));
-		fileService.mkDir(paths); // 폴더 생성
 		if (files != null && !files.isEmpty()) {
+			List<String> paths = utilService.createGoodsPaths(goodsDAO.goodsDate(goodsId));
+			fileService.mkDir(paths); // 폴더 생성
 			// 경로에 파일업로드 and DB insert
 			int goodsImagesId = fileService.uploadGoodsImageFiles(paths, goodsDto.getGoodsId(), files);
 			if (goodsImagesId == -1) {
 				return goodsImagesId;
 			}
-		} else {
-			InputStream input = null;
-			OutputStream os = null;
-			FileItem fileItem = null;
-			// 경로에 파일업로드 and DB insert
-			try {
-				File file = new File(root + "/" + directory + "/" + "noimage.png");
-				fileItem = new DiskFileItem("noimage", Files.probeContentType(file.toPath()), false, file.getName(),
-						(int) file.length(), file.getParentFile());
-				input = new FileInputStream(file);
-				os = fileItem.getOutputStream();
-				IOUtils.copy(input, os);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					input.close();
-					os.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			files = new ArrayList<MultipartFile>();
-			files.add(new CommonsMultipartFile(fileItem));
-			int goodsImagesId = fileService.uploadGoodsImageFiles(paths, goodsDto.getGoodsId(), files);
-			if (goodsImagesId == -1) {
-				return goodsImagesId;
-			}
-		} // end of fileupload
+		}
 		return goodsId;
 	}
 
@@ -150,43 +122,15 @@ public class GoodsServiceImpl implements IGoodsService {
 		updateRows = goodsDAO.goodsImagesDelete(goodsId);
 
 		// 상품글의 파일들을 올릴 경로("C:/iMint/goods/yyyy/MM/dd")를 배열로 반환
-		List<String> paths = utilService.createGoodsPaths(goodsDAO.goodsDate(goodsId));
-		fileService.mkDir(paths); // 폴더 생성
 		if (files != null && !files.isEmpty()) {
+			List<String> paths = utilService.createGoodsPaths(goodsDAO.goodsDate(goodsId));
+			fileService.mkDir(paths); // 폴더 생성
 			// 경로에 파일업로드 and DB insert
 			int goodsImagesId = fileService.uploadGoodsImageFiles(paths, goodsDto.getGoodsId(), files);
 			if (goodsImagesId == -1) {
 				return goodsImagesId;
 			}
-		} else {
-			InputStream input = null;
-			OutputStream os = null;
-			FileItem fileItem = null;
-			// 경로에 파일업로드 and DB insert
-			try {
-				File file = new File(root + "/" + directory + "/" + "noimage.png");
-				fileItem = new DiskFileItem("noimage", Files.probeContentType(file.toPath()), false, file.getName(),
-						(int) file.length(), file.getParentFile());
-				input = new FileInputStream(file);
-				os = fileItem.getOutputStream();
-				IOUtils.copy(input, os);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					input.close();
-					os.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			files = new ArrayList<MultipartFile>();
-			files.add(new CommonsMultipartFile(fileItem));
-			int goodsImagesId = fileService.uploadGoodsImageFiles(paths, goodsDto.getGoodsId(), files);
-			if (goodsImagesId == -1) {
-				return goodsImagesId;
-			}
-		} // end of fileupload
+		}
 		return updateRows;
 	}
 
