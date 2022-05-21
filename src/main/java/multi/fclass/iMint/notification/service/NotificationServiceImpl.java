@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
 import multi.fclass.iMint.chat.service.IChatService;
@@ -26,7 +27,7 @@ import multi.fclass.iMint.transaction.dto.TransactionDTO;
  */
 @Service("NofityService")
 public class NotificationServiceImpl implements INotificationService {
-
+	
 	@Autowired
 	SimpMessagingTemplate smt;
 

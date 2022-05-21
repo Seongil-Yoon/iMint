@@ -2,6 +2,7 @@ package multi.fclass.iMint.transaction.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import multi.fclass.iMint.notification.service.INotificationService;
 import multi.fclass.iMint.transaction.dao.ITransactionDAO;
