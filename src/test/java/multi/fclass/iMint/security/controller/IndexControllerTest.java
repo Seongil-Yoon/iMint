@@ -67,6 +67,8 @@ public class IndexControllerTest {
 		mvc.perform(get("/"))
 			.andExpect(status().isOk())
 			.andExpect((ResultMatcher) view().name("index"));
+		
+		memberDTO = null;
 	}
 	
 	@Test
