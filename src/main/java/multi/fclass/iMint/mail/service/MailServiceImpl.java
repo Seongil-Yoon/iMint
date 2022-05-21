@@ -172,7 +172,7 @@ public class MailServiceImpl implements IMailService {
 		mailString.put("goodsThumbnail", goodsThumbnail);
 		String htmlContent = 
 				"<h3>상품이미지 : </h3>"
-				+ "<img src='cid:thumb'>"
+				+ "<img src='cid:thumb' style=\"width:200px; height:200px; object-fit:contain;\">"
 				+ "<h3>" + mailString.get("targetNick") + "</h3>"
 				+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
 				+ "<h3>" + mailString.get("goodsContent") + "</h3>"
@@ -185,7 +185,7 @@ public class MailServiceImpl implements IMailService {
 		try {
 			File file = new File(root + URLDecoder.decode(goodsThumbnail, "UTF-8"));
 			if(!file.exists() || !file.isFile()) {
-				 file = new File(root + "/" + directory + "/" + "iMint_Black.png");
+				 file = new File(root + "/" + directory + "/" + "noimage.png");
 			}
 			fileItem = new DiskFileItem("thumb", Files.probeContentType(file.toPath()), false, file.getName(),
 					(int) file.length(), file.getParentFile());
