@@ -36,7 +36,7 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
  */
 
 @Controller
-public class AdminCotroller {
+public class AdminController {
 
 	@Autowired
 	AdminServiceImpl service;
@@ -58,28 +58,27 @@ public class AdminCotroller {
 
 	// 전체 회원 조회
 	@RequestMapping("/admin/member")
-	public ModelAndView member(Authentication auth) {
+	public String member(Authentication auth, Model model) {
 		if (auth == null) {
 			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
 
-		ModelAndView mv = new ModelAndView();
-
 		try {
 			String mbId = parseMbId.parseMbId(auth);
 			MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+			
 			if (mbId.isEmpty() || !(memberDTO.getMbRole().equals(Role.ADMIN))) {
 				throw new ForbiddenException(ErrorCode.FORBIDDEN);
 			}
 
 			List<MemberDTO> memberlist = adminDAO.selectmemberall();
 
-			mv.addObject("memberlist", memberlist);
-			mv.setViewName("admin/admin_member");
+			model.addAttribute("memberlist", memberlist);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		return mv;
+		
+		return "admin/admin_member";
 	}
 
 	// 관리자가 선택한 회원 강퇴(비동기)
@@ -106,11 +105,10 @@ public class AdminCotroller {
 
 	// 회원 통계 페이지 이동
 	@GetMapping("/admin/stats/member")
-	public ModelAndView statsView(Authentication auth) {
+	public String statsView(Authentication auth, Model model) {
 		if (auth == null) {
 			throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
 		}
-		ModelAndView mv = new ModelAndView();
 
 		try {
 			String mbId = parseMbId.parseMbId(auth);
@@ -121,13 +119,12 @@ public class AdminCotroller {
 
 			List<AdminDTO> memberstats = adminDAO.selectmemberstats();
 
-			mv.addObject("memberstats", memberstats);
-			mv.setViewName("admin/stats_member");
+			model.addAttribute("memberstats", memberstats);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return mv;
+		return "admin/stats_member";
 	}
 
 	// 회원 통계 페이지 결과 조회
