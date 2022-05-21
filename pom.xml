@@ -139,12 +139,15 @@
 			<groupId>org.springframework.boot</groupId> 
 			<artifactId>spring-boot-starter-test</artifactId> 
 		    <version>2.6.6</version>
-			<scope>test</scope> 
 			<exclusions> 
 				<exclusion> 
 					<groupId>org.junit.vintage</groupId> 
 					<artifactId>junit-vintage-engine</artifactId> 
 				</exclusion> 
+		        <exclusion>
+		            <groupId>com.vaadin.external.google</groupId>
+		            <artifactId>android-json</artifactId>
+		        </exclusion>
 			</exclusions> 
 		</dependency>
 <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
@@ -153,7 +156,13 @@
           <artifactId>hamcrest</artifactId>
           <version>2.2</version>
           <scope>test</scope>
-      </dependency>		
+      </dependency>
+      <!-- mybatis test --> 
+	<dependency> 
+		<groupId>org.mybatis.spring.boot</groupId> 
+		<artifactId>mybatis-spring-boot-starter-test</artifactId> 
+		<version>2.2.0</version> 
+	</dependency>
 	</dependencies>
 
 	<build>
