@@ -30,6 +30,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,42 +84,39 @@ public class IndexController {
 	
     // 로그인 
 	@GetMapping({"", "/"})
-	public ModelAndView loginForm(Authentication auth) { // 첫화면에서 로그인 여부, 회원 권한이 인증여부에 따라 다른 화면으로 전달 
-		
-		ModelAndView mv = new ModelAndView();
+	public String loginForm(Authentication auth, Model model) { // 첫화면에서 로그인 여부, 회원 권한이 인증여부에 따라 다른 화면으로 전달 
 		
 		try { // 로그인 상태인 경우 
 			String mbId = parseMbId.parseMbId(auth);
 			MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
+			model.addAttribute("memberDTO", memberDTO);
+
 			// 회원가입 미완료(아이, 보호자 각각, 자진 탈퇴 회원)상태이면 회원가입 페이지로 이동 
 			if(memberDTO.getMbRole() == Role.UN_CHILD || memberDTO.getMbRole() == Role.UN_GUARD) {
-				mv.setViewName("member/register");							
+				return "member/register";							
 			}
 			// 관리자면 관리자 페이지로 이동 
 			else if(memberDTO.getMbRole() == Role.ADMIN) {
-				mv.addObject(memberDTO);
-				mv.setViewName("redirect:/admin/member");
+				model.addAttribute(memberDTO);
+				return "redirect:/admin/member";
 			}
 			// 관리자가 강퇴시킨 회원이면 index페이지로 이동 
 			else if (memberDTO.getMbRole() == Role.GUEST) {
-				mv.setViewName("index");							
+				return "index";							
 			}
 			// 권한이 가입완료된 회원(CHILD, GUARD)이면 메인으로 이동
 			else {
-				mv.setViewName("redirect:/main");	
+				return "redirect:/main";	
 			}
-			mv.addObject("memberDTO", memberDTO);
 		} catch (Exception e) { // 비로그인 상태이면 로그인 페이지로 이동
-			mv.setViewName("index");			
+			return "index";			
 		}
-		return mv;
 	}
 	
 	// 가입 완료시키기
 	@RequestMapping(value = "/err/denied-page")
-	public ModelAndView accessDenied(Authentication auth, HttpServletRequest req){
+	public String accessDenied(Authentication auth, HttpServletRequest req){
 		
-		ModelAndView mv = new ModelAndView();
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
 		
@@ -127,15 +125,13 @@ public class IndexController {
 		log.info("memberDTO : {}", memberDTO);
 		log.info("exception : {}", ade); // 로그 기록
 		
-		mv.setViewName("err/403");
-		
-		return mv;
+		return "err/403";
 	}
 
 	// 회원가입은 총 4단계 
 	// 회원가입 2(보호자, 아이 모두): sns 가입(회원가입 1)후 register 페이지로 이동
 	@GetMapping("/register/2")
-	public ModelAndView registersns(Authentication auth) { 
+	public String registersns(Authentication auth, Model model) { 
 		// 비 로그인
 		if (auth == null) {
 					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
@@ -148,11 +144,8 @@ public class IndexController {
 		log.info("---------- register ---------");
 		log.info("memberDTO : {}", memberDTO);
 		
-		ModelAndView mv = new ModelAndView();
-
-		mv.addObject("memberDTO", memberDTO);
-		mv.setViewName("member/register");
-		return mv;
+		model.addAttribute(memberDTO);
+		return "member/register";
 	}
 	
 	// 회원가입 2에서 닉네임 중복 확인(비동기)
@@ -182,9 +175,8 @@ public class IndexController {
 	
 	// 회원가입 3(보호자, 아이 모두. 로직은 분리)
 	@PostMapping("/register/3") 
-	public ModelAndView registersns(HttpServletRequest req, Authentication auth, String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
+	public String registersns(HttpServletRequest req, Authentication auth, Model model, String mbId, String mbRole, String mbNick, String mbEmail, String mbInterest) { // Authentication auth -> mbId로 연결하기 & 수정 & 권한 업데이트
 
-		ModelAndView mv = new ModelAndView();
 		// 비 로그인
 		if (auth == null) {
 					throw new UnauthorizedException(ErrorCode.UNAUTHORIZED);
@@ -197,16 +189,15 @@ public class IndexController {
 		memberDTO.setMbInterest(mbInterest);
 		
 		securityDAO.updateregister3(memberDTO);
-		
-		if(mbRole.equals("UN_GUARD")) {
-			mv.setViewName("mypage/location");
-		}
-		else if(mbRole.equals("UN_CHILD")) {
-			mv.setViewName("member/register_connect");			
-		}
 
-		mv.addObject("memberDTO", memberDTO);
-		return mv;
+		model.addAttribute(memberDTO);
+		
+		if(mbRole.equals("UN_GUARD")) { // 미인증 보호자이면 
+			return "mypage/location";
+		}
+		else { // 미인증 아이이면 
+			return "member/register_connect";			
+		}
 	}
 	
 
@@ -214,10 +205,8 @@ public class IndexController {
 	// 부모-> 위치 설정 , 아이 -> 보호자 연동이 각각 끝나면 Role를 인증으로 변경
 	// 회원가입 완료되면 다시 로그인 요청
 	@PostMapping({ "", "/" })
-	public ModelAndView registerdetails(HttpServletRequest req, Authentication auth, String mbLocationOrGuard,
+	public String registerdetails(HttpServletRequest req, Authentication auth, Model model, String mbLocationOrGuard,
 			String guardPin) throws IOException {
-
-		ModelAndView mv = new ModelAndView();
 
 		// 비 로그인
 		if (auth == null) {
@@ -227,17 +216,12 @@ public class IndexController {
 		// 현재 로그인한 회원의 정보 파싱
 		String mbId = parseMbId.parseMbId(auth);
 		MemberDTO memberDTO = parseMbId.getMemberMbId(mbId);
-		mv.addObject("memberDTO", memberDTO);
-		//
-		// // 현재 로그인한 회원의 상태
-		// String status = null;
-		// if (memberDTO.getMbIsdelete() == true) {
-		// status = "탈퇴한 회원입니다.";
-		// }
+
+		model.addAttribute(memberDTO);
 		
 		try {
 			// 미인증 보호자(UN_GUARD)인 경우 mbLocation 받아오기, 회원가입 마치면 GUARD로 권한 업그레이드
-			if (memberDTO.getMbRole() == Role.UN_GUARD) { // 보호자
+			if (memberDTO.getMbRole() == Role.UN_GUARD) { // 미인증 보호자
 				memberDTO.setMbGuard(null);
 				memberDTO.setMbLocation(mbLocationOrGuard);
 				memberDTO.setMbRole(Role.GUARD);
@@ -257,8 +241,7 @@ public class IndexController {
 				HttpSession session = req.getSession(true);
 				// 위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 				session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
-				mv.addObject("register", memberDTO.getMbRole());
-				mv.setViewName("index");
+				model.addAttribute("register", memberDTO.getMbRole());
 				
 				// 메일발송
 				HashMap<String, String> mailString = new HashMap<String, String>();
@@ -272,9 +255,9 @@ public class IndexController {
 						.build();
 				mailService.fileMailSend(mailDto, htmlContent);
 				// end of 메일발송
-				return mv;
+				return "index";
 
-			} else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 아이
+			} else if (memberDTO.getMbRole() == Role.UN_CHILD) { // 미인증 아이
 				MemberDTO guardMember = securityDAO.findByMbNick(mbLocationOrGuard);
 				try {
 					if (guardMember != null & guardMember.getMbPin().equals(guardPin)) {
@@ -297,26 +280,25 @@ public class IndexController {
 						HttpSession session = req.getSession(true);
 						// 위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
 						session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
-						mv.addObject("register", memberDTO.getMbRole());
-						mv.setViewName("index");
+						
+						model.addAttribute("register", memberDTO.getMbRole());
+						return "index";
 					} else { // 보호자의 입력정보가 틀리면 보호자 연동 페이지로 다시 보내기
-						mv.setViewName("member/register_connect");
+						return "member/register_connect";
 					}
 				} catch (NullPointerException e) {
 					e.printStackTrace();
-					mv.setViewName("member/register_connect"); // 보호자의 입력정보가 틀리면 다시 보내기
-					mv.addObject("err", "정확한 보호자의 닉네임, Pin을 입력해주세요.");
+					model.addAttribute("err", "정확한 보호자의 닉네임, Pin을 입력해주세요.");
+					return "member/register_connect"; // 보호자의 입력정보가 틀리면 다시 보내기
 				}
-				return mv;
 			} else if (memberDTO.getMbRole() == Role.GUARD) { // 가입 완료된 보호자
-				mv.setViewName("redirect:/mypage/location");
-				return mv;
+				return "redirect:/mypage/location";
+			} else {
+				return "index";	
 			}
-			return mv;
 
 		} catch (ClassCastException e) {
-			mv.setViewName("redirect:/mypage/location");
-			return mv;
+			return "redirect:/mypage/location";
 		} // catch end
 		
 	}//end of @PostMapping({ "", "/" })
