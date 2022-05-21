@@ -25,6 +25,8 @@ public class MailDTO {
 	private String message;
 	@Nullable
 	private MultipartFile file;
+	@Nullable
+	private MultipartFile file2;
 
 	@Builder
 	public MailDTO(String address, String title) {

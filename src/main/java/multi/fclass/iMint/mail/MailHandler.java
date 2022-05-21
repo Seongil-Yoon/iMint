@@ -20,8 +20,7 @@ import java.io.UnsupportedEncodingException;
  *
  */
 public class MailHandler {
-	
-	@Autowired
+
 	private JavaMailSender sender;
 	private MimeMessage message;
 	private MimeMessageHelper messageHelper;

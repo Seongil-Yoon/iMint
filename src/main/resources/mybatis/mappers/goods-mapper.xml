@@ -140,7 +140,7 @@
 	
 	<!-- 상품삭제 -->
 	<update id="goodsIsdelete">
-		UPDATE `imint`.`goods` SET `goods_isdelete`='1' WHERE `goods_id`=#{goods_id} AND `seller_id`=#{seller_id};
+		UPDATE `imint`.`goods` SET `goods_isdelete`='1' WHERE `goods_id`=#{goods_id};
 	</update>
 	<update id="goodsImagesIsdelete">
 		UPDATE `imint`.`goods_images` SET `goods_images_isdelete`='1' WHERE `goods_id`= #{goods_id};
