@@ -58,7 +58,7 @@ public class AdminCotrollerTest {
 	@Test
 	@WithMockUser(roles = "ADMIN") // 인증된 가짜 유저
 	@DisplayName("관리자는 회원 목록 조회에 접근 가능")
-	public void loginpageTest() throws Exception {
+	public void adminMemberlistTest() throws Exception {
 		// given
 		memberDTO.setMbRole(Role.ADMIN);
 		memberDTO.setMbId("test_123456");
