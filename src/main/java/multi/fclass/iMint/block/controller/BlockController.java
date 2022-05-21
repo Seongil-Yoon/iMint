@@ -20,7 +20,7 @@ import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
  */
 
 @Controller
-public class BlockCotroller {
+public class BlockController {
 
 	@Autowired
 	IBlockService service;
