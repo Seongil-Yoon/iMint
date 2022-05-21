@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-	locations ={"file:src/main/resorces/mybatis/*.xml"})
+	locations ={"file:src/main/resources/mybatis/*.xml"})
 public class DataSourceTest {
 
 	private DataSource ds;
