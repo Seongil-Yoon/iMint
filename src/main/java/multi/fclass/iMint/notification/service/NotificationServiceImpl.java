@@ -68,6 +68,14 @@ public class NotificationServiceImpl implements INotificationService {
 		dto.setMbNick(chatService.getNick(mbId));
 		dto.setMessage("내 아이 " + dto.getMbNick() + "님이 새 상품을 등록했습니다: " + goods.getGoodsTitle());
 
+		// 메일발송
+		String targetNick = chatService.getNick(goods.getSellerNick());
+		String guardId = mypageService.getMyGuard(mbId).getMbId();
+		MemberDTO guardDto = securityDAO.findByMbId(guardId);
+		String goodsThumbnail = goodsDAO.goodsThumbnail(goods.getGoodsId()).getGoodsImagesPath();
+		mailService.notiMailSend(guardDto.getMbEmail(), "[iMint]" + dto.getMessage(), targetNick, goods,
+				goodsThumbnail);
+		// end of 메일발송
 		return notify("goods", dto);
 	}
 
