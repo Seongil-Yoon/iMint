@@ -23,7 +23,7 @@
 		WHERE
 			mb_id LIKE #{mbId}
 		ORDER BY
-			send_date DESC, id DESC
+			send_date ASC, id ASC
 	</select>
 	
 	<!-- 단일 알림 읽음 표시 -->
@@ -34,6 +34,7 @@
 			is_read = TRUE
 		WHERE
 			id = #{id}
+			AND mb_id LIKE #{mbId}
 	</update>
 	
 	<!-- 모든 알림 읽음 표시 -->
@@ -47,23 +48,20 @@
 	</update>
 	
 	<!-- 단일 알림 삭제 -->
-	<update id="deleteNotification">
-		UPDATE
+	<delete id="deleteNotification">
+		DELETE FROM
 			`imint`.`notification`
-		SET
-			is_delete = TRUE
 		WHERE
 			id = #{id}
-	</update>
+			AND mb_id LIKE #{mbId}
+	</delete>
 	
 	<!-- 모든 알림 삭제 -->
-	<update id="deleteAllNotifications">
-		UPDATE
+	<delete id="deleteAllNotifications">
+		DELETE FROM
 			`imint`.`notification`
-		SET
-			is_delete = TRUE
 		WHERE
 			mb_id LIKE #{mbId}
-	</update>
+	</delete>
 
 </mapper>

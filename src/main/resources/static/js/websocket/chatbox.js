@@ -336,19 +336,19 @@ async function connectWS(webSocketMyId) {
         notify = JSON.parse(notify.body);
         if (notify.type == "chat") {
             let findChatroom = $(
-                "[data-chatroomId=" + notify.message.chatroomId + "]"
+                "[data-chatroomId=" + notify.content.chatroomId + "]"
             );
             if (findChatroom.length != 0) {
                 findChatroom.addClass("unread");
                 findChatroom
                     .find(".chatbox-chatroom-lastmessage")
-                    .text(notify.message.message);
+                    .text(notify.content.message);
                 $("#chatbox-list-chatrooms").prepend(findChatroom);
             } else {
                 loadChatrooms();
             }
         } else if (notify.type == "notification") {
-            notificationHandler(notify);
+            notificationHandler(notify.content);
         }
     });
 }

@@ -18,11 +18,11 @@ public interface INotificationDAO {
 
 	public List<NotificationDTO> getNotifications(String mbId);
 
-	public int markAsRead(int id);
+	public int markAsRead(String mbId, int id);
 
 	public int markAsReadAll(String mbId);
 
-	public int deleteNotification(int id);
+	public int deleteNotification(String mbId, int id);
 
 	public int deleteAllNotifications(String mbId);
 
