@@ -791,7 +791,8 @@ function putChatmessage(chatmessage, isLoading) {
 // 함수: 메세지에 금지어가 포함되어있는지 확인
 function messageFilter(message) {
     let testcase = [
-        { type: "주민등록번호", regex: /\d{6}[,\.\-\s][1-4]\d{6}/ },
+        { type: "주민등록번호", regex: /\d{6}[,\.\-\s]?[1-4]\d{6}/ },
+        { type: "주민등록번호", regex: /^[1-4]\d{6}$/ },
         {
             type: "전화번호",
             regex: /[(]?[0]([2]|\d{2})[)]?([,\.\-\s]?)\d{3,4}(\2)\d{4}/,
