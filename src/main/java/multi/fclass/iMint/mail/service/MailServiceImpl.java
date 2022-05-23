@@ -62,7 +62,7 @@ public class MailServiceImpl implements IMailService {
 			mailHandler.setText(htmlContent, true);
 			// 첨부파일
 			// 이미지 삽입
-			if (!mailDto.getFile().isEmpty() && mailDto.getFile() != null) {
+			if (mailDto.getFile() != null) {
 //				mailHandler.setAttach(mailDto.getFile().getOriginalFilename(), mailDto.getFile());
 				mailHandler.setInline("sample-img", mailDto.getFile());
 			}
@@ -86,11 +86,9 @@ public class MailServiceImpl implements IMailService {
 			mailHandler.setText(htmlContent, true);
 			// 첨부파일
 			// 이미지 삽입
-			if (!mailDto.getFile().isEmpty() && mailDto.getFile() != null) {
-				if(!mailDto.getFile2().isEmpty() && mailDto.getFile2() != null) {
+			if (mailDto.getFile() != null && mailDto.getFile2() != null) {
 					mailHandler.setInline("thumb", mailDto.getFile2());
 					mailHandler.setInline("sample-img", mailDto.getFile());
-				}
 			}
 			mailHandler.send();
 		} catch (Exception e) {
@@ -171,7 +169,7 @@ public class MailServiceImpl implements IMailService {
 		mailString.put("goodsPrice", "상품가격 : " + goodsDto.getGoodsPrice() + "원");
 		mailString.put("goodsThumbnail", goodsThumbnail);
 		String htmlContent = null;
-		if(targetNick.isEmpty() || targetNick == null) {
+		if(targetNick == null) {
 			htmlContent = 
 					"<h3>상품이미지 : </h3>"
 					+ "<img src='cid:thumb' style=\"width:200px; height:200px; object-fit:contain;\">"
@@ -219,7 +217,5 @@ public class MailServiceImpl implements IMailService {
 		mailDto.setFile2(thumbFile);
 		fileMailSend2(mailDto, htmlContent);
 	}
-	
-	
 
 }

@@ -9,6 +9,9 @@ let myId = $("#buyerId").val();
 let goodsPrice = $("#goodsPrice").html();
 let crtLocation = $("#userLocation").val();
 
+let level_default = parseInt(document.getElementById('leveling').innerText);
+const levelbtn = document.getElementById('leveling');
+
 //on load html 이미지나 자바스크립트 링크가 다오고 실행됨
 $(window).on("load", function () {
     if (crtLocation == undefined || crtLocation == "") {
@@ -331,8 +334,37 @@ function fomatPrice(strNum) {
     return strNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 세자리 콤마
 }
 
+function leveling() {
+    let level = undefined;
+    if (level_default <= 0) {
+        level = 0;
+    } else if (level_default <= 100) {
+        level = parseInt(level_default / 10)
+        if (level < 3) {
+            levelbtn.style.backgroundColor = 'rgb(192, 192, 192)';
+        } else if (level < 5) {
+            levelbtn.style.backgroundColor = 'rgba(202,255,133,1)';
+        } else if (level < 7) {
+            levelbtn.style.backgroundColor = 'rgba(240,235,113,1)';
+
+        } else if (level < 9) {
+            levelbtn.style.backgroundColor = 'rgba(166,193,238,1)';
+
+        } else if (level < 10) {
+            levelbtn.style.backgroundColor = 'rgba(251,194,235,1)';
+        }
+
+    } else {
+        level = "MAX";
+        levelbtn.style.background = 'linear-gradient(90deg, rgba(251,194,235,1) 0%, rgba(251,194,235,1) 0%, rgba(166,193,238,1) 100%)';
+    }
+
+    levelbtn.innerText = "레벨 " + level;
+}
+
 function main() {
     $("#goodsPrice").html(fomatPrice(goodsPrice));
+    leveling();
     modifyHandler();
     deleteHandler();
     wishHandler();
