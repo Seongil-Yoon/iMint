@@ -52,7 +52,7 @@
 		FROM
 			`imint`.`wishlist` AS w
             JOIN `imint`.`goods` AS g ON w.goods_id = g.goods_id
-			LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+			LEFT JOIN (SELECT goods_id, goods_images_path, goods_images_originname FROM `imint`.`goods_images` WHERE goods_images_isdelete = FALSE AND goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id
 			LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as wi on g.goods_id = wi.goods_id
 			LEFT JOIN (SELECT goods_id, buyer_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
 			LEFT JOIN `imint`.`transaction` AS trx ON g.goods_id = trx.goods_id
@@ -60,8 +60,6 @@
 			w.wishlist_isdelete = FALSE
 			AND w.mb_id LIKE #{myId}
 			AND g.goods_isdelete = FALSE
-			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
-            AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
 			AND (trx_isdelete = FALSE OR trx.trx_isdelete IS NULL)
 		ORDER BY
 			last_update_date DESC, goods_id DESC
@@ -90,15 +88,13 @@
 			END AS last_update_date
 		FROM
 			`imint`.`goods` AS g
-			LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+			LEFT JOIN (SELECT goods_id, goods_images_path, goods_images_originname FROM `imint`.`goods_images` WHERE goods_images_isdelete = FALSE AND goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id
 			LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
 			LEFT JOIN (SELECT goods_id, buyer_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
 		WHERE
 			g.goods_isdelete IS FALSE
 			AND (g.goods_status LIKE "wait" OR g.goods_status LIKE "resrv")
 			AND (g.seller_id LIKE #{myId} OR cr.buyer_id LIKE #{myId})
-			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
-		    AND (gi.goods_images_thumbnail = TRUE OR gi.goods_images_thumbnail IS NULL)
 		ORDER BY
 			last_update_date DESC, goods_id DESC
 	</select>
@@ -115,20 +111,18 @@
 		    g.goods_price,
 		    g.goods_location,
 		    g.goods_create_date,
-		    IF(gi.goods_images_path = FALSE, gi.goods_images_path, null) AS goods_images_path,
+		    gi.goods_images_path,
 		    gi.goods_images_originname,
 		    w.wishes,
 			trx.trx_complete_date AS last_update_date
 		FROM
 			`imint`.`transaction` AS trx
 			JOIN `imint`.`goods` AS g ON trx.goods_id = g.goods_id
+			LEFT JOIN (SELECT goods_id, goods_images_path, goods_images_originname FROM `imint`.`goods_images` WHERE goods_images_isdelete = FALSE AND goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id
 			LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
-			LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
 		WHERE
 			trx.trx_isdelete = FALSE
-			AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 			AND (trx.mb_id LIKE #{myId} OR g.seller_id LIKE #{myId})
-			AND gi.goods_images_thumbnail = TRUE
 		ORDER BY
 			last_update_date DESC, g.goods_id DESC
 	</select>
@@ -146,7 +140,7 @@
 	    IF(g.seller_id LIKE #{myId}, mbbuy.mb_nick, g.seller_nick) AS opponent_nick,
 	    IF(g.seller_id LIKE #{myId}, mbbuy.mb_thumbnail, mbsell.mb_thumbnail) AS opponent_thumbnail,
 	    g.goods_location,
-	    IF(gi.goods_images_path = FALSE, gi.goods_images_path, null) AS goods_images_path,
+	    gi.goods_images_path,
 	    gi.goods_images_originname,
 	    cm.sender_id,
 	    cm.message,
@@ -157,7 +151,7 @@
 	    JOIN (SELECT mb_id, mb_nick, mb_thumbnail FROM `imint`.`member`) AS mbbuy on cr.buyer_id = mbbuy.mb_id
 	    JOIN `imint`.`goods` AS g ON cr.goods_id = g.goods_id
 	    JOIN (SELECT mb_id, mb_thumbnail FROM `imint`.`member`) AS mbsell on g.seller_id = mbsell.mb_id
-	    LEFT JOIN `imint`.`goods_images` AS gi ON g.goods_id = gi.goods_id
+	    LEFT JOIN (SELECT goods_id, goods_images_path, goods_images_originname FROM `imint`.`goods_images` WHERE goods_images_isdelete = FALSE AND goods_images_thumbnail = TRUE) AS gi ON g.goods_id = gi.goods_id
 	    LEFT JOIN
 	    	(SELECT
 	    		chatroom_id,
@@ -183,9 +177,7 @@
 	    		send_date DESC) AS cm ON cr.id = cm.chatroom_id
 	WHERE
 		cr.isdelete = FALSE
-		AND (gi.goods_images_isdelete = FALSE OR gi.goods_images_isdelete IS NULL)
 	    AND (g.seller_id LIKE #{myId} OR cr.buyer_id LIKE #{myId})
-	    AND gi.goods_images_thumbnail = TRUE
 	    AND (g.seller_id NOT LIKE #{myId} OR cm.message IS NOT NULL)
 	ORDER BY
 		last_update_date DESC, cr.create_date DESC
