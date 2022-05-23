@@ -17,6 +17,7 @@
 		<typeAlias type="multi.fclass.iMint.chat.dto.ChatMessageDTO" alias="ChatMessageDTO" />
 		<typeAlias type="multi.fclass.iMint.chat.dto.ChatroomOpenCheckDTO" alias="ChatroomOpenCheckDTO" />
 		<typeAlias type="multi.fclass.iMint.chat.dto.ChatroomJoinCheckDTO" alias="ChatroomJoinCheckDTO" />
+		<typeAlias type="multi.fclass.iMint.notification.dto.NotificationDTO" alias="NotificationDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageDTO" alias="MypageDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageChatroomDTO" alias="MypageChatroomDTO" />
 		<typeAlias type="multi.fclass.iMint.mypage.dto.MypageConnectionDTO" alias="MypageConnectionDTO" />

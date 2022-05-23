@@ -72,6 +72,7 @@ public class NotificationServiceImpl implements INotificationService {
 			if (guardId != null && !guardId.equals("")) {
 				JSONObject out = new JSONObject();
 
+				notifyDAO.sendNotification((NotificationDTO) payload);
 				out.put("type", "notification");
 				out.put("message", payload);
 
