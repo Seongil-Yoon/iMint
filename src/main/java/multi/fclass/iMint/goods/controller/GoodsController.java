@@ -25,6 +25,7 @@ import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
 import multi.fclass.iMint.goods.service.GoodsServiceImpl;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.member.dto.Role;
+import multi.fclass.iMint.notification.service.NotificationServiceImpl;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.wishlist.service.WishlistServiceImpl;
 
@@ -39,6 +40,9 @@ public class GoodsController {
 	
 	@Autowired
 	WishlistServiceImpl wishService;
+	
+	@Autowired
+	NotificationServiceImpl notifyService;
 	
 	@Autowired
 	ParseMbId parseService;
@@ -112,6 +116,8 @@ public class GoodsController {
 		if (goodsId != -1) {
 			goodsDTO.setGoodsId(goodsId);
 		}
+		
+		notifyService.notifyNewGoods(mbId, goodsDTO);
 		// 브라우저단에서 location.href로 상품상세
 		return goodsDTO;
 	}

@@ -10,14 +10,14 @@ import multi.fclass.iMint.transaction.dto.TransactionDTO;
  */
 public interface INotificationService {
 
-	public boolean notifyReservation(String mbId, String targetId, TransactionDTO trxDto);
-
-	public boolean notifyCancelReservation(String mbId, String targetId,TransactionDTO trxDto);
-
-	public boolean notifyTransaction(String mbId, String targetId,TransactionDTO trxDto);
-
 	public boolean notifyNewMessage(ChatMessageDTO message);
 
-	public boolean notifyNewGoods(GoodsDTO goods);
+	public boolean notifyNewGoods(String mbId, GoodsDTO goods);
+
+	public boolean notifyReservation(String mbId, String targetId, TransactionDTO trxDto);
+
+	public boolean notifyCancelReservation(String mbId, String targetId, TransactionDTO trxDto);
+
+	public boolean notifyTransaction(String mbId, String targetId, TransactionDTO trxDto);
 
 }
