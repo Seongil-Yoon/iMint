@@ -82,18 +82,11 @@
     padding: 0;
 }
 
-#rating-score .weather {
+#rating-score .rating-icon {
     float: left;
     width: 100px;
     height: 98px;
-    font-size: 70px;
-}
-
-#rating-score .weather:first-child {
-    line-height: 80px;
-}
-
-#rating-score .weather:last-child {
+    font-size: 40px;
     line-height: 90px;
 }
 
