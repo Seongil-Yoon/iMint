@@ -26,7 +26,7 @@
             <span th:text="${rinfo?.opponentNick}"></span>님과의 거래는 <span th:text="${rinfo.ratingScore}"></span>점입니다.
         </div>
         <div id="rating-score" class="roundBox">
-            <div class="weather">🌩️</div>
+            <div class="rating-icon">😔</div>
             <div id="rating-scorebutton" class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 <input th:disabled="${#strings.equals(status, 'rated')}" th:checked="${rinfo?.ratingScore == 1}"
                     type="radio" class="btn-check" name="ratingScore" id="btnradio1" value="1" autocomplete="off">
@@ -49,7 +49,7 @@
                     name="ratingScore" id="btnradio5" value="5" autocomplete="off">
                 <label class="btn btn-outline-primary" for="btnradio5">5</label>
             </div>
-            <div class="weather">☀️</div>
+            <div class="rating-icon">😍</div>
         </div>
         <div id="rating-buttons">
             <button id="rating-close" class="btn btn-primary" type="button">닫기</button>
