@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 import multi.fclass.iMint.security.service.CustomOAuth2UserService;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

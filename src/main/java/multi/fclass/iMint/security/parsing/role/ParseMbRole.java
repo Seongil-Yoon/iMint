@@ -13,7 +13,7 @@ import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

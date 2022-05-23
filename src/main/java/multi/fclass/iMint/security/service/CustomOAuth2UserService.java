@@ -24,7 +24,7 @@ import multi.fclass.iMint.security.auth.provider.OAuth2UserInfo;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

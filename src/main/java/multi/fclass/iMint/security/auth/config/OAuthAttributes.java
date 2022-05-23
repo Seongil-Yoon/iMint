@@ -14,7 +14,7 @@ import multi.fclass.iMint.security.auth.provider.NaverUserInfo;
 import multi.fclass.iMint.security.auth.provider.OAuth2UserInfo;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

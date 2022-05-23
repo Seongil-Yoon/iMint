@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

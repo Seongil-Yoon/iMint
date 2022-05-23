@@ -5,8 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import javax.annotation.Resource;
-
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +23,7 @@ import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.member.dto.Role;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 
