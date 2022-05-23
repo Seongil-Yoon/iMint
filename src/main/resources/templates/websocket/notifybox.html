@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="notifybox">
+	<div id="notifybox-openbtn" class="notifybox-openbtn" data-bs-toggle="tooltip" data-bs-placement="left"
+		title="알림 펼치기">🔔</div>
+	<div id="notifybox-main">
+		<div id="notifybox-list">
+			<div id="notifybox-list-title" class="notifybox-title">
+				<span class="notifybox-title-text">아이민트 알림</span>
+				<div id="notifybox-close" class="notifybox-menubtn" data-bs-toggle="tooltip" data-bs-placement="top"
+					title="숨기기">↓</div>
+				<div id="notifybox-option" class="notifybox-menubtn">
+					<div data-bs-toggle="dropdown" aria-expanded="false">
+						<div data-bs-toggle="tooltip" data-bs-placement="top" title="알림 옵션">…</div>
+					</div>
+					<ul class="dropdown-menu">
+						<li id="notifybox-option-readall" class="dropdown-item" data-bs-toggle="tooltip"
+							data-bs-placement="left" title="모든 알림을<br>읽음 상태로 표시합니다." data-bs-html="true">모두 읽음 표시
+						</li>
+						<li id="notifybox-option-deleteall" class="dropdown-item" data-bs-toggle="tooltip"
+							data-bs-placement="left" title="모든 알림을 삭제합니다.">모두 지우기</li>
+					</ul>
+				</div>
+			</div>
+			<div id="notifybox-list-notifications"></div>
+		</div>
+	</div>
+</th:block>
+
+</html>

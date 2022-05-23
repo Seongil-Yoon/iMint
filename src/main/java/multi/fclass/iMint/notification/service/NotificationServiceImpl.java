@@ -1,10 +1,13 @@
 package multi.fclass.iMint.notification.service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-
-import com.nimbusds.jose.shaded.json.JSONObject;
 
 import multi.fclass.iMint.chat.dao.IChatDAO;
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
@@ -50,12 +53,12 @@ public class NotificationServiceImpl implements INotificationService {
 
 	private boolean notify(String category, Object payload) {
 		if (category.equals("chat")) {
-			JSONObject out = new JSONObject();
+			Map<String, Object> map = new HashMap<String, Object>();
 			ChatroomJoinCheckDTO cjcDTO = chatDAO.checkChatroomJoinable(((ChatMessageDTO) payload).getChatroomId());
 			String opponentId = null;
 
-			out.put("type", "chat");
-			out.put("message", payload);
+			map.put("type", "chat");
+			map.put("content", (ChatMessageDTO) payload);
 
 			if (((ChatMessageDTO) payload).getSenderId().equals(cjcDTO.getBuyerId())) {
 				opponentId = cjcDTO.getSellerId();
@@ -65,22 +68,19 @@ public class NotificationServiceImpl implements INotificationService {
 				return false;
 			}
 
-			smt.convertAndSendToUser(opponentId, "/notify", out.toJSONString());
+			smt.convertAndSendToUser(opponentId, "/notify", map);
 			return true;
 		} else {
-			String guardId = mypageService.getMyGuard(((NotificationDTO) payload).getMbId()).getMbId();
-			if (guardId != null && !guardId.equals("")) {
-				JSONObject out = new JSONObject();
+			Map<String, Object> map = new HashMap<String, Object>();
 
-				out.put("type", "notification");
-				out.put("message", payload);
+			notifyDAO.sendNotification((NotificationDTO) payload);
+			((NotificationDTO) payload).setSendDate(LocalDateTime.now());
+			map.put("type", "notification");
+			map.put("content", (NotificationDTO) payload);
 
-				smt.convertAndSendToUser(guardId, "/notify", out.toJSONString());
-				return true;
-			}
+			smt.convertAndSendToUser(((NotificationDTO) payload).getMbId(), "/notify", map);
+			return true;
 		}
-
-		return false;
 	}
 
 	@Override
@@ -93,13 +93,12 @@ public class NotificationServiceImpl implements INotificationService {
 		NotificationDTO dto = new NotificationDTO();
 
 		dto.setCategory("goods");
-		dto.setMbId(mbId);
+		dto.setMbId(mypageService.getMyGuard(mbId).getMbId());
 		dto.setMessage("내 아이 " + chatDAO.getNick(mbId) + "님이 새 상품을 등록했습니다: " + goods.getGoodsTitle());
 
 		// 메일발송
 		String targetNick = chatDAO.getNick(goods.getSellerNick());
-		String guardId = mypageService.getMyGuard(mbId).getMbId();
-		MemberDTO guardDto = securityDAO.findByMbId(guardId);
+		MemberDTO guardDto = securityDAO.findByMbId(dto.getMbId());
 		String goodsThumbnail = goodsDAO.goodsThumbnail(goods.getGoodsId()).getGoodsImagesPath();
 		mailService.notiMailSend(guardDto.getMbEmail(), "[iMint]" + dto.getMessage(), targetNick, goods,
 				goodsThumbnail);
@@ -112,13 +111,12 @@ public class NotificationServiceImpl implements INotificationService {
 		NotificationDTO dto = new NotificationDTO();
 
 		dto.setCategory("resrv");
-		dto.setMbId(mbId);
+		dto.setMbId(mypageService.getMyGuard(mbId).getMbId());
 		dto.setMessage("내 아이 " + chatDAO.getNick(mbId) + "님이 거래를 예약했습니다: " + trxDTO.getGoodsTitle());
 
 		// 메일발송
 		String targetNick = chatDAO.getNick(targetId);
-		String guardId = mypageService.getMyGuard(mbId).getMbId();
-		MemberDTO guardDto = securityDAO.findByMbId(guardId);
+		MemberDTO guardDto = securityDAO.findByMbId(dto.getMbId());
 		GoodsDTO goodsDto = goodsDAO.goods(trxDTO.getGoodsId());
 		String goodsThumbnail = goodsDAO.goodsThumbnail(trxDTO.getGoodsId()).getGoodsImagesPath();
 		mailService.notiMailSend(guardDto.getMbEmail(), "[iMint]" + dto.getMessage(), targetNick, goodsDto,
@@ -133,13 +131,12 @@ public class NotificationServiceImpl implements INotificationService {
 		NotificationDTO dto = new NotificationDTO();
 
 		dto.setCategory("resrv_cancel");
-		dto.setMbId(mbId);
+		dto.setMbId(mypageService.getMyGuard(mbId).getMbId());
 		dto.setMessage("내 아이 " + chatDAO.getNick(mbId) + "님이 예약을 취소했습니다: " + trxDTO.getGoodsTitle());
 
 		// 메일발송
 		String targetNick = chatDAO.getNick(targetId);
-		String guardId = mypageService.getMyGuard(mbId).getMbId();
-		MemberDTO guardDto = securityDAO.findByMbId(guardId);
+		MemberDTO guardDto = securityDAO.findByMbId(dto.getMbId());
 		GoodsDTO goodsDto = goodsDAO.goods(trxDTO.getGoodsId());
 		String goodsThumbnail = goodsDAO.goodsThumbnail(trxDTO.getGoodsId()).getGoodsImagesPath();
 		mailService.notiMailSend(guardDto.getMbEmail(), "[iMint]" + dto.getMessage(), targetNick, goodsDto,
@@ -154,13 +151,12 @@ public class NotificationServiceImpl implements INotificationService {
 		NotificationDTO dto = new NotificationDTO();
 
 		dto.setCategory("trx");
-		dto.setMbId(mbId);
+		dto.setMbId(mypageService.getMyGuard(mbId).getMbId());
 		dto.setMessage("내 아이 " + chatDAO.getNick(mbId) + "님이 거래를 완료했습니다: " + trxDTO.getGoodsTitle());
 
 		// 메일발송
 		String targetNick = chatDAO.getNick(targetId);
-		String guardId = mypageService.getMyGuard(mbId).getMbId();
-		MemberDTO guardDto = securityDAO.findByMbId(guardId);
+		MemberDTO guardDto = securityDAO.findByMbId(dto.getMbId());
 		GoodsDTO goodsDto = goodsDAO.goods(trxDTO.getGoodsId());
 		String goodsThumbnail = goodsDAO.goodsThumbnail(trxDTO.getGoodsId()).getGoodsImagesPath();
 		mailService.notiMailSend(guardDto.getMbEmail(), "[iMint]" + dto.getMessage(), targetNick, goodsDto,
@@ -168,6 +164,39 @@ public class NotificationServiceImpl implements INotificationService {
 		// end of 메일발송
 
 		return notify("trx", dto);
+	}
+
+	@Override
+	public List<NotificationDTO> getNotifications(String mbId) {
+		return notifyDAO.getNotifications(mbId);
+	}
+
+	@Override
+	public boolean markAsRead(String mbId, int id) {
+		if (notifyDAO.markAsRead(mbId, id) == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public int markAsReadAll(String mbId) {
+		return notifyDAO.markAsReadAll(mbId);
+	}
+
+	@Override
+	public boolean deleteNotification(String mbId, int id) {
+		if (notifyDAO.deleteNotification(mbId, id) == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public int deleteAllNotifications(String mbId) {
+		return notifyDAO.deleteAllNotifications(mbId);
 	}
 
 }
