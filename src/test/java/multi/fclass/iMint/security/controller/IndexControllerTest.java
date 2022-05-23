@@ -25,7 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.security.dao.ISecurityDAO;
-
+import org.springframework.mail.javamail.JavaMailSender;
 /**
  * @author Jungmin, Yang
  *
@@ -41,6 +41,10 @@ public class IndexControllerTest {
 	
 	@Autowired
 	private MockMvc mvc;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+	
 
 	// 테스트 시작전 MockMvc 인스턴스 생성 
 	@Before

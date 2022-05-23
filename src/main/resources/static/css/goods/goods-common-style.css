@@ -20,6 +20,11 @@ h3 {
   border-color: rgb(155, 155, 155);
 } */
 
+#leveling {
+  font-size: 0.8em;
+  color: white;
+}
+
 .tab-item {
   background-color: #F9F9F9;
   align-items: center;
