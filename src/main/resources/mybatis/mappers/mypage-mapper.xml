@@ -92,7 +92,7 @@
 			LEFT JOIN (SELECT goods_id, count(*) AS wishes FROM `imint`.`wishlist` WHERE wishlist_isdelete = FALSE GROUP BY goods_id) as w on g.goods_id = w.goods_id
 			LEFT JOIN (SELECT goods_id, buyer_id, resrv_date FROM `imint`.`chatroom` WHERE isdelete = FALSE AND resrv_date IS NOT NULL) AS cr ON g.goods_id = cr.goods_id
 		WHERE
-			g.goods_isdelete IS FALSE
+			g.goods_isdelete = FALSE
 			AND (g.goods_status LIKE "wait" OR g.goods_status LIKE "resrv")
 			AND (g.seller_id LIKE #{myId} OR cr.buyer_id LIKE #{myId})
 		ORDER BY
@@ -177,6 +177,7 @@
 	    		send_date DESC) AS cm ON cr.id = cm.chatroom_id
 	WHERE
 		cr.isdelete = FALSE
+		AND g.goods_isdelete = FALSE
 	    AND (g.seller_id LIKE #{myId} OR cr.buyer_id LIKE #{myId})
 	    AND (g.seller_id NOT LIKE #{myId} OR cm.message IS NOT NULL)
 	ORDER BY
