@@ -49,7 +49,7 @@
 	</update>
 	
 	<!-- 회원 여부 조회 -->
-	<select id="checkMember" resultType="String">
+	<select id="getNick" resultType="String">
 		SELECT
 			mb_nick
 		FROM

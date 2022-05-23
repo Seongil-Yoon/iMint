@@ -330,12 +330,27 @@ async function connectWS(chatboxMyId) {
     });
 
     stompClient.subscribe("/ws/notify", function (notify) {
-        var options = {
-            body: JSON.parse(notify.body).message,
-            icon: "/static/images/hamster.png",
-        };
-        if ("Notification" in window) {
-            var n = new Notification("iMint :: 내 아이의 활동 알림", options);
+        notify = JSON.parse(notify.body);
+        if (notify.type == "chat") {
+            let findChatroom = $(
+                "[data-chatroomId=" + notify.message.chatroomId + "]"
+            );
+            if (findChatroom.length != 0) {
+                findChatroom.addClass("unread");
+                findChatroom
+                    .find(".chatbox-chatroom-lastmessage")
+                    .text(notify.message.message);
+                $("#chatbox-list-chatrooms").prepend(findChatroom);
+            } else {
+                loadChatrooms();
+            }
+        } else if (notify.type == "notification") {
+            if ("Notification" in window) {
+                new Notification("iMint :: 내 아이의 활동 알림", {
+                    body: notify.message,
+                    icon: "/static/images/hamster.png",
+                });
+            }
         }
     });
 }

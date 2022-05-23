@@ -19,6 +19,7 @@ import multi.fclass.iMint.chat.service.IChatService;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
 import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.service.IMypageService;
+import multi.fclass.iMint.notification.service.INotificationService;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.websocket.config.WebSocketPrincipal;
 import net.minidev.json.JSONObject;
@@ -38,6 +39,9 @@ public class ChatController {
 
 	@Autowired
 	IMypageService mypageService;
+
+	@Autowired
+	INotificationService notifyService;
 
 	// REST API: 채팅목록 불러오기
 	@GetMapping("/chat/getchatrooms")
@@ -120,6 +124,7 @@ public class ChatController {
 		chatMessage.setSenderNick(chatService.getNick(principal.getName()));
 		chatMessage.setSendDate(LocalDateTime.now());
 		chatService.sendChatroomMessage(chatMessage);
+		notifyService.notifyNewMessage(chatMessage);
 		return chatMessage;
 	}
 
