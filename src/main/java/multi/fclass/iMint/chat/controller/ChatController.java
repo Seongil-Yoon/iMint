@@ -75,6 +75,8 @@ public class ChatController {
 				return null;
 			}
 		} else {
+			// 보호자가 아닌 아이가 직접 읽을 때만 읽음 표시
+			chatService.markAsReadAll(chatroomId, myId);
 			return chatService.getChatroomMessages(myId, chatroomId, pageNumber, numberOfItems);
 		}
 	}
