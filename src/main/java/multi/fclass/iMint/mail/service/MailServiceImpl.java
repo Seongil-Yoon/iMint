@@ -170,15 +170,26 @@ public class MailServiceImpl implements IMailService {
 		mailString.put("goodsContent", "상품설명 : " + goodsDto.getGoodsContent());
 		mailString.put("goodsPrice", "상품가격 : " + goodsDto.getGoodsPrice() + "원");
 		mailString.put("goodsThumbnail", goodsThumbnail);
-		String htmlContent = 
-				"<h3>상품이미지 : </h3>"
-				+ "<img src='cid:thumb' style=\"width:200px; height:200px; object-fit:contain;\">"
-				+ "<h3>" + mailString.get("targetNick") + "</h3>"
-				+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
-				+ "<h3>" + mailString.get("goodsContent") + "</h3>"
-				+ "<h3>" + mailString.get("goodsPrice") + "</h3>"
-				+ "<br><br> <img src='cid:sample-img'>";
-		
+		String htmlContent = null;
+		if(targetNick.isEmpty() || targetNick == null) {
+			htmlContent = 
+					"<h3>상품이미지 : </h3>"
+					+ "<img src='cid:thumb' style=\"width:200px; height:200px; object-fit:contain;\">"
+					+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
+					+ "<h3>" + mailString.get("goodsContent") + "</h3>"
+					+ "<h3>" + mailString.get("goodsPrice") + "</h3>"
+					+ "<br><br> <img src='cid:sample-img'>";
+		}else {
+			htmlContent = 
+					"<h3>상품이미지 : </h3>"
+					+ "<img src='cid:thumb' style=\"width:200px; height:200px; object-fit:contain;\">"
+					+ "<h3>" + mailString.get("targetNick") + "</h3>"
+					+ "<h3>" + mailString.get("goodsTitle") + "</h3>"
+					+ "<h3>" + mailString.get("goodsContent") + "</h3>"
+					+ "<h3>" + mailString.get("goodsPrice") + "</h3>"
+					+ "<br><br> <img src='cid:sample-img'>";
+		}
+
 		InputStream input = null;
 		OutputStream os = null;
 		FileItem fileItem = null;
