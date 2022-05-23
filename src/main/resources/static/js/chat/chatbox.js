@@ -332,9 +332,10 @@ async function connectWS(chatboxMyId) {
     stompClient.subscribe("/ws/notify", function (notify) {
         var options = {
             body: JSON.parse(notify.body).message,
+            icon: "/static/images/hamster.png",
         };
         if ("Notification" in window) {
-            var n = new Notification("내 아이의 활동 알림", options);
+            var n = new Notification("iMint :: 내 아이의 활동 알림", options);
         }
     });
 }
