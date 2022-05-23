@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import multi.fclass.iMint.block.dto.BlockDTO;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

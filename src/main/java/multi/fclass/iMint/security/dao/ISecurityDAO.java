@@ -9,7 +9,7 @@ import multi.fclass.iMint.member.dto.Role;
 import multi.fclass.iMint.member.dto.MemberDTO;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

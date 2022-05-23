@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

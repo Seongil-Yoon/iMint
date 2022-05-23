@@ -2,7 +2,7 @@ package multi.fclass.iMint.security;
 import java.util.Random;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

@@ -45,7 +45,7 @@ import multi.fclass.iMint.security.dao.ISecurityDAO;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

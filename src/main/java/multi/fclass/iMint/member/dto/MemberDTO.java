@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

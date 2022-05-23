@@ -3,7 +3,7 @@ package multi.fclass.iMint.security.auth.provider;
 import java.util.Map;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 

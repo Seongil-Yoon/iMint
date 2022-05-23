@@ -1,7 +1,7 @@
 package multi.fclass.iMint.security.auth.provider;
 
 /**
- * @author Junming, Yang
+ * @author Jungmin, Yang
  *
  */
 
