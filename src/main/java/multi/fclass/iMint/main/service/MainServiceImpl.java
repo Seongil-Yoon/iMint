@@ -28,7 +28,6 @@ public class MainServiceImpl implements IMainService {
 	@Override
 	public List<HashMap<String, Object>> goodsListMap(String goodsCategory, int lastBoard, String mbLocation,
 			String searchOption, String keyword, List<String> blocklist) {
-		System.out.println(goodsCategory + ", " + searchOption + ", " + keyword);
 		List<HashMap<String, Object>> listMap = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
 		

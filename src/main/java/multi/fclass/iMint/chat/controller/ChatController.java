@@ -45,7 +45,6 @@ public class ChatController {
 	public List<MypageChatroomDTO> getChatrooms(Authentication auth, @Nullable String childId) {
 		String myId = parseService.parseMbId(auth);
 
-		System.out.println(childId == null);
 		if (childId != null && !childId.equals("") && !childId.equals("null")) {
 			if (mypageService.isMyChild(myId, childId)) {
 				return mypageService.getChatroomList(childId);

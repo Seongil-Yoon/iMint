@@ -57,7 +57,6 @@ public class FileServiceImpl implements IFileService {
 		// imagesPath는 DB에서 조회해서 완성된 경로
 		int idx = 0;
 		for (String path : imagesPath) {
-			System.out.println(root.concat(path));
 			File f = new File(root.concat(path));
 			if (!f.exists()) {
 				return idx;

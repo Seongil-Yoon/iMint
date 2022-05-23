@@ -63,7 +63,6 @@ public class MainController {
 		MemberDTO memberDTO = null;
 		List<String> blocklist = null;
 		if (auth == null) {
-			System.out.println("auth객체가 null");
 			blocklist = new ArrayList<String>();
 			blocklist.add("");
 			return mainService.goodsListMap(goodsCategory, lastBoard, userLocation, searchOption, keyword, blocklist);

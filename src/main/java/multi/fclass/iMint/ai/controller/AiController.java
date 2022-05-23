@@ -50,7 +50,6 @@ public class AiController {
 		target.setWritable(true, false);
 		target.setExecutable(true, false);
 		file1.transferTo(target); // StreamUtils.copy(in, out);
-		System.out.println(fileName);
 		return fileName;
 	}
 
