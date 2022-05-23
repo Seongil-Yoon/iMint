@@ -1,18 +1,13 @@
 package multi.fclass.iMint.notification.service;
 
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import multi.fclass.iMint.chat.dto.ChatMessageDTO;
 import multi.fclass.iMint.chat.service.IChatService;
 import multi.fclass.iMint.goods.dao.IGoodsDAO;
 import multi.fclass.iMint.goods.dto.GoodsDTO;
-import multi.fclass.iMint.goods.dto.GoodsImagesDTO;
-import multi.fclass.iMint.mail.dto.MailDTO;
 import multi.fclass.iMint.mail.service.IMailService;
 import multi.fclass.iMint.member.dto.MemberDTO;
 import multi.fclass.iMint.mypage.service.IMypageService;
@@ -27,7 +22,7 @@ import multi.fclass.iMint.transaction.dto.TransactionDTO;
  */
 @Service("NofityService")
 public class NotificationServiceImpl implements INotificationService {
-	
+
 	@Autowired
 	SimpMessagingTemplate smt;
 
@@ -49,8 +44,6 @@ public class NotificationServiceImpl implements INotificationService {
 	private boolean notify(String category, Object payload) {
 		if (category.equals("chat")) {
 			smt.convertAndSendToUser(((ChatMessageDTO) payload).getSenderId(), "/notify", payload);
-		} else if (category.equals("goods")) {
-
 		} else {
 			String guardId = mypageService.getMyGuard(((NotificationDTO) payload).getMbId()).getMbId();
 			if (guardId != null && !guardId.equals("")) {
@@ -59,6 +52,23 @@ public class NotificationServiceImpl implements INotificationService {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean notifyNewMessage(ChatMessageDTO message) {
+		return notify("chat", message);
+	}
+
+	@Override
+	public boolean notifyNewGoods(String mbId, GoodsDTO goods) {
+		NotificationDTO dto = new NotificationDTO();
+
+		dto.setCategory("goods");
+		dto.setMbId(mbId);
+		dto.setMbNick(chatService.getNick(mbId));
+		dto.setMessage("내 아이 " + dto.getMbNick() + "님이 새 상품을 등록했습니다: " + goods.getGoodsTitle());
+
+		return notify("goods", dto);
 	}
 
 	@Override
@@ -125,16 +135,6 @@ public class NotificationServiceImpl implements INotificationService {
 		// end of 메일발송
 
 		return notify("trx", dto);
-	}
-
-	@Override
-	public boolean notifyNewMessage(ChatMessageDTO message) {
-		return notify("chat", message);
-	}
-
-	@Override
-	public boolean notifyNewGoods(GoodsDTO goods) {
-		return notify("goods", goods);
 	}
 
 }
