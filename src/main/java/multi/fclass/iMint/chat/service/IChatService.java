@@ -22,4 +22,6 @@ public interface IChatService {
 
 	public List<ChatMessageDTO> getChatroomMessages(String myId, int chatroomId, int pageNumber, int numberOfItems);
 
+	public int markAsReadAll(int chatroomId, String myId);
+	
 }
