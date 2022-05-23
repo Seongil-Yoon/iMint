@@ -86,7 +86,8 @@
 	<div class="voicepopup-overlay" tabindex="-1" style="opacity: 0; display: none;"></div>
 
 	<!-- 채팅 -->
-	<th:block th:replace="chat/chatbox" />
+	<th:block th:replace="websocket/chatbox" />
+	<th:block th:replace="websocket/notifybox" />
 </header>
 
 <!-- 푸터 css,js 불러오기는 libs.jsp파일 -->

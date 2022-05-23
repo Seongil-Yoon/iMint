@@ -211,7 +211,7 @@ function modifyHandler() {
 
 function chatHandler() {
     $.ajax({
-        url: "/chat/checkmychatroom",
+        url: "/ws/chat/checkmychatroom",
         type: "GET",
         data: {
             goodsId: `${goodsId}`,
@@ -221,7 +221,7 @@ function chatHandler() {
             if (check.result == "buyer") {
                 console.dir("buyer");
                 $.ajax({
-                    url: "/chat/getmychatroom",
+                    url: "/ws/chat/getmychatroom",
                     type: "POST",
                     data: {
                         goodsId: `${goodsId}`,

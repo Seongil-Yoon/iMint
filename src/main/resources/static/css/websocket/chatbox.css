@@ -10,6 +10,7 @@
     display: none;
     position: fixed;
     user-select: none;
+    bottom: 16.8px;
     right: 16.8px;
     width: calc(var(--title-height) + 10px);
     text-align: center;
@@ -23,9 +24,6 @@
 }
 .chatbox-openbtn:hover {
     cursor: pointer;
-}
-#chatbox-openbtn {
-    bottom: 16.8px;
 }
 
 #chatbox-main {
