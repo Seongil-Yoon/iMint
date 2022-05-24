@@ -2,7 +2,9 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="chatbox">
 	<div id="chatbox-openbtn" class="chatbox-openbtn" data-bs-toggle="tooltip" data-bs-placement="left" title="채팅 펼치기">
-		💬</div>
+		💬<span id="chatbox-newalert"
+			class="position-absolute top-0 start-100 translate-middle p-2 rounded-circle"><span
+				class="visually-hidden">읽지 않은 채팅 메세지가 있음</span></span></div>
 	<div id="chatbox-main">
 		<div id="chatbox-list">
 			<div id="chatbox-list-title" class="chatbox-title">

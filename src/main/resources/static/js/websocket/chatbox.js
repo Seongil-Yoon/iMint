@@ -20,6 +20,8 @@ function chatboxInitializer() {
     if (webSocketMyRole == "CHILD" || webSocketMyRole == "GUARD") {
         $("#chatbox-openbtn").show();
         connectWS(webSocketMyId);
+        loadChatrooms();
+        checkUnreadChat();
 
         if (webSocketMyRole == "GUARD") {
             $.ajax({
@@ -69,16 +71,16 @@ function chatboxEventHandler() {
             $("#notifybox-openbtn").hide();
         }
         $("#chatbox-main").show();
-        // 채팅박스 열 때 채팅방 새로 불러오기
-        loadChatrooms();
     });
 
     // 이벤트 등록: 채팅박스 닫기 버튼 누르면 채팅박스 숨기고 채팅 버튼 표시
     $("#chatbox-close").on("click", function () {
         $("#chatbox-main").hide();
         $("#chatbox-openbtn").show();
+        checkUnreadChat();
         if (webSocketMyRole == "GUARD") {
             $("#notifybox-openbtn").show();
+            checkUnreadNotify();
         }
     });
 
@@ -89,7 +91,6 @@ function chatboxEventHandler() {
         lastNewMessageDate = null;
         $("#chatbox-view").hide();
         $("#chatbox-list").show();
-        loadChatrooms();
     });
 
     // 이벤트 등록: 전송 버튼 누르면 메세지 보내기
@@ -347,6 +348,7 @@ async function connectWS(webSocketMyId) {
             } else {
                 loadChatrooms();
             }
+            checkUnreadChat();
         } else if (notify.type == "notification") {
             notificationHandler(notify.content);
         }
@@ -451,11 +453,24 @@ function loadChatrooms() {
                 $(this).on("click", function () {
                     $("#chatbox-view").show();
                     $("#chatbox-list").hide();
+                    $(this).removeClass("unread");
                     joinChatroom(this);
                 });
             });
         },
     });
+}
+
+// 함수: 읽지 않은 채팅 메세지 확인
+function checkUnreadChat() {
+    setTimeout(function () {
+        let check = $(".chatbox-chatrooms-chatroom.unread");
+        if (check.length > 0) {
+            $("#chatbox-newalert").show();
+        } else {
+            $("#chatbox-newalert").hide();
+        }
+    }, 100);
 }
 
 // 함수: 거래 관련 버튼 영역 표시/숨기기
