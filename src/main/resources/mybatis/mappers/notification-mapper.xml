@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="multi.fclass.iMint.notification.dao.INotificationDAO">
+	<!-- 전송된 알림 저장 -->
+	<insert id="sendNotification" parameterType="NotificationDTO">
+		INSERT INTO
+			`imint`.`notification`(category, mb_id, message)
+		VALUES
+			(#{category}, #{mbId}, #{message})
+		<selectKey keyProperty="id" order="AFTER" resultType="Integer">
+			SELECT MAX(id) FROM `imint`.`notification`
+		</selectKey>
+	</insert>
+	
+	<!-- 알림 가져오기 -->
+	<select id="getNotifications" resultType="NotificationDTO">
+		SELECT
+			*
+		FROM
+			`imint`.`notification`
+		WHERE
+			mb_id LIKE #{mbId}
+		ORDER BY
+			send_date ASC, id ASC
+	</select>
+	
+	<!-- 단일 알림 읽음 표시 -->
+	<update id="markAsRead">
+		UPDATE
+			`imint`.`notification`
+		SET
+			is_read = TRUE
+		WHERE
+			id = #{id}
+			AND mb_id LIKE #{mbId}
+	</update>
+	
+	<!-- 모든 알림 읽음 표시 -->
+	<update id="markAsReadAll">
+		UPDATE
+			`imint`.`notification`
+		SET
+			is_read = TRUE
+		WHERE
+			mb_id LIKE #{mbId}
+	</update>
+	
+	<!-- 단일 알림 삭제 -->
+	<delete id="deleteNotification">
+		DELETE FROM
+			`imint`.`notification`
+		WHERE
+			id = #{id}
+			AND mb_id LIKE #{mbId}
+	</delete>
+	
+	<!-- 모든 알림 삭제 -->
+	<delete id="deleteAllNotifications">
+		DELETE FROM
+			`imint`.`notification`
+		WHERE
+			mb_id LIKE #{mbId}
+	</delete>
+
+</mapper>

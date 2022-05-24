@@ -15,7 +15,7 @@ import multi.fclass.iMint.chat.dto.ChatroomJoinCheckDTO;
 @Mapper
 public interface IChatDAO {
 
-	public String checkMember(String myId);
+	public String getNick(String myId);
 
 	public ChatroomJoinCheckDTO checkChatroomJoinable(int chatroomId);
 

@@ -17,13 +17,13 @@ $(function () {
 // 함수: 보호자 회원일 때 내 아이 선택 상자 추가
 function chatboxInitializer() {
     // 인증된 회원이면 채팅 버튼 표시하고 웹소켓 접속
-    if (chatboxMyRole == "CHILD" || chatboxMyRole == "GUARD") {
+    if (webSocketMyRole == "CHILD" || webSocketMyRole == "GUARD") {
         $("#chatbox-openbtn").show();
-        connectWS(chatboxMyId);
+        connectWS(webSocketMyId);
 
-        if (chatboxMyRole == "GUARD") {
+        if (webSocketMyRole == "GUARD") {
             $.ajax({
-                url: "/chat/getmychildren",
+                url: "/ws/chat/getmychildren",
                 type: "GET",
                 dataType: "JSON",
                 success: function (result) {
@@ -58,9 +58,6 @@ function chatboxInitializer() {
             });
         }
     }
-    if ("Notification" in window) {
-        Notification.requestPermission();
-    }
 }
 
 // 함수: 각종 버튼 이벤트 등록
@@ -68,6 +65,9 @@ function chatboxEventHandler() {
     // 이벤트 등록: 채팅 버튼 누르면 채팅 버튼 숨기고 채팅박스 표시
     $("#chatbox-openbtn").on("click", function () {
         $(this).hide();
+        if (webSocketMyRole == "GUARD") {
+            $("#notifybox-openbtn").hide();
+        }
         $("#chatbox-main").show();
         // 채팅박스 열 때 채팅방 새로 불러오기
         loadChatrooms();
@@ -77,6 +77,9 @@ function chatboxEventHandler() {
     $("#chatbox-close").on("click", function () {
         $("#chatbox-main").hide();
         $("#chatbox-openbtn").show();
+        if (webSocketMyRole == "GUARD") {
+            $("#notifybox-openbtn").show();
+        }
     });
 
     // 이벤트 등록: 채팅방 닫기 버튼 누르면 채팅방 목록 표시
@@ -320,22 +323,32 @@ function chatboxEventHandler() {
 }
 
 // 함수: 웹소켓에 연결 + 알림 채널 구독
-async function connectWS(chatboxMyId) {
+async function connectWS(webSocketMyId) {
     await new Promise(function (resolve, reject) {
         let socket = new SockJS("/ws");
         stompClient = Stomp.over(socket);
-        stompClient.connect({ "user-name": chatboxMyId }, function (frame) {
+        stompClient.connect({ "user-name": webSocketMyId }, function (frame) {
             resolve("success");
         });
     });
 
     stompClient.subscribe("/ws/notify", function (notify) {
-        var options = {
-            body: JSON.parse(notify.body).message,
-            icon: "/static/images/hamster.png",
-        };
-        if ("Notification" in window) {
-            var n = new Notification("iMint :: 내 아이의 활동 알림", options);
+        notify = JSON.parse(notify.body);
+        if (notify.type == "chat") {
+            let findChatroom = $(
+                "[data-chatroomId=" + notify.content.chatroomId + "]"
+            );
+            if (findChatroom.length != 0) {
+                findChatroom.addClass("unread");
+                findChatroom
+                    .find(".chatbox-chatroom-lastmessage")
+                    .text(notify.content.message);
+                $("#chatbox-list-chatrooms").prepend(findChatroom);
+            } else {
+                loadChatrooms();
+            }
+        } else if (notify.type == "notification") {
+            notificationHandler(notify.content);
         }
     });
 }
@@ -358,7 +371,7 @@ function loadChatrooms() {
 
     // AJAX: 채팅방 목록 요청
     $.ajax({
-        url: "/chat/getchatrooms",
+        url: "/ws/chat/getchatrooms",
         type: "GET",
         data: {
             childId: chatboxChildId,
@@ -423,7 +436,7 @@ function loadChatrooms() {
                     );
 
                 if (
-                    result[i].senderId != chatboxMyId &&
+                    result[i].senderId != webSocketMyId &&
                     result[i].senderId != chatboxChildId &&
                     result[i].read == false
                 ) {
@@ -452,7 +465,7 @@ function setExtraUIs(showTrxbtns) {
         parseInt($(":root").css("--title-height")) -
         parseInt($(":root").css("--chatroom-height")) * 2;
 
-    if (chatboxMyRole == "GUARD") {
+    if (webSocketMyRole == "GUARD") {
         // 보호자 회원일 때 메세지 입력 상자 숨기기
         $("#chatbox-view-send").hide();
         $("#chatbox-view-trxbtns").html("");
@@ -637,7 +650,7 @@ function directJoinChatroom(chatroomId, childId) {
 function getChatmessages(isInitializing) {
     // AJAX: 기존 대화내용 조회
     $.ajax({
-        url: "/chat/getchatmessages",
+        url: "/ws/chat/getchatmessages",
         type: "GET",
         data: {
             childId: chatboxChildId,
@@ -707,7 +720,7 @@ function putChatmessage(chatmessage, isLoading) {
 
         // DB의 메세지 목록을 불러올 때는 앞쪽으로 추가
         if (
-            chatmessage.senderId != chatboxMyId &&
+            chatmessage.senderId != webSocketMyId &&
             chatmessage.senderId != chatboxChildId
         ) {
             $("#chatbox-view-chatmessages").prepend(
@@ -735,7 +748,7 @@ function putChatmessage(chatmessage, isLoading) {
 
         // 웹소켓을 통해 메세지를 받았을 때는 뒤쪽으로 추가
         if (
-            chatmessage.senderId != chatboxMyId &&
+            chatmessage.senderId != webSocketMyId &&
             chatmessage.senderId != chatboxChildId
         ) {
             $("#chatbox-view-chatmessages").append(
@@ -779,7 +792,7 @@ function putChatmessage(chatmessage, isLoading) {
         )
         .append(
             `<div class="chatbox-chatinfo-isread">` +
-                ((chatmessage.senderId == chatboxMyId ||
+                ((chatmessage.senderId == webSocketMyId ||
                     chatmessage.senderId == chatboxChildId) &&
                 chatmessage.read
                     ? "읽음"

@@ -19,6 +19,7 @@ import multi.fclass.iMint.chat.service.IChatService;
 import multi.fclass.iMint.mypage.dto.MypageChatroomDTO;
 import multi.fclass.iMint.mypage.dto.MypageConnectionDTO;
 import multi.fclass.iMint.mypage.service.IMypageService;
+import multi.fclass.iMint.notification.service.INotificationService;
 import multi.fclass.iMint.security.parsing.mbid.ParseMbId;
 import multi.fclass.iMint.websocket.config.WebSocketPrincipal;
 import net.minidev.json.JSONObject;
@@ -39,8 +40,11 @@ public class ChatController {
 	@Autowired
 	IMypageService mypageService;
 
+	@Autowired
+	INotificationService notifyService;
+
 	// REST API: 채팅목록 불러오기
-	@GetMapping("/chat/getchatrooms")
+	@GetMapping("/ws/chat/getchatrooms")
 	@ResponseBody
 	public List<MypageChatroomDTO> getChatrooms(Authentication auth, @Nullable String childId) {
 		String myId = parseService.parseMbId(auth);
@@ -57,7 +61,7 @@ public class ChatController {
 	}
 
 	// REST API: 메세지목록 불러오기
-	@GetMapping("/chat/getchatmessages")
+	@GetMapping("/ws/chat/getchatmessages")
 	@ResponseBody
 	public List<ChatMessageDTO> getChatMessages(Authentication auth, @Nullable String childId, int chatroomId,
 			int pageNumber) {
@@ -71,12 +75,14 @@ public class ChatController {
 				return null;
 			}
 		} else {
+			// 보호자가 아닌 아이가 직접 읽을 때만 읽음 표시
+			chatService.markAsReadAll(chatroomId, myId);
 			return chatService.getChatroomMessages(myId, chatroomId, pageNumber, numberOfItems);
 		}
 	}
 
 	// REST API: 내 아이 목록 불러오기
-	@GetMapping("/chat/getmychildren")
+	@GetMapping("/ws/chat/getmychildren")
 	@ResponseBody
 	public List<MypageConnectionDTO> getChildren(Authentication auth) {
 		String myId = parseService.parseMbId(auth);
@@ -85,7 +91,7 @@ public class ChatController {
 	}
 
 	// REST API: 채팅방 생성/접속 가능한지 확인하기
-	@GetMapping("/chat/checkmychatroom")
+	@GetMapping("/ws/chat/checkmychatroom")
 	@ResponseBody
 	public String checkChatroom(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
@@ -97,7 +103,7 @@ public class ChatController {
 	}
 
 	// REST API: 채팅방 접속 위해 채팅방 번호 확인하기
-	@PostMapping("/chat/getmychatroom")
+	@PostMapping("/ws/chat/getmychatroom")
 	@ResponseBody
 	public String startChatrom(Authentication auth, Integer goodsId) {
 		String myId = parseService.parseMbId(auth);
@@ -120,6 +126,7 @@ public class ChatController {
 		chatMessage.setSenderNick(chatService.getNick(principal.getName()));
 		chatMessage.setSendDate(LocalDateTime.now());
 		chatService.sendChatroomMessage(chatMessage);
+		notifyService.notifyNewMessage(chatMessage);
 		return chatMessage;
 	}
 

@@ -30,7 +30,7 @@ public class ChatServiceImpl implements IChatService {
 
 	@Override
 	public String getNick(String myId) {
-		return chatDAO.checkMember(myId);
+		return chatDAO.getNick(myId);
 	}
 
 	// 채팅방 SUBSCRIBE 또는 SEND 권한 확인
@@ -108,8 +108,12 @@ public class ChatServiceImpl implements IChatService {
 			numberOfItems = 0;
 		}
 
-		chatDAO.markAsReadAll(chatroomId, myId);
 		return chatDAO.getChatroomMessages(chatroomId, (pageNumber - 1) * numberOfItems, numberOfItems);
+	}
+
+	@Override
+	public int markAsReadAll(int chatroomId, String myId) {
+		return chatDAO.markAsReadAll(chatroomId, myId);
 	}
 
 }
