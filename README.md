@@ -18,7 +18,7 @@
 ![Untitled](https://user-images.githubusercontent.com/93465128/166223754-08cfcc7a-68b0-4b02-b7c0-bdea59a1fb28.png)
 
 ## ****👥****팀원 구성
-![KakaoTalk_20220523_222725444](https://user-images.githubusercontent.com/93465128/169990164-006f624b-b30f-461a-be52-e99e083c106d.png)
+![Untitled](https://user-images.githubusercontent.com/93465128/169990164-006f624b-b30f-461a-be52-e99e083c106d.png)
 | 이름 | 윤성일 | 양정민 | 이강산 | 전해연 |
 | --- | --- | --- | --- | --- |
 | 역할 | 팀장 | 팀원 | 팀원 | 팀원 |
@@ -62,7 +62,7 @@
 
 🔗 알림: [https://youtu.be/QZVVTugBYwk](https://youtu.be/QZVVTugBYwk)
 
-🔗  이메일 ; [https://youtu.be/lrIIvCNdqro](https://youtu.be/lrIIvCNdqro)
+🔗 이메일: [https://youtu.be/lrIIvCNdqro](https://youtu.be/lrIIvCNdqro)
 
 
 ## ⏰ 이슈 해결
@@ -71,11 +71,11 @@
 
 - @Async로 처리 전 : 문서로딩에 4.57초 소요
     
-    ![Untitled (3)](https://user-images.githubusercontent.com/93465128/169992097-a0c74d7a-8039-4343-a2b9-f98b047d7938.png)
+    ![Untitled](https://user-images.githubusercontent.com/93465128/169992097-a0c74d7a-8039-4343-a2b9-f98b047d7938.png)
     
 - @Async로 처리 후 : 문서로딩에 67밀리초 소요
     
-    ![Untitled (4)](https://user-images.githubusercontent.com/93465128/169992151-de7d4216-b0d3-4d53-b438-4c30ffa6e442.png)
+    ![Untitled](https://user-images.githubusercontent.com/93465128/169992151-de7d4216-b0d3-4d53-b438-4c30ffa6e442.png)
     
 ### 2. [EC2 **자동 재부팅 (cron)(tomcat자동시작)**](https://www.notion.so/EC2-cron-tomcat-9c6d874656e64bc0aa99a93b0616a2ec)
 
