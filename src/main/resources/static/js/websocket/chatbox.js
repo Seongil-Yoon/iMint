@@ -89,6 +89,9 @@ function chatboxEventHandler() {
         currentSubscription.unsubscribe();
         lastOldMessageDate = null;
         lastNewMessageDate = null;
+        $("div[data-chatroomId='" + currentChatroomId + "']").removeClass(
+            "unread"
+        );
         $("#chatbox-view").hide();
         $("#chatbox-list").show();
     });
