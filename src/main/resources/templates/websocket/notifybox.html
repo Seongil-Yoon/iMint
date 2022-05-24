@@ -2,7 +2,9 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="notifybox">
 	<div id="notifybox-openbtn" class="notifybox-openbtn" data-bs-toggle="tooltip" data-bs-placement="left"
-		title="알림 펼치기">🔔</div>
+		title="알림 펼치기">🔔<span id="notifybox-newalert"
+			class="position-absolute top-0 start-100 translate-middle p-2 rounded-circle"><span
+				class="visually-hidden">읽지 않은 알림 메세지가 있음</span></span></div>
 	<div id="notifybox-main">
 		<div id="notifybox-list">
 			<div id="notifybox-list-title" class="notifybox-title">

@@ -26,6 +26,11 @@
     cursor: pointer;
 }
 
+#notifybox-newalert {
+    display: none;
+    background-color: #3387a8;
+}
+
 #notifybox-main {
     z-index: 10;
     user-select: none;

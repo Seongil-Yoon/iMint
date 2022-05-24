@@ -7,6 +7,9 @@ $(function () {
 function notifyboxInitializer() {
     if (webSocketMyRole == "GUARD") {
         $("#notifybox-openbtn").show();
+        // 알림 목록 새로 불러오기
+        loadNotifications();
+        checkUnreadNotify();
         if ("Notification" in window) {
             Notification.requestPermission();
         }
@@ -20,16 +23,16 @@ function notifyboxEventHandler() {
         $(this).hide();
         $("#chatbox-openbtn").hide();
         $("#notifybox-main").show();
-        // 알림박스 열 때 알림 목록 새로 불러오기
-        loadNotifications();
     });
 
     // 이벤트 등록: 알림박스 닫기 버튼 누르면 알림박스 숨기고 알림 버튼 표시
     $("#notifybox-close").on("click", function () {
         $("#notifybox-main").hide();
         $("#chatbox-openbtn").show();
+        checkUnreadChat();
         if (webSocketMyRole == "GUARD") {
             $("#notifybox-openbtn").show();
+            checkUnreadNotify();
         }
     });
 
@@ -71,6 +74,7 @@ function notifyboxEventHandler() {
 // 함수: 알림 수신시 알림 목록에 추가 + 데스크톱 알림
 function notificationHandler(notify) {
     prependNotification(notify);
+    checkUnreadNotify();
     let options = {
         body: notify.message,
         icon: "/static/images/hamster.png",
@@ -97,6 +101,18 @@ function loadNotifications() {
             }
         },
     });
+}
+
+// 함수: 읽지 않은 알림 메세지 확인
+function checkUnreadNotify() {
+    setTimeout(function () {
+        let check = $(".notifybox-notifications-notification.unread");
+        if (check.length > 0) {
+            $("#notifybox-newalert").show();
+        } else {
+            $("#notifybox-newalert").hide();
+        }
+    }, 100);
 }
 
 // 함수: 새 알림 추가
