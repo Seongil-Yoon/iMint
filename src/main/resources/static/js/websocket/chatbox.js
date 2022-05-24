@@ -89,9 +89,6 @@ function chatboxEventHandler() {
         currentSubscription.unsubscribe();
         lastOldMessageDate = null;
         lastNewMessageDate = null;
-        $("div[data-chatroomId='" + currentChatroomId + "']").removeClass(
-            "unread"
-        );
         $("#chatbox-view").hide();
         $("#chatbox-list").show();
     });
@@ -339,18 +336,7 @@ async function connectWS(webSocketMyId) {
     stompClient.subscribe("/ws/notify", function (notify) {
         notify = JSON.parse(notify.body);
         if (notify.type == "chat") {
-            let findChatroom = $(
-                "[data-chatroomId=" + notify.content.chatroomId + "]"
-            );
-            if (findChatroom.length != 0) {
-                findChatroom.addClass("unread");
-                findChatroom
-                    .find(".chatbox-chatroom-lastmessage")
-                    .text(notify.content.message);
-                $("#chatbox-list-chatrooms").prepend(findChatroom);
-            } else {
-                loadChatrooms();
-            }
+            updateChatroomList(notify, false);
             checkUnreadChat();
         } else if (notify.type == "notification") {
             notificationHandler(notify.content);
@@ -466,6 +452,22 @@ function loadChatrooms() {
             });
         },
     });
+}
+
+// 함수:
+function updateChatroomList(content, isRead) {
+    let findChatroom = $("[data-chatroomId=" + content.chatroomId + "]");
+    if (findChatroom.length != 0) {
+        if (!isRead) {
+            findChatroom.addClass("unread");
+        }
+        findChatroom
+            .find(".chatbox-chatroom-lastmessage")
+            .text(content.message);
+        $("#chatbox-list-chatrooms").prepend(findChatroom);
+    } else {
+        loadChatrooms();
+    }
 }
 
 // 함수: 읽지 않은 채팅 메세지 확인
@@ -625,19 +627,21 @@ function joinChatroom(chatroom) {
     currentSubscription = stompClient.subscribe(
         "/ws/chat/" + currentChatroomId,
         function (chatmessage) {
+            let content = JSON.parse(chatmessage.body);
             if (
                 Math.round(
                     $("#chatbox-view-chatmessages").scrollTop() +
                         $("#chatbox-view-chatmessages").innerHeight() * 2
                 ) >= $("#chatbox-view-chatmessages").prop("scrollHeight")
             ) {
-                putChatmessage(JSON.parse(chatmessage.body), false);
+                putChatmessage(content, false);
                 $("#chatbox-view-alertnew").trigger("click");
                 $("#chatbox-view-alertnew").hide();
             } else {
-                putChatmessage(JSON.parse(chatmessage.body), false);
+                putChatmessage(content, false);
                 $("#chatbox-view-alertnew").show();
             }
+            updateChatroomList(content, true);
         }
     );
 }
