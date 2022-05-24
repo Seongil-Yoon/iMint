@@ -397,12 +397,7 @@ function loadChatrooms() {
                         result[i].opponentId +
                         `"></div>`
                 );
-                if (result[i].message === null) {
-                    $("div[data-chatroomId='" + result[i].id + "']").css(
-                        "display",
-                        "none"
-                    );
-                }
+
                 $("div[data-chatroomId='" + result[i].id + "']")
                     .append(
                         `<img class="chatbox-chatroom-profile" src="` +
@@ -437,7 +432,16 @@ function loadChatrooms() {
                                 : `buyer">(구매자)</span>`)
                     );
 
+                if (result[i].message == null) {
+                    $("div[data-chatroomId='" + result[i].id + "']").css(
+                        "display",
+                        "none"
+                    );
+                    result[i].read == true;
+                }
+
                 if (
+                    result[i].senderId != null &&
                     result[i].senderId != webSocketMyId &&
                     result[i].senderId != chatboxChildId &&
                     result[i].read == false
