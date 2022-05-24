@@ -47,6 +47,24 @@
 | GUEST | 관리자에 의해 강제 탈퇴된 회원 |
 | ADMIN | 관리자 |
 
+
+## 🛠 기능
+
+🔗 권한관리: [https://youtu.be/2yc33skTdFw](https://youtu.be/2yc33skTdFw)
+
+🔗 유해상품: [https://youtu.be/cr3zbbF5774](https://youtu.be/cr3zbbF5774)
+
+🔗 거래평가: [https://youtu.be/0d5YHgXblKQ](https://youtu.be/0d5YHgXblKQ)
+
+🔗 채팅필터링: [https://youtu.be/UackI0HQokM](https://youtu.be/UackI0HQokM)
+
+🔗 차단: [https://youtu.be/Ow_irM2oB28](https://youtu.be/Ow_irM2oB28)
+
+🔗 알림: [https://youtu.be/QZVVTugBYwk](https://youtu.be/QZVVTugBYwk)
+
+🔗  이메일 ; [https://youtu.be/lrIIvCNdqro](https://youtu.be/lrIIvCNdqro)
+
+
 ## ⏰ 이슈 해결
 
 ### 1. 메일발송 후 대기시간 개선
