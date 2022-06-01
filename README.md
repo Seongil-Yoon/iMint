@@ -68,6 +68,9 @@
 🔗 이메일: [https://youtu.be/lrIIvCNdqro](https://youtu.be/lrIIvCNdqro)
 
 
+## 🛠 기술스택
+![image](https://user-images.githubusercontent.com/60749057/171462992-6eaa8664-5a37-46de-b0de-17786268e52a.png)
+
 ## ⏰ 이슈 해결
 
 ### 1. 메일발송 후 대기시간 개선
