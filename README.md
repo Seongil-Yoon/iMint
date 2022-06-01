@@ -3,8 +3,7 @@
 
 🔗 서비스 URL : https://imint.yukenet.wo.tc/ <br/>
 🔗 팀 소개: https://hailey-hy.github.io/react-team7-porfolio/index.html
-
-
+🔗 팀 노션페이지: https://night-hydrangea-f7d.notion.site/iMint-8268bf915a6f409e8008c60e83b4c9f7
 
 ## ****🗂****개요
 
