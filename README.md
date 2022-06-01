@@ -2,7 +2,7 @@
 ![iMint_Black](https://user-images.githubusercontent.com/93465128/169989949-caccfa6e-0060-4167-af12-56e7058ba793.png)
 
 🔗 서비스 URL : https://imint.yukenet.wo.tc/ <br/>
-🔗 팀 소개: https://hailey-hy.github.io/react-team7-porfolio/index.html
+🔗 팀 소개: https://hailey-hy.github.io/react-team7-porfolio/index.html <br/>
 🔗 팀 노션페이지: https://night-hydrangea-f7d.notion.site/iMint-8268bf915a6f409e8008c60e83b4c9f7
 
 ## ****🗂****개요
@@ -30,6 +30,10 @@
 ## ****♟****정보 구조도
 
 ![Untitled](https://user-images.githubusercontent.com/93465128/166220866-fa827937-b32a-48d4-a677-2182bce80bbe.png)
+
+## ****🧩****시스템 구조도
+
+![시스템 구조도.drawio .png](https://user-images.githubusercontent.com/60749057/171457368-af427c37-5b37-44b4-b801-cb60a80e211c.png)
 
 ## ****🗺****ER 다이어그램
 
